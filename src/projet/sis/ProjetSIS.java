@@ -21,6 +21,8 @@ public class ProjetSIS {
         String surname="Paul";
         int classe=3;
         Patient p=new Patient(id,surname, classe);
+        
+        String test = "test";
     }
     
 }
