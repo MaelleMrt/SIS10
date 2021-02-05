@@ -17,12 +17,12 @@ public class ProjetSIS {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int id =2334;
-        String surname="Paul";
-        int classe=3;
-        Patient p=new Patient(id,surname, classe);
+//        int id =2334;
+//        String surname="Paul";
+//        int classe=3;
+//        Patient p=new Patient(id,surname, classe);
         
-        String test = "test";
+        CIC_accueil accueil = new CIC_accueil();
     }
     
 }
