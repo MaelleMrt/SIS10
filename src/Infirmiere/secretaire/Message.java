@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projet.sis.secretaire;
+package Infirmiere.secretaire;
 
+import java.util.Date;
 import java.util.Random;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
@@ -16,6 +17,8 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 public class Message extends javax.swing.JFrame {
 
    JFrame accueil;
+   Date date = new Date();
+   int annee = date.getYear()+1900;
    
     public Message(JFrame accueil) {
         initComponents();
@@ -31,10 +34,15 @@ public class Message extends javax.swing.JFrame {
         int max = 9999999;
         int min = 0;
         String ID = "";
+        
+        String chiffreAnnee = String.valueOf(annee);
+        char[] tabAnnee = chiffreAnnee.toCharArray();
+        
         Random rand = new Random(); 
         int nombreAleatoire = rand.nextInt(max - min + 1) + min;
-        ID += nombreAleatoire;
-        //Code à faire : rajouter année de venur + vérifer dans BDD qu'il n'existe pas + enregistrer dans BDD
+        
+        ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire; // pour un patient qui n'est jamais venu
+        //Code à faire : vérifer dans BDD qu'il n'existe pas + enregistrer dans BDD + si patient déjà venu récupérer l'année 
         return ID; 
     }
 
@@ -55,7 +63,7 @@ public class Message extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Le nouveau patient");
+        jLabel1.setText("Le patient");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("jLabel2");
@@ -75,28 +83,29 @@ public class Message extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addGap(47, 47, 47)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(130, 130, 130))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
