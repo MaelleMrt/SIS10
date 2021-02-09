@@ -22,7 +22,6 @@ public class ProjetSIS {
 //        int classe=3;
 //        Patient p=new Patient(id,surname, classe);
         
-        CIC_accueil accueil = new CIC_accueil();
     }
     
 }
