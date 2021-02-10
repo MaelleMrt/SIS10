@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,28 +19,26 @@ import java.sql.Statement;
  */
 public class ExempleJdbc {
     
- public void connexion() throws SQLException{
+ public Statement connexion() throws SQLException {
+     Statement st=null;
      try{
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("org.mariadb.jdbc.Driver");
         String urlDB = "jdbc:mysql://mysql-projetsis.alwaysdata.net:3306/projetsis_a"; // ouverture d’une nouvelle connexion à la BD 
-        Connection conn= DriverManager.getConnection( urlDB, "projetsis", "Alwaysdatas2020!"); 
-        Statement st = conn.createStatement();
-        st.executeUpdate("CREATE TABLE personne( nom VARCHAR(30),prenom VARCHAR(30), age INTEGER)");  st.close(); 
-        int nb = st.executeUpdate("INSERT INTO personne(nom,prenom) VALUES (‘Pierre’, ‘Martin’)");  
-        System.out.println("Nombre de lignes insérées = " + nb); 
-        st.close(); 
-        ResultSet r = st.executeQuery("Select * from personne");
-        System.out.println(r.getInt(1));
-
+        Connection conn= DriverManager.getConnection( urlDB, "projetsis_mams", "Alwaysdatas2020!"); 
+        st = conn.createStatement();
         
-     }catch(Exception e) {
-         
+        
+     }catch (SQLException e) {
+         System.out.println(e);
+     } catch (ClassNotFoundException ex) {
+         System.out.println("classe non trouvé");
      }
     
 
     
-    
+    return st;
     }
+    
 }
 
 
