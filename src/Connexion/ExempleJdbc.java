@@ -29,7 +29,7 @@ public class ExempleJdbc {
         st.close(); 
         ResultSet r = st.executeQuery("Select * from personne");
         System.out.println(r.getInt(1));
-
+        System.out.println(r.getInt(2));
         
      }catch(Exception e) {
          
