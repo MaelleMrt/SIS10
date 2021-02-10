@@ -124,7 +124,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        ajouter.setText("Ajouter");
+        ajouter.setText("Ajouter un participant");
         ajouter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ajouterActionPerformed(evt);
@@ -243,7 +243,8 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        CicAjouterParticipant a = new CicAjouterParticipant();
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void supprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerActionPerformed
