@@ -30,6 +30,7 @@ public class CicParticipant extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         retour = new javax.swing.JButton();
         accueil = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -67,12 +68,15 @@ public class CicParticipant extends javax.swing.JFrame {
 
         utilisateur.setText("Prénom Nom");
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(762, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(utilisateur)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(deconnexion)
@@ -86,6 +90,9 @@ public class CicParticipant extends javax.swing.JFrame {
                     .addComponent(utilisateur)
                     .addComponent(deconnexion))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
 
         retour.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -356,6 +363,7 @@ public class CicParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
