@@ -36,7 +36,7 @@ public class InterfaceConnexion extends javax.swing.JFrame {
         String nom = null;
         try {  
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+            ResultSet rs = s.executeQuery("SELECT nom FROM " + table +" WHERE login='" + Login +"'");
                 while (rs.next()) {
                     nom = rs.getString("nom");    
                 }
@@ -50,7 +50,7 @@ public class InterfaceConnexion extends javax.swing.JFrame {
         String prenom = null;
         try {  
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+            ResultSet rs = s.executeQuery("SELECT prenom FROM " + table +" WHERE login='" + Login +"'");
                 while (rs.next()) {
                     prenom = rs.getString("prenom");    
                 }
@@ -65,7 +65,7 @@ public class InterfaceConnexion extends javax.swing.JFrame {
         String nomS = null;
         try {  
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+            ResultSet rs = s.executeQuery("SELECT  nomS FROM " + table +" WHERE login='" + Login +"'");
                 while (rs.next()) {
                     nomS = rs.getString("nomS");    
                 }
