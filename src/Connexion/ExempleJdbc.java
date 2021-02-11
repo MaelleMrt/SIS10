@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ExempleJdbc {
     
- public Statement connexion() throws SQLException {
+ public static Statement connexion() throws SQLException {
      Statement st=null;
      try{
         Class.forName("org.mariadb.jdbc.Driver");

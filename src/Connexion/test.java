@@ -6,8 +6,8 @@
 package Connexion;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import com.sun.org.apache.bcel.internal.generic.Select;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -21,6 +21,13 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException {
-       new ExempleJdbc().connexion();
+
+        Statement s= ExempleJdbc.connexion();
+        ResultSet r= s.executeQuery("SELECT * FROM Patient");
+          if (r.next()) {
+           String  userName = r.getString(1) ;
+           System.out.println(userName);
+         }
+        
     }
 }
