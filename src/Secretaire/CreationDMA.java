@@ -20,6 +20,7 @@ public class CreationDMA extends javax.swing.JFrame {
 
     JFrame accueil;
     Date date = new Date();
+    String nSecu;
 
     public CreationDMA(JFrame precedent, String nom, String prenom) {
         this.accueil = precedent;
@@ -27,7 +28,7 @@ public class CreationDMA extends javax.swing.JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        affichageNom(nom,prenom);
+        affichageNom(nom, prenom);
     }
 
     private void affichageNom(String nom, String prenom) { // récupérer nom de la personne
@@ -44,8 +45,9 @@ public class CreationDMA extends javax.swing.JFrame {
         }
         return numero;
     }
+
     private String genderBDD() { // quel est le sexe du patient ?
-        String numero = null;
+        String numero ="";
         if (jCheckBox1.isSelected()) {
             numero = "F"; // c'est une femme
         } else if (jCheckBox2.isSelected()) {
@@ -58,14 +60,8 @@ public class CreationDMA extends javax.swing.JFrame {
         boolean result = false;
         String numero = jTextField10.getText();
         char[] tabChiffre = numero.toCharArray();
-        int compteur = 0;
-
-        if (tabChiffre[0] == genderSecu()) { // vérification cohérence sexe du patient
-            compteur += 1;
-        }
-        // vérification date de naissance (année + mois)
-
-        if (compteur == 3) {
+        
+        if (tabChiffre.length == 13) { //verification nombre chiffres num secu
             result = true;
         }
         return result;
@@ -83,7 +79,7 @@ public class CreationDMA extends javax.swing.JFrame {
         String ville = jTextField9.getText();
         String dateN = jTextField4.getText();
         String lieuN = jTextField5.getText();
-        String nSecu = jTextField10.getText();
+        nSecu = jTextField10.getText();
         String nomM = jTextField11.getText();
         String sexe = genderBDD();
 
@@ -92,11 +88,11 @@ public class CreationDMA extends javax.swing.JFrame {
             Statement s = ExempleJdbc.connexion();
             s.executeUpdate("INSERT INTO Patient(id, nomusuel, nomdenaissance, prenom, sexe, rue,"
                     + " ville, codepostale, datedenaissance, secu, médecintraitant, nationalité, lieudenaissance)"
-                    + " VALUES ('" + null + "', '" + nomU + "', '" + nomN + "', '" + prenom + "', '" + sexe + "', '" + rue 
-                    + "', '" + ville + "', '" + codeP + "', '" + dateN + "', '"  + nSecu + "', '" + nomM + "', '" + nationalite + "', '" + lieuN + "')");
-                    }catch (SQLException e) {
+                    + " VALUES ('0', '" + nomU + "', '" + nomN + "', '" + prenom + "', '" + sexe + "', '" + rue
+                    + "', '" + ville + "', '" + codeP + "', '" + dateN + "', '" + nSecu + "', '" + nomM + "', '" + nationalite + "', '" + lieuN + "')");
+        } catch (SQLException e) {
             System.out.println(e);
-        } 
+        }
     }
 
     /**
@@ -389,15 +385,16 @@ public class CreationDMA extends javax.swing.JFrame {
             JFrame erreur = new MessageErreur("- Des informations n'ont pas été saisies ");
             erreur.setVisible(true);
         } // vérification présence des informations
-        /**
-         * else if(){ JFrame erreur = new MessageErreur("- Numéro de sécurité
-         * sociale invalide "); erreur.setVisible(true); } else if (){ JFrame
-         * erreur = new MessageErreur("- Le format de la date de naissance n'est
-         * pas valide "); erreur.setVisible(true); }
-        *
-         */
+        else if (verificationNumSecu() == false) {
+            JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide");
+            erreur.setVisible(true); } 
+        /*else if (){ 
+            JFrame erreur = new MessageErreur ( "- Le format de la date de naissance n'est pas valide");        
+            erreur.setVisible(true); }
+        **/
         else {
-            JFrame msg = new Message(accueil);
+            enregistrer();
+            JFrame msg = new Message(accueil, nSecu);
             msg.setVisible(true);
             this.setVisible(false);
         }
