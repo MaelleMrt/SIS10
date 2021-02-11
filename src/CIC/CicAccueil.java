@@ -6,9 +6,13 @@
 package CIC;
 
 import Connexion.ExempleJdbc;
+import Patient.Patient;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,21 +20,42 @@ import java.sql.Statement;
  */
 public class CicAccueil extends javax.swing.JFrame {
 
+    private ArrayList<Etude> listeEtude= new ArrayList<Etude>();
     /**
      * Creates new form CicAccueil
      */
-    public CicAccueil() {
+    public CicAccueil() throws SQLException {
         initComponents();
         this.setVisible(true);
         erreur.setVisible(false);
+        remplirTableau();
     }
     
     public void remplirTableau() throws SQLException{
-        ExempleJdbc jdbc = new ExempleJdbc();
-        Statement st = jdbc.connexion();
-        ResultSet rs = st.executeQuery("SELECT nom,prenom FROM personne");
-        st.close();
-    }
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT Etude.nom, CIC.nom, CIC.prenom, date, duree FROM Etude JOIN CIC on (PH = login)");
+                while(rs.next()){
+                   Etude etude =new Etude(rs.getString("Etude.nom"), rs.getString("CIC.nom"), rs.getString("CIC.prenom"), rs.getString("date"), rs.getInt("duree"));
+                   listeEtude.add(etude);
+                }   
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        for(int i = 0; i<listeEtude.size(); i++){
+            Etude e = listeEtude.get(i);
+            etudes.setValueAt(e.getNom(), i, 0);
+            etudes.setValueAt(e.getNomPH() + " " + e.getPrenomPH(), i, 1);
+            etudes.setValueAt(e.getDate(), i, 2);
+            etudes.setValueAt(e.getDuree() + " semaines", i, 3);
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -287,7 +312,11 @@ public class CicAccueil extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicAccueil().setVisible(true);
+                try {
+                    new CicAccueil().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CicAccueil.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
