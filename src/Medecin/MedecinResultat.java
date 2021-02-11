@@ -5,17 +5,20 @@
  */
 package Medecin;
 
+import Patient.Patient;
+
 /**
  *
  * @author Maelle
  */
 public class MedecinResultat extends javax.swing.JFrame {
-
+    public Patient patient;
     /**
      * Creates new form SecretaireAcceuil
      */
     public MedecinResultat() {
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -241,15 +244,15 @@ public class MedecinResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        MedecinAcceuil init1=new MedecinAcceuil();
-        init1.setVisible(true);
+        //new MedecinAcceuil();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        MedecinPatient init1=new MedecinPatient();
-        init1.setVisible(true);
+        new MedecinPatient(patient);
+
         
         
         
@@ -288,7 +291,7 @@ public class MedecinResultat extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MedecinAcceuil().setVisible(true);
+
                 
             }
         });

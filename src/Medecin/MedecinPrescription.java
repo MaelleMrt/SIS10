@@ -5,17 +5,21 @@
  */
 package Medecin;
 
+import Patient.Patient;
+
 /**
  *
  * @author Maelle
  */
 public class MedecinPrescription extends javax.swing.JFrame {
-
+     public Patient patient;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinPrescription() {
+    public MedecinPrescription(Patient p) {
+        patient=p;
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -187,7 +191,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addGap(298, 298, 298)
+                                .addGap(344, 344, 344)
                                 .addComponent(jButton1))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -196,7 +200,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addGap(155, 155, 155))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,15 +245,14 @@ public class MedecinPrescription extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        MedecinAcceuil init1=new MedecinAcceuil();
-        init1.setVisible(true);
+        //new MedecinAcceuil();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        MedecinPatient init1=new MedecinPatient();
-        init1.setVisible(true);
+        new MedecinPatient(patient);
+
         
         
         
@@ -288,7 +291,6 @@ public class MedecinPrescription extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MedecinAcceuil().setVisible(true);
                 
             }
         });
