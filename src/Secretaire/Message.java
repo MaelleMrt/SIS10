@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Infirmiere.secretaire;
+package Secretaire;
 
 import java.util.Date;
 import java.util.Random;
