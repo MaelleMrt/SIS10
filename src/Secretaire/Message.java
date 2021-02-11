@@ -5,6 +5,12 @@
  */
 package Secretaire;
 
+import Connexion.ExempleJdbc;
+import Patient.Patient;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JFrame;
@@ -19,6 +25,7 @@ public class Message extends javax.swing.JFrame {
    JFrame accueil;
    Date date = new Date();
    int annee = date.getYear()+1900;
+   String nSecu; // a recuperer de la création
    
     public Message(JFrame accueil) {
         initComponents();
@@ -34,6 +41,8 @@ public class Message extends javax.swing.JFrame {
         int max = 9999999;
         int min = 0;
         String ID = "";
+        ArrayList listID = new ArrayList<>();
+        ArrayList listSecu = new ArrayList<>();
         
         String chiffreAnnee = String.valueOf(annee);
         char[] tabAnnee = chiffreAnnee.toCharArray();
@@ -41,8 +50,47 @@ public class Message extends javax.swing.JFrame {
         Random rand = new Random(); 
         int nombreAleatoire = rand.nextInt(max - min + 1) + min;
         
-        ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire; // pour un patient qui n'est jamais venu
-        //Code à faire : vérifer dans BDD qu'il n'existe pas + enregistrer dans BDD + si patient déjà venu récupérer l'année 
+        try{  // On recupere les id + secu des patients existants
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT id, secu FROM Patient");
+                while(rs.next()){
+                   int idPatient = rs.getInt("id");
+                   int secuPatient = rs.getInt("secu");
+                   listID.add(idPatient);
+                   listSecu.add(secuPatient);
+                }   
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        
+        if(listSecu.contains(nSecu)){ // le patient existe déjà avant
+            try{  // On recupere année du patient existant avec le nSecu
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT  FROM Patient WHERE secu = 'nSecu' ");
+                while(rs.next()){
+                }   
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        }
+        else{ // pour un patient qui n'est jamais venu
+            ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire; 
+            if(listID.contains(ID)){ // verif id n'existe pas
+                ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire;
+        }
+        }
+        //Code à faire : enregistrer dans BDD + si patient déjà venu récupérer l'année 
         return ID; 
     }
 

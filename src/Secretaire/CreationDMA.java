@@ -5,7 +5,9 @@
  */
 package Secretaire;
 
-
+import Connexion.ExempleJdbc;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
@@ -18,47 +20,85 @@ public class CreationDMA extends javax.swing.JFrame {
 
     JFrame accueil;
     Date date = new Date();
-    
-    public CreationDMA(JFrame precedent) {
+
+    public CreationDMA(JFrame precedent, String nom, String prenom) {
         this.accueil = precedent;
         initComponents();
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        affichageNom();
+        affichageNom(nom,prenom);
     }
-    
-    private void affichageNom(){ // récupérer nom de la personne
-        jLabel13.setText("Prénom");
-        jLabel2.setText("Nom");
+
+    private void affichageNom(String nom, String prenom) { // récupérer nom de la personne
+        jLabel13.setText(prenom);
+        jLabel2.setText(nom);
     }
-    
-    private int Gender(){ // quel est le sexe du patient ?
+
+    private int genderSecu() { // quel est le sexe du patient ?
         int numero = 0;
-        if (jCheckBox1.isSelected()){
+        if (jCheckBox1.isSelected()) {
             numero = 2; // c'est une femme
-        } 
-        else if (jCheckBox2.isSelected()){
+        } else if (jCheckBox2.isSelected()) {
             numero = 1; // c'est un homme
         }
         return numero;
     }
-    private boolean verificationNumSecu(){
+    private String genderBDD() { // quel est le sexe du patient ?
+        String numero = null;
+        if (jCheckBox1.isSelected()) {
+            numero = "F"; // c'est une femme
+        } else if (jCheckBox2.isSelected()) {
+            numero = "M"; // c'est un homme
+        }
+        return numero;
+    }
+
+    private boolean verificationNumSecu() {
         boolean result = false;
         String numero = jTextField10.getText();
         char[] tabChiffre = numero.toCharArray();
         int compteur = 0;
-        
-        if (tabChiffre[0] == Gender()){ // vérification cohérence sexe du patient
-            compteur += 1; 
+
+        if (tabChiffre[0] == genderSecu()) { // vérification cohérence sexe du patient
+            compteur += 1;
         }
         // vérification date de naissance (année + mois)
-        
-        if (compteur == 3){
+
+        if (compteur == 3) {
             result = true;
         }
         return result;
     }
+
+    private void enregistrer() {
+
+        // On récupère les info saisies
+        String nomU = jTextField1.getText();
+        String nomN = jTextField2.getText();
+        String prenom = jTextField3.getText();
+        String nationalite = jTextField6.getText();
+        String rue = jTextField7.getText();
+        String codeP = jTextField8.getText();
+        String ville = jTextField9.getText();
+        String dateN = jTextField4.getText();
+        String lieuN = jTextField5.getText();
+        String nSecu = jTextField10.getText();
+        String nomM = jTextField11.getText();
+        String sexe = genderBDD();
+
+        // On enregistre le nouveau patient dans BDD
+        try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("INSERT INTO Patient(id, nomusuel, nomdenaissance, prenom, sexe, rue,"
+                    + " ville, codepostale, datedenaissance, secu, médecintraitant, nationalité, lieudenaissance)"
+                    + " VALUES ('" + null + "', '" + nomU + "', '" + nomN + "', '" + prenom + "', '" + sexe + "', '" + rue 
+                    + "', '" + ville + "', '" + codeP + "', '" + dateN + "', '"  + nSecu + "', '" + nomM + "', '" + nationalite + "', '" + lieuN + "')");
+                    }catch (SQLException e) {
+            System.out.println(e);
+        } 
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,8 +134,6 @@ public class CreationDMA extends javax.swing.JFrame {
         jTextField9 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -197,8 +235,6 @@ public class CreationDMA extends javax.swing.JFrame {
 
         jLabel10.setText("Numéro de sécurité sociale:");
 
-        jLabel12.setText("Ancien identifiant:");
-
         jLabel11.setText("Médecin traitant:");
 
         jButton1.setBackground(java.awt.SystemColor.activeCaption);
@@ -214,10 +250,6 @@ public class CreationDMA extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,7 +264,11 @@ public class CreationDMA extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -241,14 +277,6 @@ public class CreationDMA extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -274,7 +302,11 @@ public class CreationDMA extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(19, 19, 19))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField3});
@@ -316,13 +348,9 @@ public class CreationDMA extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -345,12 +373,11 @@ public class CreationDMA extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        if (jCheckBox1.isSelected()){
+        if (jCheckBox1.isSelected()) {
             jCheckBox2.setEnabled(false);
-        }
-        else{
+        } else {
             jCheckBox2.setEnabled(true);
-    }
+        }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
@@ -358,35 +385,31 @@ public class CreationDMA extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField7.getText().equals("rue") || jTextField8.getText().equals("code postal")|| jTextField9.getText().equals("ville")||(jCheckBox1.isSelected()==false && jCheckBox2.isSelected()==false)){
+        if (jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField7.getText().equals("rue") || jTextField8.getText().equals("code postal") || jTextField9.getText().equals("ville") || (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false)) {
             JFrame erreur = new MessageErreur("- Des informations n'ont pas été saisies ");
             erreur.setVisible(true);
         } // vérification présence des informations
-        
-        /**else if(){
-            JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide ");
-            erreur.setVisible(true);
-        }
-        else if (){
-            JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
-            erreur.setVisible(true);
-        }
-        * */
-        else{
+        /**
+         * else if(){ JFrame erreur = new MessageErreur("- Numéro de sécurité
+         * sociale invalide "); erreur.setVisible(true); } else if (){ JFrame
+         * erreur = new MessageErreur("- Le format de la date de naissance n'est
+         * pas valide "); erreur.setVisible(true); }
+        *
+         */
+        else {
             JFrame msg = new Message(accueil);
             msg.setVisible(true);
-            this.setVisible(false);  
+            this.setVisible(false);
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-         if (jCheckBox2.isSelected()){
+        if (jCheckBox2.isSelected()) {
             jCheckBox1.setEnabled(false);
-        }
-        else{
+        } else {
             jCheckBox1.setEnabled(true);
-    }
+        }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -441,7 +464,7 @@ public class CreationDMA extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //JFrame DMA = new CreationDMA();
-                
+
             }
         });
     }
@@ -453,7 +476,6 @@ public class CreationDMA extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
@@ -469,7 +491,6 @@ public class CreationDMA extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

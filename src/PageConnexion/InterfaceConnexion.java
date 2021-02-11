@@ -5,9 +5,15 @@
  */
 package PageConnexion;
 
-import Infirmiere.InfirmiereAcceuil;
+import Connexion.ExempleJdbc;
+import Infirmieres.InfirmiereAcceuil;
 import Medecin.MedecinAcceuil;
 import Secretaire.Secretaire;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  *
@@ -15,10 +21,9 @@ import Secretaire.Secretaire;
  */
 public class InterfaceConnexion extends javax.swing.JFrame {
 
-    String login;
-    
-    
-    
+    String Login;
+    String mdp;
+
     public InterfaceConnexion() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -26,31 +31,111 @@ public class InterfaceConnexion extends javax.swing.JFrame {
         jLabel5.setVisible(false);
         
     }
-    private String RecupereID(){
+    
+    private String RecupereNom(String table){
+        String nom = null;
+        try {  
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+                while (rs.next()) {
+                    nom = rs.getString("nom");    
+                }
+            }
+            catch (SQLException e) {
+            System.out.println(e);
+            }
+        return nom;
+    }
+    private String RecuperePrenom(String table){
+        String prenom = null;
+        try {  
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+                while (rs.next()) {
+                    prenom = rs.getString("prenom");    
+                }
+            }
+            catch (SQLException e) {
+            System.out.println(e);
+            }
+        return prenom;
+    }
+    
+    private String RecupereNomS(String table){
+        String nomS = null;
+        try {  
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT nom, prenom, nomS FROM " + table +" WHERE login='" + Login +"'");
+                while (rs.next()) {
+                    nomS = rs.getString("nomS");    
+                }
+            }
+            catch (SQLException e) {
+            System.out.println(e);
+            }
+        return nomS;
+    }
+
+    private String RecupereID() {
         String id;
         id = jTextField1.getText();
         return id;
     }
-    private String RecupereMDP(){
-        String mdp;
-        mdp = jPasswordField1.getPassword().toString();
-        return mdp;
+
+    private String RecupereMDP() {
+        char[] motPasse;
+        motPasse = jPasswordField1.getPassword();
+        String MDP= new String(motPasse);
+        return MDP;
     }
-    
-    private boolean Connexion(){
-        boolean result = false;
-        this.login = RecupereID();
-        String mdp = RecupereMDP();
+
+    private boolean Connexion() {
+        boolean result = false; 
+        String MDP = null;
+        ArrayList listlogin = new ArrayList<>();
+
+        try {  // On recupere les logins 
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT login FROM Utilisateur");
+            while (rs.next()) {
+                String log = rs.getString("login");
+                listlogin.add(log);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }   
+
+        if(listlogin.contains(Login)){ // On vérifie que les identifiants sont bons
+            try {  
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT mdp FROM Utilisateur WHERE login='" + Login +"'");
+                while (rs.next()) {
+                    MDP = rs.getString("mdp");               
+                }
+            }
+            catch (SQLException e) {
+            System.out.println(e);
+            }
+            if (mdp.equals(MDP)){
+                result = true;
+            }
+        }
         
-        // if login dans BDD
-            //if le mdp correspond a celui dans BDD
-        
-        return result;
-    }
-    
-    private String Metier(){
-        String metier = "";
-        // recuperer le role grâce au login
+    return result ;
+}
+
+private String Metier(){
+        String metier = null;
+        try {  // On recupee le metier de la personne qui se connecte 
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT type FROM Utilisateur WHERE login='" + Login +"'");
+            while (rs.next()) {
+                metier = rs.getString("type");
+                
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } 
         return metier;
     }
     
@@ -189,22 +274,28 @@ public class InterfaceConnexion extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.Login = RecupereID();
+        this.mdp = RecupereMDP();
         String metier = Metier();
-        if (Connexion()){           
+        if (Connexion()==true){           
             this.setVisible(false);
             switch(metier){
-                case "secretaire":
-                    Secretaire s = new Secretaire();
+                case "secrétaire":
+                    String nom = RecupereNom("Secrétaire");
+                    String prenom = RecuperePrenom("Secrétaire");
+                    String service = RecupereNomS("Secrétaire");
+                    Secretaire s = new Secretaire(nom,prenom,service);
                     s.setVisible(true);
                     break;
-                case "medecin" :
-                    MedecinAcceuil m = new MedecinAcceuil();
+                case "médecin" :
+                    /*MedecinAcceuil m = new MedecinAcceuil();
                     m.setVisible(true);
-                    break;
-                case "infirmiere" :
+                    **/break;
+                case "infirmière" :
                     InfirmiereAcceuil i = new InfirmiereAcceuil();
                     i.setVisible(true);
                     break;
+                // CIC ?
             }
                     
         }
@@ -227,16 +318,32 @@ public class InterfaceConnexion extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } 
+
+catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
