@@ -200,30 +200,10 @@
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
-                <Column editable="false" title="Nom de l&apos;&#xe9;tude" type="java.lang.String">
-                  <Data value="Etude 1"/>
-                  <Data value="Etude 2"/>
-                  <Data value="Etude 3"/>
-                  <Data value="Etude 4"/>
-                </Column>
-                <Column editable="false" title="Praticien hospitalier porteur" type="java.lang.String">
-                  <Data value="Clara Oster"/>
-                  <Data value="Maelle Martinet"/>
-                  <Data value="Elodie Collet"/>
-                  <Data value="Amira Haouas"/>
-                </Column>
-                <Column editable="false" title="Date de d&#xe9;marrage" type="java.lang.Object">
-                  <Data value="10/01/2021"/>
-                  <Data value="23/12/2020"/>
-                  <Data value="17/10/2020"/>
-                  <Data value="03/10/2020"/>
-                </Column>
-                <Column editable="false" title="Dur&#xe9;e" type="java.lang.String">
-                  <Data value="6 semaines"/>
-                  <Data value="10 semaines"/>
-                  <Data value="5 semaines"/>
-                  <Data value="12 semaines"/>
-                </Column>
+                <Column editable="false" title="Nom de l&apos;&#xe9;tude" type="java.lang.String"/>
+                <Column editable="false" title="Praticien hospitalier porteur" type="java.lang.String"/>
+                <Column editable="false" title="Date de d&#xe9;marrage" type="java.lang.Object"/>
+                <Column editable="false" title="Dur&#xe9;e" type="java.lang.String"/>
               </Table>
             </Property>
           </Properties>

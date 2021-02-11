@@ -5,6 +5,11 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author clara
@@ -18,6 +23,13 @@ public class CicAccueil extends javax.swing.JFrame {
         initComponents();
         this.setVisible(true);
         erreur.setVisible(false);
+    }
+    
+    public void remplirTableau() throws SQLException{
+        ExempleJdbc jdbc = new ExempleJdbc();
+        Statement st = jdbc.connexion();
+        ResultSet rs = st.executeQuery("SELECT nom,prenom FROM personne");
+        st.close();
     }
 
     /**
@@ -109,10 +121,10 @@ public class CicAccueil extends javax.swing.JFrame {
 
         etudes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Etude 1", "Clara Oster", "10/01/2021", "6 semaines"},
-                {"Etude 2", "Maelle Martinet", "23/12/2020", "10 semaines"},
-                {"Etude 3", "Elodie Collet", "17/10/2020", "5 semaines"},
-                {"Etude 4", "Amira Haouas", "03/10/2020", "12 semaines"}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
                 "Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée"
