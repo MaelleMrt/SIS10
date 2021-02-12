@@ -111,7 +111,7 @@ public class MedecinPatient extends javax.swing.JFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel8.setText(patient.getNom());
+        jLabel8.setText(patient.getNomUsuel());
 
         jLabel9.setText(patient.getNaissance().toString());
 

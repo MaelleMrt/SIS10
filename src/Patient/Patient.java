@@ -34,10 +34,11 @@ public class Patient {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+nom+"'' AND prenom='"+prenom+"' AND dateDeNaissance='"+dateDeNaissance+"'" );
+                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+nom+"' AND prenom='"+prenom+"'" );
                 while(rs.next()){
                     id=rs.getInt("id");
-                }   
+                    System.out.println("id    "+id);
+                }    
 
             } catch(SQLException e){
                     System.out.println(e);
@@ -45,6 +46,7 @@ public class Patient {
 
         } catch (SQLException e){
             System.out.println(e);
+
         }
         
     }
@@ -55,7 +57,7 @@ public class Patient {
 
    
 
-    public String getNom() {
+    public String getNomUsuel() {
         return nom;
     }
 
@@ -67,7 +69,162 @@ public class Patient {
         return naissance;
     }
    
+    public String getNomNaissance() {
+        String nomNaissance=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT nomdenaissance FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   nomNaissance=rs.getString("nomdenaissance");
+                }    
 
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return nomNaissance;
+    }
+    
+    public String getSexe() {
+        String sexe=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT sexe FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   sexe=rs.getString("sexe");
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return sexe;
+    }
+   
+    public String getAdresse() {
+        String adresse="";
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT rue,ville,codepostale FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   adresse+="rue "+rs.getString("rue")+"  ";
+                   adresse+=rs.getString("codepostale")+"   ";
+                   adresse+=rs.getString("ville")+"   ";
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return adresse;
+    }
+    
+    public String getSecu() {
+        String secu=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT secu FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   secu=rs.getString("secu");
+                 
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return secu;
+    }
+    
+    public String getMedecinTraitant() {
+        String medT=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT médecintraitant FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   medT=rs.getString("médecintraitant");
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return medT;
+    }
+   
+    public String getNationalite() {
+        String nat=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT nationalité FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   nat=rs.getString("nationalité");
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return nat;
+    }
+    
+    public String getLieuNaissance() {
+        String lieuN=null;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT lieudenaissance FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   lieuN=rs.getString("lieudenaissance");
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+        return lieuN;
+    }
    
    
     @Override

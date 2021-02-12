@@ -27,19 +27,18 @@ public class TableauPatient  extends AbstractTableModel{
             try{
                 ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+ login+"'AND Patient.id = Acte.idP" );
                 while(rs.next()){
-                    System.out.println("nom:" +rs.getString("nomusuel"));
-                    System.out.println("prenom:" +rs.getString("prenom"));
-                    System.out.println("naissance:" +rs.getString("datedenaissance"));
                     Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getDate("datedenaissance"));
                     listPatient.add(patient);
                 }   
 
             } catch(SQLException e){
                     System.out.println(e);
+
             }
 
         } catch (SQLException e){
             System.out.println(e);
+
         }
      }
  
@@ -62,7 +61,7 @@ public class TableauPatient  extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                return listPatient.get(rowIndex).getNom();
+                return listPatient.get(rowIndex).getNomUsuel();
             case 1:
                 return listPatient.get(rowIndex).getPrenom();
             case 2: 

@@ -159,9 +159,9 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                     e.getButton() == MouseEvent.BUTTON3)
                 {
                     int indRow =jTable1.rowAtPoint(e.getPoint());
-                    System.out.println("nom: " +jTable1.getValueAt(indRow, 0).toString());
-                    System.out.println("prenom: " +jTable1.getValueAt(indRow, 1).toString());
-                    System.out.println("date: " +jTable1.getValueAt(indRow, 2).toString());
+                    System.out.println("nomtable: " +jTable1.getValueAt(indRow, 0).toString());
+                    System.out.println("prenomtable: " +jTable1.getValueAt(indRow, 1).toString());
+                    System.out.println("datetable: " +jTable1.getValueAt(indRow, 2).toString());
                     String dateN=jTable1.getValueAt(indRow, 2).toString();
                     try{
                         SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
@@ -237,16 +237,16 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 String texte=jTextField1.getText();
                 int i=0;
                 for (Patient p : listPatient.getListPatient()) {
-                    if(p.getNom().contains(texte)){
+                    if(p.getNomUsuel().contains(texte)){
                         Vector<String> v=new Vector<String>();
-                        v.add(p.getNom());
+                        v.add(p.getNomUsuel());
                         v.add(p.getPrenom());
                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                         String dateN = dateFormat.format(p.getNaissance());
                         v.add(dateN);
                         ModeleTest2.setColumnIdentifiers(new String[]{"Nom","Prenom","Date de Naissance"});
                         ModeleTest2.insertRow(i,v) ;
-                        System.out.println("ajout vecteur "+p.getNom()+" "+p.getNaissance());
+                        System.out.println("ajout vecteur "+p.getNomUsuel()+" "+p.getNaissance());
                         i++;
                     }
                 }

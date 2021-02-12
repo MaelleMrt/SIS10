@@ -6,19 +6,18 @@
 package Medecin;
 
 import java.util.Date;
-import javafx.scene.text.Text;
 
 /**
  *
  * @author Maelle
  */
-public class Prescription {
+public class Resultat {
     String service;
     String nomMedecin;
     Date date;
     String cont;
     
-   public Prescription(String s,String m, Date d,String contenu){
+   public Resultat(String s,String m, Date d,String contenu){
        service =s;
        nomMedecin =m;
        date=d;
@@ -41,5 +40,4 @@ public class Prescription {
     public String getMedecin() {
         return nomMedecin;
     }
-  
 }

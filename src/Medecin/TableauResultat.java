@@ -18,12 +18,12 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Maelle
  */
-public class TableauPrescriptions extends AbstractTableModel{
+public class TableauResultat extends AbstractTableModel{
      private ArrayList<Prescription> listPrescription= new ArrayList<Prescription>();
      
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     
-    public TableauPrescriptions(Patient p) {
+    public TableauResultat(Patient p) {
         Date date;
         String contenu;
         String login=null;
@@ -32,10 +32,11 @@ public class TableauPrescriptions extends AbstractTableModel{
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Prescription WHERE idP ='"+ p.getId()+"'" );
+                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Resultat WHERE idP ='"+ p.getId()+"'" );
                 while(rs1.next()){
                     date= rs1.getDate("date");
                     contenu= rs1.getString("contenu");
+                    System.out.println(contenu);
                     login =rs1.getString("login");
                     ResultSet rs2= s.executeQuery("SELECT nom,nomS FROM Médecin WHERE login ='"+login+"'" );
                         while(rs2.next()){
@@ -75,16 +76,12 @@ public class TableauPrescriptions extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                System.out.println("cas 0");
                 return listPrescription.get(rowIndex).getService();
             case 1:
-                System.out.println("cas 1");
                 return listPrescription.get(rowIndex).getMedecin();
             case 2: 
-                System.out.println("cas 2");
                 return listPrescription.get(rowIndex).getDate();
             case 3: 
-                System.out.println("cas 3");
                 return listPrescription.get(rowIndex).getContenu();
             default:
                 return null; //Ne devrait jamais arriver
