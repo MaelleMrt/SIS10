@@ -5,19 +5,60 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author clara
  */
 public class CicParticipant extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CicParticipant
-     */
-    public CicParticipant() {
+    private Etude e;
+    private Participant p;
+    
+    public CicParticipant(Etude e,Participant p) {
         initComponents();
+        this.e = e;
+        this.p = p;
+        remplirLabel();
+        jLabel13.setText(e.getNom());
+        this.setVisible(true);
     }
 
+    public void remplirLabel(){
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT * FROM Participant JOIN Etude ON(etude = nom)  WHERE (nomUsuel = '"+p.getNomU()+"' and dateDeNaissance = '"+p.getDateN()+"' and prenom = '"+p.getPrenom()+"')");
+                while(rs.next()){
+                   participant.setText(rs.getString("prenom")+" "+rs.getString("nomUsuel")+" ("+rs.getString("nomDeNaissance")+")");
+                   type.setText(rs.getString("type"));
+                   sexe.setText(rs.getString("sexe"));
+                   date.setText(rs.getString("dateDeNaissance"));
+                   taille.setText(rs.getString("taille")+" cm");
+                   poids.setText(rs.getString("poids")+" kg");
+                   patho.setText(rs.getString("pathologie"));
+                   allergie.setText(rs.getString("allergie"));
+                   régime.setText(rs.getString("regime"));
+                   sport.setText(rs.getString("sport"));
+                   fumeur.setText(rs.getString("fumeur"));
+                   categorie.setText(rs.getString("categorie"));
+                   ville.setText(rs.getString("ville"));
+                   
+                }   
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,7 +89,7 @@ public class CicParticipant extends javax.swing.JFrame {
         participant = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         sexe = new javax.swing.JLabel();
-        age = new javax.swing.JLabel();
+        date = new javax.swing.JLabel();
         taille = new javax.swing.JLabel();
         poids = new javax.swing.JLabel();
         patho = new javax.swing.JLabel();
@@ -58,6 +99,8 @@ public class CicParticipant extends javax.swing.JFrame {
         fumeur = new javax.swing.JLabel();
         categorie = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        ville = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,7 +163,7 @@ public class CicParticipant extends javax.swing.JFrame {
         jLabel3.setText("Sexe :");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel4.setText("Âge :");
+        jLabel4.setText("Date de naissance :");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel5.setText("Taille :");
@@ -153,7 +196,7 @@ public class CicParticipant extends javax.swing.JFrame {
 
         sexe.setText("F/M/autre");
 
-        age.setText("x ans");
+        date.setText("jj/mm/aaaa");
 
         taille.setText("xx cm");
 
@@ -173,6 +216,11 @@ public class CicParticipant extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel13.setText("Nom de l'étude");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel15.setText("Ville :");
+
+        ville.setText("ville");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,7 +273,7 @@ public class CicParticipant extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(age))
+                        .addComponent(date))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,7 +283,11 @@ public class CicParticipant extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(accueil)
                         .addGap(215, 215, 215)
-                        .addComponent(jLabel13)))
+                        .addComponent(jLabel13))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ville)))
                 .addContainerGap(431, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -266,7 +318,7 @@ public class CicParticipant extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(age))
+                    .addComponent(date))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -299,7 +351,11 @@ public class CicParticipant extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(categorie))
-                .addGap(42, 42, 42))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(ville))
+                .addContainerGap())
         );
 
         pack();
@@ -307,12 +363,20 @@ public class CicParticipant extends javax.swing.JFrame {
 
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
-        CicEtude etude = new CicEtude();
+        try {
+            CicEtude etude = new CicEtude(e);
+        } catch (SQLException ex) {
+            Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_retourActionPerformed
 
     private void accueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accueilActionPerformed
         this.setVisible(false);
-        CicAccueil accueil = new CicAccueil();
+        try {
+            CicAccueil accueil = new CicAccueil();
+        } catch (SQLException ex) {
+            Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_accueilActionPerformed
 
     /**
@@ -345,16 +409,16 @@ public class CicParticipant extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicParticipant().setVisible(true);
+//                new CicParticipant().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton accueil;
-    private javax.swing.JLabel age;
     private javax.swing.JLabel allergie;
     private javax.swing.JLabel categorie;
+    private javax.swing.JLabel date;
     private javax.swing.JButton deconnexion;
     private javax.swing.JLabel fumeur;
     private javax.swing.JLabel jLabel1;
@@ -363,6 +427,7 @@ public class CicParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -382,5 +447,6 @@ public class CicParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel taille;
     private javax.swing.JLabel type;
     private javax.swing.JLabel utilisateur;
+    private javax.swing.JLabel ville;
     // End of variables declaration//GEN-END:variables
 }

@@ -11,15 +11,13 @@ package CIC;
  */
 public class Etude {
     private String nom;
-    private String nomPH;
-    private String prenomPH;
+    private String PH;
     private String date;
     private int duree;
     
-    public Etude(String nom, String nomPH, String prenomPH, String date, int duree ){
+    public Etude(String nom, String PH, String date, int duree ){
         this.nom = nom;
-        this.nomPH = nomPH;
-        this.prenomPH = prenomPH;
+        this.PH = PH;
         this.date = date;
         this.duree = duree;
     }
@@ -28,12 +26,8 @@ public class Etude {
         return this.nom;
     }
     
-    public String getNomPH(){
-        return this.nomPH;
-    }
-    
-    public String getPrenomPH(){
-        return this.prenomPH;
+    public String getPH(){
+        return this.PH;
     }
     
     public String getDate(){

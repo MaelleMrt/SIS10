@@ -5,6 +5,10 @@
  */
 package CIC;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author clara
@@ -261,7 +265,11 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
-        CicAccueil accueil = new CicAccueil();
+        try {
+            CicAccueil accueil = new CicAccueil();
+        } catch (SQLException ex) {
+            Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_annulerActionPerformed
 
     /**

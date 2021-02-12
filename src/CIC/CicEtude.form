@@ -35,15 +35,10 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="visualiser" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="rechercherTextField" max="32767" attributes="0"/>
+                      <Component id="rechercherTextField" pref="737" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="rechercher" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
@@ -77,7 +72,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="409" max="-2" attributes="0"/>
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="409" max="32767" attributes="0"/>
+                  <EmptySpace pref="412" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -113,9 +108,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="179" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="visualiser" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
@@ -223,12 +216,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="ph">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Pr&#xe9;nom Nom"/>
+        <Property name="text" type="java.lang.String" value="Nom Pr&#xe9;nom"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="date">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jj/mm/aaaa"/>
+        <Property name="text" type="java.lang.String" value="date"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -241,7 +234,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="duree">
       <Properties>
-        <Property name="text" type="java.lang.String" value="x semaines"/>
+        <Property name="text" type="java.lang.String" value="dur&#xe9;e"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="rechercherTextField">
@@ -281,7 +274,7 @@
         <Component class="javax.swing.JTable" name="participants">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="4" rowCount="30">
                 <Column editable="false" title="Nom" type="java.lang.String"/>
                 <Column editable="false" title="Pr&#xe9;nom" type="java.lang.String"/>
                 <Column editable="false" title="Date de naissance" type="java.lang.Object"/>
@@ -289,14 +282,12 @@
               </Table>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="participantsMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="visualiser">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Visualiser"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel13">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

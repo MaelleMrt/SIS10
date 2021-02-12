@@ -5,19 +5,59 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author clara
  */
 public class CicEtude extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CicEtude
-     */
-    public CicEtude() {
+    private Etude e;
+    private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    
+    public CicEtude(Etude e) throws SQLException {
         initComponents();
+        this.e = e;
+        jLabel13.setText(this.e.getNom());
+        ph.setText(e.getPH());
+        date.setText(e.getDate());
+        duree.setText(String.valueOf(e.getDuree()) + " semaines" );
         this.setVisible(true);
-    }
+        remplirTableau(); 
+   }
+    
+    public void remplirTableau() throws SQLException{
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT nomUsuel, nomDeNaissance, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND nomDeNaissance = participantNomN AND prenom = participantPrenom AND dateDeNaissance = participantDate) WHERE Etude.nom = '"+e.getNom()+"'");
+                while(rs.next()){
+                   Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                   listeParticipants.add(participant);
+                }   
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        for(int i = 0; i<listeParticipants.size(); i++){
+            Participant p = listeParticipants.get(i);
+            participants.setValueAt(p.getNomU(), i, 0);
+            participants.setValueAt(p.getPrenom(), i, 1);
+            participants.setValueAt(p.getDateN(), i, 2);
+            participants.setValueAt(p.getType(), i, 3);
+        }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +85,6 @@ public class CicEtude extends javax.swing.JFrame {
         reinitialiser = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         participants = new javax.swing.JTable();
-        visualiser = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -101,14 +140,14 @@ public class CicEtude extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel5.setText("Liste des participants :");
 
-        ph.setText("Prénom Nom");
+        ph.setText("Nom Prénom");
 
-        date.setText("jj/mm/aaaa");
+        date.setText("date");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel4.setText("Durée :");
 
-        duree.setText("x semaines");
+        duree.setText("durée");
 
         rechercherTextField.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         rechercherTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -141,6 +180,32 @@ public class CicEtude extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -162,9 +227,12 @@ public class CicEtude extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        participants.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                participantsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(participants);
-
-        visualiser.setText("Visualiser");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel13.setText("Nom de l'étude");
@@ -183,14 +251,10 @@ public class CicEtude extends javax.swing.JFrame {
                 .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(visualiser)
-                .addGap(15, 15, 15))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rechercherTextField)
+                        .addComponent(rechercherTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rechercher)
                         .addGap(3, 3, 3)
@@ -216,7 +280,7 @@ public class CicEtude extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                     .addGap(409, 409, 409)
                     .addComponent(jLabel13)
-                    .addContainerGap(409, Short.MAX_VALUE)))
+                    .addContainerGap(412, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,9 +309,7 @@ public class CicEtude extends javax.swing.JFrame {
                     .addComponent(reinitialiser))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(visualiser)
-                .addContainerGap())
+                .addGap(54, 54, 54))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(80, 80, 80)
@@ -260,7 +322,11 @@ public class CicEtude extends javax.swing.JFrame {
 
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
-        CicAccueil accueil = new CicAccueil();
+        try {
+            CicAccueil accueil = new CicAccueil();
+        } catch (SQLException ex) {
+            Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_retourActionPerformed
 
     private void rechercherTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherTextFieldActionPerformed
@@ -279,6 +345,23 @@ public class CicEtude extends javax.swing.JFrame {
         rechercherTextField.setText("");
         // il faudra remettre toutes les valeurs dans le tableau -> à faire quand on aura la BDD
     }//GEN-LAST:event_reinitialiserActionPerformed
+
+    private void participantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_participantsMouseClicked
+        int i = 0;
+        while (i < participants.getRowCount() && !participants.isRowSelected(i)) {
+            i++;
+        }
+        if (i < participants.getRowCount()) {
+
+            String nom = String.valueOf(participants.getValueAt(i, 0));
+            String prenom = String.valueOf(participants.getValueAt(i, 1));
+            String date = String.valueOf(participants.getValueAt(i, 2));
+            String type = String.valueOf(participants.getValueAt(i, 3));
+            Participant p = new Participant(nom, prenom, date,type);
+            this.setVisible(false);
+            CicParticipant part = new CicParticipant(e,p);  
+        }
+    }//GEN-LAST:event_participantsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -310,7 +393,12 @@ public class CicEtude extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicEtude().setVisible(true);
+                Etude e1 = new Etude ("covid-19","house gregory","r",2);
+                try {
+                    new CicEtude(e1).setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -334,6 +422,5 @@ public class CicEtude extends javax.swing.JFrame {
     private javax.swing.JButton reinitialiser;
     private javax.swing.JButton retour;
     private javax.swing.JLabel utilisateur;
-    private javax.swing.JButton visualiser;
     // End of variables declaration//GEN-END:variables
 }

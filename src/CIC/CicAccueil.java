@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,9 +36,9 @@ public class CicAccueil extends javax.swing.JFrame {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT Etude.nom, CIC.nom, CIC.prenom, date, duree FROM Etude JOIN CIC on (PH = login)");
+                ResultSet rs= s.executeQuery("SELECT distinct Etude.nom, CIC.nom, CIC.prenom, date, duree FROM Etude JOIN CIC on (PH = login)");
                 while(rs.next()){
-                   Etude etude =new Etude(rs.getString("Etude.nom"), rs.getString("CIC.nom"), rs.getString("CIC.prenom"), rs.getString("date"), rs.getInt("duree"));
+                   Etude etude =new Etude(rs.getString("Etude.nom"), rs.getString("CIC.nom") + " " + rs.getString("CIC.prenom"), rs.getString("date"), rs.getInt("duree"));
                    listeEtude.add(etude);
                 }   
 
@@ -51,9 +52,9 @@ public class CicAccueil extends javax.swing.JFrame {
         for(int i = 0; i<listeEtude.size(); i++){
             Etude e = listeEtude.get(i);
             etudes.setValueAt(e.getNom(), i, 0);
-            etudes.setValueAt(e.getNomPH() + " " + e.getPrenomPH(), i, 1);
+            etudes.setValueAt(e.getPH(), i, 1);
             etudes.setValueAt(e.getDate(), i, 2);
-            etudes.setValueAt(e.getDuree() + " semaines", i, 3);
+            etudes.setValueAt(e.getDuree(), i, 3);
         }
      }
 
@@ -152,11 +153,11 @@ public class CicAccueil extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée"
+                "Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -168,6 +169,11 @@ public class CicAccueil extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        etudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                etudesMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(etudes);
@@ -281,6 +287,27 @@ public class CicAccueil extends javax.swing.JFrame {
         this.setVisible(false);
         CicAjouterEtude a = new CicAjouterEtude();
     }//GEN-LAST:event_ajouterActionPerformed
+
+    private void etudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etudesMouseClicked
+        int i = 0;
+        while (i < etudes.getRowCount() && !etudes.isRowSelected(i)) {
+            i++;
+        }
+        if (i < etudes.getRowCount()) {
+
+            String nom = String.valueOf(etudes.getValueAt(i, 0));
+            String PH = String.valueOf(etudes.getValueAt(i, 1));
+            String date = String.valueOf(etudes.getValueAt(i, 2));
+            int duree = (int)etudes.getValueAt(i, 3);
+            Etude e = new Etude(nom, PH, date,duree);
+            this.setVisible(false);
+            try {
+                CicEtude etude = new CicEtude(e);
+            } catch (SQLException ex) {
+                Logger.getLogger(CicAccueil.class.getName()).log(Level.SEVERE, null, ex);
+            }  
+        }
+    }//GEN-LAST:event_etudesMouseClicked
 
     /**
      * @param args the command line arguments
