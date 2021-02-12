@@ -54,13 +54,20 @@ public class CicEtude extends javax.swing.JFrame {
         } catch (SQLException e){
             System.out.println(e);
         }
-        for(int i = 0; i<listeParticipants.size(); i++){
-            Participant p = listeParticipants.get(i);
-            participants.setValueAt(p.getNomU(), i, 0);
-            participants.setValueAt(p.getPrenom(), i, 1);
-            participants.setValueAt(p.getDateN(), i, 2);
-            participants.setValueAt(p.getType(), i, 3);
+        
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Participant p : listeParticipants) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getNomU());
+            v.add(p.getPrenom());
+            v.add(p.getDateN());
+            v.add(p.getType());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance", "Type"});
+            model.insertRow(i, v);
+            i++;
         }
+        participants.setModel (model);
      }
 
     /**
