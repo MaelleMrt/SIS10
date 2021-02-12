@@ -60,8 +60,22 @@ public class CreationDMA extends javax.swing.JFrame {
         boolean result = false;
         String numero = jTextField10.getText();
         char[] tabChiffre = numero.toCharArray();
+        int premier = Character.getNumericValue(tabChiffre[0]);
+        int moisDiz = Character.getNumericValue(tabChiffre[3]);
+        int moisUni = Character.getNumericValue(tabChiffre[4]);
+        int mois = moisDiz*10 + moisUni;
+        int compteur = 0;
         
         if (tabChiffre.length == 13) { //verification nombre chiffres num secu
+            compteur += 1;
+        }
+        if (premier == genderSecu()) { //verification cohérence sexe
+            compteur += 1;
+        }
+        if (mois <= 12) { //verification mois 
+            compteur += 1;
+        }
+        if (compteur == 3){
             result = true;
         }
         return result;
@@ -362,7 +376,7 @@ public class CreationDMA extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -381,10 +395,12 @@ public class CreationDMA extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField7.getText().equals("rue") || jTextField8.getText().equals("code postal") || jTextField9.getText().equals("ville") || (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false)) {
+         // vérification présence des informations
+        if (jTextField11.getText().equals("") || jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField7.getText().equals("rue") || jTextField8.getText().equals("code postal") || jTextField9.getText().equals("ville") || (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false)) {
             JFrame erreur = new MessageErreur("- Des informations n'ont pas été saisies ");
             erreur.setVisible(true);
-        } // vérification présence des informations
+        }
+        // vérification format + validité n° sécu
         else if (verificationNumSecu() == false) {
             JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide");
             erreur.setVisible(true); } 
