@@ -10,8 +10,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -153,6 +157,11 @@ public class CicEtude extends javax.swing.JFrame {
         rechercherTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rechercherTextFieldActionPerformed(evt);
+            }
+        });
+        rechercherTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                rechercherTextFieldPropertyChange(evt);
             }
         });
 
@@ -362,6 +371,42 @@ public class CicEtude extends javax.swing.JFrame {
             CicParticipant part = new CicParticipant(e,p);  
         }
     }//GEN-LAST:event_participantsMouseClicked
+
+    private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
+        rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte=rechercherTextField.getText();
+                int i=0;
+                for (Participant p : listeParticipants) {
+                    if(p.getNomU().toUpperCase().contains(texte.toUpperCase())){
+                        Vector<Object> v=new Vector<Object>();
+                        v.add(p.getNomU());
+                        v.add(p.getPrenom());
+                        v.add(p.getDateN());
+                        v.add(p.getType());
+                        model.setColumnIdentifiers(new String[]{"Nom","Prénom","Date de naissance","Type"});
+                        model.insertRow(i,v) ;
+                        i++;
+                    }
+                }
+                participants.setModel(model);
+            }
+
+            
+            
+        });
+    }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
     /**
      * @param args the command line arguments

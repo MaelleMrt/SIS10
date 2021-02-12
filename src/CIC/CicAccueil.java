@@ -12,8 +12,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,7 +32,6 @@ public class CicAccueil extends javax.swing.JFrame {
     public CicAccueil() throws SQLException {
         initComponents();
         this.setVisible(true);
-        erreur.setVisible(false);
         remplirTableau();
     }
     
@@ -71,11 +74,8 @@ public class CicAccueil extends javax.swing.JFrame {
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        erreur = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         rechercherTextField = new javax.swing.JTextField();
-        rechercher = new javax.swing.JButton();
-        reinitialiser = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         etudes = new javax.swing.JTable();
         ajouter = new javax.swing.JButton();
@@ -117,31 +117,18 @@ public class CicAccueil extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        erreur.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
-        erreur.setForeground(new java.awt.Color(255, 0, 0));
-        erreur.setText("Aucun résultat ne correspond à votre recherche");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Etudes cliniques");
 
         rechercherTextField.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-
-        rechercher.setText("Rechercher");
-        rechercher.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rechercherMouseClicked(evt);
+        rechercherTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercherTextFieldActionPerformed(evt);
             }
         });
-        rechercher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rechercherActionPerformed(evt);
-            }
-        });
-
-        reinitialiser.setText("Réinitialiser");
-        reinitialiser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reinitialiserActionPerformed(evt);
+        rechercherTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                rechercherTextFieldPropertyChange(evt);
             }
         });
 
@@ -194,29 +181,21 @@ public class CicAccueil extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                            .addGap(403, 403, 403)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(erreur)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(403, 403, 403)
+                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rechercher)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(reinitialiser))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(ajouter)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(visualiser))
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(ajouter)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(visualiser))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(116, 116, 116)
+                                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,64 +203,19 @@ public class CicAccueil extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jLabel3)
+                .addGap(28, 28, 28)
+                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rechercher)
-                    .addComponent(reinitialiser))
-                .addGap(2, 2, 2)
-                .addComponent(erreur)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ajouter)
                     .addComponent(visualiser))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void rechercherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rechercherMouseClicked
-        String text = rechercherTextField.getText().toUpperCase();
-        if (!text.equals("")){
-            int j=0;
-            erreur.setVisible(false);
-            for (int i = 0; i < etudes.getRowCount(); i++) {
-                String valeur = (String)etudes.getValueAt(i, 0);
-                if(text.equals(valeur.toUpperCase())){
-                    etudes.setValueAt(etudes.getValueAt(i, 0), j, 0);
-                    etudes.setValueAt(etudes.getValueAt(i, 1), j, 1);
-                    etudes.setValueAt(etudes.getValueAt(i, 2), j, 2);
-                    etudes.setValueAt(etudes.getValueAt(i, 3), j, 3);
-                    j++;
-                }
-            }
-            if (j==0){
-                erreur.setVisible(true);
-            }
-            if(j<etudes.getRowCount()){
-                for(int i = j; i < etudes.getRowCount(); i++){
-                    for (int k = 0; k < 4; k++) {
-                        etudes.setValueAt(null, i, k);
-                    }
-                }
-            }
-            j = 0;
-        }
-
-    }//GEN-LAST:event_rechercherMouseClicked
-
-    private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
-
-    }//GEN-LAST:event_rechercherActionPerformed
-
-    private void reinitialiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reinitialiserActionPerformed
-        rechercherTextField.setText("");
-        erreur.setVisible(false);
-        // il faudra remettre toutes les valeurs dans le tableau -> à faire quand on aura la BDD
-    }//GEN-LAST:event_reinitialiserActionPerformed
 
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
@@ -309,6 +243,50 @@ public class CicAccueil extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_etudesMouseClicked
 
+    private void rechercherTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherTextFieldActionPerformed
+        
+    }//GEN-LAST:event_rechercherTextFieldActionPerformed
+
+    private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
+        rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte=rechercherTextField.getText();
+                int i=0;
+                for (Etude e : listeEtude) {
+                    if(e.getNom().toUpperCase().contains(texte.toUpperCase())){
+                        Vector<Object> v=new Vector<Object>();
+                        v.add(e.getNom());
+                        v.add(e.getPH());
+                        v.add(e.getDate());
+                        v.add(e.getDuree());
+                        model.setColumnIdentifiers(new String[]{"Nom de l'étude","Praticien hospitalier porteur","Date de démarrage","Durée (semaines)"});
+                        model.insertRow(i,v) ;
+                        i++;
+                    }
+                }
+                etudes.setModel(model);
+            }
+
+            
+            
+        });
+    }//GEN-LAST:event_rechercherTextFieldPropertyChange
+
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -351,15 +329,12 @@ public class CicAccueil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajouter;
     private javax.swing.JButton deconnexion;
-    private javax.swing.JLabel erreur;
     private javax.swing.JTable etudes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton rechercher;
     private javax.swing.JTextField rechercherTextField;
-    private javax.swing.JButton reinitialiser;
     private javax.swing.JLabel utilisateur;
     private javax.swing.JButton visualiser;
     // End of variables declaration//GEN-END:variables
