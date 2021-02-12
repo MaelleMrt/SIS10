@@ -51,7 +51,7 @@ public class CreationDMA extends javax.swing.JFrame {
         if (jCheckBox1.isSelected()) {
             numero = "F"; // c'est une femme
         } else if (jCheckBox2.isSelected()) {
-            numero = "M"; // c'est un homme
+            numero = "H"; // c'est un homme
         }
         return numero;
     }
@@ -217,7 +217,7 @@ public class CreationDMA extends javax.swing.JFrame {
         });
 
         jCheckBox2.setBackground(java.awt.SystemColor.activeCaption);
-        jCheckBox2.setText("M");
+        jCheckBox2.setText("H");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox2ActionPerformed(evt);
