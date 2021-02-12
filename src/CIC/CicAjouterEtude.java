@@ -5,9 +5,15 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,14 +21,40 @@ import java.util.logging.Logger;
  */
 public class CicAjouterEtude extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CicAjouterEtude
-     */
-    public CicAjouterEtude() {
+    private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    private String nomEtude;
+    private String dateDemarrage;
+    private int dureeEtude;
+    
+    public CicAjouterEtude(ArrayList<Participant> l,String nom,String date, int duree) {
         initComponents();
+        listeParticipants = l;
+        this.nomEtude = nom;
+        this.dateDemarrage = date;
+        this.dureeEtude = duree;
+        this.nom.setText(nomEtude);
+        this.date.setText(date);
+        this.duree.setValue(duree);
         this.setVisible(true);
     }
 
+    public void remplirTableau(){
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Participant p : listeParticipants) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getNomU());
+            v.add(p.getPrenom());
+            v.add(p.getDateN());
+            v.add(p.getType());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance", "Type"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel (model);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,14 +76,13 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         ajouter = new javax.swing.JButton();
-        modifier = new javax.swing.JButton();
         supprimer = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
         valider = new javax.swing.JButton();
         nom = new javax.swing.JTextField();
         date = new javax.swing.JTextField();
-        duree = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        duree = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,8 +166,6 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             }
         });
 
-        modifier.setText("Modifier");
-
         supprimer.setText("Supprimer");
         supprimer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +195,8 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
         jLabel7.setText("semaines");
 
+        duree.setModel(new javax.swing.SpinnerNumberModel());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,8 +210,6 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(ajouter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modifier)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(supprimer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -201,10 +230,10 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
-                        .addGap(0, 124, Short.MAX_VALUE))
+                        .addGap(0, 188, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -227,8 +256,8 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,7 +265,6 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ajouter)
-                    .addComponent(modifier)
                     .addComponent(supprimer)
                     .addComponent(annuler)
                     .addComponent(valider))
@@ -248,15 +276,45 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
-        CicAjouterParticipant a = new CicAjouterParticipant();
+        try {
+            CicAjouterParticipant a = new CicAjouterParticipant(nomEtude,dateDemarrage,dureeEtude);
+        } catch (SQLException ex) {
+            Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void supprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerActionPerformed
-        // TODO add your handling code here:
+        for(int i=0;i<jTable1.getRowCount();i++){
+            if(jTable1.isRowSelected(i)){
+                Participant p1 = new Participant(String.valueOf(jTable1.getValueAt(i, 0)),String.valueOf(jTable1.getValueAt(i, 1)),String.valueOf(jTable1.getValueAt(i, 2)),String.valueOf(jTable1.getValueAt(i, 3)));
+                for(Participant p : listeParticipants){
+                    if (p.egal(p1)){
+                        listeParticipants.remove(p);
+                    }
+                }
+                remplirTableau();
+            }
+        }
     }//GEN-LAST:event_supprimerActionPerformed
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        // TODO add your handling code here:
+        if(!nom.getText().equals("") && !date.getText().equals("") && (int)duree.getValue()!=0 && jTable1.getRowCount()>0){
+            for(int i = 0; i < jTable1.getRowCount(); i++){
+                Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)),String.valueOf(jTable1.getValueAt(i, 1)),String.valueOf(jTable1.getValueAt(i, 2)),String.valueOf(jTable1.getValueAt(i, 3)));
+                Etude e = new Etude(nom.getText(),"gregory_house",date.getText(),(int)duree.getValue());
+                
+                Statement s;
+                try {
+                    s = ExempleJdbc.connexion();
+                    s.executeUpdate("INSERT INTO Etude(nom,PH,date,duree,participantNomU,participantDate,participantPrenom) VALUES(‘"+e.getNom()+"','"+e.getPH()+"','"+e.getDate()+"','"+e.getDuree()+"','"+p.getNomU()+"','"+p.getDateN()+"','"+p.getPrenom()+"')");
+                    
+                    ResultSet rs = s.executeQuery("SELECT distinct nomDeNaissance,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville FROM Participant WHERE (nomUsuel ='"+p.getNomU()+"' AND dateDeNaissance = '"+p.getDateN()+"' AND prenom = '"+p.getPrenom()+"')");
+                    s.executeUpdate("INSERT INTO Participant(nomUsuel,nomDeNaissance,dateDeNaissance,prenom,type,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville,etude) VALUES(‘"+p.getNomU()+"','"+rs.getString("nomDeNaissance")+"','"+p.getDateN()+"','"+p.getPrenom()+"','"+p.getType()+"','"+rs.getString("sexe")+"','"+rs.getString("taille")+"','"+rs.getString("poids")+"','"+rs.getString("pathologie")+"','"+rs.getString("allergie")+"','"+rs.getString("regime")+"','"+rs.getString("sport")+"','"+rs.getString("fumeur")+"','"+rs.getString("categorie")+"','"+rs.getString("ville")+"','"+e.getNom()+"')");
+                } catch (SQLException ex) {
+                    Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }//GEN-LAST:event_validerActionPerformed
 
     private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
@@ -300,11 +358,11 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CicAjouterEtude().setVisible(true);
-            }
-        });
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new CicAjouterEtude().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -312,7 +370,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private javax.swing.JButton annuler;
     private javax.swing.JTextField date;
     private javax.swing.JButton deconnexion;
-    private javax.swing.JTextField duree;
+    private javax.swing.JSpinner duree;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -323,7 +381,6 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton modifier;
     private javax.swing.JTextField nom;
     private javax.swing.JButton supprimer;
     private javax.swing.JLabel utilisateur;

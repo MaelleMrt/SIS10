@@ -41,7 +41,7 @@ public class CicEtude extends javax.swing.JFrame {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT nomUsuel, nomDeNaissance, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND nomDeNaissance = participantNomN AND prenom = participantPrenom AND dateDeNaissance = participantDate) WHERE Etude.nom = '"+e.getNom()+"'");
+                ResultSet rs= s.executeQuery("SELECT nomUsuel, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND prenom = participantPrenom AND dateDeNaissance = participantDate) WHERE Etude.nom = '"+e.getNom()+"'");
                 while(rs.next()){
                    Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
                    listeParticipants.add(participant);
@@ -92,8 +92,6 @@ public class CicEtude extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         duree = new javax.swing.JLabel();
         rechercherTextField = new javax.swing.JTextField();
-        rechercher = new javax.swing.JButton();
-        reinitialiser = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         participants = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
@@ -172,25 +170,6 @@ public class CicEtude extends javax.swing.JFrame {
             }
         });
 
-        rechercher.setText("Rechercher");
-        rechercher.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rechercherMouseClicked(evt);
-            }
-        });
-        rechercher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rechercherActionPerformed(evt);
-            }
-        });
-
-        reinitialiser.setText("Réinitialiser");
-        reinitialiser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reinitialiserActionPerformed(evt);
-            }
-        });
-
         participants.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -263,35 +242,31 @@ public class CicEtude extends javax.swing.JFrame {
                 .addComponent(retour)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(rechercherTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rechercher)
-                        .addGap(3, 3, 3)
-                        .addComponent(reinitialiser)
-                        .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rechercherTextField)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(duree))
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ph))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(date)))
-                        .addGap(638, 638, 638))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(duree))
+                                    .addComponent(jLabel5)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ph))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(date)))
+                                .addGap(0, 626, Short.MAX_VALUE)))))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(409, 409, 409)
@@ -319,10 +294,7 @@ public class CicEtude extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rechercherTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(rechercher)
-                    .addComponent(reinitialiser))
+                .addComponent(rechercherTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54))
@@ -348,19 +320,6 @@ public class CicEtude extends javax.swing.JFrame {
     private void rechercherTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rechercherTextFieldActionPerformed
-
-    private void rechercherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rechercherMouseClicked
-
-    }//GEN-LAST:event_rechercherMouseClicked
-
-    private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
-
-    }//GEN-LAST:event_rechercherActionPerformed
-
-    private void reinitialiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reinitialiserActionPerformed
-        rechercherTextField.setText("");
-        // il faudra remettre toutes les valeurs dans le tableau -> à faire quand on aura la BDD
-    }//GEN-LAST:event_reinitialiserActionPerformed
 
     private void participantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_participantsMouseClicked
         int i = 0;
@@ -469,9 +428,7 @@ public class CicEtude extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable participants;
     private javax.swing.JLabel ph;
-    private javax.swing.JButton rechercher;
     private javax.swing.JTextField rechercherTextField;
-    private javax.swing.JButton reinitialiser;
     private javax.swing.JButton retour;
     private javax.swing.JLabel utilisateur;
     // End of variables declaration//GEN-END:variables

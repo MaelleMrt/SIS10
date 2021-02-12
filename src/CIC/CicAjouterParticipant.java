@@ -5,19 +5,69 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author clara
  */
 public class CicAjouterParticipant extends javax.swing.JFrame {
 
+    private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    private ArrayList<Participant> nouveaux= new ArrayList<Participant>();
+    private String nom;
+    private String date;
+    private int duree;
     /**
      * Creates new form CicAjouterParticipant
      */
-    public CicAjouterParticipant() {
+    public CicAjouterParticipant(String nom, String date, int duree) throws SQLException {
         initComponents();
+        remplirTableau();
+        this.nom = nom;
+        this.date = date;
+        this.duree = duree;
         this.setVisible(true);
     }
+    
+    public void remplirTableau() throws SQLException{
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
+                while(rs.next()){
+                   Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                   listeParticipants.add(participant);
+                }   
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Participant p : listeParticipants) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getNomU());
+            v.add(p.getPrenom());
+            v.add(p.getDateN());
+            v.add(p.getType());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance", "Type"});
+            model.insertRow(i, v);
+            i++;
+        }
+        participants.setModel (model);
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,14 +84,11 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        participants = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,8 +133,8 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        participants.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        participants.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -113,7 +160,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(participants);
 
         jButton2.setText("Recherche par critères");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -122,9 +169,12 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Visualiser");
-
         jButton4.setText("Ajouter");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("Ajouter des participants");
@@ -132,15 +182,6 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jButton5.setText("Rechercher par nom");
-
-        jButton6.setText("Réinitialiser");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
             }
         });
 
@@ -159,20 +200,12 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton4))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6)))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -186,17 +219,13 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
                     .addComponent(jButton4))
                 .addContainerGap())
         );
@@ -215,12 +244,19 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        CicAjouterEtude a = new CicAjouterEtude();
+        CicAjouterEtude a = new CicAjouterEtude(nouveaux,nom,date,duree);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        for(int i = 0; i < participants.getRowCount();i++){
+            if(participants.isRowSelected(i)){
+                Participant p = new Participant(String.valueOf(participants.getValueAt(i,0)),String.valueOf(participants.getValueAt(i, 1)),String.valueOf(participants.getValueAt(i, 2)),String.valueOf(participants.getValueAt(i, 3)));
+                nouveaux.add(p);
+            }
+        }
+        this.setVisible(false);
+        CicAjouterEtude a = new CicAjouterEtude(nouveaux,nom,date,duree);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,7 +288,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicAjouterParticipant().setVisible(true);
+//                new CicAjouterParticipant().setVisible(true);
             }
         });
     }
@@ -261,16 +297,13 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable participants;
     private javax.swing.JLabel utilisateur;
     // End of variables declaration//GEN-END:variables
 }

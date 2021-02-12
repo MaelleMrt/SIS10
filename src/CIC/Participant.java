@@ -43,4 +43,8 @@ public class Participant {
     public String getType() {
         return type;
     }
+    
+    public boolean egal(Participant p){
+        return (nomU.equals(p.getNomU()) && prenom.equals(p.getPrenom()) && dateN.equals(p.getDateN()) && type.equals(p.getType()));
+    }
 }
