@@ -5,16 +5,19 @@
  */
 package Medecin;
 
+import Patient.Patient;
+
 /**
  *
  * @author Maelle
  */
 public class AffichagePrescription extends javax.swing.JFrame {
-
+    Patient patient;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AffichagePrescription() {
+    public AffichagePrescription(Patient p) {
+        patient =p;
         initComponents();
         this.setVisible(true);
     }
@@ -182,7 +185,7 @@ public class AffichagePrescription extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        //new MedecinAcceuil();
+        new MedecinPatient(patient);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

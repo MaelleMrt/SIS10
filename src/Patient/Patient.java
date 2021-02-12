@@ -21,13 +21,13 @@ public class Patient {
 
     private String nom;
     private String prenom;
-    private Date naissance;
+    private String naissance;
     private int id;
 
 
 
     //, Date naissance, Integer numSecu
-    public Patient(String nom, String prenom, Date dateDeNaissance) {
+    public Patient(String nom, String prenom, String dateDeNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.naissance = dateDeNaissance;
@@ -65,7 +65,7 @@ public class Patient {
         return prenom;
     }
 
-    public Date getNaissance() {
+    public String getNaissance() {
         return naissance;
     }
    

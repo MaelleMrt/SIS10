@@ -162,11 +162,8 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                     System.out.println("nomtable: " +jTable1.getValueAt(indRow, 0).toString());
                     System.out.println("prenomtable: " +jTable1.getValueAt(indRow, 1).toString());
                     System.out.println("datetable: " +jTable1.getValueAt(indRow, 2).toString());
-                    String dateN=jTable1.getValueAt(indRow, 2).toString();
                     try{
-                        SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
-                        Date date= format.parse(dateN);
-                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),date);
+                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
                         System.out.println(p.toString());
                         new MedecinPatient(p);
                     }catch(Exception e2){

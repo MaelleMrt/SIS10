@@ -27,7 +27,7 @@ public class TableauPatient  extends AbstractTableModel{
             try{
                 ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+ login+"'AND Patient.id = Acte.idP" );
                 while(rs.next()){
-                    Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getDate("datedenaissance"));
+                    Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
                     listPatient.add(patient);
                 }   
 

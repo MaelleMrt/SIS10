@@ -18,13 +18,13 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Maelle
  */
-public class TableauHospitalisations extends AbstractTableModel{
-    private ArrayList<Hospitalisations> listHospi= new ArrayList<Hospitalisations>();
+public class TableauConsultations extends AbstractTableModel {
+    private ArrayList<Consultations> listCons= new ArrayList<Consultations>();
      
     private final String[] entetes = {"Service ", "Medecin", "Date ","motif"};
     
-    public TableauHospitalisations(Patient p) {
-        Date date;
+    public TableauConsultations(Patient p) {
+        String date;
         String contenu;
         String login=null;
         String nomM;
@@ -32,18 +32,18 @@ public class TableauHospitalisations extends AbstractTableModel{
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,motif,login FROM Acte WHERE idP ='"+ p.getId()+"'AND type='Hospitalisation'" );
+                ResultSet rs1= s.executeQuery("SELECT date,motif,login FROM Acte WHERE idP ='"+ p.getId()+"'AND type='Consultation'" );
                 while(rs1.next()){
-                    date= rs1.getDate("date");
+                    date= rs1.getString("date");
                     contenu= rs1.getString("motif");
                     login =rs1.getString("login");
                     ResultSet rs2= s.executeQuery("SELECT nom,nomS FROM Médecin WHERE login ='"+login+"'" );
                         while(rs2.next()){
                             nomM= rs2.getString("nom");
                             nomS= rs2.getString("nomS");
-                            Hospitalisations pres=new Hospitalisations(nomS,nomM,date,contenu);
+                            Consultations pres=new Consultations(nomS,nomM,date,contenu);
                             System.out.println("ajout"+ contenu);
-                            listHospi.add(pres);
+                            listCons.add(pres);
                         }   
                 
                 }
@@ -61,7 +61,7 @@ public class TableauHospitalisations extends AbstractTableModel{
    
     
       public int getRowCount() {
-        return listHospi.size();
+        return listCons.size();
         
     }
  
@@ -77,23 +77,23 @@ public class TableauHospitalisations extends AbstractTableModel{
         switch(columnIndex){
             case 0:
                 System.out.println("cas 0");
-                return listHospi.get(rowIndex).getService();
+                return listCons.get(rowIndex).getService();
             case 1:
                 System.out.println("cas 1");
-                return listHospi.get(rowIndex).getNomMedecin();
+                return listCons.get(rowIndex).getNomMedecin();
             case 2: 
                 System.out.println("cas 2");
-                return listHospi.get(rowIndex).getDate();
+                return listCons.get(rowIndex).getDate();
             case 3: 
                 System.out.println("cas 3");
-                return listHospi.get(rowIndex).getMotif();
+                return listCons.get(rowIndex).getMotif();
             default:
                 return null; //Ne devrait jamais arriver
         }
 
     }
     
-    public ArrayList<Hospitalisations> getListHospitalisations(){
-        return listHospi;
+    public ArrayList<Consultations> getListConsultations(){
+        return listCons;
     }
 }
