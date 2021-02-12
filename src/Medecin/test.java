@@ -15,8 +15,8 @@ public class test {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TableauPatient tp=new TableauPatient();
-        new MedecinAcceuil(tp.getListPatient());
+        new MedecinAcceuil("jean_gilbert").setVisible(true);
+        
     }
     
 }

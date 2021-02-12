@@ -16,7 +16,8 @@ public class MedecinResultat extends javax.swing.JFrame {
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinResultat() {
+    public MedecinResultat(Patient p) {
+        patient =p;
         initComponents();
         this.setVisible(true);
     }

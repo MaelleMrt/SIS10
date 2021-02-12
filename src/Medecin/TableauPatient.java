@@ -21,14 +21,17 @@ public class TableauPatient  extends AbstractTableModel{
      
     private final String[] entetes = {"Nom ", "Prenom", "Date de Naissance"};
     
-    public TableauPatient() {
+    public TableauPatient(String login) {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance FROM Patient");
+                ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+ login+"'AND Patient.id = Acte.idP" );
                 while(rs.next()){
-                   Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
-                   listPatient.add(patient);
+                    System.out.println("nom:" +rs.getString("nomusuel"));
+                    System.out.println("prenom:" +rs.getString("prenom"));
+                    System.out.println("naissance:" +rs.getString("datedenaissance"));
+                    Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getDate("datedenaissance"));
+                    listPatient.add(patient);
                 }   
 
             } catch(SQLException e){

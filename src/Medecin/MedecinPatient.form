@@ -253,7 +253,7 @@
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="patient.getNaissance()" type="code"/>
+              <Connection code="patient.getNaissance().toString()" type="code"/>
             </Property>
           </Properties>
         </Component>

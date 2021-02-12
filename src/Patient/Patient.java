@@ -5,6 +5,11 @@
  */
 package Patient;
 
+import Connexion.ExempleJdbc;
+import Medecin.Prescription;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,17 +21,36 @@ public class Patient {
 
     private String nom;
     private String prenom;
-    private String naissance;
-   
+    private Date naissance;
+    private int id;
 
 
 
     //, Date naissance, Integer numSecu
-    public Patient(String nom, String prenom, String dateDeNaissance) {
+    public Patient(String nom, String prenom, Date dateDeNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.naissance = dateDeNaissance;
-       
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+nom+"'' AND prenom='"+prenom+"' AND dateDeNaissance='"+dateDeNaissance+"'" );
+                while(rs.next()){
+                    id=rs.getInt("id");
+                }   
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        
+    }
+
+    public int getId() {
+        return id;
     }
 
    
@@ -39,7 +63,7 @@ public class Patient {
         return prenom;
     }
 
-    public String getNaissance() {
+    public Date getNaissance() {
         return naissance;
     }
    
