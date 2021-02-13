@@ -22,19 +22,29 @@ import javax.swing.table.DefaultTableModel;
 public class CicAjouterEtude extends javax.swing.JFrame {
 
     private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    private ArrayList<Participant> ancienneListe= new ArrayList<Participant>();
+    private ArrayList<Participant> nouveaux= new ArrayList<Participant>();
     private String nomEtude;
     private String dateDemarrage;
     private int dureeEtude;
     
-    public CicAjouterEtude(ArrayList<Participant> l,String nom,String date, int duree) {
+    public CicAjouterEtude(ArrayList<Participant> ancienneListe,ArrayList<Participant> nouveaux,String nom,String date, int duree) {
         initComponents();
-        listeParticipants = l;
+        this.ancienneListe = ancienneListe;
+        this.nouveaux = nouveaux;
+        for (Participant p : this.ancienneListe){
+            listeParticipants.add(p);
+        }
+        for (Participant p : this.nouveaux){
+            listeParticipants.add(p);
+        }
         this.nomEtude = nom;
         this.dateDemarrage = date;
         this.dureeEtude = duree;
         this.nom.setText(nomEtude);
         this.date.setText(date);
         this.duree.setValue(duree);
+        remplirTableau();
         this.setVisible(true);
     }
 
@@ -277,7 +287,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(nomEtude,dateDemarrage,dureeEtude);
+            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants,nomEtude,dateDemarrage,dureeEtude);
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -313,6 +323,12 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+            this.setVisible(false);
+            try {
+                CicAccueil a = new CicAccueil();
+            } catch (SQLException ex) {
+                Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_validerActionPerformed

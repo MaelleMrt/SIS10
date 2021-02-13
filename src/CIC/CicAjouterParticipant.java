@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,55 +21,72 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CicAjouterParticipant extends javax.swing.JFrame {
 
-    private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
-    private ArrayList<Participant> nouveaux= new ArrayList<Participant>();
+    private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    private ArrayList<Participant> nouveaux = new ArrayList<Participant>();
+    private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
     private String nom;
     private String date;
     private int duree;
+    private ArrayList<Participant> supp = new ArrayList<>();
+
     /**
      * Creates new form CicAjouterParticipant
      */
-    public CicAjouterParticipant(String nom, String date, int duree) throws SQLException {
+    public CicAjouterParticipant(ArrayList<Participant> ancienneListe, String nom, String date, int duree) throws SQLException {
         initComponents();
-        remplirTableau();
+        this.ancienneListe = ancienneListe;
         this.nom = nom;
         this.date = date;
         this.duree = duree;
+        remplirTableau();
         this.setVisible(true);
     }
-    
-    public void remplirTableau() throws SQLException{
-        try{
-        Statement s= ExempleJdbc.connexion();
-            try{
-                ResultSet rs= s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
-                while(rs.next()){
-                   Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
-                   listeParticipants.add(participant);
-                }   
 
-            } catch(SQLException e){
-                    System.out.println(e);
+    public void remplirTableau() throws SQLException {
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
+                while (rs.next()) {
+                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                    listeParticipants.add(participant);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
             }
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {
+            int j = 0;
+            while (j < ancienneListe.size() && !p.egal(ancienneListe.get(j))) {
+                j++;
+            }
+            if (j<ancienneListe.size()) {
+                supp.add(p);
+            }
+        }
+        for(Participant p1 : supp){
+            listeParticipants.remove(p1);
+        }
+        for (Participant part : listeParticipants) {
             Vector<Object> v = new Vector<Object>();
-            v.add(p.getNomU());
-            v.add(p.getPrenom());
-            v.add(p.getDateN());
-            v.add(p.getType());
+            v.add(part.getNomU());
+            v.add(part.getPrenom());
+            v.add(part.getDateN());
+            v.add(part.getType());
             model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance", "Type"});
             model.insertRow(i, v);
             i++;
         }
-        participants.setModel (model);
-     }
+
+        participants.setModel(model);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,7 +107,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        rechercherTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,7 +152,6 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
             }
         });
 
-        participants.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         participants.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -179,9 +197,14 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setText("Ajouter des participants");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        rechercherTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                rechercherTextFieldActionPerformed(evt);
+            }
+        });
+        rechercherTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                rechercherTextFieldPropertyChange(evt);
             }
         });
 
@@ -190,9 +213,12 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(rechercherTextField))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, 989, Short.MAX_VALUE)
@@ -201,11 +227,10 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4))))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -220,7 +245,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,9 +258,9 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void rechercherTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_rechercherTextFieldActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
@@ -244,19 +269,55 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        CicAjouterEtude a = new CicAjouterEtude(nouveaux,nom,date,duree);
+        CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        for(int i = 0; i < participants.getRowCount();i++){
-            if(participants.isRowSelected(i)){
-                Participant p = new Participant(String.valueOf(participants.getValueAt(i,0)),String.valueOf(participants.getValueAt(i, 1)),String.valueOf(participants.getValueAt(i, 2)),String.valueOf(participants.getValueAt(i, 3)));
+        for (int i = 0; i < participants.getRowCount(); i++) {
+            if (participants.isRowSelected(i)) {
+                Participant p = new Participant(String.valueOf(participants.getValueAt(i, 0)), String.valueOf(participants.getValueAt(i, 1)), String.valueOf(participants.getValueAt(i, 2)), String.valueOf(participants.getValueAt(i, 3)));
                 nouveaux.add(p);
             }
         }
         this.setVisible(false);
-        CicAjouterEtude a = new CicAjouterEtude(nouveaux,nom,date,duree);
+        CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
+        rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte = rechercherTextField.getText();
+                int i = 0;
+                for (Participant p : listeParticipants) {
+                    if (p.getNomU().toUpperCase().contains(texte.toUpperCase())) {
+                        Vector<Object> v = new Vector<Object>();
+                        v.add(p.getNomU());
+                        v.add(p.getPrenom());
+                        v.add(p.getDateN());
+                        v.add(p.getType());
+                        model.setColumnIdentifiers(new String[]{"Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"});
+                        model.insertRow(i, v);
+                        i++;
+                    }
+                }
+                participants.setModel(model);
+            }
+
+        });
+    }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
     /**
      * @param args the command line arguments
@@ -272,16 +333,21 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterParticipant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterParticipant.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterParticipant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterParticipant.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterParticipant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterParticipant.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterParticipant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterParticipant.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -302,8 +368,8 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable participants;
+    private javax.swing.JTextField rechercherTextField;
     private javax.swing.JLabel utilisateur;
     // End of variables declaration//GEN-END:variables
 }
