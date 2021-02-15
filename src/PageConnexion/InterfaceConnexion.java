@@ -6,7 +6,7 @@
 package PageConnexion;
 
 import Connexion.ExempleJdbc;
-import Infirmieres.InfirmiereAcceuil;
+import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
 import Secretaire.Secretaire;
 import java.sql.ResultSet;
@@ -131,6 +131,7 @@ private String Metier(){
             ResultSet rs = s.executeQuery("SELECT type FROM Utilisateur WHERE login='" + Login +"'");
             while (rs.next()) {
                 metier = rs.getString("type");
+                System.out.println(metier);
                 
             }
         } catch (SQLException e) {
@@ -288,14 +289,11 @@ private String Metier(){
                     s.setVisible(true);
                     break;
                 case "médecin" :
-                    /*MedecinAcceuil m = new MedecinAcceuil();
-                    m.setVisible(true);
-                    **/break;
-                case "infirmière" :
-                    InfirmiereAcceuil i = new InfirmiereAcceuil();
-                    i.setVisible(true);
+                    MedecinAcceuil m = new MedecinAcceuil(Login);
                     break;
-                // CIC ?
+                case "infirmière" :
+                    InfirmierAcceuil i = new InfirmierAcceuil(Login);
+                    break;
             }
                     
         }
