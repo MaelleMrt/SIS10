@@ -5,18 +5,288 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author clara
  */
 public class CicRechercherParticipant extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CicRechercherParticipant
-     */
-    public CicRechercherParticipant() {
+    private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    private String nom;
+    private String date;
+    private int duree;
+
+    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree) {
         initComponents();
+        this.listeParticipants = listeParticipants;
+        this.ancienneListe = ancienneListe;
+        this.nom = nom;
+        this.date = date;
+        this.duree = duree;
         this.setVisible(true);
+    }
+
+    public ArrayList<String> Type() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (type1.isSelected()) {
+            liste.add(type1.getName());
+        }
+        if (type2.isSelected()) {
+            liste.add(type2.getName());
+        }
+        if (!type1.isSelected() && !type2.isSelected()) {
+            liste.add(type1.getName());
+            liste.add(type2.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Sexe() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (sexe1.isSelected()) {
+            liste.add(sexe1.getName());
+        }
+        if (sexe2.isSelected()) {
+            liste.add(sexe2.getName());
+        }
+        if (!sexe1.isSelected() && !sexe2.isSelected()) {
+            liste.add(sexe1.getName());
+            liste.add(sexe2.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Allergie() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (allergie1.isSelected()) {
+            liste.add(allergie1.getName());
+        }
+        if (allergie2.isSelected()) {
+            liste.add(allergie2.getName());
+        }
+        if (allergie3.isSelected()) {
+            liste.add(allergie3.getName());
+        }
+        if (allergie4.isSelected()) {
+            liste.add(allergie4.getName());
+        }
+        if (!allergie1.isSelected() && !allergie2.isSelected() && !allergie3.isSelected() && !allergie4.isSelected()) {
+            liste.add(allergie1.getName());
+            liste.add(allergie2.getName());
+            liste.add(allergie3.getName());
+            liste.add(allergie4.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Regime() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (regime1.isSelected()) {
+            liste.add(regime1.getName());
+        }
+        if (regime2.isSelected()) {
+            liste.add(regime2.getName());
+        }
+        if (regime3.isSelected()) {
+            liste.add(regime3.getName());
+        }
+        if (regime4.isSelected()) {
+            liste.add(regime4.getName());
+        }
+        if (regime5.isSelected()) {
+            liste.add(regime5.getName());
+        }
+        if (!regime1.isSelected() && !regime2.isSelected() && !regime3.isSelected() && !regime4.isSelected() && !regime5.isSelected()) {
+            liste.add(regime1.getName());
+            liste.add(regime2.getName());
+            liste.add(regime3.getName());
+            liste.add(regime4.getName());
+            liste.add(regime5.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Sport() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (sport1.isSelected()) {
+            liste.add(sport1.getName());
+        }
+        if (sport2.isSelected()) {
+            liste.add(sport2.getName());
+        }
+        if (sport3.isSelected()) {
+            liste.add(sport3.getName());
+        }
+        if (sport4.isSelected()) {
+            liste.add(sport4.getName());
+        }
+        if (!sport1.isSelected() && !sport2.isSelected() && !sport3.isSelected() && !sport4.isSelected()) {
+            liste.add(sport1.getName());
+            liste.add(sport2.getName());
+            liste.add(sport3.getName());
+            liste.add(sport4.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Fumeur() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (fumeur1.isSelected()) {
+            liste.add(fumeur1.getName());
+        }
+        if (fumeur2.isSelected()) {
+            liste.add(fumeur2.getName());
+        }
+        if (!fumeur1.isSelected() && !fumeur2.isSelected()) {
+            liste.add(fumeur1.getName());
+            liste.add(fumeur2.getName());
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Categorie() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (cat1.isSelected()) {
+            liste.add(cat1.getName());
+        }
+        if (cat2.isSelected()) {
+            liste.add(cat2.getName());
+        }
+        if (cat3.isSelected()) {
+            liste.add(cat3.getName());
+        }
+        if (cat4.isSelected()) {
+            liste.add(cat4.getName());
+        }
+        if (cat5.isSelected()) {
+            liste.add(cat5.getName());
+        }
+        if (cat6.isSelected()) {
+            liste.add(cat6.getName());
+        }
+        if (cat7.isSelected()) {
+            liste.add(cat7.getName());
+        }
+        if (cat8.isSelected()) {
+            liste.add(cat8.getName());
+        }
+        if (cat9.isSelected()) {
+            liste.add(cat9.getName());
+        }
+        if (!cat1.isSelected() && !cat2.isSelected() && !cat3.isSelected() && !cat4.isSelected() && !cat5.isSelected() && !cat6.isSelected() && !cat7.isSelected() && !cat8.isSelected() && !cat9.isSelected()) {
+            liste.add(cat1.getName());
+            liste.add(cat2.getName());
+            liste.add(cat3.getName());
+            liste.add(cat4.getName());
+            liste.add(cat5.getName());
+            liste.add(cat6.getName());
+            liste.add(cat7.getName());
+            liste.add(cat8.getName());
+            liste.add(cat9.getName());
+        }
+        return liste;
+    }
+
+    public Date Date(String str) throws ParseException {
+        Date d = new SimpleDateFormat("dd/MM/yyyy").parse(str);
+        return d;
+    }
+
+    public ArrayList<Integer> Age() {
+        ArrayList<Integer> liste = new ArrayList<>();
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date aujourdhui = new Date();
+
+        if (age1.isSelected()) {
+            int annee1 = aujourdhui.getYear() - 18;
+            int annee2 = aujourdhui.getYear() - 25;
+            Date d1 = new Date(annee1,aujourdhui.getMonth(),aujourdhui.getDay());
+            Date d2 = new Date(annee2,aujourdhui.getMonth(),aujourdhui.getDay());
+            liste.add(1);
+        }
+        if (age2.isSelected()) {
+            liste.add(2);
+        }
+        if (age3.isSelected()) {
+            liste.add(3);
+        }
+        if (age4.isSelected()) {
+            liste.add(4);
+        }
+        if (!age1.isSelected() && !age2.isSelected() && !age3.isSelected() && !age4.isSelected()) {
+            liste.add(1);
+            liste.add(2);
+            liste.add(3);
+            liste.add(4);
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Taille() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (taille1.isSelected()) {
+            liste.add("taille < 150");
+        }
+        if (taille2.isSelected()) {
+            liste.add("taille >= 150 AND taille <= 170");
+        }
+        if (taille3.isSelected()) {
+            liste.add("taille >= 171 AND taille <= 190");
+        }
+        if (taille4.isSelected()) {
+            liste.add("taille > 190");
+        }
+        if (!taille1.isSelected() && !taille2.isSelected() && !taille3.isSelected() && !taille4.isSelected()) {
+            liste.add("taille < 150");
+            liste.add("taille >= 150 AND taille <= 170");
+            liste.add("taille >= 171 AND taille <= 190");
+            liste.add("taille > 190");
+        }
+        return liste;
+    }
+
+    public ArrayList<String> Poids() {
+        ArrayList<String> liste = new ArrayList<>();
+        if (poids1.isSelected()) {
+            liste.add("poids < 45");
+        }
+        if (poids2.isSelected()) {
+            liste.add("poids >= 45 AND poids <= 60");
+        }
+        if (poids3.isSelected()) {
+            liste.add("poids >= 61 AND poids <= 75");
+        }
+        if (poids4.isSelected()) {
+            liste.add("poids >= 76 AND poids <= 90");
+        }
+        if (poids5.isSelected()) {
+            liste.add("poids >= 91 AND poids <= 105");
+        }
+        if (poids6.isSelected()) {
+            liste.add("poids > 105");
+        }
+        if (!poids1.isSelected() && !poids2.isSelected() && !poids3.isSelected() && !poids4.isSelected() && !poids5.isSelected() && !poids6.isSelected()) {
+            liste.add("poids < 45");
+            liste.add("poids >= 45 AND poids <= 60");
+            liste.add("poids >= 61 AND poids <= 75");
+            liste.add("poids >= 76 AND poids <= 90");
+            liste.add("poids >= 91 AND poids <= 105");
+            liste.add("poids > 105");
+        }
+        return liste;
     }
 
     /**
@@ -28,72 +298,68 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
+        type1 = new javax.swing.JCheckBox();
+        type2 = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        sexe1 = new javax.swing.JCheckBox();
+        sexe2 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
+        age1 = new javax.swing.JCheckBox();
+        age2 = new javax.swing.JCheckBox();
+        age3 = new javax.swing.JCheckBox();
+        age4 = new javax.swing.JCheckBox();
         jLabel6 = new javax.swing.JLabel();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jCheckBox13 = new javax.swing.JCheckBox();
+        taille1 = new javax.swing.JCheckBox();
+        taille2 = new javax.swing.JCheckBox();
+        taille3 = new javax.swing.JCheckBox();
+        taille4 = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jCheckBox16 = new javax.swing.JCheckBox();
-        jCheckBox17 = new javax.swing.JCheckBox();
-        jCheckBox18 = new javax.swing.JCheckBox();
-        jCheckBox19 = new javax.swing.JCheckBox();
+        poids1 = new javax.swing.JCheckBox();
+        poids2 = new javax.swing.JCheckBox();
+        poids3 = new javax.swing.JCheckBox();
+        poids4 = new javax.swing.JCheckBox();
+        poids5 = new javax.swing.JCheckBox();
+        poids6 = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        pathologie = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jCheckBox20 = new javax.swing.JCheckBox();
-        jCheckBox21 = new javax.swing.JCheckBox();
-        jCheckBox22 = new javax.swing.JCheckBox();
-        jCheckBox23 = new javax.swing.JCheckBox();
+        allergie1 = new javax.swing.JCheckBox();
+        allergie2 = new javax.swing.JCheckBox();
+        allergie3 = new javax.swing.JCheckBox();
+        allergie4 = new javax.swing.JCheckBox();
         jLabel10 = new javax.swing.JLabel();
-        jCheckBox24 = new javax.swing.JCheckBox();
-        jCheckBox25 = new javax.swing.JCheckBox();
-        jCheckBox26 = new javax.swing.JCheckBox();
-        jCheckBox27 = new javax.swing.JCheckBox();
+        regime1 = new javax.swing.JCheckBox();
+        regime2 = new javax.swing.JCheckBox();
+        regime3 = new javax.swing.JCheckBox();
+        regime4 = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
-        jCheckBox28 = new javax.swing.JCheckBox();
-        jCheckBox29 = new javax.swing.JCheckBox();
-        jCheckBox30 = new javax.swing.JCheckBox();
-        jCheckBox31 = new javax.swing.JCheckBox();
+        sport1 = new javax.swing.JCheckBox();
+        sport2 = new javax.swing.JCheckBox();
+        sport3 = new javax.swing.JCheckBox();
+        sport4 = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
-        jCheckBox32 = new javax.swing.JCheckBox();
-        jCheckBox33 = new javax.swing.JCheckBox();
+        fumeur1 = new javax.swing.JCheckBox();
+        fumeur2 = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
-        jCheckBox34 = new javax.swing.JCheckBox();
-        jCheckBox35 = new javax.swing.JCheckBox();
-        jCheckBox36 = new javax.swing.JCheckBox();
-        jCheckBox37 = new javax.swing.JCheckBox();
-        jCheckBox38 = new javax.swing.JCheckBox();
-        jCheckBox39 = new javax.swing.JCheckBox();
-        jCheckBox40 = new javax.swing.JCheckBox();
-        jCheckBox41 = new javax.swing.JCheckBox();
-        jCheckBox42 = new javax.swing.JCheckBox();
+        cat1 = new javax.swing.JCheckBox();
+        cat2 = new javax.swing.JCheckBox();
+        cat3 = new javax.swing.JCheckBox();
+        cat4 = new javax.swing.JCheckBox();
+        cat5 = new javax.swing.JCheckBox();
+        cat6 = new javax.swing.JCheckBox();
+        cat7 = new javax.swing.JCheckBox();
+        cat8 = new javax.swing.JCheckBox();
+        cat9 = new javax.swing.JCheckBox();
         rechercher = new javax.swing.JButton();
         annuler = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setText("Ajouter une étude clinique");
+        ville = new javax.swing.JTextField();
+        regime5 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,192 +400,190 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Ajouter un participant");
 
-        jCheckBox1.setText("Patient");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        type1.setText("Patient");
+        type1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                type1ActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText("Volontaire sain");
+        type2.setText("Volontaire sain");
 
         jLabel4.setText("Sexe :");
 
-        jCheckBox3.setText("F");
+        sexe1.setText("F");
 
-        jCheckBox4.setText("H");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+        sexe2.setText("H");
+        sexe2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
+                sexe2ActionPerformed(evt);
             }
         });
-
-        jCheckBox5.setText("Autre");
 
         jLabel5.setText("Age :");
 
-        jCheckBox6.setText("18-25");
+        age1.setText("18-25");
 
-        jCheckBox7.setText("26-40");
+        age2.setText("26-40");
 
-        jCheckBox8.setText("41-65");
-        jCheckBox8.addActionListener(new java.awt.event.ActionListener() {
+        age3.setText("41-65");
+        age3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox8ActionPerformed(evt);
+                age3ActionPerformed(evt);
             }
         });
 
-        jCheckBox10.setText(">65");
+        age4.setText(">65");
 
         jLabel6.setText("Taille (cm) :");
 
-        jCheckBox11.setText("<150");
-        jCheckBox11.addActionListener(new java.awt.event.ActionListener() {
+        taille1.setText("<150");
+        taille1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox11ActionPerformed(evt);
+                taille1ActionPerformed(evt);
             }
         });
 
-        jCheckBox9.setText("150-170");
+        taille2.setText("150-170");
 
-        jCheckBox12.setText("171-190");
+        taille3.setText("171-190");
 
-        jCheckBox13.setText(">190");
+        taille4.setText(">190");
 
         jLabel7.setText("Poids (kg) :");
 
-        jCheckBox14.setText("<45");
-        jCheckBox14.addActionListener(new java.awt.event.ActionListener() {
+        poids1.setText("<45");
+        poids1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox14ActionPerformed(evt);
+                poids1ActionPerformed(evt);
             }
         });
 
-        jCheckBox15.setText("45-60");
+        poids2.setText("45-60");
 
-        jCheckBox16.setText("61-75");
+        poids3.setText("61-75");
 
-        jCheckBox17.setText("76-90");
+        poids4.setText("76-90");
 
-        jCheckBox18.setText("91-105");
+        poids5.setText("91-105");
 
-        jCheckBox19.setText(">105");
+        poids6.setText(">105");
 
         jLabel8.setText("Pathologie(s) :");
 
         jLabel9.setText("Allergie(s) :");
 
-        jCheckBox20.setText("Alimentaire");
-        jCheckBox20.addActionListener(new java.awt.event.ActionListener() {
+        allergie1.setText("Alimentaire");
+        allergie1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox20ActionPerformed(evt);
+                allergie1ActionPerformed(evt);
             }
         });
 
-        jCheckBox21.setText("Médicament");
+        allergie2.setText("Médicament");
 
-        jCheckBox22.setText("Autre");
+        allergie3.setText("Autre");
 
-        jCheckBox23.setText("Aucune");
-        jCheckBox23.addActionListener(new java.awt.event.ActionListener() {
+        allergie4.setText("Aucune");
+        allergie4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox23ActionPerformed(evt);
+                allergie4ActionPerformed(evt);
             }
         });
 
         jLabel10.setText("Régime alimentaire :");
 
-        jCheckBox24.setText("Végétarien");
+        regime1.setText("Végétarien");
 
-        jCheckBox25.setText("Sans gluten");
-        jCheckBox25.addActionListener(new java.awt.event.ActionListener() {
+        regime2.setText("Sans gluten");
+        regime2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox25ActionPerformed(evt);
+                regime2ActionPerformed(evt);
             }
         });
 
-        jCheckBox26.setText("Sans sel");
-        jCheckBox26.addActionListener(new java.awt.event.ActionListener() {
+        regime3.setText("Sans sel");
+        regime3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox26ActionPerformed(evt);
+                regime3ActionPerformed(evt);
             }
         });
 
-        jCheckBox27.setText("Normal");
-        jCheckBox27.addActionListener(new java.awt.event.ActionListener() {
+        regime4.setText("Autre");
+        regime4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox27ActionPerformed(evt);
+                regime4ActionPerformed(evt);
             }
         });
 
         jLabel11.setText("Sport :");
 
-        jCheckBox28.setText("Jamais");
-        jCheckBox28.addActionListener(new java.awt.event.ActionListener() {
+        sport1.setText("Jamais");
+        sport1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox28ActionPerformed(evt);
+                sport1ActionPerformed(evt);
             }
         });
 
-        jCheckBox29.setText("Rarement");
+        sport2.setText("Rarement");
 
-        jCheckBox30.setText("Régulièrement");
+        sport3.setText("Régulièrement");
 
-        jCheckBox31.setText("Sportif de haut niveau");
+        sport4.setText("Sportif de haut niveau");
 
         jLabel12.setText("Fumeur :");
 
-        jCheckBox32.setText("Oui");
+        fumeur1.setText("Oui");
 
-        jCheckBox33.setText("Non");
-        jCheckBox33.addActionListener(new java.awt.event.ActionListener() {
+        fumeur2.setText("Non");
+        fumeur2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox33ActionPerformed(evt);
+                fumeur2ActionPerformed(evt);
             }
         });
 
         jLabel13.setText("Catégorie socio-professionnelle :");
 
-        jCheckBox34.setText("Agriculteurs exploitants");
+        cat1.setText("Agriculteurs exploitants");
 
-        jCheckBox35.setText("Artisans, commerçants, chefs d'entreprise");
-        jCheckBox35.addActionListener(new java.awt.event.ActionListener() {
+        cat2.setText("Artisans, commerçants, chefs d'entreprise");
+        cat2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox35ActionPerformed(evt);
+                cat2ActionPerformed(evt);
             }
         });
 
-        jCheckBox36.setText("Cadres et professions intellectuelles supérieures");
-        jCheckBox36.addActionListener(new java.awt.event.ActionListener() {
+        cat3.setText("Cadres et professions intellectuelles supérieures");
+        cat3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox36ActionPerformed(evt);
+                cat3ActionPerformed(evt);
             }
         });
 
-        jCheckBox37.setText("Professions intermédiaires ");
+        cat4.setText("Professions intermédiaires ");
 
-        jCheckBox38.setText("Employés");
+        cat5.setText("Employés");
 
-        jCheckBox39.setText("Ouvriers");
-        jCheckBox39.addActionListener(new java.awt.event.ActionListener() {
+        cat6.setText("Ouvriers");
+        cat6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox39ActionPerformed(evt);
+                cat6ActionPerformed(evt);
             }
         });
 
-        jCheckBox40.setText("Retraités");
-        jCheckBox40.addActionListener(new java.awt.event.ActionListener() {
+        cat7.setText("Retraités");
+        cat7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox40ActionPerformed(evt);
+                cat7ActionPerformed(evt);
             }
         });
 
-        jCheckBox41.setText("Etudiants");
+        cat8.setText("Etudiants");
 
-        jCheckBox42.setText("Autres sans activité professionnelle");
-        jCheckBox42.addActionListener(new java.awt.event.ActionListener() {
+        cat9.setText("Autres sans activité professionnelle");
+        cat9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox42ActionPerformed(evt);
+                cat9ActionPerformed(evt);
             }
         });
 
@@ -339,6 +603,13 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
 
         jLabel14.setText("Ville :");
 
+        regime5.setText("Normal");
+        regime5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                regime5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -352,25 +623,23 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox3)
+                                .addComponent(sexe1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox5))
+                                .addComponent(sexe2))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBox1)
+                                .addComponent(type1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox2))
+                                .addComponent(type2))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox6)
+                                .addComponent(age1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox7)
+                                .addComponent(age2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox8)
+                                .addComponent(age3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox10))
+                                .addComponent(age4))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
@@ -378,88 +647,91 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox14)
+                                        .addComponent(poids1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox15)
+                                        .addComponent(poids2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox16)
+                                        .addComponent(poids3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox17)
+                                        .addComponent(poids4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox18)
+                                        .addComponent(poids5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox19))
+                                        .addComponent(poids6))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox11)
+                                        .addComponent(taille1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox9)
+                                        .addComponent(taille2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox12)
+                                        .addComponent(taille3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox13))))
+                                        .addComponent(taille4))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox20)
+                                .addComponent(allergie1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox21)
+                                .addComponent(allergie2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox22)
+                                .addComponent(allergie3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox23))
+                                .addComponent(allergie4))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox28)
+                                .addComponent(sport1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox29)
+                                .addComponent(sport2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox30)
+                                .addComponent(sport3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox31))
+                                .addComponent(sport4))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox32)
+                                .addComponent(fumeur1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox33))
+                                .addComponent(fumeur2))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox37)
+                                        .addComponent(cat4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox38)
+                                        .addComponent(cat5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox39)
+                                        .addComponent(cat6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox40)
+                                        .addComponent(cat7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox41)
+                                        .addComponent(cat8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox42))
+                                        .addComponent(cat9))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jCheckBox34)
+                                        .addComponent(cat1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox35)
+                                        .addComponent(cat2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox36))))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField1))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(jLabel10)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox24)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox25)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox26)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jCheckBox27)))))
+                                        .addComponent(cat3))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(pathologie))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(regime1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(regime2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(regime3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(regime4)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regime5))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(452, 452, 452)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -469,7 +741,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ville, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(annuler)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -484,81 +756,81 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2))
+                    .addComponent(type1)
+                    .addComponent(type2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox5))
+                    .addComponent(sexe1)
+                    .addComponent(sexe2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox8)
-                    .addComponent(jCheckBox10))
+                    .addComponent(age1)
+                    .addComponent(age2)
+                    .addComponent(age3)
+                    .addComponent(age4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jCheckBox11)
-                    .addComponent(jCheckBox9)
-                    .addComponent(jCheckBox12)
-                    .addComponent(jCheckBox13))
+                    .addComponent(taille1)
+                    .addComponent(taille2)
+                    .addComponent(taille3)
+                    .addComponent(taille4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jCheckBox14)
-                    .addComponent(jCheckBox15)
-                    .addComponent(jCheckBox16)
-                    .addComponent(jCheckBox17)
-                    .addComponent(jCheckBox18)
-                    .addComponent(jCheckBox19))
+                    .addComponent(poids1)
+                    .addComponent(poids2)
+                    .addComponent(poids3)
+                    .addComponent(poids4)
+                    .addComponent(poids5)
+                    .addComponent(poids6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pathologie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jCheckBox20)
-                    .addComponent(jCheckBox21)
-                    .addComponent(jCheckBox22)
-                    .addComponent(jCheckBox23))
+                    .addComponent(allergie1)
+                    .addComponent(allergie2)
+                    .addComponent(allergie3)
+                    .addComponent(allergie4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jCheckBox24)
-                    .addComponent(jCheckBox25)
-                    .addComponent(jCheckBox26)
-                    .addComponent(jCheckBox27))
+                    .addComponent(regime1)
+                    .addComponent(regime2)
+                    .addComponent(regime3)
+                    .addComponent(regime4)
+                    .addComponent(regime5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jCheckBox28)
-                    .addComponent(jCheckBox29)
-                    .addComponent(jCheckBox30)
-                    .addComponent(jCheckBox31))
+                    .addComponent(sport1)
+                    .addComponent(sport2)
+                    .addComponent(sport3)
+                    .addComponent(sport4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jCheckBox32)
-                    .addComponent(jCheckBox33))
+                    .addComponent(fumeur1)
+                    .addComponent(fumeur2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jCheckBox34)
-                    .addComponent(jCheckBox35)
-                    .addComponent(jCheckBox36))
+                    .addComponent(cat1)
+                    .addComponent(cat2)
+                    .addComponent(cat3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox37)
-                    .addComponent(jCheckBox38)
-                    .addComponent(jCheckBox39)
-                    .addComponent(jCheckBox40)
-                    .addComponent(jCheckBox41)
-                    .addComponent(jCheckBox42))
+                    .addComponent(cat4)
+                    .addComponent(cat5)
+                    .addComponent(cat6)
+                    .addComponent(cat7)
+                    .addComponent(cat8)
+                    .addComponent(cat9))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
@@ -570,90 +842,229 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ville, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(32, 32, 32))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void type1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_type1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_type1ActionPerformed
 
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
+    private void sexe2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sexe2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
+    }//GEN-LAST:event_sexe2ActionPerformed
 
-    private void jCheckBox8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox8ActionPerformed
+    private void age3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_age3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox8ActionPerformed
+    }//GEN-LAST:event_age3ActionPerformed
 
-    private void jCheckBox11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox11ActionPerformed
+    private void taille1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_taille1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox11ActionPerformed
+    }//GEN-LAST:event_taille1ActionPerformed
 
-    private void jCheckBox14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox14ActionPerformed
+    private void poids1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_poids1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox14ActionPerformed
+    }//GEN-LAST:event_poids1ActionPerformed
 
-    private void jCheckBox20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox20ActionPerformed
+    private void allergie1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allergie1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox20ActionPerformed
+    }//GEN-LAST:event_allergie1ActionPerformed
 
-    private void jCheckBox23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox23ActionPerformed
+    private void allergie4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allergie4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox23ActionPerformed
+    }//GEN-LAST:event_allergie4ActionPerformed
 
-    private void jCheckBox25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox25ActionPerformed
+    private void regime2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regime2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox25ActionPerformed
+    }//GEN-LAST:event_regime2ActionPerformed
 
-    private void jCheckBox26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox26ActionPerformed
+    private void regime3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regime3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox26ActionPerformed
+    }//GEN-LAST:event_regime3ActionPerformed
 
-    private void jCheckBox27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox27ActionPerformed
+    private void regime4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regime4ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox27ActionPerformed
+    }//GEN-LAST:event_regime4ActionPerformed
 
-    private void jCheckBox28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox28ActionPerformed
+    private void sport1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sport1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox28ActionPerformed
+    }//GEN-LAST:event_sport1ActionPerformed
 
-    private void jCheckBox33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox33ActionPerformed
+    private void fumeur2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fumeur2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox33ActionPerformed
+    }//GEN-LAST:event_fumeur2ActionPerformed
 
-    private void jCheckBox35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox35ActionPerformed
+    private void cat2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cat2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox35ActionPerformed
+    }//GEN-LAST:event_cat2ActionPerformed
 
-    private void jCheckBox36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox36ActionPerformed
+    private void cat3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cat3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox36ActionPerformed
+    }//GEN-LAST:event_cat3ActionPerformed
 
-    private void jCheckBox39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox39ActionPerformed
+    private void cat6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cat6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox39ActionPerformed
+    }//GEN-LAST:event_cat6ActionPerformed
 
-    private void jCheckBox40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox40ActionPerformed
+    private void cat7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cat7ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox40ActionPerformed
+    }//GEN-LAST:event_cat7ActionPerformed
 
-    private void jCheckBox42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox42ActionPerformed
+    private void cat9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cat9ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox42ActionPerformed
+    }//GEN-LAST:event_cat9ActionPerformed
 
     private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
+        ArrayList<String> l1 = Type();
+        ArrayList<String> l2 = Sexe();
+        ArrayList<String> l3 = Allergie();
+        ArrayList<String> l4 = Regime();
+        ArrayList<String> l5 = Sport();
+        ArrayList<String> l6 = Fumeur();
+        ArrayList<String> l7 = Categorie();
+        ArrayList<Integer> l8 = Age();
+        ArrayList<String> l9 = Taille();
+        ArrayList<String> l10 = Poids();
+        String patho = pathologie.getText();
+        String v = ville.getText();
+
+        for (String t : l1) {
+            for (String s : l2) {
+                for (String a : l3) {
+                    for (String r : l4) {
+                        for (String sp : l5) {
+                            for (String f : l6) {
+                                for (String c : l7) {
+                                    for (int age : l8) { //à voir
+                                        for (String ta : l9) {
+                                            for (String p : l10) {
+                                                if (!v.equals("")) {
+                                                    if (!patho.equals("")) {
+                                                        try {
+                                                            Statement st = ExempleJdbc.connexion();
+                                                            try {
+                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
+                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
+                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND ville ='" + v + "' AND pathologie ='" + patho + "')");
+
+                                                                while (rs.next()) {
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
+                                                        } catch (SQLException e) {
+                                                            System.out.println(e);
+                                                        }
+                                                    } else {
+                                                        try {
+                                                            Statement st = ExempleJdbc.connexion();
+                                                            try {
+                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
+                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
+                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND ville ='" + v + "')");
+
+                                                                while (rs.next()) {
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
+                                                        } catch (SQLException e) {
+                                                            System.out.println(e);
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (!patho.equals("")) {
+                                                        try {
+                                                            Statement st = ExempleJdbc.connexion();
+                                                            try {
+                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
+                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
+                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND pathologie ='" + patho + "')");
+
+                                                                while (rs.next()) {
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
+                                                        } catch (SQLException e) {
+                                                            System.out.println(e);
+                                                        }
+                                                    } else {
+                                                        try {
+                                                            Statement st = ExempleJdbc.connexion();
+                                                            try {
+                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
+                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
+                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + ")");
+
+                                                                while (rs.next()) {
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
+                                                        } catch (SQLException e) {
+                                                            System.out.println(e);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         this.setVisible(false);
-        CicAjouterParticipant a = new CicAjouterParticipant();
+        try {
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree);
+        } catch (SQLException ex) {
+            Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_rechercherActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
-        CicAjouterParticipant a = new CicAjouterParticipant();
+        try {
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree);
+        } catch (SQLException ex) {
+            Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_annulerActionPerformed
+
+    private void regime5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regime5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_regime5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -685,63 +1096,39 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicRechercherParticipant().setVisible(true);
+//                new CicRechercherParticipant().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox age1;
+    private javax.swing.JCheckBox age2;
+    private javax.swing.JCheckBox age3;
+    private javax.swing.JCheckBox age4;
+    private javax.swing.JCheckBox allergie1;
+    private javax.swing.JCheckBox allergie2;
+    private javax.swing.JCheckBox allergie3;
+    private javax.swing.JCheckBox allergie4;
     private javax.swing.JButton annuler;
+    private javax.swing.JCheckBox cat1;
+    private javax.swing.JCheckBox cat2;
+    private javax.swing.JCheckBox cat3;
+    private javax.swing.JCheckBox cat4;
+    private javax.swing.JCheckBox cat5;
+    private javax.swing.JCheckBox cat6;
+    private javax.swing.JCheckBox cat7;
+    private javax.swing.JCheckBox cat8;
+    private javax.swing.JCheckBox cat9;
     private javax.swing.JButton deconnexion;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox18;
-    private javax.swing.JCheckBox jCheckBox19;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox20;
-    private javax.swing.JCheckBox jCheckBox21;
-    private javax.swing.JCheckBox jCheckBox22;
-    private javax.swing.JCheckBox jCheckBox23;
-    private javax.swing.JCheckBox jCheckBox24;
-    private javax.swing.JCheckBox jCheckBox25;
-    private javax.swing.JCheckBox jCheckBox26;
-    private javax.swing.JCheckBox jCheckBox27;
-    private javax.swing.JCheckBox jCheckBox28;
-    private javax.swing.JCheckBox jCheckBox29;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox30;
-    private javax.swing.JCheckBox jCheckBox31;
-    private javax.swing.JCheckBox jCheckBox32;
-    private javax.swing.JCheckBox jCheckBox33;
-    private javax.swing.JCheckBox jCheckBox34;
-    private javax.swing.JCheckBox jCheckBox35;
-    private javax.swing.JCheckBox jCheckBox36;
-    private javax.swing.JCheckBox jCheckBox37;
-    private javax.swing.JCheckBox jCheckBox38;
-    private javax.swing.JCheckBox jCheckBox39;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox40;
-    private javax.swing.JCheckBox jCheckBox41;
-    private javax.swing.JCheckBox jCheckBox42;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JCheckBox fumeur1;
+    private javax.swing.JCheckBox fumeur2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -750,9 +1137,32 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField pathologie;
+    private javax.swing.JCheckBox poids1;
+    private javax.swing.JCheckBox poids2;
+    private javax.swing.JCheckBox poids3;
+    private javax.swing.JCheckBox poids4;
+    private javax.swing.JCheckBox poids5;
+    private javax.swing.JCheckBox poids6;
     private javax.swing.JButton rechercher;
+    private javax.swing.JCheckBox regime1;
+    private javax.swing.JCheckBox regime2;
+    private javax.swing.JCheckBox regime3;
+    private javax.swing.JCheckBox regime4;
+    private javax.swing.JCheckBox regime5;
+    private javax.swing.JCheckBox sexe1;
+    private javax.swing.JCheckBox sexe2;
+    private javax.swing.JCheckBox sport1;
+    private javax.swing.JCheckBox sport2;
+    private javax.swing.JCheckBox sport3;
+    private javax.swing.JCheckBox sport4;
+    private javax.swing.JCheckBox taille1;
+    private javax.swing.JCheckBox taille2;
+    private javax.swing.JCheckBox taille3;
+    private javax.swing.JCheckBox taille4;
+    private javax.swing.JCheckBox type1;
+    private javax.swing.JCheckBox type2;
     private javax.swing.JLabel utilisateur;
+    private javax.swing.JTextField ville;
     // End of variables declaration//GEN-END:variables
 }

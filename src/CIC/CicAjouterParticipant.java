@@ -32,9 +32,10 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
     /**
      * Creates new form CicAjouterParticipant
      */
-    public CicAjouterParticipant(ArrayList<Participant> ancienneListe, String nom, String date, int duree) throws SQLException {
+    public CicAjouterParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree) throws SQLException {
         initComponents();
         this.ancienneListe = ancienneListe;
+        this.listeParticipants = listeParticipants;
         this.nom = nom;
         this.date = date;
         this.duree = duree;
@@ -264,7 +265,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        CicRechercherParticipant r = new CicRechercherParticipant();
+        CicRechercherParticipant r = new CicRechercherParticipant(ancienneListe,listeParticipants,nom,date,duree);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

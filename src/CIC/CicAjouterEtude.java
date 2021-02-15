@@ -312,14 +312,23 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             for(int i = 0; i < jTable1.getRowCount(); i++){
                 Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)),String.valueOf(jTable1.getValueAt(i, 1)),String.valueOf(jTable1.getValueAt(i, 2)),String.valueOf(jTable1.getValueAt(i, 3)));
                 Etude e = new Etude(nom.getText(),"gregory_house",date.getText(),(int)duree.getValue());
-                
                 Statement s;
                 try {
                     s = ExempleJdbc.connexion();
-                    s.executeUpdate("INSERT INTO Etude(nom,PH,date,duree,participantNomU,participantDate,participantPrenom) VALUES(‘"+e.getNom()+"','"+e.getPH()+"','"+e.getDate()+"','"+e.getDuree()+"','"+p.getNomU()+"','"+p.getDateN()+"','"+p.getPrenom()+"')");
+                    s.executeUpdate("INSERT INTO Etude(nom,PH,date,duree,participantNomU,participantDate,participantPrenom)" 
+                    + "VALUES(‘Etude','"+e.getPH()+"','"+e.getDate()+"','"+e.getDuree()+"','"+p.getNomU()+"','"+p.getDateN()
+                    +"','"+p.getPrenom()+"')");
+//                    
+//                    ResultSet rs = s.executeQuery("SELECT distinct nomDeNaissance,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville FROM Participant WHERE (nomUsuel ='"+p.getNomU()+"' AND dateDeNaissance = '"+p.getDateN()+"' AND prenom = '"+p.getPrenom()+"')");
+//                    s.executeUpdate("INSERT INTO Participant(nomUsuel,nomDeNaissance,dateDeNaissance,prenom,type,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville,etude) VALUES(‘"+p.getNomU()+"','"+rs.getString("nomDeNaissance")+"','"+p.getDateN()+"','"+p.getPrenom()+"','"+p.getType()+"','"+rs.getString("sexe")+"','"+rs.getString("taille")+"','"+rs.getString("poids")+"','"+rs.getString("pathologie")+"','"+rs.getString("allergie")+"','"+rs.getString("regime")+"','"+rs.getString("sport")+"','"+rs.getString("fumeur")+"','"+rs.getString("categorie")+"','"+rs.getString("ville")+"','"+e.getNom()+"')");
+//                    
+//                    Statement s = ExempleJdbc.connexion();
+//                    s.executeUpdate("INSERT INTO Patient(id, nomusuel, nomdenaissance, prenom, sexe, rue,"
+//                    + " ville, codepostale, datedenaissance, secu, médecintraitant, nationalité, lieudenaissance)"
+//                    + " VALUES ('0', '" + nomU + "', '" + nomN + "', '" + prenom + "', '" + sexe + "', '" + rue
+//                    + "', '" + ville + "', '" + codeP + "', '" + dateN + "', '" + nSecu + "', '" + nomM + "', '" + nationalite + "', '" + lieuN + "')");
+//                    
                     
-                    ResultSet rs = s.executeQuery("SELECT distinct nomDeNaissance,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville FROM Participant WHERE (nomUsuel ='"+p.getNomU()+"' AND dateDeNaissance = '"+p.getDateN()+"' AND prenom = '"+p.getPrenom()+"')");
-                    s.executeUpdate("INSERT INTO Participant(nomUsuel,nomDeNaissance,dateDeNaissance,prenom,type,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville,etude) VALUES(‘"+p.getNomU()+"','"+rs.getString("nomDeNaissance")+"','"+p.getDateN()+"','"+p.getPrenom()+"','"+p.getType()+"','"+rs.getString("sexe")+"','"+rs.getString("taille")+"','"+rs.getString("poids")+"','"+rs.getString("pathologie")+"','"+rs.getString("allergie")+"','"+rs.getString("regime")+"','"+rs.getString("sport")+"','"+rs.getString("fumeur")+"','"+rs.getString("categorie")+"','"+rs.getString("ville")+"','"+e.getNom()+"')");
                 } catch (SQLException ex) {
                     Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
                 }
