@@ -5,6 +5,12 @@
  */
 package Secretaire;
 
+import Connexion.ExempleJdbc;
+import Patient.Patient;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JFrame;
@@ -16,34 +22,67 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  */
 public class Message extends javax.swing.JFrame {
 
-   JFrame accueil;
-   Date date = new Date();
-   int annee = date.getYear()+1900;
-   
-    public Message(JFrame accueil) {
+    JFrame accueil;
+    Date date = new Date();
+    int annee = date.getYear() + 1900;
+    String nSecu;
+
+    public Message(JFrame accueil, String nSecu) {
+        this.nSecu = nSecu;
+        System.out.println(nSecu);
         initComponents();
         this.accueil = accueil;
         jLabel2.setText(generationID());
-        
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        
+
     }
-    private String generationID(){
+
+    private String generationID() {
         int max = 9999999;
         int min = 0;
         String ID = "";
-        
+        ArrayList listID = new ArrayList<>();
+
         String chiffreAnnee = String.valueOf(annee);
         char[] tabAnnee = chiffreAnnee.toCharArray();
-        
-        Random rand = new Random(); 
+
+        Random rand = new Random();
         int nombreAleatoire = rand.nextInt(max - min + 1) + min;
+
+        try {  // On recupere les id + secu des patients existants
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT id FROM Patient");
+            while (rs.next()) {
+                int idPatient = rs.getInt("id");
+                listID.add(idPatient);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
         
-        ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire; // pour un patient qui n'est jamais venu
-        //Code à faire : vérifer dans BDD qu'il n'existe pas + enregistrer dans BDD + si patient déjà venu récupérer l'année 
-        return ID; 
+        // generation id pour un patient qui n'est jamais venu
+        ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire;
+        
+        // verif id n'existe pas
+        if (listID.contains(ID)) { 
+            while(listID.contains(ID)){
+                ID = ID.replaceAll(ID, "");
+                ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire;
+            }      
+        }
+        // enregistrer dans BDD
+        try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("UPDATE Patient SET id ='" + ID + "' WHERE secu ='" + nSecu + "'");
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        
+        return ID;
     }
 
     /**
