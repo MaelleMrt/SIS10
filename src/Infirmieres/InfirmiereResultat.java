@@ -263,7 +263,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        //new MedecinAcceuil();
+        new InfirmierAcceuil(infirmier.login);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -278,7 +278,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.setVisible(false);
+        this.dispose();
         JFrame pageConnexion = new InterfaceConnexion();
     }//GEN-LAST:event_jButton3ActionPerformed
 
