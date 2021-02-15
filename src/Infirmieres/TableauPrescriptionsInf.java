@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Medecin;
+package Infirmieres;
 
+import Medecin.*;
 import Connexion.ExempleJdbc;
 import Patient.Patient;
 import java.sql.ResultSet;
@@ -18,30 +19,31 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Maelle
  */
-public class TableauPrescriptions extends AbstractTableModel{
+public class TableauPrescriptionsInf extends AbstractTableModel{
      private ArrayList<Prescription> listPrescription= new ArrayList<Prescription>();
      
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
+    String service;
     
-    public TableauPrescriptions(Patient p) {
+    public TableauPrescriptionsInf(Patient p,String nomS) {
+        service=nomS;
         Date date;
         String contenu;
         String login=null;
         String nomM;
-        String nomS;
+
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Prescription WHERE idP ='"+ p.getId()+"'" );
+                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Prescription WHERE idP ='"+ p.getId()+"'");
                 while(rs1.next()){
                     date= rs1.getDate("date");
                     contenu= rs1.getString("contenu");
                     login =rs1.getString("login");
-                    ResultSet rs2= s.executeQuery("SELECT nom,nomS FROM Médecin WHERE login ='"+login+"'" );
+                    ResultSet rs2= s.executeQuery("SELECT nom FROM Médecin WHERE login ='"+login+"'AND nomS='"+service+"'" );
                         while(rs2.next()){
                             nomM= rs2.getString("nom");
-                            nomS= rs2.getString("nomS");
-                            Prescription pres=new Prescription(nomS,nomM,date,contenu);
+                            Prescription pres=new Prescription(service,nomM,date,contenu);
                             listPrescription.add(pres);
                         }   
                 

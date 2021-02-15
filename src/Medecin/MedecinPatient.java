@@ -13,11 +13,13 @@ import Patient.Patient;
  */
 public class MedecinPatient extends javax.swing.JFrame {
     public Patient patient;
+    public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinPatient(Patient p) {
+    public MedecinPatient(Patient p,Medecin med) {
         patient =p;
+        medecin=med;
         initComponents();
        
         this.setVisible(true);
@@ -58,7 +60,7 @@ public class MedecinPatient extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel3.setText("Clara Oster");
+        jLabel3.setText(medecin.getNom()+" "+medecin.getPrenom());
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 8)); // NOI18N
         jLabel5.setText("Deconnexion");
@@ -113,7 +115,7 @@ public class MedecinPatient extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jLabel8.setText(patient.getNomUsuel());
 
-        jLabel9.setText(patient.getNaissance().toString());
+        jLabel9.setText(patient.getNaissance());
 
         jButton2.setBackground(new java.awt.Color(209, 235, 245));
         jButton2.setText("Retour");
@@ -178,7 +180,7 @@ public class MedecinPatient extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(334, 425, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jToggleButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,7 +231,7 @@ public class MedecinPatient extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 6, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
@@ -245,33 +247,33 @@ public class MedecinPatient extends javax.swing.JFrame {
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.dispose();
-        new DMA(patient);
+        new DMA(patient,medecin);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        //new MedecinAcceuil();
+        new MedecinAcceuil(medecin.login);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         this.dispose();
-        new MedecinResultat(patient);
+        new MedecinResultat(patient,medecin);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
-        new MedecinPrescription(patient);
+        new MedecinPrescription(patient,medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        new AffichagePrescription(patient);        // TODO add your handling code here:
+        new AffichagePrescription(patient,medecin);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
-        new AffichageCR();
+        new AffichageCR(patient,medecin);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

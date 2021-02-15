@@ -5,9 +5,13 @@
  */
 package Medecin;
 
+import Connexion.ExempleJdbc;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Patient.Patient;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,11 +32,13 @@ import javax.swing.table.DefaultTableModel;
 public class MedecinAcceuil extends javax.swing.JFrame {
     String login;
     TableauPatient listPatient;
+    Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinAcceuil (String login) {
-        login=login;
+    public MedecinAcceuil (String log) {
+        login=log;
+        rechercheMedecin();
         listPatient= new TableauPatient(login);
         initComponents();
         this.setVisible(true);
@@ -91,7 +97,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel35.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel35.setText("Clara Oster");
+        jLabel35.setText(medecin.getNom()+" "+medecin.getPrenom());
 
         jLabel37.setFont(new java.awt.Font("Lucida Grande", 0, 8)); // NOI18N
         jLabel37.setText("Deconnexion");
@@ -159,13 +165,10 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                     e.getButton() == MouseEvent.BUTTON3)
                 {
                     int indRow =jTable1.rowAtPoint(e.getPoint());
-                    System.out.println("nomtable: " +jTable1.getValueAt(indRow, 0).toString());
-                    System.out.println("prenomtable: " +jTable1.getValueAt(indRow, 1).toString());
-                    System.out.println("datetable: " +jTable1.getValueAt(indRow, 2).toString());
                     try{
                         Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
                         System.out.println(p.toString());
-                        new MedecinPatient(p);
+                        new MedecinPatient(p,medecin);
                     }catch(Exception e2){
                     }
 
@@ -187,7 +190,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(14, 14, 14))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 526, Short.MAX_VALUE)
+                        .addGap(0, 543, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -238,9 +241,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());
                         v.add(p.getPrenom());
-                        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                        String dateN = dateFormat.format(p.getNaissance());
-                        v.add(dateN);
+                        v.add(p.getNaissance());
                         ModeleTest2.setColumnIdentifiers(new String[]{"Nom","Prenom","Date de Naissance"});
                         ModeleTest2.insertRow(i,v) ;
                         System.out.println("ajout vecteur "+p.getNomUsuel()+" "+p.getNaissance());
@@ -285,6 +286,25 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    // rechercher le médecin à partir du login 
+    public void rechercheMedecin(){
+        System.out.println(login);
+         try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT nom, prenom, nomS FROM Médecin WHERE login='"+login+"'");
+                while(rs.next()){
+                   medecin=new Medecin(rs.getString("nom"),rs.getString("prenom"),rs.getString("nomS"),login);
+                }
+                
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+    }
     /**
      * @param args the command line arguments
      */

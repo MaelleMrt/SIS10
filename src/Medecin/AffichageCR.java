@@ -5,16 +5,26 @@
  */
 package Medecin;
 
+import Connexion.ExempleJdbc;
+import Patient.Patient;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Maelle
  */
 public class AffichageCR extends javax.swing.JFrame {
-
+    Patient patient;
+    Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AffichageCR() {
+    public AffichageCR(Patient p,Medecin med) {
+        patient=p;
+        medecin=med;
+        System.out.println(medecin.getLogin());
         initComponents();
         this.setVisible(true);
     }
@@ -40,7 +50,12 @@ public class AffichageCR extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,9 +110,9 @@ public class AffichageCR extends javax.swing.JFrame {
         );
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel8.setText("Maëlle Martinet");
+        jLabel8.setText(patient.getNomUsuel());
 
-        jLabel9.setText("22/07/1999");
+        jLabel9.setText(patient.getNaissance());
 
         jButton2.setBackground(new java.awt.Color(209, 235, 245));
         jButton2.setText("Retour");
@@ -113,7 +128,35 @@ public class AffichageCR extends javax.swing.JFrame {
         jTextArea1.setText("Rédiger votre CR");
         jScrollPane1.setViewportView(jTextArea1);
 
-        jToggleButton1.setText("Enregistrer");
+        jLabel2.setText("Date :");
+
+        jTextField1.setForeground(new java.awt.Color(204, 204, 204));
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField1.setText("yyyy-mm-dd");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Enregistrer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setVisible(false);
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel4.setText("Date non rempli");
+
+        jLabel6.setVisible(false);
+        jLabel6.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel6.setText("CR non saisie");
+
+        jLabel7.setVisible(false);
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setText("Date invalide");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,7 +172,12 @@ public class AffichageCR extends javax.swing.JFrame {
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(167, 167, 167)
+                                        .addComponent(jLabel2)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -138,13 +186,18 @@ public class AffichageCR extends javax.swing.JFrame {
                         .addContainerGap(16, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(109, 109, 109))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jToggleButton1)
-                                .addContainerGap())))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(109, 109, 109))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,11 +211,24 @@ public class AffichageCR extends javax.swing.JFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13))
         );
 
@@ -190,6 +256,56 @@ public class AffichageCR extends javax.swing.JFrame {
         //new MedecinAcceuil();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //on n'affiche plus les messages d'erreurs
+        jLabel4.setVisible(false);
+        jLabel7.setVisible(false);
+        jLabel6.setVisible(false);
+        new DateChecker();
+        //on test si la jTextField date est vide
+        if(jTextField1.getText()==null){
+            jLabel4.setVisible(true);
+        }
+        // on verifie la validite de la date
+        else if(!DateChecker.isValid(jTextField1.getText())){
+            jLabel7.setVisible(true);
+        }
+        //on test si la jTextField contenu est vide
+        else if(jTextArea1.getText()==null){
+            jLabel6.setVisible(true);
+        }
+        // sinon on ajoute le CR a la BDD
+        else{
+            ajoutCR(jTextField1.getText().toString(),jTextArea1.getText().toString());
+            new AjoutValide(patient, medecin);
+            this.dispose();
+
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    public void ajoutCR(String date,String contenu){
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                System.out.println(medecin.getLogin());
+                ResultSet rs= s.executeQuery("INSERT INTO CR VALUES ('"+medecin.getLogin()+"','"+patient.getId()+"','"+date+"','"+contenu+"')");
+          
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -229,18 +345,23 @@ public class AffichageCR extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

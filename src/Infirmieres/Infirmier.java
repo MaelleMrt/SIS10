@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Medecin;
+package Infirmieres;
+
+import Medecin.*;
 
 /**
  *
  * @author Maelle
  */
-public class Medecin {
+public class Infirmier {
     String service ;
     String nom;
     String prenom;
     TableauPatient tb;
     String login;
     
-    public Medecin(String n,String p, String s,String log){
+    public Infirmier(String n,String p, String s,String log){
         nom=n;
         prenom=p;
         service=s;

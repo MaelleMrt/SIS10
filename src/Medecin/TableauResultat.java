@@ -32,7 +32,7 @@ public class TableauResultat extends AbstractTableModel{
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Resultat WHERE idP ='"+ p.getId()+"'" );
+                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM CR WHERE idP ='"+ p.getId()+"'" );
                 while(rs1.next()){
                     date= rs1.getDate("date");
                     contenu= rs1.getString("contenu");

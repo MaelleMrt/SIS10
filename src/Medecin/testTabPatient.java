@@ -15,7 +15,8 @@ public class testTabPatient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        TableauPatient tp=new TableauPatient();
+        new DateChecker();
+        System.out.println(DateChecker.isValid("1999-08-12"));
     }
     
 }

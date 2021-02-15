@@ -5,18 +5,22 @@
  */
 package Infirmieres;
 
-import projet.sis.*;
+import Medecin.*;
+import Patient.Patient;
 
 /**
  *
  * @author Maelle
  */
-public class InfirmiereObservation extends javax.swing.JFrame {
-
+public class InfirmierPrescription extends javax.swing.JFrame {
+     public Patient patient;
+     public Infirmier infirmier;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public InfirmiereObservation() {
+    public InfirmierPrescription(Patient p,Infirmier inf) {
+        patient=p;
+        infirmier=inf;
         initComponents();
         this.setVisible(true);
     }
@@ -34,7 +38,8 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TableauPrescriptionsInf modele = new TableauPrescriptionsInf(patient,infirmier.service);
+        jTable1 = new javax.swing.JTable(modele);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -47,6 +52,7 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         jLabel38 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
         jLabel40 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,20 +62,9 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel6.setText("Observations et résultats");
+        jLabel6.setText("Prescriptions");
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Service", "Practicien Hospitalier", "Date", "Motif", "Observations/Résultats"
-            }
-        ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
@@ -93,7 +88,7 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel35.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel35.setText("Clara Oster");
+        jLabel35.setText(infirmier.getNom()+" "+infirmier.getPrenom());
 
         jLabel37.setFont(new java.awt.Font("Lucida Grande", 0, 8)); // NOI18N
         jLabel37.setText("Deconnexion");
@@ -103,31 +98,35 @@ public class InfirmiereObservation extends javax.swing.JFrame {
 
         jLabel40.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/deconnexion.png"))); // NOI18N
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel2.setText("service "+infirmier.service);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(637, Short.MAX_VALUE)
+                .addContainerGap(801, Short.MAX_VALUE)
+                .addComponent(jLabel34)
+                .addGap(109, 109, 109)
+                .addComponent(jLabel36)
+                .addGap(55, 55, 55))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel38)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel35)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel38)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel35)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel37)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel40)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel39))))
+                        .addComponent(jLabel37)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel34)
-                        .addGap(178, 178, 178)
-                        .addComponent(jLabel36)
-                        .addGap(55, 55, 55))))
+                        .addComponent(jLabel40)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel39))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,6 +135,7 @@ public class InfirmiereObservation extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel34)
+                        .addGap(0, 0, 0)
                         .addComponent(jLabel36)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
@@ -148,10 +148,12 @@ public class InfirmiereObservation extends javax.swing.JFrame {
                                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel35)
                                             .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 9, Short.MAX_VALUE))
+                                .addGap(0, 19, Short.MAX_VALUE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel38)
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel38))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -192,7 +194,7 @@ public class InfirmiereObservation extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
-                                .addGap(252, 252, 252)
+                                .addGap(342, 342, 342)
                                 .addComponent(jButton1))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -200,8 +202,8 @@ public class InfirmiereObservation extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,16 +230,16 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -246,15 +248,14 @@ public class InfirmiereObservation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        InfirmiereAcceuil init1=new InfirmiereAcceuil();
-        init1.setVisible(true);
+        //new MedecinAcceuil();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        InfirmierePatient init1=new InfirmierePatient();
-        init1.setVisible(true);
+        new InfirmierPatient(patient,infirmier);
+
         
         
         
@@ -277,13 +278,13 @@ public class InfirmiereObservation extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InfirmiereObservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InfirmiereObservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InfirmiereObservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InfirmiereObservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -293,7 +294,6 @@ public class InfirmiereObservation extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InfirmiereObservation().setVisible(true);
                 
             }
         });
@@ -303,6 +303,7 @@ public class InfirmiereObservation extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;

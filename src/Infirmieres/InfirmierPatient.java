@@ -5,18 +5,21 @@
  */
 package Infirmieres;
 
-import projet.sis.*;
+import Patient.Patient;
 
 /**
  *
  * @author Maelle
  */
-public class InfirmierePatient extends javax.swing.JFrame {
-
+public class InfirmierPatient extends javax.swing.JFrame {
+    Patient patient;
+    Infirmier infirmier;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public InfirmierePatient() {
+    public InfirmierPatient(Patient p,Infirmier inf) {
+        patient=p;
+        infirmier=inf;
         initComponents();
         this.setVisible(true);
     }
@@ -37,6 +40,7 @@ public class InfirmierePatient extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         jLabel8 = new javax.swing.JLabel();
@@ -64,12 +68,17 @@ public class InfirmierePatient extends javax.swing.JFrame {
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/deconnexion.png"))); // NOI18N
 
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel2.setText("service "+infirmier.service);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(659, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 488, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addGap(39, 39, 39)
                 .addComponent(jLabel3)
@@ -95,7 +104,9 @@ public class InfirmierePatient extends javax.swing.JFrame {
                         .addContainerGap(10, Short.MAX_VALUE))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel11))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -111,11 +122,16 @@ public class InfirmierePatient extends javax.swing.JFrame {
         jToggleButton3.setBackground(new java.awt.Color(137, 202, 216));
         jToggleButton3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jToggleButton3.setText("Prescription");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jLabel8.setText("Maëlle Martinet");
+        jLabel8.setText(patient.getNomUsuel());
 
-        jLabel9.setText("22/07/1999");
+        jLabel9.setText(patient.getNaissance());
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/unnamed.png"))); // NOI18N
 
@@ -155,10 +171,10 @@ public class InfirmierePatient extends javax.swing.JFrame {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(334, 334, 334)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel15))
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -181,8 +197,8 @@ public class InfirmierePatient extends javax.swing.JFrame {
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
                 .addGap(166, 166, 166))
         );
 
@@ -206,14 +222,20 @@ public class InfirmierePatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        // TODO add your handling code here:
+        new InfirmiereResultat(patient, infirmier);
+        this.dispose();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        InfirmiereAcceuil init1=new InfirmiereAcceuil();
+        InfirmierAcceuil init1=new InfirmierAcceuil(infirmier.login);
         init1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        new InfirmierPrescription(patient, infirmier);
+        this.dispose();
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,14 +254,18 @@ public class InfirmierePatient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InfirmierePatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InfirmierPatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InfirmierePatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InfirmierPatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InfirmierePatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InfirmierPatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InfirmierePatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InfirmierPatient .class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -248,7 +274,7 @@ public class InfirmierePatient extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InfirmiereAcceuil().setVisible(true);
+
             }
         });
     }
@@ -259,6 +285,7 @@ public class InfirmierePatient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

@@ -17,8 +17,8 @@ public class TestInterface {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       InfirmiereObservation init=new InfirmiereObservation();
-        init.setVisible(true);
+        new InfirmierAcceuil("jean_nemar");
+
     }
     
 }

@@ -122,7 +122,7 @@ public class Patient {
                 while(rs.next()){
                    adresse+="rue "+rs.getString("rue")+"  ";
                    adresse+=rs.getString("codepostale")+"   ";
-                   adresse+=rs.getString("ville")+"   ";
+                   adresse+="\n"+rs.getString("ville")+"   ";
                 }    
 
             } catch(SQLException e){

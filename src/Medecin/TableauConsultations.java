@@ -76,16 +76,16 @@ public class TableauConsultations extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                System.out.println("cas 0");
+
                 return listCons.get(rowIndex).getService();
             case 1:
-                System.out.println("cas 1");
+
                 return listCons.get(rowIndex).getNomMedecin();
             case 2: 
-                System.out.println("cas 2");
+
                 return listCons.get(rowIndex).getDate();
             case 3: 
-                System.out.println("cas 3");
+
                 return listCons.get(rowIndex).getMotif();
             default:
                 return null; //Ne devrait jamais arriver

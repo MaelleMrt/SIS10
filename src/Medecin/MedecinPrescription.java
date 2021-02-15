@@ -13,11 +13,13 @@ import Patient.Patient;
  */
 public class MedecinPrescription extends javax.swing.JFrame {
      public Patient patient;
+     public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinPrescription(Patient p) {
+    public MedecinPrescription(Patient p,Medecin med) {
         patient=p;
+        medecin=med;
         initComponents();
         this.setVisible(true);
     }
@@ -84,7 +86,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel35.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel35.setText("Clara Oster");
+        jLabel35.setText(medecin.getNom()+" "+medecin.getPrenom());
 
         jLabel37.setFont(new java.awt.Font("Lucida Grande", 0, 8)); // NOI18N
         jLabel37.setText("Deconnexion");
@@ -241,7 +243,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        new MedecinPatient(patient);
+        new MedecinPatient(patient,medecin);
 
         
         

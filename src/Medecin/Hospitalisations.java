@@ -11,32 +11,10 @@ import java.util.Date;
  *
  * @author Maelle
  */
-public class Hospitalisations {
-    String service;
-    String nomMedecin;
-    Date date;
-    String mot;
-     public Hospitalisations(String s,String m, Date d,String motif){
-       service =s;
-       nomMedecin =m;
-       date=d;
-       mot=motif;
-        
-    }
+public class Hospitalisations extends Acte {
 
-    public String getService() {
-        return service;
+    public Hospitalisations(String s, String m, String d, String motif) {
+        super(s, m, d, motif);
     }
-
-    public String getNomMedecin() {
-        return nomMedecin;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getMotif() {
-        return mot;
-    }
+    
 }

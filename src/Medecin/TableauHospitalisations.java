@@ -24,7 +24,7 @@ public class TableauHospitalisations extends AbstractTableModel{
     private final String[] entetes = {"Service ", "Medecin", "Date ","motif"};
     
     public TableauHospitalisations(Patient p) {
-        Date date;
+        String date;
         String contenu;
         String login=null;
         String nomM;
@@ -34,7 +34,7 @@ public class TableauHospitalisations extends AbstractTableModel{
             try{
                 ResultSet rs1= s.executeQuery("SELECT date,motif,login FROM Acte WHERE idP ='"+ p.getId()+"'AND type='Hospitalisation'" );
                 while(rs1.next()){
-                    date= rs1.getDate("date");
+                    date= rs1.getString("date");
                     contenu= rs1.getString("motif");
                     login =rs1.getString("login");
                     ResultSet rs2= s.executeQuery("SELECT nom,nomS FROM Médecin WHERE login ='"+login+"'" );
@@ -76,16 +76,16 @@ public class TableauHospitalisations extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                System.out.println("cas 0");
+
                 return listHospi.get(rowIndex).getService();
             case 1:
-                System.out.println("cas 1");
+
                 return listHospi.get(rowIndex).getNomMedecin();
             case 2: 
-                System.out.println("cas 2");
+
                 return listHospi.get(rowIndex).getDate();
             case 3: 
-                System.out.println("cas 3");
+
                 return listHospi.get(rowIndex).getMotif();
             default:
                 return null; //Ne devrait jamais arriver

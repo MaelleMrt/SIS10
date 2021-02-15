@@ -5,7 +5,7 @@
  */
 package PageConnexion;
 
-import Infirmiere.InfirmiereAcceuil;
+import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
 import Secretaire.Secretaire;
 
@@ -202,7 +202,7 @@ public class InterfaceConnexion extends javax.swing.JFrame {
                     m.setVisible(true);
                     break;
                 case "infirmiere" :
-                    InfirmiereAcceuil i = new InfirmiereAcceuil();
+                    InfirmierAcceuil i = new InfirmierAcceuil();
                     i.setVisible(true);
                     break;
             }
