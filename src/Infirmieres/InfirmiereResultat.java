@@ -8,6 +8,8 @@ package Infirmieres;
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
 import Patient.Patient;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 
 /**
@@ -68,6 +70,25 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(modele);
         jScrollPane1.setViewportView(jTable1);
+        jTable1.addMouseListener(new MouseAdapter()  {
+            public void mousePressed(MouseEvent e) {
+
+                // clic sur le bouton gauche ou droit
+                if(e.getButton() == MouseEvent.BUTTON1 ||
+                    e.getButton() == MouseEvent.BUTTON3)
+                {
+                    int indRow =jTable1.rowAtPoint(e.getPoint());
+
+                    try{
+                        ResultatPrescription res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        new ContenuInf(res,patient,infirmier);
+                    }catch(Exception e2){
+                    }
+
+                }
+            }
+
+        });
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
         jButton1.setText("Acceuil");
@@ -110,14 +131,14 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 494, Short.MAX_VALUE)
                         .addComponent(jLabel38))
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel34)
                         .addGap(109, 109, 109)
                         .addComponent(jLabel36)))

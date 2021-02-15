@@ -12,34 +12,9 @@ import javafx.scene.text.Text;
  *
  * @author Maelle
  */
-public class Prescription {
-    String service;
-    String nomMedecin;
-    Date date;
-    String cont;
-    
-   public Prescription(String s,String m, Date d,String contenu){
-       service =s;
-       nomMedecin =m;
-       date=d;
-       cont=contenu;
-        
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getContenu() {
-        return cont;
-    }
-
-    public String getService() {
-        return service;
-    }
-
-    public String getMedecin() {
-        return nomMedecin;
-    }
+public class Prescription extends ResultatPrescription{
   
+   public Prescription(String s,String m, String d,String contenu){
+            super(s,m,d,contenu);
+    }
 }

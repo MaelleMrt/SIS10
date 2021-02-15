@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -142,6 +142,7 @@
                 </Property>
               </Properties>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.addMouseListener(new MouseAdapter()  {&#xa;            public void mousePressed(MouseEvent e) {&#xa;&#xa;                // clic sur le bouton gauche ou droit&#xa;                if(e.getButton() == MouseEvent.BUTTON1 ||&#xa;                    e.getButton() == MouseEvent.BUTTON3)&#xa;                {&#xa;                    int indRow =jTable1.rowAtPoint(e.getPoint());&#xa;&#xa;                    try{&#xa;                        ResultatPrescription pres=new Prescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());&#xa;                        new Contenu(pres,patient,medecin);&#xa;                    }catch(Exception e2){&#xa;                    }&#xa;&#xa;                }&#xa;            }&#xa;&#xa;        });"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPrescriptions modele = new TableauPrescriptions(patient);"/>
               </AuxValues>

@@ -11,33 +11,10 @@ import java.util.Date;
  *
  * @author Maelle
  */
-public class Resultat {
-    String service;
-    String nomMedecin;
-    Date date;
-    String cont;
+public class Resultat extends ResultatPrescription{
+
+    public Resultat(String s, String m, String d, String contenu) {
+        super(s, m, d, contenu);
+    }
     
-   public Resultat(String s,String m, Date d,String contenu){
-       service =s;
-       nomMedecin =m;
-       date=d;
-       cont=contenu;
-        
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getContenu() {
-        return cont;
-    }
-
-    public String getService() {
-        return service;
-    }
-
-    public String getMedecin() {
-        return nomMedecin;
-    }
 }

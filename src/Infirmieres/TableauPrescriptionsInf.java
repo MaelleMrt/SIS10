@@ -27,7 +27,7 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
     
     public TableauPrescriptionsInf(Patient p,String nomS) {
         service=nomS;
-        Date date;
+        String date;
         String contenu;
         String login=null;
         String nomM;
@@ -37,7 +37,7 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
             try{
                 ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Prescription WHERE idP ='"+ p.getId()+"'");
                 while(rs1.next()){
-                    date= rs1.getDate("date");
+                    date= rs1.getString("date");
                     contenu= rs1.getString("contenu");
                     login =rs1.getString("login");
                     ResultSet rs2= s.executeQuery("SELECT nom FROM Médecin WHERE login ='"+login+"'AND nomS='"+service+"'" );

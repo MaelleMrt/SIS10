@@ -24,7 +24,7 @@ public class TableauPrescriptions extends AbstractTableModel{
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     
     public TableauPrescriptions(Patient p) {
-        Date date;
+        String date;
         String contenu;
         String login=null;
         String nomM;
@@ -34,7 +34,7 @@ public class TableauPrescriptions extends AbstractTableModel{
             try{
                 ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM Prescription WHERE idP ='"+ p.getId()+"'" );
                 while(rs1.next()){
-                    date= rs1.getDate("date");
+                    date= rs1.getString("date");
                     contenu= rs1.getString("contenu");
                     login =rs1.getString("login");
                     ResultSet rs2= s.executeQuery("SELECT nom,nomS FROM Médecin WHERE login ='"+login+"'" );
