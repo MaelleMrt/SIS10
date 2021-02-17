@@ -73,7 +73,7 @@
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="405" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="543" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
@@ -147,7 +147,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextField1.setFont(new java.awt.Font(&quot;Bell MT&quot;, 0, 13)); // NOI18N&#xa;        jTextField1.setText(&quot;Recherche Patient&quot;);&#xa;        jTextField1.getDocument().addDocumentListener(new DocumentListener() {&#xa;            public void changedUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void removeUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void insertUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;&#xa;            public void afficherList() {&#xa;                DefaultTableModel ModeleTest2 = new DefaultTableModel();&#xa;                String texte=jTextField1.getText();&#xa;                int i=0;&#xa;                for (Patient p : listPatient) {&#xa;                    if(p.getNom().contains(texte)){&#xa;                        Vector&lt;String&gt; v=new Vector&lt;String&gt;();&#xa;                        v.add(p.getNom());&#xa;                        v.add(p.getPrenom());&#xa;                        v.add(p.getNaissance());&#xa;                        ModeleTest2.setColumnIdentifiers(new String[]{&quot;Nom&quot;,&quot;Prenom&quot;,&quot;Date de Naissance&quot;});&#xa;                        ModeleTest2.insertRow(i,v) ;&#xa;                        System.out.println(&quot;ajout vecteur &quot;+p.getNom()+&quot; &quot;+p.getNaissance());&#xa;                        i++;&#xa;                    }&#xa;                }&#xa;                jTable1.setModel(ModeleTest2);&#xa;            }&#xa;        });&#xa;jTextField1.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                jTextField1ActionPerformed(evt);&#xa;            }&#xa;        });&#xa;/*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;            public void keyTyped(java.awt.event.KeyEvent evt) {&#xa;                jTextField1KeyTyped(evt);&#xa;            }&#xa;        });*/"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextField1.setFont(new java.awt.Font(&quot;Bell MT&quot;, 0, 13)); // NOI18N&#xa;        jTextField1.setText(&quot;Recherche Patient&quot;);&#xa;        jTextField1.getDocument().addDocumentListener(new DocumentListener() {&#xa;            public void changedUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void removeUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void insertUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;&#xa;            public void afficherList() {&#xa;                DefaultTableModel ModeleTest2 = new DefaultTableModel();&#xa;                String texte=jTextField1.getText();&#xa;                int i=0;&#xa;                for (Patient p : listPatient.getListPatient()) {&#xa;                    if(p.getNomUsuel().contains(texte)){&#xa;                        Vector&lt;String&gt; v=new Vector&lt;String&gt;();&#xa;                        v.add(p.getNomUsuel());&#xa;                        v.add(p.getPrenom());&#xa;                        v.add(p.getNaissance());&#xa;                        ModeleTest2.setColumnIdentifiers(new String[]{&quot;Nom&quot;,&quot;Prenom&quot;,&quot;Date de Naissance&quot;});&#xa;                        ModeleTest2.insertRow(i,v) ;&#xa;                        System.out.println(&quot;ajout vecteur &quot;+p.getNomUsuel()+&quot; &quot;+p.getNaissance());&#xa;                        i++;&#xa;                    }&#xa;                }&#xa;                jTable1.setModel(ModeleTest2);&#xa;            }&#xa;        });&#xa;jTextField1.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                jTextField1ActionPerformed(evt);&#xa;            }&#xa;        });&#xa;/*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;            public void keyTyped(java.awt.event.KeyEvent evt) {&#xa;                jTextField1KeyTyped(evt);&#xa;            }&#xa;        });*/"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel7">
@@ -161,30 +161,30 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="685" max="32767" attributes="0"/>
+                      <EmptySpace pref="806" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
                               <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabel40" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -192,31 +192,26 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel37" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                      <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="jLabel39" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="15" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -229,18 +224,12 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Lucida Grande" size="18" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Clara Oster"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="medecin.getNom()+&quot; &quot;+medecin.getPrenom()" type="code"/>
+                </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel36">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel37">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Lucida Grande" size="8" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Deconnexion"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel38">
               <Properties>
@@ -251,12 +240,13 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel39">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel40">
+            <Component class="javax.swing.JButton" name="jButton3">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Logo/deconnexion.png"/>
-                </Property>
+                <Property name="text" type="java.lang.String" value="D&#xe9;connexion"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -274,9 +264,9 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.addMouseListener(new MouseAdapter()  {&#xa;&#x9;&#x9;&#x9;public void mousePressed(MouseEvent e) {&#xa; &#xa;                                // clic sur le bouton gauche ou droit&#xa;&#x9;&#x9;&#x9;&#x9;if(e.getButton() == MouseEvent.BUTTON1 ||&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;e.getButton() == MouseEvent.BUTTON3) &#xa;&#x9;&#x9;&#x9;&#x9;{&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;int indRow =jTable1.rowAtPoint(e.getPoint()); &#xa;                                         System.out.println(&quot;nom: &quot; +jTable1.getValueAt(indRow, 0).toString());&#xa;                                         System.out.println(&quot;prenom: &quot; +jTable1.getValueAt(indRow, 1).toString());&#xa;                                         System.out.println(&quot;date: &quot; +jTable1.getValueAt(indRow, 2).toString());&#xa;&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());&#xa;                                        System.out.println(p.toString());&#xa;                                        new MedecinPatient(p);&#xa;                                }&#xa;                        }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.addMouseListener(new MouseAdapter()  {&#xa;&#x9;&#x9;&#x9;public void mousePressed(MouseEvent e) {&#xa; &#xa;                                // clic sur le bouton gauche ou droit&#xa;&#x9;&#x9;&#x9;&#x9;if(e.getButton() == MouseEvent.BUTTON1 ||&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;e.getButton() == MouseEvent.BUTTON3) &#xa;&#x9;&#x9;&#x9;&#x9;{&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;int indRow =jTable1.rowAtPoint(e.getPoint()); &#xa;                                        try{&#xa;                                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());&#xa;                                        System.out.println(p.toString());&#xa;                                        new MedecinPatient(p,medecin);&#xa;                                        }catch(Exception e2){&#xa;                                        }&#xa;&#xa;                                }                   &#xa;                        }&#xa;&#xa;});"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPatient modele = new TableauPatient();"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPatient modele = listPatient;"/>
               </AuxValues>
             </Component>
           </SubComponents>

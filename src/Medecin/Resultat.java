@@ -5,18 +5,16 @@
  */
 package Medecin;
 
+import java.util.Date;
+
 /**
  *
  * @author Maelle
  */
-public class testTabPatient {
+public class Resultat extends ResultatPrescription{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        new DateChecker();
-        System.out.println(DateChecker.isValid("1999-08-12"));
+    public Resultat(String s, String m, String d, String contenu) {
+        super(s, m, d, contenu);
     }
     
 }

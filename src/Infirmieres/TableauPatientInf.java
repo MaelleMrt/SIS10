@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Medecin;
+package Infirmieres;
 
+import Medecin.*;
 import Connexion.ExempleJdbc;
 import Patient.Patient;
 import java.sql.ResultSet;
@@ -16,20 +17,30 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Maelle
  */
-public class TableauPatient  extends AbstractTableModel{
+public class TableauPatientInf  extends AbstractTableModel{
      private ArrayList<Patient> listPatient= new ArrayList<Patient>();
      
     private final String[] entetes = {"Nom ", "Prenom", "Date de Naissance"};
     
-    public TableauPatient(String login) {
+    public TableauPatientInf(String nomS) {
+        ArrayList<String> listLoginMedecin= new ArrayList<String>();
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+ login+"'AND Patient.id = Acte.idP" );
-                while(rs.next()){
-                    Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
-                    listPatient.add(patient);
+                ResultSet r1= s.executeQuery("SELECT login FROM Médecin where nomS='"+nomS+"'" );
+                 while(r1.next()){
+                    String login=r1.getString("login");
+                    listLoginMedecin.add(login);
                 }   
+                for(String log:listLoginMedecin){
+                    ResultSet r2= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+log+"'AND Patient.id = Acte.idP" );
+                    while(r2.next()){
+                    Patient patient =new Patient(r2.getString("nomusuel"), r2.getString("prenom"), r2.getString("datedenaissance"));
+                    listPatient.add(patient);
+                    } 
+                }
+              
+                 
 
             } catch(SQLException e){
                     System.out.println(e);
