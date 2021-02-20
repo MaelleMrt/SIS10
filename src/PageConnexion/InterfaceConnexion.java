@@ -5,6 +5,7 @@
  */
 package PageConnexion;
 
+import CIC.CicAccueil;
 import Connexion.ExempleJdbc;
 import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
@@ -14,6 +15,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -294,6 +297,14 @@ private String Metier(){
                 case "infirmière" :
                     InfirmierAcceuil i = new InfirmierAcceuil(Login);
                     break;
+                case "CIC" :
+            
+                try {
+                    CicAccueil c = new CicAccueil(Login);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfaceConnexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
             }
                     
         }

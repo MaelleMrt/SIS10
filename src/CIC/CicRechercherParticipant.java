@@ -6,6 +6,7 @@
 package CIC;
 
 import Connexion.ExempleJdbc;
+import PageConnexion.InterfaceConnexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -28,28 +29,53 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private String nom;
     private String date;
     private int duree;
+    private String login;
+    private Cic cic;
 
-    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree) {
-        initComponents();
+    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree,String login) {
+        
+        
         this.listeParticipants = listeParticipants;
         this.ancienneListe = ancienneListe;
         this.nom = nom;
         this.date = date;
         this.duree = duree;
+        this.login = login;
+        trouverCic();
+        initComponents();
+        erreur.setVisible(false);
         this.setVisible(true);
+    }
+    
+    public void trouverCic(){
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                while (rs.next()) {
+                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 
     public ArrayList<String> Type() {
         ArrayList<String> liste = new ArrayList<>();
         if (type1.isSelected()) {
-            liste.add(type1.getName());
+            liste.add("patient");
         }
         if (type2.isSelected()) {
-            liste.add(type2.getName());
+            liste.add("volontaire sain");
         }
         if (!type1.isSelected() && !type2.isSelected()) {
-            liste.add(type1.getName());
-            liste.add(type2.getName());
+            liste.add("patient");
+            liste.add("volontaire sain");
         }
         return liste;
     }
@@ -57,14 +83,14 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Sexe() {
         ArrayList<String> liste = new ArrayList<>();
         if (sexe1.isSelected()) {
-            liste.add(sexe1.getName());
+            liste.add("F");
         }
         if (sexe2.isSelected()) {
-            liste.add(sexe2.getName());
+            liste.add("H");
         }
         if (!sexe1.isSelected() && !sexe2.isSelected()) {
-            liste.add(sexe1.getName());
-            liste.add(sexe2.getName());
+            liste.add("F");
+            liste.add("H");
         }
         return liste;
     }
@@ -72,22 +98,22 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Allergie() {
         ArrayList<String> liste = new ArrayList<>();
         if (allergie1.isSelected()) {
-            liste.add(allergie1.getName());
+            liste.add("alimentaire");
         }
         if (allergie2.isSelected()) {
-            liste.add(allergie2.getName());
+            liste.add("médicament");
         }
         if (allergie3.isSelected()) {
-            liste.add(allergie3.getName());
+            liste.add("autre");
         }
         if (allergie4.isSelected()) {
-            liste.add(allergie4.getName());
+            liste.add("aucune");
         }
         if (!allergie1.isSelected() && !allergie2.isSelected() && !allergie3.isSelected() && !allergie4.isSelected()) {
-            liste.add(allergie1.getName());
-            liste.add(allergie2.getName());
-            liste.add(allergie3.getName());
-            liste.add(allergie4.getName());
+            liste.add("alimentaire");
+            liste.add("médicament");
+            liste.add("autre");
+            liste.add("aucune");
         }
         return liste;
     }
@@ -95,26 +121,26 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Regime() {
         ArrayList<String> liste = new ArrayList<>();
         if (regime1.isSelected()) {
-            liste.add(regime1.getName());
+            liste.add("végétarien");
         }
         if (regime2.isSelected()) {
-            liste.add(regime2.getName());
+            liste.add("sans gluten");
         }
         if (regime3.isSelected()) {
-            liste.add(regime3.getName());
+            liste.add("sans sel");
         }
         if (regime4.isSelected()) {
-            liste.add(regime4.getName());
+            liste.add("autre");
         }
         if (regime5.isSelected()) {
-            liste.add(regime5.getName());
+            liste.add("normal");
         }
         if (!regime1.isSelected() && !regime2.isSelected() && !regime3.isSelected() && !regime4.isSelected() && !regime5.isSelected()) {
-            liste.add(regime1.getName());
-            liste.add(regime2.getName());
-            liste.add(regime3.getName());
-            liste.add(regime4.getName());
-            liste.add(regime5.getName());
+            liste.add("végétarien");
+            liste.add("sans gluten");
+            liste.add("sans sel");
+            liste.add("autre");
+            liste.add("normal");
         }
         return liste;
     }
@@ -122,22 +148,22 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Sport() {
         ArrayList<String> liste = new ArrayList<>();
         if (sport1.isSelected()) {
-            liste.add(sport1.getName());
+            liste.add("jamais");
         }
         if (sport2.isSelected()) {
-            liste.add(sport2.getName());
+            liste.add("rarement");
         }
         if (sport3.isSelected()) {
-            liste.add(sport3.getName());
+            liste.add("régulièrement");
         }
         if (sport4.isSelected()) {
-            liste.add(sport4.getName());
+            liste.add("sportif de haut niveau");
         }
         if (!sport1.isSelected() && !sport2.isSelected() && !sport3.isSelected() && !sport4.isSelected()) {
-            liste.add(sport1.getName());
-            liste.add(sport2.getName());
-            liste.add(sport3.getName());
-            liste.add(sport4.getName());
+            liste.add("jamais");
+            liste.add("rarement");
+            liste.add("régulièrement");
+            liste.add("sportif de haut niveau");
         }
         return liste;
     }
@@ -145,14 +171,14 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Fumeur() {
         ArrayList<String> liste = new ArrayList<>();
         if (fumeur1.isSelected()) {
-            liste.add(fumeur1.getName());
+            liste.add("oui");
         }
         if (fumeur2.isSelected()) {
-            liste.add(fumeur2.getName());
+            liste.add("non");
         }
         if (!fumeur1.isSelected() && !fumeur2.isSelected()) {
-            liste.add(fumeur1.getName());
-            liste.add(fumeur2.getName());
+            liste.add("oui");
+            liste.add("non");
         }
         return liste;
     }
@@ -160,42 +186,42 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Categorie() {
         ArrayList<String> liste = new ArrayList<>();
         if (cat1.isSelected()) {
-            liste.add(cat1.getName());
+            liste.add("agriculteurs exploitants");
         }
         if (cat2.isSelected()) {
-            liste.add(cat2.getName());
+            liste.add("artisans, commerçants, chefs d entreprise");
         }
         if (cat3.isSelected()) {
-            liste.add(cat3.getName());
+            liste.add("cadres et professions intellectuelles supérieures");
         }
         if (cat4.isSelected()) {
-            liste.add(cat4.getName());
+            liste.add("professions intermédiaires");
         }
         if (cat5.isSelected()) {
-            liste.add(cat5.getName());
+            liste.add("employés");
         }
         if (cat6.isSelected()) {
-            liste.add(cat6.getName());
+            liste.add("ouvriers");
         }
         if (cat7.isSelected()) {
-            liste.add(cat7.getName());
+            liste.add("retraités");
         }
         if (cat8.isSelected()) {
-            liste.add(cat8.getName());
+            liste.add("étudiants");
         }
         if (cat9.isSelected()) {
-            liste.add(cat9.getName());
+            liste.add("autres sans activité professionnelle");
         }
         if (!cat1.isSelected() && !cat2.isSelected() && !cat3.isSelected() && !cat4.isSelected() && !cat5.isSelected() && !cat6.isSelected() && !cat7.isSelected() && !cat8.isSelected() && !cat9.isSelected()) {
-            liste.add(cat1.getName());
-            liste.add(cat2.getName());
-            liste.add(cat3.getName());
-            liste.add(cat4.getName());
-            liste.add(cat5.getName());
-            liste.add(cat6.getName());
-            liste.add(cat7.getName());
-            liste.add(cat8.getName());
-            liste.add(cat9.getName());
+            liste.add("agriculteurs exploitants");
+            liste.add("artisans, commerçants, chefs d entreprise");
+            liste.add("cadres et professions intellectuelles supérieures");
+            liste.add("professions intermédiaires");
+            liste.add("employés");
+            liste.add("ouvriers");
+            liste.add("retraités");
+            liste.add("étudiants");
+            liste.add("autres sans activité professionnelle");
         }
         return liste;
     }
@@ -207,14 +233,8 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
 
     public ArrayList<Integer> Age() {
         ArrayList<Integer> liste = new ArrayList<>();
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date aujourdhui = new Date();
 
         if (age1.isSelected()) {
-            int annee1 = aujourdhui.getYear() - 18;
-            int annee2 = aujourdhui.getYear() - 25;
-            Date d1 = new Date(annee1,aujourdhui.getMonth(),aujourdhui.getDay());
-            Date d2 = new Date(annee2,aujourdhui.getMonth(),aujourdhui.getDay());
             liste.add(1);
         }
         if (age2.isSelected()) {
@@ -238,22 +258,22 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Taille() {
         ArrayList<String> liste = new ArrayList<>();
         if (taille1.isSelected()) {
-            liste.add("taille < 150");
+            liste.add(" AND taille < 150");
         }
         if (taille2.isSelected()) {
-            liste.add("taille >= 150 AND taille <= 170");
+            liste.add(" AND taille BETWEEN 150 AND 170");
         }
         if (taille3.isSelected()) {
-            liste.add("taille >= 171 AND taille <= 190");
+            liste.add(" AND taille BETWEEN 171 AND 190");
         }
         if (taille4.isSelected()) {
-            liste.add("taille > 190");
+            liste.add(" AND taille > 190");
         }
         if (!taille1.isSelected() && !taille2.isSelected() && !taille3.isSelected() && !taille4.isSelected()) {
-            liste.add("taille < 150");
-            liste.add("taille >= 150 AND taille <= 170");
-            liste.add("taille >= 171 AND taille <= 190");
-            liste.add("taille > 190");
+            liste.add(" AND taille < 150");
+            liste.add(" AND taille BETWEEN 150 AND 170");
+            liste.add(" AND taille BETWEEN 171 AND 190");
+            liste.add(" AND taille > 190");
         }
         return liste;
     }
@@ -261,30 +281,30 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     public ArrayList<String> Poids() {
         ArrayList<String> liste = new ArrayList<>();
         if (poids1.isSelected()) {
-            liste.add("poids < 45");
+            liste.add(" AND poids < 45");
         }
         if (poids2.isSelected()) {
-            liste.add("poids >= 45 AND poids <= 60");
+            liste.add(" AND poids BETWEEN 45 AND 60");
         }
         if (poids3.isSelected()) {
-            liste.add("poids >= 61 AND poids <= 75");
+            liste.add(" AND poids BETWEEN 61 AND 75");
         }
         if (poids4.isSelected()) {
-            liste.add("poids >= 76 AND poids <= 90");
+            liste.add(" AND poids BETWEEN 76 AND 90");
         }
         if (poids5.isSelected()) {
-            liste.add("poids >= 91 AND poids <= 105");
+            liste.add(" AND poids BETWEEN 91 AND 105");
         }
         if (poids6.isSelected()) {
-            liste.add("poids > 105");
+            liste.add(" AND poids > 105");
         }
         if (!poids1.isSelected() && !poids2.isSelected() && !poids3.isSelected() && !poids4.isSelected() && !poids5.isSelected() && !poids6.isSelected()) {
-            liste.add("poids < 45");
-            liste.add("poids >= 45 AND poids <= 60");
-            liste.add("poids >= 61 AND poids <= 75");
-            liste.add("poids >= 76 AND poids <= 90");
-            liste.add("poids >= 91 AND poids <= 105");
-            liste.add("poids > 105");
+            liste.add(" AND poids < 45");
+            liste.add(" AND poids BETWEEN 45 AND 60");
+            liste.add(" AND poids BETWEEN 61 AND 75");
+            liste.add(" AND poids BETWEEN 76 AND 90");
+            liste.add(" AND poids BETWEEN 91 AND 105");
+            liste.add(" AND poids > 105");
         }
         return liste;
     }
@@ -360,6 +380,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         ville = new javax.swing.JTextField();
         regime5 = new javax.swing.JCheckBox();
+        erreur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -367,8 +388,13 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
 
         deconnexion.setText("Déconnexion");
         deconnexion.setToolTipText("");
+        deconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
 
-        utilisateur.setText("Prénom Nom");
+        utilisateur.setText(cic.getPrenom()+" "+cic.getNom());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -610,142 +636,148 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
             }
         });
 
+        erreur.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+        erreur.setForeground(new java.awt.Color(255, 0, 0));
+        erreur.setText("Aucun participant ne correspond à votre recherche");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(452, 452, 452)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(454, 454, 454))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sexe1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sexe2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(type1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(type2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(age1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(age2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(age3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(age4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sexe1)
+                                .addComponent(poids1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sexe2))
+                                .addComponent(poids2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(poids3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(poids4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(poids5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(poids6))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(type1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(type2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(age1)
+                                .addComponent(taille1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(age2)
+                                .addComponent(taille2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(age3)
+                                .addComponent(taille3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(age4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(poids1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(poids2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(poids3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(poids4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(poids5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(poids6))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(taille1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(taille2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(taille3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(taille4))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(allergie1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(allergie2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(allergie3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(allergie4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sport1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sport2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sport3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(sport4))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fumeur1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fumeur2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cat4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat7)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat9))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cat1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cat3))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pathologie))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(regime1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(regime2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(regime3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(regime4)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(regime5))))
+                                .addComponent(taille4))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(452, 452, 452)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(439, 439, 439)))
-                .addGap(15, 15, 15))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ville, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(annuler)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rechercher)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(allergie1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(allergie2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(allergie3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(allergie4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sport1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sport2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sport3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sport4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(fumeur1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fumeur2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cat4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat9))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cat1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cat3))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pathologie))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regime1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regime2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regime3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(regime4)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(regime5))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ville, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(erreur, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(108, 108, 108)
+                                .addComponent(annuler)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rechercher)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -754,7 +786,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(type1)
                     .addComponent(type2))
@@ -824,26 +856,25 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                     .addComponent(cat2)
                     .addComponent(cat3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cat4)
-                    .addComponent(cat5)
-                    .addComponent(cat6)
-                    .addComponent(cat7)
-                    .addComponent(cat8)
-                    .addComponent(cat9))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(rechercher)
-                            .addComponent(annuler))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cat4)
+                            .addComponent(cat5)
+                            .addComponent(cat6)
+                            .addComponent(cat7)
+                            .addComponent(cat8)
+                            .addComponent(cat9))
+                        .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
                             .addComponent(ville, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32))))
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rechercher)
+                            .addComponent(annuler)))
+                    .addComponent(erreur, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         pack();
@@ -918,6 +949,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     }//GEN-LAST:event_cat9ActionPerformed
 
     private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
+
         ArrayList<String> l1 = Type();
         ArrayList<String> l2 = Sexe();
         ArrayList<String> l3 = Allergie();
@@ -931,27 +963,62 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         String patho = pathologie.getText();
         String v = ville.getText();
 
-        for (String t : l1) {
-            for (String s : l2) {
-                for (String a : l3) {
-                    for (String r : l4) {
-                        for (String sp : l5) {
-                            for (String f : l6) {
-                                for (String c : l7) {
-                                    for (int age : l8) { //à voir
-                                        for (String ta : l9) {
-                                            for (String p : l10) {
-                                                if (!v.equals("")) {
-                                                    if (!patho.equals("")) {
-                                                        try {
-                                                            Statement st = ExempleJdbc.connexion();
+        listeParticipants = new ArrayList<Participant>();
+        erreur.setVisible(false);
+        
+        try {
+            Statement st = ExempleJdbc.connexion();
+            ResultSet rs;
+            for (String t : l1) {
+                for (String s : l2) {
+                    for (String a : l3) {
+                        for (String r : l4) {
+                            for (String sp : l5) {
+                                for (String f : l6) {
+                                    for (String c : l7) {
+                                        for (int age : l8) {
+                                            String s1;
+                                            if (age == 1) {
+                                                Date aujourdhui = new Date();
+                                                int annee1 = aujourdhui.getYear() - 18;
+                                                int annee2 = aujourdhui.getYear() - 25;
+                                                java.sql.Date d1 = new java.sql.Date(annee1, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                java.sql.Date d2 = new java.sql.Date(annee2, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                s1 = " BETWEEN '" + d2 + "' AND '" + d1 + "'";
+                                            } else if (age == 2) {
+                                                Date aujourdhui = new Date();
+                                                int annee1 = aujourdhui.getYear() - 26;
+                                                int annee2 = aujourdhui.getYear() - 40;
+                                                java.sql.Date d1 = new java.sql.Date(annee1, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                java.sql.Date d2 = new java.sql.Date(annee2, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                s1 = " BETWEEN '" + d2 + "' AND '" + d1 + "'";
+                                            } else if (age == 3) {
+                                                Date aujourdhui = new Date();
+                                                int annee1 = aujourdhui.getYear() - 41;
+                                                int annee2 = aujourdhui.getYear() - 65;
+                                                java.sql.Date d1 = new java.sql.Date(annee1, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                java.sql.Date d2 = new java.sql.Date(annee2, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                s1 = " BETWEEN '" + d2 + "' AND '" + d1 + "'";
+                                            } else {
+                                                Date aujourdhui = new Date();
+                                                int annee1 = aujourdhui.getYear() - 65;
+                                                java.sql.Date d1 = new java.sql.Date(annee1, aujourdhui.getMonth(), aujourdhui.getDate());
+                                                s1 = " < '" + d1 + "'";
+
+                                            }
+                                            for (String ta : l9) {
+                                                for (String p : l10) {
+                                                    String requete = "SELECT nomUsuel, prenom, dateDeNaissance, type FROM Participant WHERE type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "' AND fumeur ='" + f + "' AND categorie ='" + c + "'" + ta + p + " AND dateDeNaissance" + s1;
+
+                                                    if (!v.equals("")) {
+                                                        if (!patho.equals("")) {
+
                                                             try {
-                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
-                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
-                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND ville ='" + v + "' AND pathologie ='" + patho + "')");
+                                                                rs = st.executeQuery(requete + " AND ville ='" + v + "' AND pathologie ='" + patho + "'");
 
                                                                 while (rs.next()) {
-                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    System.out.println(rs.getString("nomUsuel"));
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
                                                                     if (!listeParticipants.contains(participant)) {
                                                                         listeParticipants.add(participant);
                                                                     }
@@ -961,19 +1028,33 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 System.out.println(e);
                                                             }
 
-                                                        } catch (SQLException e) {
-                                                            System.out.println(e);
+                                                        } else {
+
+                                                            try {
+                                                                rs = st.executeQuery(requete + " AND ville ='" + v + "'");
+
+                                                                while (rs.next()) {
+                                                                    System.out.println(rs.getString("nomUsuel"));
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
                                                         }
                                                     } else {
-                                                        try {
-                                                            Statement st = ExempleJdbc.connexion();
+                                                        if (!patho.equals("")) {
+
                                                             try {
-                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
-                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
-                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND ville ='" + v + "')");
+                                                                rs = st.executeQuery(requete + " AND pathologie ='" + patho + ")");
 
                                                                 while (rs.next()) {
-                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                                                                    System.out.println(rs.getString("nomUsuel"));
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
                                                                     if (!listeParticipants.contains(participant)) {
                                                                         listeParticipants.add(participant);
                                                                     }
@@ -983,56 +1064,26 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 System.out.println(e);
                                                             }
 
-                                                        } catch (SQLException e) {
-                                                            System.out.println(e);
+                                                        } else {
+
+                                                            try {
+                                                                rs = st.executeQuery(requete);
+
+                                                                while (rs.next()) {
+                                                                    System.out.println(rs.getString("nomUsuel"));
+                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
+                                                                    if (!listeParticipants.contains(participant)) {
+                                                                        listeParticipants.add(participant);
+                                                                    }
+                                                                }
+
+                                                            } catch (SQLException e) {
+                                                                System.out.println(e);
+                                                            }
+
                                                         }
                                                     }
-                                                } else {
-                                                    if (!patho.equals("")) {
-                                                        try {
-                                                            Statement st = ExempleJdbc.connexion();
-                                                            try {
-                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
-                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
-                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + " AND pathologie ='" + patho + "')");
 
-                                                                while (rs.next()) {
-                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
-                                                                        listeParticipants.add(participant);
-                                                                    }
-                                                                }
-
-                                                            } catch (SQLException e) {
-                                                                System.out.println(e);
-                                                            }
-
-                                                        } catch (SQLException e) {
-                                                            System.out.println(e);
-                                                        }
-                                                    } else {
-                                                        try {
-                                                            Statement st = ExempleJdbc.connexion();
-                                                            try {
-                                                                ResultSet rs = st.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant"
-                                                                        + "WHERE (type ='" + t + "' AND sexe ='" + s + "' AND allergie = '" + a + "' AND regime = '" + r + "' AND sport ='" + sp + "'"
-                                                                        + "AND fumeur ='" + f + "' AND categorie ='" + c + "' AND " + ta + " AND " + p + ")");
-
-                                                                while (rs.next()) {
-                                                                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
-                                                                        listeParticipants.add(participant);
-                                                                    }
-                                                                }
-
-                                                            } catch (SQLException e) {
-                                                                System.out.println(e);
-                                                            }
-
-                                                        } catch (SQLException e) {
-                                                            System.out.println(e);
-                                                        }
-                                                    }
                                                 }
                                             }
                                         }
@@ -1043,20 +1094,26 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                     }
                 }
             }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
 
-        this.setVisible(false);
-        try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree);
-        } catch (SQLException ex) {
-            Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
+        if (listeParticipants.isEmpty()) {
+            erreur.setVisible(true);
+        } else {
+            this.setVisible(false);
+            try {
+                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree,login);
+            } catch (SQLException ex) {
+                Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_rechercherActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree);
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree,login);
         } catch (SQLException ex) {
             Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1065,6 +1122,11 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private void regime5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regime5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_regime5ActionPerformed
+
+    private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        this.setVisible(false);
+        InterfaceConnexion i = new InterfaceConnexion();
+    }//GEN-LAST:event_deconnexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1121,6 +1183,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private javax.swing.JCheckBox cat8;
     private javax.swing.JCheckBox cat9;
     private javax.swing.JButton deconnexion;
+    private javax.swing.JLabel erreur;
     private javax.swing.JCheckBox fumeur1;
     private javax.swing.JCheckBox fumeur2;
     private javax.swing.JLabel jLabel1;

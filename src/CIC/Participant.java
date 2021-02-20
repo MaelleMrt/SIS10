@@ -5,6 +5,8 @@
  */
 package CIC;
 
+import java.sql.Date;
+
 /**
  *
  * @author clara
@@ -13,10 +15,10 @@ public class Participant {
     private String nomU;
 //    private String nomN;
     private String prenom;
-    private String dateN;
+    private Date dateN;
     private String type;
     
-    public Participant(String nomU,String prenom,String dateN, String type){
+    public Participant(String nomU,String prenom,Date dateN, String type){
         this.nomU = nomU;
 //        this.nomN = nomN;
         this.prenom = prenom;
@@ -36,7 +38,7 @@ public class Participant {
         return prenom;
     }
 
-    public String getDateN() {
+    public Date getDateN() {
         return dateN;
     }
 

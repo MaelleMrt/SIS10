@@ -6,9 +6,13 @@
 package CIC;
 
 import Connexion.ExempleJdbc;
+import PageConnexion.InterfaceConnexion;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -25,25 +29,32 @@ public class CicEtude extends javax.swing.JFrame {
 
     private Etude e;
     private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    private String login;
+    private Cic cic;
     
-    public CicEtude(Etude e) throws SQLException {
+    public CicEtude(Etude e,String login) throws SQLException {
+        
+        
+        this.login = login;
+        trouverCic();
         initComponents();
         this.e = e;
         jLabel13.setText(this.e.getNom());
         ph.setText(e.getPH());
         date.setText(e.getDate());
         duree.setText(String.valueOf(e.getDuree()) + " semaines" );
+        remplirTableau();
         this.setVisible(true);
-        remplirTableau(); 
+         
    }
     
     public void remplirTableau() throws SQLException{
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT nomUsuel, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND prenom = participantPrenom AND dateDeNaissance = participantDate) WHERE Etude.nom = '"+e.getNom()+"'");
+                ResultSet rs= s.executeQuery("SELECT nomUsuel, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND prenom = participantPrenom AND dateDeNaissance = participantDate AND etude = nom) WHERE Etude.nom = '"+e.getNom()+"'");
                 while(rs.next()){
-                   Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getString("dateDeNaissance"), rs.getString("type"));
+                   Participant participant =new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
                    listeParticipants.add(participant);
                 }   
 
@@ -69,6 +80,24 @@ public class CicEtude extends javax.swing.JFrame {
         }
         participants.setModel (model);
      }
+    
+    public void trouverCic(){
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                while (rs.next()) {
+                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,8 +131,13 @@ public class CicEtude extends javax.swing.JFrame {
 
         deconnexion.setText("Déconnexion");
         deconnexion.setToolTipText("");
+        deconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
 
-        utilisateur.setText("Prénom Nom");
+        utilisateur.setText(cic.getPrenom()+" "+cic.getNom());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -307,7 +341,7 @@ public class CicEtude extends javax.swing.JFrame {
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil();
+            CicAccueil accueil = new CicAccueil(login);
         } catch (SQLException ex) {
             Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -317,6 +351,7 @@ public class CicEtude extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rechercherTextFieldActionPerformed
 
+    
     private void participantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_participantsMouseClicked
         int i = 0;
         while (i < participants.getRowCount() && !participants.isRowSelected(i)) {
@@ -324,13 +359,21 @@ public class CicEtude extends javax.swing.JFrame {
         }
         if (i < participants.getRowCount()) {
 
-            String nom = String.valueOf(participants.getValueAt(i, 0));
-            String prenom = String.valueOf(participants.getValueAt(i, 1));
-            String date = String.valueOf(participants.getValueAt(i, 2));
-            String type = String.valueOf(participants.getValueAt(i, 3));
-            Participant p = new Participant(nom, prenom, date,type);
-            this.setVisible(false);
-            CicParticipant part = new CicParticipant(e,p);  
+            try {
+                String nom = String.valueOf(participants.getValueAt(i, 0));
+                String prenom = String.valueOf(participants.getValueAt(i, 1));
+                
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String da = String.valueOf(participants.getValueAt(i, 2));
+                java.util.Date d = dateFormat.parse(da);
+                Date date = new Date(d.getTime());
+                String type = String.valueOf(participants.getValueAt(i, 3));
+                Participant p = new Participant(nom, prenom, date,type);
+                this.setVisible(false);  
+                CicParticipant part = new CicParticipant(e,p,login);
+            } catch (ParseException ex) {
+                Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_participantsMouseClicked
 
@@ -370,6 +413,11 @@ public class CicEtude extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
+    private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        this.setVisible(false);
+        InterfaceConnexion i = new InterfaceConnexion();
+    }//GEN-LAST:event_deconnexionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -400,12 +448,12 @@ public class CicEtude extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Etude e1 = new Etude ("covid-19","house gregory","r",2);
-                try {
-                    new CicEtude(e1).setVisible(true);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                Etude e1 = new Etude ("covid-19","house gregory","r",2);
+//                try {
+//                    new CicEtude(e1).setVisible(true);
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
         });
     }

@@ -6,6 +6,7 @@
 package CIC;
 
 import Connexion.ExempleJdbc;
+import PageConnexion.InterfaceConnexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,11 +21,16 @@ public class CicParticipant extends javax.swing.JFrame {
 
     private Etude e;
     private Participant p;
+    private String login;
+    private Cic cic;
     
-    public CicParticipant(Etude e,Participant p) {
-        initComponents();
+    public CicParticipant(Etude e,Participant p,String login) {
+        
         this.e = e;
         this.p = p;
+        this.login = login;
+        trouverCic();
+        initComponents();
         remplirLabel();
         jLabel13.setText(e.getNom());
         this.setVisible(true);
@@ -59,6 +65,25 @@ public class CicParticipant extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
+    
+    public void trouverCic(){
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                while (rs.next()) {
+                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,8 +133,13 @@ public class CicParticipant extends javax.swing.JFrame {
 
         deconnexion.setText("Déconnexion");
         deconnexion.setToolTipText("");
+        deconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
 
-        utilisateur.setText("Prénom Nom");
+        utilisateur.setText(cic.getPrenom()+" "+cic.getNom());
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -364,7 +394,7 @@ public class CicParticipant extends javax.swing.JFrame {
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicEtude etude = new CicEtude(e);
+            CicEtude etude = new CicEtude(e,login);
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -373,11 +403,16 @@ public class CicParticipant extends javax.swing.JFrame {
     private void accueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accueilActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil();
+            CicAccueil accueil = new CicAccueil(login);
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_accueilActionPerformed
+
+    private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        this.setVisible(false);
+        InterfaceConnexion i = new InterfaceConnexion();
+    }//GEN-LAST:event_deconnexionActionPerformed
 
     /**
      * @param args the command line arguments

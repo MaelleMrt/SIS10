@@ -57,10 +57,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="duree" min="-2" max="-2" attributes="0"/>
+                      <Component id="duree" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="188" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="162" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -152,10 +152,15 @@
             <Property name="text" type="java.lang.String" value="D&#xe9;connexion"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deconnexionActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="utilisateur">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pr&#xe9;nom Nom"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="cic.getPrenom() + &quot; &quot; + cic.getNom()" type="code"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -249,8 +254,18 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="nom">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="nomEtude" type="code"/>
+        </Property>
+      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="date">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="dateDemarrage" type="code"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dateActionPerformed"/>
       </Events>
@@ -262,8 +277,8 @@
     </Component>
     <Component class="javax.swing.JSpinner" name="duree">
       <Properties>
-        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-          <SpinnerModel initial="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="new javax.swing.SpinnerNumberModel(Integer.valueOf(dureeEtude), null, null, Integer.valueOf(1))" type="code"/>
         </Property>
       </Properties>
     </Component>

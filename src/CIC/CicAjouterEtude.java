@@ -6,13 +6,18 @@
 package CIC;
 
 import Connexion.ExempleJdbc;
+import PageConnexion.InterfaceConnexion;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,34 +26,36 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CicAjouterEtude extends javax.swing.JFrame {
 
-    private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
-    private ArrayList<Participant> ancienneListe= new ArrayList<Participant>();
-    private ArrayList<Participant> nouveaux= new ArrayList<Participant>();
+    private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    private ArrayList<Participant> nouveaux = new ArrayList<Participant>();
     private String nomEtude;
     private String dateDemarrage;
     private int dureeEtude;
-    
-    public CicAjouterEtude(ArrayList<Participant> ancienneListe,ArrayList<Participant> nouveaux,String nom,String date, int duree) {
-        initComponents();
+    private Cic cic;
+    private String login;
+
+    public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, String login) {
+
         this.ancienneListe = ancienneListe;
         this.nouveaux = nouveaux;
-        for (Participant p : this.ancienneListe){
+        for (Participant p : this.ancienneListe) {
             listeParticipants.add(p);
         }
-        for (Participant p : this.nouveaux){
+        for (Participant p : this.nouveaux) {
             listeParticipants.add(p);
         }
         this.nomEtude = nom;
         this.dateDemarrage = date;
         this.dureeEtude = duree;
-        this.nom.setText(nomEtude);
-        this.date.setText(date);
-        this.duree.setValue(duree);
+        this.login = login;
+        trouverCic();
+        initComponents();
         remplirTableau();
         this.setVisible(true);
     }
 
-    public void remplirTableau(){
+    public void remplirTableau() {
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {
@@ -61,10 +68,27 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             model.insertRow(i, v);
             i++;
         }
-        jTable1.setModel (model);
+        jTable1.setModel(model);
     }
-    
-    
+
+    public void trouverCic() {
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '" + this.login + "'");
+                while (rs.next()) {
+                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,8 +124,13 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
         deconnexion.setText("Déconnexion");
         deconnexion.setToolTipText("");
+        deconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
 
-        utilisateur.setText("Prénom Nom");
+        utilisateur.setText(cic.getPrenom() + " " + cic.getNom());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -197,6 +226,9 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             }
         });
 
+        nom.setText(nomEtude);
+
+        date.setText(dateDemarrage);
         date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dateActionPerformed(evt);
@@ -205,7 +237,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
         jLabel7.setText("semaines");
 
-        duree.setModel(new javax.swing.SpinnerNumberModel());
+        duree.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(dureeEtude), null, null, Integer.valueOf(1)));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -240,10 +272,10 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
-                        .addGap(0, 188, Short.MAX_VALUE))
+                        .addGap(0, 162, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -286,58 +318,100 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
+        ArrayList<Participant> liste = new ArrayList<>();
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants,nomEtude,dateDemarrage,dureeEtude);
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
+                while (rs.next()) {
+                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
+                    liste.add(participant);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        try {
+            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nomEtude, dateDemarrage, dureeEtude, login);
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void supprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerActionPerformed
-        for(int i=0;i<jTable1.getRowCount();i++){
-            if(jTable1.isRowSelected(i)){
-                Participant p1 = new Participant(String.valueOf(jTable1.getValueAt(i, 0)),String.valueOf(jTable1.getValueAt(i, 1)),String.valueOf(jTable1.getValueAt(i, 2)),String.valueOf(jTable1.getValueAt(i, 3)));
-                for(Participant p : listeParticipants){
-                    if (p.egal(p1)){
-                        listeParticipants.remove(p);
-                    }
-                }
-                remplirTableau();
-            }
-        }
-    }//GEN-LAST:event_supprimerActionPerformed
-
-    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        if(!nom.getText().equals("") && !date.getText().equals("") && (int)duree.getValue()!=0 && jTable1.getRowCount()>0){
-            for(int i = 0; i < jTable1.getRowCount(); i++){
-                Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)),String.valueOf(jTable1.getValueAt(i, 1)),String.valueOf(jTable1.getValueAt(i, 2)),String.valueOf(jTable1.getValueAt(i, 3)));
-                Etude e = new Etude(nom.getText(),"gregory_house",date.getText(),(int)duree.getValue());
-                Statement s;
+        ArrayList<Participant> supp = new ArrayList<>();
+        for (int i = 0; i < jTable1.getRowCount(); i++) {
+            if (jTable1.isRowSelected(i)) {
                 try {
-                    s = ExempleJdbc.connexion();
-                    s.executeUpdate("INSERT INTO Etude(nom,PH,date,duree,participantNomU,participantDate,participantPrenom)" 
-                    + "VALUES(‘Etude','"+e.getPH()+"','"+e.getDate()+"','"+e.getDuree()+"','"+p.getNomU()+"','"+p.getDateN()
-                    +"','"+p.getPrenom()+"')");
-//                    
-//                    ResultSet rs = s.executeQuery("SELECT distinct nomDeNaissance,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville FROM Participant WHERE (nomUsuel ='"+p.getNomU()+"' AND dateDeNaissance = '"+p.getDateN()+"' AND prenom = '"+p.getPrenom()+"')");
-//                    s.executeUpdate("INSERT INTO Participant(nomUsuel,nomDeNaissance,dateDeNaissance,prenom,type,sexe,taille,poids,pathologie,allergie,regime,sport,fumeur,categorie,ville,etude) VALUES(‘"+p.getNomU()+"','"+rs.getString("nomDeNaissance")+"','"+p.getDateN()+"','"+p.getPrenom()+"','"+p.getType()+"','"+rs.getString("sexe")+"','"+rs.getString("taille")+"','"+rs.getString("poids")+"','"+rs.getString("pathologie")+"','"+rs.getString("allergie")+"','"+rs.getString("regime")+"','"+rs.getString("sport")+"','"+rs.getString("fumeur")+"','"+rs.getString("categorie")+"','"+rs.getString("ville")+"','"+e.getNom()+"')");
-//                    
-//                    Statement s = ExempleJdbc.connexion();
-//                    s.executeUpdate("INSERT INTO Patient(id, nomusuel, nomdenaissance, prenom, sexe, rue,"
-//                    + " ville, codepostale, datedenaissance, secu, médecintraitant, nationalité, lieudenaissance)"
-//                    + " VALUES ('0', '" + nomU + "', '" + nomN + "', '" + prenom + "', '" + sexe + "', '" + rue
-//                    + "', '" + ville + "', '" + codeP + "', '" + dateN + "', '" + nSecu + "', '" + nomM + "', '" + nationalite + "', '" + lieuN + "')");
-//                    
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String da = String.valueOf(jTable1.getValueAt(i, 2));
+                    java.util.Date d = dateFormat.parse(da);
+                    Date date = new Date(d.getTime());
+                    Participant p1 = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), date, String.valueOf(jTable1.getValueAt(i, 3)));
                     
-                } catch (SQLException ex) {
+                    for (Participant p : listeParticipants) {
+                        if (p.egal(p1)) {
+                            supp.add(p);
+                        }
+                    }
+                    for (Participant p2 : supp) {
+                        listeParticipants.remove(p2);
+                    }
+
+                    
+                } catch (ParseException ex) {
                     Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+        for(Participant p : listeParticipants){
+            System.out.println(p.getPrenom());
+        }
+        remplirTableau();
+    }//GEN-LAST:event_supprimerActionPerformed
+
+    private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+        if (!nom.getText().equals("") && !date.getText().equals("") && (int) duree.getValue() != 0 && jTable1.getRowCount() > 0) {
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String da = String.valueOf(jTable1.getValueAt(i, 2));
+                    java.util.Date d = dateFormat.parse(da);
+                    Date d1 = new Date(d.getTime());
+                    Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), d1, String.valueOf(jTable1.getValueAt(i, 3)));
+                    Etude e = new Etude(nom.getText(), login, date.getText(), (int) duree.getValue());
+                    System.out.println(e.getDate() + " " + e.getNom() + " " + e.getPH() + " " + e.getDuree());
+                    Statement s;
+                    try {
+                        s = ExempleJdbc.connexion();
+                        s.executeUpdate("INSERT INTO `Etude`(`nom`, `PH`, `date`, `duree`, `participantNomU`, `participantDate`, `participantPrenom`) VALUES ('" + e.getNom() + "','" + e.getPH() + "','" + e.getDate() + "','" + e.getDuree() + "','" + p.getNomU() + "','" + p.getDateN() + "','" + p.getPrenom() + "')");
+                        ResultSet rs = s.executeQuery("SELECT * FROM Participant WHERE (nomUsuel = '" + p.getNomU() + "' and dateDeNaissance = '" + p.getDateN() + "' and prenom = '" + p.getPrenom() + "')");
+                        while (rs.next()) {
+                            s.executeUpdate("INSERT INTO `Participant`(`nomUsuel`, `nomDeNaissance`, `dateDeNaissance`, `prenom`, `type`, `sexe`, `taille`, `poids`, `pathologie`, `allergie`, `regime`, `sport`, `fumeur`, `categorie`, `ville`, `etude`) VALUES ('" + rs.getString("nomUsuel") + "','" + rs.getString("nomDeNaissance") + "','" + rs.getDate("dateDeNaissance") + "','" + rs.getString("prenom") + "','" + rs.getString("type") + "','" + rs.getString("sexe") + "','" + rs.getInt("taille") + "','" + rs.getInt("poids") + "','" + rs.getString("pathologie") + "','" + rs.getString("allergie") + "','" + rs.getString("regime") + "','" + rs.getString("sport") + "','" + rs.getString("fumeur") + "','" + rs.getString("categorie") + "','" + rs.getString("ville") + "','" + e.getNom() + "')");
+
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CicAjouterEtude.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(CicAjouterEtude.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            JOptionPane.showMessageDialog(null, "L'étude "+nom.getText()+" a bien été ajouté", "Message", JOptionPane.WARNING_MESSAGE);
             this.setVisible(false);
             try {
-                CicAccueil a = new CicAccueil();
+                CicAccueil a = new CicAccueil(login);
+
             } catch (SQLException ex) {
-                Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CicAjouterEtude.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_validerActionPerformed
@@ -349,11 +423,18 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil();
+            CicAccueil accueil = new CicAccueil(login);
+
         } catch (SQLException ex) {
-            Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CicAjouterEtude.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_annulerActionPerformed
+
+    private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        this.setVisible(false);
+        InterfaceConnexion i = new InterfaceConnexion();
+    }//GEN-LAST:event_deconnexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,16 +450,21 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterEtude.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterEtude.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterEtude.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterEtude.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterEtude.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterEtude.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CicAjouterEtude.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAjouterEtude.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
