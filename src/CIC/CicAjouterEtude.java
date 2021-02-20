@@ -18,6 +18,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -51,6 +52,9 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         this.login = login;
         trouverCic();
         initComponents();
+//        this.nom.setText(nomEtude);
+//        this.date.setText(dateDemarrage);
+//        this.duree.setValue(dureeEtude);
         remplirTableau();
         erreur.setVisible(false);
         this.setVisible(true);
@@ -251,7 +255,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
         duree.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(dureeEtude), null, null, Integer.valueOf(1)));
 
-        erreur.setFont(new java.awt.Font("Tahoma", 3, 16)); // NOI18N
+        erreur.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         erreur.setForeground(new java.awt.Color(255, 0, 51));
         erreur.setText("Erreur");
 
@@ -259,47 +263,49 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(ajouter)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(supprimer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(erreur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(valider)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(annuler)
-                .addGap(15, 15, 15))
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
+                .addGap(340, 340, 340)
+                .addComponent(jLabel2)
+                .addGap(340, 340, 340))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(ajouter)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
-                        .addGap(0, 162, Short.MAX_VALUE))
+                                .addComponent(supprimer)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(erreur, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(valider)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(annuler))
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nom)))
-                .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(duree, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nom)))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,7 +361,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             System.out.println(e);
         }
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nomEtude, dateDemarrage, dureeEtude, login);
+            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nom.getText(), date.getText(), (int)duree.getValue(), login);
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -386,9 +392,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                 }
             }
         }
-        for (Participant p : listeParticipants) {
-            System.out.println(p.getPrenom());
-        }
+        
         remplirTableau();
     }//GEN-LAST:event_supprimerActionPerformed
 
