@@ -103,6 +103,23 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             return false;
         }
     }
+    
+    public boolean verifNom(String str){
+        Statement s;
+            try {
+                s = ExempleJdbc.connexion();
+                ResultSet r = s.executeQuery("SELECT distinct nom FROM Etude");
+                while (r.next()) {
+                    if (str.toUpperCase().equals(r.getString("nom").toUpperCase())) {
+                        return true;
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CicAjouterEtude.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+            return false;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,6 +152,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         erreur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -255,7 +273,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
         duree.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(dureeEtude), null, null, Integer.valueOf(1)));
 
-        erreur.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
+        erreur.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         erreur.setForeground(new java.awt.Color(255, 0, 51));
         erreur.setText("Erreur");
 
@@ -341,6 +359,8 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       
+    
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
         ArrayList<Participant> liste = new ArrayList<>();
@@ -397,13 +417,12 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     }//GEN-LAST:event_supprimerActionPerformed
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
+       ArrayList<String> liste = new ArrayList<>();
         if (!nom.getText().equals("") && !date.getText().equals("") && (int) duree.getValue() != 0 && jTable1.getRowCount() > 0) {
             Statement s;
             try {
                 s = ExempleJdbc.connexion();
-                ResultSet r = s.executeQuery("SELECT nom FROM Etude");
-                while (r.next()) {
-                    if (nom.getText().toUpperCase().equals(r.getString("nom").toUpperCase())) {
+                    if (verifNom(nom.getText())) {
                         erreur.setText("L'étude " + nom.getText() + " existe déjà.");
                         erreur.setVisible(true);
                     } else if (!verifDate(date.getText())) {
@@ -419,11 +438,11 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                                 Date d1 = new Date(d.getTime());
                                 Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), d1, String.valueOf(jTable1.getValueAt(i, 3)));
                                 Etude e = new Etude(nom.getText(), login, date.getText(), (int) duree.getValue());
-                                System.out.println(e.getDate() + " " + e.getNom() + " " + e.getPH() + " " + e.getDuree());
+                                
 
-                                s = ExempleJdbc.connexion();
+//                                s = ExempleJdbc.connexion();
                                 s.executeUpdate("INSERT INTO `Etude`(`nom`, `PH`, `date`, `duree`, `participantNomU`, `participantDate`, `participantPrenom`) VALUES ('" + e.getNom() + "','" + e.getPH() + "','" + e.getDate() + "','" + e.getDuree() + "','" + p.getNomU() + "','" + p.getDateN() + "','" + p.getPrenom() + "')");
-                                ResultSet rs = s.executeQuery("SELECT * FROM Participant WHERE (nomUsuel = '" + p.getNomU() + "' and dateDeNaissance = '" + p.getDateN() + "' and prenom = '" + p.getPrenom() + "')");
+                                ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, nomDeNaissance, dateDeNaissance, prenom, type, sexe, taille, poids, pathologie, allergie, regime, sport, fumeur, categorie, ville FROM Participant WHERE (nomUsuel = '" + p.getNomU() + "' and dateDeNaissance = '" + p.getDateN() + "' and prenom = '" + p.getPrenom() + "')");
                                 while (rs.next()) {
                                     s.executeUpdate("INSERT INTO `Participant`(`nomUsuel`, `nomDeNaissance`, `dateDeNaissance`, `prenom`, `type`, `sexe`, `taille`, `poids`, `pathologie`, `allergie`, `regime`, `sport`, `fumeur`, `categorie`, `ville`, `etude`) VALUES ('" + rs.getString("nomUsuel") + "','" + rs.getString("nomDeNaissance") + "','" + rs.getDate("dateDeNaissance") + "','" + rs.getString("prenom") + "','" + rs.getString("type") + "','" + rs.getString("sexe") + "','" + rs.getInt("taille") + "','" + rs.getInt("poids") + "','" + rs.getString("pathologie") + "','" + rs.getString("allergie") + "','" + rs.getString("regime") + "','" + rs.getString("sport") + "','" + rs.getString("fumeur") + "','" + rs.getString("categorie") + "','" + rs.getString("ville") + "','" + e.getNom() + "')");
 
@@ -434,7 +453,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                                         .getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                        JOptionPane.showMessageDialog(null, "L'étude " + nom.getText() + " a bien été ajouté", "Message", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "L'étude " + nom.getText() + " a bien été ajoutée", "Message", JOptionPane.WARNING_MESSAGE);
                         this.setVisible(false);
                         try {
                             CicAccueil a = new CicAccueil(login);
@@ -444,7 +463,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                                     .getName()).log(Level.SEVERE, null, ex);
                         }
                     }
-                }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(CicAjouterEtude.class
                         .getName()).log(Level.SEVERE, null, ex);

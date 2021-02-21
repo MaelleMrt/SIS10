@@ -32,9 +32,8 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private String login;
     private Cic cic;
 
-    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree,String login) {
-        
-        
+    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, String login) {
+
         this.listeParticipants = listeParticipants;
         this.ancienneListe = ancienneListe;
         this.nom = nom;
@@ -46,12 +45,12 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         erreur.setVisible(false);
         this.setVisible(true);
     }
-    
-    public void trouverCic(){
+
+    public void trouverCic() {
         try {
             Statement s = ExempleJdbc.connexion();
             try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '" + this.login + "'");
                 while (rs.next()) {
                     this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
                 }
@@ -383,6 +382,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         erreur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -965,7 +965,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
 
         listeParticipants = new ArrayList<Participant>();
         erreur.setVisible(false);
-        
+
         try {
             Statement st = ExempleJdbc.connexion();
             ResultSet rs;
@@ -1019,8 +1019,11 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 while (rs.next()) {
                                                                     System.out.println(rs.getString("nomUsuel"));
                                                                     Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
-                                                                        listeParticipants.add(participant);
+                                                                    for (Participant pa : listeParticipants) {
+                                                                        System.out.println(pa.getPrenom());
+                                                                        if (!pa.egal(participant)) {
+                                                                            listeParticipants.add(participant);
+                                                                        }
                                                                     }
                                                                 }
 
@@ -1036,8 +1039,16 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 while (rs.next()) {
                                                                     System.out.println(rs.getString("nomUsuel"));
                                                                     Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
+                                                                    if(listeParticipants.isEmpty()){
                                                                         listeParticipants.add(participant);
+                                                                    }
+                                                                    else{
+                                                                    for (Participant pa : listeParticipants) {
+                                                                        System.out.println(pa.getPrenom());
+                                                                        if (!pa.egal(participant)) {
+                                                                            listeParticipants.add(participant);
+                                                                        }
+                                                                    }
                                                                     }
                                                                 }
 
@@ -1055,8 +1066,16 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 while (rs.next()) {
                                                                     System.out.println(rs.getString("nomUsuel"));
                                                                     Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
+                                                                    if(listeParticipants.isEmpty()){
                                                                         listeParticipants.add(participant);
+                                                                    }
+                                                                    else{
+                                                                    for (Participant pa : listeParticipants) {
+                                                                        System.out.println(pa.getPrenom());
+                                                                        if (!pa.egal(participant)) {
+                                                                            listeParticipants.add(participant);
+                                                                        }
+                                                                    }
                                                                     }
                                                                 }
 
@@ -1070,10 +1089,18 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
                                                                 rs = st.executeQuery(requete);
 
                                                                 while (rs.next()) {
-                                                                    System.out.println(rs.getString("nomUsuel"));
+//                                                                    System.out.println(rs.getString("nomUsuel"));
                                                                     Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
-                                                                    if (!listeParticipants.contains(participant)) {
+                                                                    if(listeParticipants.isEmpty()){
                                                                         listeParticipants.add(participant);
+                                                                    }
+                                                                    else{
+                                                                    for (Participant pa : listeParticipants) {
+                                                                        System.out.println(pa.getPrenom());
+                                                                        if (!pa.egal(participant)) {
+                                                                            listeParticipants.add(participant);
+                                                                        }
+                                                                    }
                                                                     }
                                                                 }
 
@@ -1101,9 +1128,12 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         if (listeParticipants.isEmpty()) {
             erreur.setVisible(true);
         } else {
+            for (Participant p2 : listeParticipants) {
+                System.out.println(p2.getPrenom());
+            }
             this.setVisible(false);
             try {
-                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree,login);
+                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, login);
             } catch (SQLException ex) {
                 Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1113,7 +1143,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree,login);
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, login);
         } catch (SQLException ex) {
             Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
