@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< Updated upstream
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Prescription.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/DMA.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Patient/Patient.java</file>
@@ -28,6 +29,38 @@
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Hospitalisations.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/test.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Resultat.java</file>
+=======
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/DMA.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Prescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Motif.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/MessageErreur.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Acte.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/CreationDMA.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/AffichagePrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Logo/pngegg.png</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/TableauConsultations.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/AffichageCR.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/PageConnexion/InterfaceConnexion.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierPrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierPatient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauPatientInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/ContenuInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Contenu.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauPrescriptionsInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinAcceuil.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Connexion/ExempleJdbc.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Logo/unnamed.png</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Message.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/TableauResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmiereResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierAcceuil.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Secretaire.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauResultatInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Resultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/AjoutValide.java</file>
+>>>>>>> Stashed changes
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Consultations.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPatient.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/TableauPrescriptions.java</file>
