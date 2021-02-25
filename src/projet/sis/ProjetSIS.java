@@ -5,6 +5,9 @@
  */
 package Infirmiere;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import library.interfaces.Patient;
 
 /**
@@ -17,11 +20,8 @@ public class ProjetSIS {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        int id =2334;
-//        String surname="Paul";
-//        int classe=3;
-//        Patient p=new Patient(id,surname, classe);
         
+
     }
-    
+
 }

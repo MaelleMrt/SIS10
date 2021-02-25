@@ -5,20 +5,96 @@
  */
 package CIC;
 
+import Connexion.ExempleJdbc;
+import PageConnexion.InterfaceConnexion;
+import Patient.Patient;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author clara
  */
 public class CicAccueil extends javax.swing.JFrame {
 
+    private ArrayList<Etude> listeEtude = new ArrayList<Etude>();
+
+    String login;
+    Cic cic;
     /**
      * Creates new form CicAccueil
      */
-    public CicAccueil() {
+    public CicAccueil(String login) throws SQLException {
+        this.login = login;
+        trouverCic(); 
         initComponents();
+        remplirTableau();
         this.setVisible(true);
-        erreur.setVisible(false);
     }
+
+    public void remplirTableau() throws SQLException {
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT distinct Etude.nom, CIC.nom, CIC.prenom, date, duree FROM Etude JOIN CIC on (PH = login)");
+                while (rs.next()) {
+                    Etude etude = new Etude(rs.getString("Etude.nom"), rs.getString("CIC.nom") + " " + rs.getString("CIC.prenom"), rs.getString("date"), rs.getInt("duree"));
+                    listeEtude.add(etude);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Etude e : listeEtude) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(e.getNom());
+            v.add(e.getPH());
+            v.add(e.getDate());
+            v.add(e.getDuree());
+            model.setColumnIdentifiers(new String[]{"Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"});
+            model.insertRow(i, v);
+            i++;
+        }
+        etudes.setModel(model);
+        
+        
+        
+    }
+    
+    public void trouverCic(){
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                while (rs.next()) {
+                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,31 +108,37 @@ public class CicAccueil extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
-        erreur = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         rechercherTextField = new javax.swing.JTextField();
-        rechercher = new javax.swing.JButton();
-        reinitialiser = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         etudes = new javax.swing.JTable();
         ajouter = new javax.swing.JButton();
-        visualiser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         deconnexion.setText("Déconnexion");
         deconnexion.setToolTipText("");
+        deconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deconnexionActionPerformed(evt);
+            }
+        });
 
-        utilisateur.setText("Prénom Nom");
+        utilisateur.setText(cic.getPrenom() + " " + cic.getNom());
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(utilisateur)
                 .addGap(26, 26, 26)
                 .addComponent(deconnexion)
@@ -70,49 +152,39 @@ public class CicAccueil extends javax.swing.JFrame {
                     .addComponent(utilisateur)
                     .addComponent(deconnexion))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        erreur.setFont(new java.awt.Font("Tahoma", 2, 12)); // NOI18N
-        erreur.setForeground(new java.awt.Color(255, 0, 0));
-        erreur.setText("Aucun résultat ne correspond à votre recherche");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel3.setText("Etudes cliniques");
 
         rechercherTextField.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-
-        rechercher.setText("Rechercher");
-        rechercher.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rechercherMouseClicked(evt);
+        rechercherTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rechercherTextFieldActionPerformed(evt);
             }
         });
-        rechercher.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rechercherActionPerformed(evt);
-            }
-        });
-
-        reinitialiser.setText("Réinitialiser");
-        reinitialiser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reinitialiserActionPerformed(evt);
+        rechercherTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                rechercherTextFieldPropertyChange(evt);
             }
         });
 
         etudes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Etude 1", "Clara Oster", "10/01/2021", "6 semaines"},
-                {"Etude 2", "Maelle Martinet", "23/12/2020", "10 semaines"},
-                {"Etude 3", "Elodie Collet", "17/10/2020", "5 semaines"},
-                {"Etude 4", "Amira Haouas", "03/10/2020", "12 semaines"}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée"
+                "Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -126,11 +198,19 @@ public class CicAccueil extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        etudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                etudesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(etudes);
 
         ajouter.setText("Ajouter une étude");
-
-        visualiser.setText("Visualiser");
+        ajouter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajouterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,94 +219,111 @@ public class CicAccueil extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                            .addGap(403, 403, 403)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(erreur)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(403, 403, 403)
+                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rechercher)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(reinitialiser))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                    .addComponent(ajouter)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(visualiser))
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ajouter, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(16, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rechercherTextField))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rechercher)
-                    .addComponent(reinitialiser))
-                .addGap(2, 2, 2)
-                .addComponent(erreur)
+                .addGap(37, 37, 37)
+                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ajouter)
-                    .addComponent(visualiser))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(ajouter)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void rechercherMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rechercherMouseClicked
-        String text = rechercherTextField.getText().toUpperCase();
-        if (!text.equals("")){
-            int j=0;
-            erreur.setVisible(false);
-            for (int i = 0; i < etudes.getRowCount(); i++) {
-                String valeur = (String)etudes.getValueAt(i, 0);
-                if(text.equals(valeur.toUpperCase())){
-                    etudes.setValueAt(etudes.getValueAt(i, 0), j, 0);
-                    etudes.setValueAt(etudes.getValueAt(i, 1), j, 1);
-                    etudes.setValueAt(etudes.getValueAt(i, 2), j, 2);
-                    etudes.setValueAt(etudes.getValueAt(i, 3), j, 3);
-                    j++;
-                }
+    private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
+        this.setVisible(false);
+        ArrayList<Participant> part = new ArrayList<>();
+        ArrayList<Participant> ancienne = new ArrayList<>();
+        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,login);
+    }//GEN-LAST:event_ajouterActionPerformed
+
+    private void etudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etudesMouseClicked
+        int i = 0;
+        while (i < etudes.getRowCount() && !etudes.isRowSelected(i)) {
+            i++;
+        }
+        if (i < etudes.getRowCount()) {
+
+            String nom = String.valueOf(etudes.getValueAt(i, 0));
+            String PH = String.valueOf(etudes.getValueAt(i, 1));
+            String date = String.valueOf(etudes.getValueAt(i, 2));
+            int duree = (int) etudes.getValueAt(i, 3);
+            Etude e = new Etude(nom, PH, date, duree);
+            this.setVisible(false);
+            try {
+                CicEtude etude = new CicEtude(e,login);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CicAccueil.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
-            if (j==0){
-                erreur.setVisible(true);
+        }
+    }//GEN-LAST:event_etudesMouseClicked
+
+    private void rechercherTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherTextFieldActionPerformed
+
+    }//GEN-LAST:event_rechercherTextFieldActionPerformed
+
+    private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
+        rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
             }
-            if(j<etudes.getRowCount()){
-                for(int i = j; i < etudes.getRowCount(); i++){
-                    for (int k = 0; k < 4; k++) {
-                        etudes.setValueAt(null, i, k);
+
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte = rechercherTextField.getText();
+                int i = 0;
+                for (Etude e : listeEtude) {
+                    if (e.getNom().toUpperCase().contains(texte.toUpperCase())) {
+                        Vector<Object> v = new Vector<Object>();
+                        v.add(e.getNom());
+                        v.add(e.getPH());
+                        v.add(e.getDate());
+                        v.add(e.getDuree());
+                        model.setColumnIdentifiers(new String[]{"Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"});
+                        model.insertRow(i, v);
+                        i++;
                     }
                 }
+                etudes.setModel(model);
             }
-            j = 0;
-        }
 
-    }//GEN-LAST:event_rechercherMouseClicked
+        });
+    }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
-    private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
-
-    }//GEN-LAST:event_rechercherActionPerformed
-
-    private void reinitialiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reinitialiserActionPerformed
-        rechercherTextField.setText("");
-        erreur.setVisible(false);
-        // il faudra remettre toutes les valeurs dans le tableau -> à faire quand on aura la BDD
-    }//GEN-LAST:event_reinitialiserActionPerformed
+    private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        this.setVisible(false);
+        InterfaceConnexion i = new InterfaceConnexion();
+    }//GEN-LAST:event_deconnexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,23 +339,34 @@ public class CicAccueil extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CicAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAccueil.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CicAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAccueil.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CicAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAccueil.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CicAccueil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CicAccueil.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CicAccueil().setVisible(true);
+                try {
+                    new CicAccueil("gregory_house").setVisible(true);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CicAccueil.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -266,15 +374,12 @@ public class CicAccueil extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajouter;
     private javax.swing.JButton deconnexion;
-    private javax.swing.JLabel erreur;
     private javax.swing.JTable etudes;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton rechercher;
     private javax.swing.JTextField rechercherTextField;
-    private javax.swing.JButton reinitialiser;
     private javax.swing.JLabel utilisateur;
-    private javax.swing.JButton visualiser;
     // End of variables declaration//GEN-END:variables
 }

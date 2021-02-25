@@ -1,0 +1,730 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="452" max="-2" attributes="0"/>
+              <Component id="jLabel3" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="454" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="sexe1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sexe2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="type1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="type2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="age1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="age2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="age3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="age4" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="poids1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="poids2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="poids3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="poids4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="poids5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="poids6" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="taille1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="taille2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="taille3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="taille4" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="allergie1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="allergie2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="allergie3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="allergie4" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="sport1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sport2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sport3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="sport4" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="fumeur1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="fumeur2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="cat4" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat7" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat9" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="cat1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cat3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="pathologie" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="regime1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="regime2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="regime3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="regime4" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="regime5" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="ville" min="-2" pref="430" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="erreur" min="-2" pref="503" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
+                              <Component id="annuler" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="rechercher" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Component id="jLabel3" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="type1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="type2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sexe1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sexe2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="age4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="taille1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="taille2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="taille3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="taille4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids5" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="poids6" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="pathologie" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="allergie1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="allergie2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="allergie3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="allergie4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="regime1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="regime2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="regime3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="regime4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="regime5" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sport1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sport2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sport3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="sport4" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fumeur1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="fumeur2" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cat1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cat2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cat3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="cat4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cat5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cat6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cat7" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cat8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cat9" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ville" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="rechercher" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="annuler" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Component id="erreur" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="jPanel1">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="cc" green="cc" red="cc" type="rgb"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="utilisateur" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="deconnexion" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="utilisateur" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="deconnexion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="deconnexion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="D&#xe9;connexion"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deconnexionActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="utilisateur">
+          <Properties>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="cic.getPrenom()+&quot; &quot;+cic.getNom()" type="code"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Logo/AtlanTISpng.png"/>
+            </Property>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="jLabel3">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="24" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Ajouter un participant"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="type1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Patient"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="type1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="type2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Volontaire sain"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sexe :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sexe1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="F"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sexe2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="H"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sexe2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Age :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="age1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="18-25"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="age2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="26-40"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="age3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="41-65"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="age3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="age4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&gt;65"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Taille (cm) :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="taille1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;150"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="taille1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="taille2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="150-170"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="taille3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="171-190"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="taille4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&gt;190"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Poids (kg) :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&lt;45"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="poids1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="45-60"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="61-75"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="76-90"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="91-105"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="poids6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="&gt;105"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Pathologie(s) :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="pathologie">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Allergie(s) :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="allergie1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alimentaire"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allergie1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="allergie2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="M&#xe9;dicament"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="allergie3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autre"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="allergie4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aucune"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="allergie4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="R&#xe9;gime alimentaire :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="regime1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="V&#xe9;g&#xe9;tarien"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="regime2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sans gluten"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regime2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="regime3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sans sel"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regime3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="regime4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autre"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regime4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sport :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sport1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Jamais"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sport1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sport2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rarement"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sport3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="R&#xe9;guli&#xe8;rement"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="sport4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sportif de haut niveau"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel12">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Fumeur :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="fumeur1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Oui"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="fumeur2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Non"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fumeur2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel13">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cat&#xe9;gorie socio-professionnelle :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Agriculteurs exploitants"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Artisans, commer&#xe7;ants, chefs d&apos;entreprise"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cat2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadres et professions intellectuelles sup&#xe9;rieures"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cat3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Professions interm&#xe9;diaires "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Employ&#xe9;s"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ouvriers"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cat6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Retrait&#xe9;s"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cat7ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Etudiants"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="cat9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Autres sans activit&#xe9; professionnelle"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cat9ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="rechercher">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rechercher"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rechercherActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="annuler">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Annuler"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="annulerActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel14">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ville :"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="ville">
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="regime5">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Normal"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="regime5ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="erreur">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="3"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Aucun participant ne correspond &#xe0; votre recherche"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
