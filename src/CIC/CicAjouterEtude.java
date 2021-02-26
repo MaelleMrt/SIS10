@@ -57,6 +57,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 //        this.duree.setValue(dureeEtude);
         remplirTableau();
         erreur.setVisible(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

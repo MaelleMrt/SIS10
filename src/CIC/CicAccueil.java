@@ -38,6 +38,7 @@ public class CicAccueil extends javax.swing.JFrame {
         trouverCic(); 
         initComponents();
         remplirTableau();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

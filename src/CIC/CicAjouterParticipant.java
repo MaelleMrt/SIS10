@@ -53,6 +53,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         initComponents();
         remplirTableau();
         erreur.setVisible(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
