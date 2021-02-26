@@ -37,6 +37,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         rechercheInfirmiere();
         listPatient= new TableauPatientInf(infirmier.getService());
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -84,26 +85,12 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         });
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.addMouseListener(new MouseAdapter()  {
-            public void mousePressed(MouseEvent e) {
-
-                // clic sur le bouton gauche ou droit
-                if(e.getButton() == MouseEvent.BUTTON1 ||
-                    e.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(e.getPoint());
-                    try{
-                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
-                        System.out.println(p.toString());
-                        new InfirmierPatient(p, infirmier);
-                    }catch(Exception e2){
-                    }
-
-                }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
             }
-
         });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -261,6 +248,22 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        if(evt.getButton() == MouseEvent.BUTTON1 ||
+						evt.getButton() == MouseEvent.BUTTON3) 
+				{
+					int indRow =jTable1.rowAtPoint(evt.getPoint()); 
+                                        try{
+                                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
+                                        System.out.println(p.toString());
+                                        this.dispose();
+                                        new InfirmierPatient(p, infirmier);
+                                        }catch(Exception e2){
+                                        }
+
+                                }
+    }//GEN-LAST:event_jTable1MousePressed
 
     // rechercher le médecin à partir du login 
     public void rechercheInfirmiere(){

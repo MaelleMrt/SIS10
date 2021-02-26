@@ -37,6 +37,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         rechercheMedecin();
         listPatient= new TableauPatient(login);
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -83,26 +84,12 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         });
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.addMouseListener(new MouseAdapter()  {
-            public void mousePressed(MouseEvent e) {
-
-                // clic sur le bouton gauche ou droit
-                if(e.getButton() == MouseEvent.BUTTON1 ||
-                    e.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(e.getPoint());
-                    try{
-                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
-                        System.out.println(p.toString());
-                        new MedecinPatient(p,medecin);
-                    }catch(Exception e2){
-                    }
-
-                }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
             }
-
         });
+        jScrollPane1.setViewportView(jTable1);
 
         jPanel8.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -254,6 +241,22 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion4ActionPerformed
 
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        if(evt.getButton() == MouseEvent.BUTTON1 ||
+						evt.getButton() == MouseEvent.BUTTON3) 
+				{
+					int indRow =jTable1.rowAtPoint(evt.getPoint()); 
+                                        try{
+                                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
+                                        System.out.println(p.toString());
+                                        new MedecinPatient(p,medecin);
+                                        this.dispose();
+                                        }catch(Exception e2){
+                                        }
+
+                                }
+    }//GEN-LAST:event_jTable1MousePressed
+
     // rechercher le médecin à partir du login 
     public void rechercheMedecin(){
         System.out.println(login);
@@ -313,36 +316,16 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton deconnexion;
-    private javax.swing.JButton deconnexion1;
-    private javax.swing.JButton deconnexion2;
-    private javax.swing.JButton deconnexion3;
     private javax.swing.JButton deconnexion4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JLabel utilisateur;
-    private javax.swing.JLabel utilisateur1;
-    private javax.swing.JLabel utilisateur2;
-    private javax.swing.JLabel utilisateur3;
     private javax.swing.JLabel utilisateur4;
     // End of variables declaration//GEN-END:variables
 }

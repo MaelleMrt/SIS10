@@ -24,6 +24,7 @@ public class Contenu extends javax.swing.JFrame {
         respres=rp;
         patient=p;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
