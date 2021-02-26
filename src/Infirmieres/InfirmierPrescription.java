@@ -26,6 +26,7 @@ public class InfirmierPrescription extends javax.swing.JFrame {
         patient=p;
         infirmier=inf;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -132,26 +133,12 @@ public class InfirmierPrescription extends javax.swing.JFrame {
         });
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.addMouseListener(new MouseAdapter()  {
-            public void mousePressed(MouseEvent e) {
-
-                // clic sur le bouton gauche ou droit
-                if(e.getButton() == MouseEvent.BUTTON1 ||
-                    e.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(e.getPoint());
-
-                    try{
-                        ResultatPrescription pres=new Prescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
-                        new ContenuInf(pres,patient,infirmier);
-                    }catch(Exception e2){
-                    }
-
-                }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
             }
-
         });
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -236,14 +223,14 @@ public class InfirmierPrescription extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        //new MedecinAcceuil();
+        new InfirmierAcceuil(infirmier.login);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
-        this.dispose();
-        new InfirmierPatient(patient,infirmier);
 
+        new InfirmierPatient(patient,infirmier);
+        this.dispose();
         
         
         
@@ -253,6 +240,23 @@ public class InfirmierPrescription extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+         if(evt.getButton() == MouseEvent.BUTTON1 ||
+                    evt.getButton() == MouseEvent.BUTTON3)
+                {
+                    int indRow =jTable1.rowAtPoint(evt.getPoint());
+
+                    try{
+                        Prescription pres=new Prescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        this.dispose();
+                        new ContenuInf(pres,patient,infirmier);
+                    }catch(Exception e2){
+                    }
+
+                }
+
+    }//GEN-LAST:event_jTable1MousePressed
 
     /**
      * @param args the command line arguments

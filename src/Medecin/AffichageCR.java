@@ -25,8 +25,8 @@ public class AffichageCR extends javax.swing.JFrame {
     public AffichageCR(Patient p,Medecin med) {
         patient=p;
         medecin=med;
-        System.out.println(medecin.getLogin());
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

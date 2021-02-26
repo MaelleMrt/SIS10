@@ -25,6 +25,7 @@ public class ContenuInf extends javax.swing.JFrame {
         respres=rp;
         patient=p;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -206,13 +207,14 @@ public class ContenuInf extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.dispose();
+         this.dispose();
         if(respres.getClass().equals("Prescription")){
             new InfirmierPrescription(patient,infirmier);
         }
         if(respres.getClass().equals("Resultat")){
-            new InfirmiereResultat(patient, infirmier);
+            new InfirmierPrescription(patient,infirmier);
         }
+   
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -137,8 +137,10 @@
                   <Font name="Lucida Grande" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
+              </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.addMouseListener(new MouseAdapter()  {&#xa;&#x9;&#x9;&#x9;public void mousePressed(MouseEvent e) {&#xa; &#xa;                                // clic sur le bouton gauche ou droit&#xa;&#x9;&#x9;&#x9;&#x9;if(e.getButton() == MouseEvent.BUTTON1 ||&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;e.getButton() == MouseEvent.BUTTON3) &#xa;&#x9;&#x9;&#x9;&#x9;{&#xa;&#x9;&#x9;&#x9;&#x9;&#x9;int indRow =jTable1.rowAtPoint(e.getPoint()); &#xa;                                        try{&#xa;                                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());&#xa;                                        System.out.println(p.toString());&#xa;                                        new InfirmierPatient(p, infirmier);&#xa;                                        }catch(Exception e2){&#xa;                                        }&#xa;&#xa;                                }                   &#xa;                        }&#xa;&#xa;});"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
                 <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPatientInf modele = listPatient;"/>
               </AuxValues>
