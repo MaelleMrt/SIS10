@@ -23,15 +23,17 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 public class Message extends javax.swing.JFrame {
 
     JFrame accueil;
+    JFrame DMA;
     Date date = new Date();
     int annee = date.getYear() + 1900;
     String nSecu;
 
-    public Message(JFrame accueil, String nSecu) {
+    public Message(JFrame accueil, String nSecu, JFrame precedent) {
         this.nSecu = nSecu;
         System.out.println(nSecu);
         initComponents();
         this.accueil = accueil;
+        DMA = precedent;
         jLabel2.setText(generationID());
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -102,8 +104,6 @@ public class Message extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Le patient");
 
@@ -168,6 +168,7 @@ public class Message extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         accueil.setVisible(true);
         this.setVisible(false);
+        DMA.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
