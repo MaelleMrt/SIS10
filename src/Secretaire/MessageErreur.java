@@ -17,7 +17,7 @@ public class MessageErreur extends javax.swing.JFrame {
         initComponents();
         this.erreur = erreur;
         jLabel3.setText(erreur);
-        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         infoNonConnues();
@@ -26,7 +26,12 @@ public class MessageErreur extends javax.swing.JFrame {
     
     private void infoNonConnues(){
         if (erreur.equals("- Des informations n'ont pas été saisies ")){
-            jLabel4.setVisible(true);
+            jLabel5.setText("Si les informations ne sont pas connues, veuillez inscrire 'Non renseigné'");           
+            jLabel5.setVisible(true);
+        }
+        else if (erreur.equals("- Le format de la date de naissance n'est pas valide ")){
+            jLabel5.setText("Le format de la date doit être de la forme : YYYY-MM-DD");
+            jLabel5.setVisible(true);
         }
     }
 
@@ -44,11 +49,9 @@ public class MessageErreur extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("L'erreur suivante a éte trouvée lors");
@@ -68,8 +71,7 @@ public class MessageErreur extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 51, 51));
         jLabel3.setText("jLabel3");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
-        jLabel4.setText("Si les informations ne sont pas connues, veuillez inscrire \"non renseigné\"");
+        jLabel5.setText("jLabel5");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,8 +93,8 @@ public class MessageErreur extends javax.swing.JFrame {
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addComponent(jLabel5)))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,9 +105,9 @@ public class MessageErreur extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addGap(25, 25, 25)
                 .addComponent(jButton1)
                 .addGap(23, 23, 23))
         );
@@ -158,7 +160,7 @@ public class MessageErreur extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MessageErreur("- Numéro de sécurité sociale invalide").setVisible(true);
+                new MessageErreur("- Le format de la date de naissance n'est pas valide ").setVisible(true);
             }
         });
     }
@@ -168,7 +170,7 @@ public class MessageErreur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
