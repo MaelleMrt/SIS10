@@ -33,6 +33,7 @@ public class CicParticipant extends javax.swing.JFrame {
         initComponents();
         remplirLabel();
         jLabel13.setText(e.getNom());
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
