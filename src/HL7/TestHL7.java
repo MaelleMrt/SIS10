@@ -17,9 +17,8 @@ public class TestHL7 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ServeurHL7 serveur = new ServeurHL7();
-        serveur.connection(6558);
-        serveur.ecoute();
+        EnvoieMessage em=new EnvoieMessage();
+        em.sendMessage("hello", "Hello world", "roshannep27@gmail.com" , "roshannep27@gmail.com" );
     }
     
 }
