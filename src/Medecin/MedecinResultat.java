@@ -6,7 +6,7 @@
 package Medecin;
 
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
@@ -16,12 +16,12 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class MedecinResultat extends javax.swing.JFrame {
-    public Patient patient;
+    public PatientHop patient;
     public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinResultat(Patient p,Medecin med) {
+    public MedecinResultat(PatientHop p,Medecin med) {
         patient =p;
         medecin=med;
         initComponents();
@@ -208,7 +208,7 @@ public class MedecinResultat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Clic sur le bouton Retour ramene a l'interface Patient
+        //Clic sur le bouton Retour ramene a l'interface PatientHop
         this.dispose();
         new MedecinPatient(patient,medecin);
 

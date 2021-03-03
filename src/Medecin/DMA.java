@@ -6,7 +6,7 @@
 package Medecin;
 
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -16,13 +16,13 @@ import java.awt.event.MouseEvent;
  */
 public class DMA extends javax.swing.JFrame {
 
-    public Patient patient;
+    public PatientHop patient;
     public Medecin medecin;
 
     /**
      * Creates new form SecretaireAcceuil
      */
-    public DMA(Patient p, Medecin med) {
+    public DMA(PatientHop p, Medecin med) {
         medecin = med;
         patient = p;
         initComponents();

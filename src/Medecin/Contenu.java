@@ -6,7 +6,7 @@
 package Medecin;
 
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 
 /**
  *
@@ -14,12 +14,12 @@ import Patient.Patient;
  */
 public class Contenu extends javax.swing.JFrame {
     ResultatPrescription respres;
-    Patient patient;
+    PatientHop patient;
     Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public Contenu(ResultatPrescription rp,Patient p,Medecin med) {
+    public Contenu(ResultatPrescription rp,PatientHop p,Medecin med) {
         medecin =med;
         respres=rp;
         patient=p;

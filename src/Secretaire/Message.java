@@ -6,7 +6,7 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

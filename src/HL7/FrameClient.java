@@ -10,6 +10,7 @@ package HL7;
  *
  * Created on 6 févr. 2009, 10:18:51
  */
+import Patient.PatientHop;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.text.ParseException;
@@ -30,6 +31,7 @@ import library.interfaces.PatientLocation;
 public class FrameClient extends javax.swing.JFrame {
 
     private Patient patient;
+    private PatientHop patientHop;
     private Action action;
     private char sex = 'X';
     private String card = "cardAdmettre";
@@ -37,8 +39,12 @@ public class FrameClient extends javax.swing.JFrame {
     private final SimpleDateFormat formateur = new SimpleDateFormat("dd/MM/yyyy");
 
     /** Creates new form FrameClient */
-    public FrameClient() {
+    public FrameClient(PatientHop patHop) {
+        this.patientHop=patHop;
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
         initComponents();
+
     }
 
     /** This method is called from within the constructor to
@@ -69,14 +75,8 @@ public class FrameClient extends javax.swing.JFrame {
         fieldDateNaissance = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
         comboBoxSexe = new javax.swing.JComboBox();
-        jLabelDateSortie = new javax.swing.JLabel();
-        jPanelMort = new javax.swing.JPanel();
-        comboBoxMort = new javax.swing.JComboBox();
-        jLabelMort = new javax.swing.JLabel();
-        fieldDateMort = new javax.swing.JFormattedTextField();
         comboBoxClass = new javax.swing.JComboBox();
         jLabel15 = new javax.swing.JLabel();
-        jFormattedTextFieldDateSortie = new javax.swing.JFormattedTextField();
         jFormattedTextFieldDateAdmi = new javax.swing.JFormattedTextField();
         jLabelDateAdmi = new javax.swing.JLabel();
         panelAction = new javax.swing.JPanel();
@@ -90,22 +90,6 @@ public class FrameClient extends javax.swing.JFrame {
         paneltransfere = new javax.swing.JPanel();
         jLabel43 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelAdmettre = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabelDateFin = new javax.swing.JLabel();
-        fieldDateFin = new javax.swing.JFormattedTextField();
-        comboBoxCodeAction = new javax.swing.JComboBox();
-        jLabel16 = new javax.swing.JLabel();
-        comboBoxNatureRole = new javax.swing.JComboBox();
-        jPanelPersonne = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        fieldNomRole = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        fieldPrenomRole = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        fieldTelPat1 = new javax.swing.JTextField();
-        fieldDateDebut = new javax.swing.JFormattedTextField();
-        jLabelDateDebut = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabelPointOfCare = new javax.swing.JLabel();
         jTextFieldPointOfCare = new javax.swing.JTextField();
@@ -176,14 +160,14 @@ public class FrameClient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(259, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton1)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton1)
                 .addContainerGap())
         );
@@ -229,7 +213,13 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         panelPatient.add(jLabel2, gridBagConstraints);
 
+        fieldIdPat.setText( String. valueOf(patientHop.getId()));
         fieldIdPat.setMinimumSize(new java.awt.Dimension(244, 28));
+        fieldIdPat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldIdPatActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -237,6 +227,13 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         panelPatient.add(fieldIdPat, gridBagConstraints);
+
+        fieldNomPat.setText(patientHop.getNomUsuel());
+        fieldNomPat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNomPatActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -267,6 +264,8 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel5, gridBagConstraints);
+
+        fieldPrenomPat.setText(patientHop.getPrenom());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -288,6 +287,7 @@ public class FrameClient extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         fieldDateNaissance.setToolTipText("dd/MM/yyyy");
+        fieldDateNaissance.setText(patientHop.getNomNaissance());
         fieldDateNaissance.setMinimumSize(new java.awt.Dimension(68, 20));
         fieldDateNaissance.setPreferredSize(new java.awt.Dimension(68, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -303,7 +303,7 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel9, gridBagConstraints);
 
-        comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Inconnu", "Femme", "Homme", "Autre" }));
+        comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { patientHop.getSexe()}));
         comboBoxSexe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxSexeActionPerformed(evt);
@@ -315,61 +315,6 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
         panelPatient.add(comboBoxSexe, gridBagConstraints);
-
-        jLabelDateSortie.setText("Date sortie :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        panelPatient.add(jLabelDateSortie, gridBagConstraints);
-
-        jPanelMort.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanelMort.setLayout(new java.awt.GridBagLayout());
-
-        comboBoxMort.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Non décédé", "Décédé", " " }));
-        comboBoxMort.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxMortActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelMort.add(comboBoxMort, gridBagConstraints);
-
-        jLabelMort.setText("Date :");
-        jLabelMort.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelMort.add(jLabelMort, gridBagConstraints);
-
-        try {
-            fieldDateMort.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fieldDateMort.setToolTipText("dd/MM/yyyy");
-        fieldDateMort.setEnabled(false);
-        fieldDateMort.setMinimumSize(new java.awt.Dimension(68, 20));
-        fieldDateMort.setPreferredSize(new java.awt.Dimension(68, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelMort.add(fieldDateMort, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        panelPatient.add(jPanelMort, gridBagConstraints);
 
         comboBoxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Urgence", "Hospitalisé", "Externe", "Pré-admission", "Récurrent", "Obstétrique", "Compte commercial", "Non applicable", "Inconnu" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -386,15 +331,6 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel15, gridBagConstraints);
-
-        jFormattedTextFieldDateSortie.setText("  /  /    ");
-        jFormattedTextFieldDateSortie.setToolTipText("dd/MM/yyyy");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        panelPatient.add(jFormattedTextFieldDateSortie, gridBagConstraints);
 
         jFormattedTextFieldDateAdmi.setText("  /  /    ");
         jFormattedTextFieldDateAdmi.setToolTipText("dd/MM/yyyy");
@@ -436,14 +372,14 @@ public class FrameClient extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(273, Short.MAX_VALUE)
+                .addContainerGap(251, Short.MAX_VALUE)
                 .add(jButtonConnexion)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButtonConnexion)
                 .addContainerGap())
         );
@@ -465,12 +401,12 @@ public class FrameClient extends javax.swing.JFrame {
         panelAdmission.setLayout(panelAdmissionLayout);
         panelAdmissionLayout.setHorizontalGroup(
             panelAdmissionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 412, Short.MAX_VALUE)
+            .add(0, 379, Short.MAX_VALUE)
             .add(panelAdmissionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(panelAdmissionLayout.createSequentialGroup()
-                    .add(0, 16, Short.MAX_VALUE)
+                    .add(0, 0, Short.MAX_VALUE)
                     .add(jLabel42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 379, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(0, 17, Short.MAX_VALUE)))
+                    .add(0, 0, Short.MAX_VALUE)))
         );
         panelAdmissionLayout.setVerticalGroup(
             panelAdmissionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -492,12 +428,12 @@ public class FrameClient extends javax.swing.JFrame {
         panelDecharge.setLayout(panelDechargeLayout);
         panelDechargeLayout.setHorizontalGroup(
             panelDechargeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 412, Short.MAX_VALUE)
+            .add(0, 379, Short.MAX_VALUE)
             .add(panelDechargeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(panelDechargeLayout.createSequentialGroup()
-                    .add(0, 16, Short.MAX_VALUE)
+                    .add(0, 0, Short.MAX_VALUE)
                     .add(jLabel41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 379, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(0, 17, Short.MAX_VALUE)))
+                    .add(0, 0, Short.MAX_VALUE)))
         );
         panelDechargeLayout.setVerticalGroup(
             panelDechargeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -519,12 +455,12 @@ public class FrameClient extends javax.swing.JFrame {
         paneltransfere.setLayout(paneltransfereLayout);
         paneltransfereLayout.setHorizontalGroup(
             paneltransfereLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 412, Short.MAX_VALUE)
+            .add(0, 379, Short.MAX_VALUE)
             .add(paneltransfereLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(paneltransfereLayout.createSequentialGroup()
-                    .add(0, 16, Short.MAX_VALUE)
+                    .add(0, 0, Short.MAX_VALUE)
                     .add(jLabel43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 379, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(0, 17, Short.MAX_VALUE)))
+                    .add(0, 0, Short.MAX_VALUE)))
         );
         paneltransfereLayout.setVerticalGroup(
             paneltransfereLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -543,145 +479,6 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         panelAction.add(panelSousAction, gridBagConstraints);
-
-        jPanelAdmettre.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanelAdmettre.setLayout(new java.awt.GridBagLayout());
-
-        jLabel23.setText("Code de l’action :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelAdmettre.add(jLabel23, gridBagConstraints);
-
-        jLabelDateFin.setText("Date de fin d’effet :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelAdmettre.add(jLabelDateFin, gridBagConstraints);
-
-        try {
-            fieldDateFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fieldDateFin.setToolTipText("dd/MM/yyyy");
-        fieldDateFin.setMinimumSize(new java.awt.Dimension(68, 20));
-        fieldDateFin.setPreferredSize(new java.awt.Dimension(68, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelAdmettre.add(fieldDateFin, gridBagConstraints);
-
-        comboBoxCodeAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ajouter ", "Supprimer", "Inchangé ", "Mettre à jour" }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelAdmettre.add(comboBoxCodeAction, gridBagConstraints);
-
-        jLabel16.setText("Nature du rôle :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelAdmettre.add(jLabel16, gridBagConstraints);
-
-        comboBoxNatureRole.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médecin prescripteur", "Médecin \"Attending\"", "Médecin consultant", "Médecin de famille", "Médecin adressant", "Médecin correspondant", "Médecin Traitant", "Remplaçant du médecin traitant", " " }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelAdmettre.add(comboBoxNatureRole, gridBagConstraints);
-
-        jPanelPersonne.setBorder(javax.swing.BorderFactory.createTitledBorder("Personne dans le rôle"));
-        jPanelPersonne.setLayout(new java.awt.GridBagLayout());
-
-        jLabel17.setText("Nom :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelPersonne.add(jLabel17, gridBagConstraints);
-
-        fieldNomRole.setMinimumSize(new java.awt.Dimension(128, 20));
-        fieldNomRole.setPreferredSize(new java.awt.Dimension(128, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelPersonne.add(fieldNomRole, gridBagConstraints);
-
-        jLabel18.setText("Prénom :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelPersonne.add(jLabel18, gridBagConstraints);
-
-        fieldPrenomRole.setMinimumSize(new java.awt.Dimension(128, 20));
-        fieldPrenomRole.setPreferredSize(new java.awt.Dimension(128, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelPersonne.add(fieldPrenomRole, gridBagConstraints);
-
-        jLabel21.setText("Téléphone :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelPersonne.add(jLabel21, gridBagConstraints);
-
-        fieldTelPat1.setMinimumSize(new java.awt.Dimension(128, 20));
-        fieldTelPat1.setPreferredSize(new java.awt.Dimension(128, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(2, 0, 2, 0);
-        jPanelPersonne.add(fieldTelPat1, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanelAdmettre.add(jPanelPersonne, gridBagConstraints);
-
-        try {
-            fieldDateDebut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fieldDateDebut.setToolTipText("dd/MM/yyyy");
-        fieldDateDebut.setMinimumSize(new java.awt.Dimension(68, 20));
-        fieldDateDebut.setPreferredSize(new java.awt.Dimension(68, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanelAdmettre.add(fieldDateDebut, gridBagConstraints);
-
-        jLabelDateDebut.setText("Date de prise d’effet :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanelAdmettre.add(jLabelDateDebut, gridBagConstraints);
-
-        jTabbedPane1.addTab("Rôle", jPanelAdmettre);
 
         jPanel7.setLayout(new java.awt.GridBagLayout());
 
@@ -1093,36 +890,10 @@ public class FrameClient extends javax.swing.JFrame {
             //changer de panel
             java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
             c.show(this.panelCard, "cardAction");
-            c = (CardLayout) this.panelSousAction.getLayout();
-            c.show(this.panelSousAction, card);
+            c = (CardLayout) this.panelAction.getLayout();
+            c.show(this.panelAction, card);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void comboBoxSexeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSexeActionPerformed
-        int i = this.comboBoxSexe.getSelectedIndex();
-        switch (i) {
-            case 0: {
-                this.sex = 'U';
-                break;
-            }
-            case 1: {
-                this.sex = 'F';
-                break;
-            }
-            case 2: {
-                this.sex = 'M';
-                break;
-            }
-            case 3: {
-                this.sex = 'O';
-                break;
-            }
-            case 4: {
-                this.sex = 'A';
-                break;
-            }
-        }
-    }//GEN-LAST:event_comboBoxSexeActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String host = this.fieldHost.getText();
@@ -1168,79 +939,8 @@ public class FrameClient extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxADTActionPerformed
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-        int codeNbr = this.comboBoxCodeAction.getSelectedIndex();
-        String code = null;
-        switch (codeNbr) {
-            case 0: {
-                code = "AD";
-                break;
-            }
-            case 1: {
-                code = "CO";
-                break;
-            }
-            case 2: {
-                code = "DE";
-                break;
-            }
-            case 3: {
-                code = "LI";
-                break;
-            }
-            case 4: {
-                code = "UC";
-                break;
-            }
-            case 5: {
-                code = "UN";
-                break;
-            }
-            case 6: {
-                code = "UC";
-                break;
-            }
-            case 7: {
-                code = "UP";
-                break;
-            }
-        }
-
-        int roleNbr = this.comboBoxNatureRole.getSelectedIndex();
-        String role = null;
-        switch (roleNbr) {
-            case 0: {
-                role = "AD";
-                break;
-            }
-            case 1: {
-                role = "AT";
-                break;
-            }
-            case 2: {
-                role = "CP";
-                break;
-            }
-            case 3: {
-                role = "FHCP";
-                break;
-            }
-            case 4: {
-                role = "PP";
-                break;
-            }
-            case 5: {
-                role = "RP";
-                break;
-            }
-            case 6: {
-                role = "RT";
-                break;
-            }
-
-        }
-
-        String rolePersonne = this.fieldNomRole.getText();
-        this.action = new Action(code, role, rolePersonne);
+        
+      
 
         //Assigne Patient Location
         if (nbr == 0 || nbr == 1) {
@@ -1260,26 +960,17 @@ public class FrameClient extends javax.swing.JFrame {
         c.show(this.panelCard, "cardConnexion");
 }//GEN-LAST:event_jButtonConnexionActionPerformed
 
-    private void comboBoxMortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxMortActionPerformed
-        switch (this.comboBoxMort.getSelectedIndex()) {
-            case 0: {
-                this.fieldDateMort.setEnabled(false);
-                this.jLabelMort.setEnabled(false);
-                break;
-            }
-            case 1: {
-                this.fieldDateMort.setEnabled(true);
-                this.jLabelMort.setEnabled(true);
-                break;
-            }
-            case 3: {
-                this.fieldDateMort.setEnabled(false);
-                this.jLabelMort.setEnabled(false);
-                break;
-            }
-        }
+    private void fieldIdPatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldIdPatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldIdPatActionPerformed
 
-}//GEN-LAST:event_comboBoxMortActionPerformed
+    private void fieldNomPatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNomPatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNomPatActionPerformed
+
+    private void comboBoxSexeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSexeActionPerformed
+       
+    }//GEN-LAST:event_comboBoxSexeActionPerformed
 
     private boolean champsPatOk() {
         boolean r = true;
@@ -1305,14 +996,7 @@ public class FrameClient extends javax.swing.JFrame {
             }
         }
 
-        //Date Decharge
-        if (this.nbr == 2) {
-            String dateDechargeString = this.jFormattedTextFieldDateSortie.getText();
-            if (dateDechargeString.equals("  /  /    ")) {
-                r = false;
-                this.jFormattedTextFieldDateSortie.setBackground(Color.RED);
-            }
-        }
+        
         return r;
 
     }
@@ -1431,55 +1115,8 @@ public class FrameClient extends javax.swing.JFrame {
         }
 
         //sexe
-        if (this.sex != 'X') {
-            this.patient.setSex(this.sex);
-        }
-
-        //Mort
-        switch (this.comboBoxMort.getSelectedIndex()) {
-            case 0: {
-                this.patient.setDeath(false);
-                break;
-            }
-            case 1: {
-                Date dateDeath = null;
-                String dateDeathString = this.fieldDateMort.getText();
-                try {
-                    if (!dateDeathString.equals("  /  /    ")) {
-                        dateDeath = formateur.parse(dateDeathString);
-                        this.patient.setDeath(dateDeath);
-                    } else {
-                        this.patient.setDeath(true);
-                    }
-                } catch (ParseException ex) {
-                    Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                break;
-
-            }
-            case 2: {
-                this.patient.restDeath();
-                break;
-            }
-        }
-
-        //Date Decharge
-        Date dateDecharge = null;
-        String dateDechargeString = this.jFormattedTextFieldDateSortie.getText();
-        try {
-            if (!dateDechargeString.equals("  /  /    ")) {
-                dateDecharge = formateur.parse(dateDechargeString);
-                this.patient.setDateDicharge(dateDecharge);
-            }
-
-        } catch (ParseException ex) {
-            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    //Date Admission
-
-
+        this.patient.setSex(patientHop.getSexe().charAt(0));
+ 
     }
 
     private PatientLocation setValPatLoc(PatientLocation patLocation) {
@@ -1638,8 +1275,10 @@ public class FrameClient extends javax.swing.JFrame {
     private void initBackgroundField() {
         this.fieldIdPat.setBackground(Color.WHITE);
         this.fieldNomPat.setBackground(Color.WHITE);
-        this.jFormattedTextFieldDateSortie.setBackground(Color.WHITE);
 
+    }
+    public Patient conversionPatient(PatientHop patHop,char classe){
+       return patient=new Patient(patHop.getId(),patHop.getPrenom(),classe);
     }
 
     /**
@@ -1649,7 +1288,7 @@ public class FrameClient extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameClient().setVisible(true);
+                
             }
         });
     }
@@ -1657,40 +1296,25 @@ public class FrameClient extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox comboBoxADT;
     private javax.swing.JComboBox comboBoxClass;
-    private javax.swing.JComboBox comboBoxCodeAction;
-    private javax.swing.JComboBox comboBoxMort;
-    private javax.swing.JComboBox comboBoxNatureRole;
     private javax.swing.JComboBox comboBoxSexe;
-    private javax.swing.JFormattedTextField fieldDateDebut;
-    private javax.swing.JFormattedTextField fieldDateFin;
-    private javax.swing.JFormattedTextField fieldDateMort;
     private javax.swing.JFormattedTextField fieldDateNaissance;
     private javax.swing.JTextField fieldHost;
     private javax.swing.JTextField fieldIdPat;
     private javax.swing.JTextField fieldNomPat;
-    private javax.swing.JTextField fieldNomRole;
     private javax.swing.JFormattedTextField fieldPort;
     private javax.swing.JTextField fieldPrenomPat;
-    private javax.swing.JTextField fieldPrenomRole;
-    private javax.swing.JTextField fieldTelPat1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConnexion;
     private javax.swing.JComboBox jComboBoxTypeLoc;
     private javax.swing.JComboBox jComboBoxTypeLoc1;
     private javax.swing.JFormattedTextField jFormattedTextFieldDateAdmi;
-    private javax.swing.JFormattedTextField jFormattedTextFieldDateSortie;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
@@ -1705,14 +1329,10 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelChambre;
     private javax.swing.JLabel jLabelChambre1;
     private javax.swing.JLabel jLabelDateAdmi;
-    private javax.swing.JLabel jLabelDateDebut;
-    private javax.swing.JLabel jLabelDateFin;
-    private javax.swing.JLabel jLabelDateSortie;
     private javax.swing.JLabel jLabelEtage;
     private javax.swing.JLabel jLabelEtage1;
     private javax.swing.JLabel jLabelLit;
     private javax.swing.JLabel jLabelLit1;
-    private javax.swing.JLabel jLabelMort;
     private javax.swing.JLabel jLabelPointOfCare;
     private javax.swing.JLabel jLabelPointOfCare1;
     private javax.swing.JLabel jLabelStatus;
@@ -1726,9 +1346,6 @@ public class FrameClient extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanelAdmettre;
-    private javax.swing.JPanel jPanelMort;
-    private javax.swing.JPanel jPanelPersonne;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldBatiment;
     private javax.swing.JTextField jTextFieldBatiment1;

@@ -7,7 +7,7 @@ package Infirmieres;
 
 import Medecin.*;
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Maelle
  */
 public class TableauPatientInf  extends AbstractTableModel{
-     private ArrayList<Patient> listPatient= new ArrayList<Patient>();
+     private ArrayList<PatientHop> listPatient= new ArrayList<PatientHop>();
      
     private final String[] entetes = {"Nom ", "Prenom", "Date de Naissance"};
     
@@ -35,7 +35,7 @@ public class TableauPatientInf  extends AbstractTableModel{
                 for(String log:listLoginMedecin){
                     ResultSet r2= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+log+"'AND Patient.id = Acte.idP" );
                     while(r2.next()){
-                    Patient patient =new Patient(r2.getString("nomusuel"), r2.getString("prenom"), r2.getString("datedenaissance"));
+                    PatientHop patient =new PatientHop(r2.getString("nomusuel"), r2.getString("prenom"), r2.getString("datedenaissance"));
                     listPatient.add(patient);
                     } 
                 }
@@ -83,7 +83,7 @@ public class TableauPatientInf  extends AbstractTableModel{
 
     }
     
-    public ArrayList<Patient> getListPatient(){
+    public ArrayList<PatientHop> getListPatient(){
         return listPatient;
     }
     

@@ -1,6 +1,8 @@
 package HL7;
 
 
+import Patient.PatientHop;
+import Secretaire.Secretaire;
 import library.interfaces.Patient;
 import library.interfaces.PatientLocation;
 import library.interfaces.ServeurHL7;
@@ -21,16 +23,22 @@ import library.structure.groupe.messages.Message;
  * @author Anthony CROUZET Polytech'Grenoble TIS3
  */
 public class FrameServeur extends javax.swing.JFrame {
-
+    private PatientHop patientHop;
     private Patient patient;
     private Message message;
+    private Secretaire secretaire;
     private ServeurHL7 c;
 
     /** Creates new form FrameServeur */
-    public FrameServeur() {
+    public FrameServeur(PatientHop patHop,Secretaire sec) {
+        initComponents();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
         initComponents();
         this.patient = null;
         this.message = null;
+        this.patientHop=patHop;
+        this.secretaire=sec;
     }
 
     /** This method is called from within the constructor to
@@ -353,6 +361,7 @@ public class FrameServeur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        new FrameClient(patientHop);
         Integer port = Integer.parseInt(this.fieldPort.getText());
         c = new ServeurHL7();
         c.connection(port);
@@ -467,7 +476,6 @@ public class FrameServeur extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new FrameServeur().setVisible(true);
             }
         });
     }

@@ -17,7 +17,7 @@ import java.util.Date;
  *
  * @author kalma
  */
-public class Patient {
+public class PatientHop {
 
     private String nom;
     private String prenom;
@@ -27,7 +27,7 @@ public class Patient {
 
 
     //, Date naissance, Integer numSecu
-    public Patient(String nom, String prenom, String dateDeNaissance) {
+    public PatientHop(String nom, String prenom, String dateDeNaissance) {
         this.nom = nom;
         this.prenom = prenom;
         this.naissance = dateDeNaissance;
@@ -235,8 +235,8 @@ public class Patient {
  
 
     public boolean equals(Object o) {
-        if (o instanceof Patient) {
-            Patient p = (Patient) o;
+        if (o instanceof PatientHop) {
+            PatientHop p = (PatientHop) o;
             return nom.equals(p.nom) && prenom.equals(p.prenom);
         } else {
             return false;

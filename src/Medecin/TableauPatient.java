@@ -6,7 +6,7 @@
 package Medecin;
 
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Maelle
  */
 public class TableauPatient  extends AbstractTableModel{
-     private ArrayList<Patient> listPatient= new ArrayList<Patient>();
+     private ArrayList<PatientHop> listPatient= new ArrayList<PatientHop>();
      
     private final String[] entetes = {"Nom ", "Prenom", "Date de Naissance"};
     
@@ -27,7 +27,7 @@ public class TableauPatient  extends AbstractTableModel{
             try{
                 ResultSet rs= s.executeQuery("SELECT nomusuel, prenom, datedenaissance,id FROM Patient INNER JOIN Acte WHERE Acte.login ='"+ login+"'AND Patient.id = Acte.idP" );
                 while(rs.next()){
-                    Patient patient =new Patient(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
+                    PatientHop patient =new PatientHop(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
                     listPatient.add(patient);
                 }   
 
@@ -72,7 +72,7 @@ public class TableauPatient  extends AbstractTableModel{
 
     }
     
-    public ArrayList<Patient> getListPatient(){
+    public ArrayList<PatientHop> getListPatient(){
         return listPatient;
     }
     
