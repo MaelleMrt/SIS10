@@ -117,10 +117,10 @@ public class CreationDMA extends javax.swing.JFrame {
         if (RecuperAnnee() <= anneeAjd) {
             compteur += 1;
         }
-        if (RecuperMois() <= moisAjd) {
+        if (RecuperMois() <= 12) {
             compteur += 1;
         }
-        if (RecuperJour() <= jourAjd) {
+        if (RecuperJour() <= 31) {
             compteur += 1;
         }
         if (dateNaissance.length == 10) {
@@ -354,7 +354,7 @@ public class CreationDMA extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(151, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -364,8 +364,7 @@ public class CreationDMA extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jCheckBox2)
-                                .addGap(175, 175, 175)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(375, 375, 375))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -373,8 +372,7 @@ public class CreationDMA extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(99, 99, 99)
-                                        .addGap(427, 427, 427)
+                                        .addGap(526, 526, 526)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -505,7 +503,8 @@ public class CreationDMA extends javax.swing.JFrame {
         else if (verificationNumSecu() == false) {
             JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide ");
             erreur.setVisible(true);
-        } else if (verifDateNaissance() == false) {
+        } 
+        else if (verifDateNaissance() == false) {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
         } else {
