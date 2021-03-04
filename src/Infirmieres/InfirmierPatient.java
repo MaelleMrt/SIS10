@@ -141,7 +141,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
 
         jToggleButton4.setBackground(new java.awt.Color(255, 204, 255));
         jToggleButton4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        jToggleButton4.setText("Soins");
+        jToggleButton4.setText("Constantes");
         jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton4ActionPerformed(evt);
@@ -149,6 +149,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
         });
 
         jButton1.setText("Constantes");
+        jButton1.setActionCommand("Ajouter des constantes");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

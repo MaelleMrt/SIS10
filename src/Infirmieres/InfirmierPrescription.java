@@ -157,8 +157,8 @@ public class InfirmierPrescription extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(128, 128, 128))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,7 +247,7 @@ public class InfirmierPrescription extends javax.swing.JFrame {
                     int indRow =jTable1.rowAtPoint(evt.getPoint());
 
                     try{
-                        PrescriptionInf pres=new PrescriptionInf(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString(),convert(jTable1.getValueAt(indRow, 4).toString()));
+                        PrescriptionInf pres=new PrescriptionInf(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString(),convert(jTable1.getValueAt(indRow, 4).toString()),jTable1.getValueAt(indRow, 5).toString());
                         this.dispose();
                         new ContenuPrescription(pres,patient,infirmier);
                     }catch(Exception e2){

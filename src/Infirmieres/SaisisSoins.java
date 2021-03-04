@@ -12,6 +12,9 @@ import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
@@ -309,8 +312,9 @@ public class SaisisSoins extends javax.swing.JFrame {
     try{
         Statement s= ExempleJdbc.connexion();
             try{
-                System.out.println(patient.getId());
-                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"')");
+            String date=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"','"+date+"')");
           
 
             } catch(SQLException e){

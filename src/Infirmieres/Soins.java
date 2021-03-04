@@ -17,8 +17,9 @@ public class Soins {
     public int saturation;
     public int gly;
     public String observation;
+    public String date;
 
-    public Soins(int poids, int temp, int pa, int fc, int saturation,int gly ,String observation) {
+    public Soins(int poids, int temp, int pa, int fc, int saturation,int gly ,String observation,String date) {
         this.poids = poids;
         this.temp = temp;
         this.pa = pa;
@@ -26,6 +27,7 @@ public class Soins {
         this.gly=gly;
         this.saturation = saturation;
         this.observation = observation;
+        this.date=date;
     }
 
     public int getPoids() {
@@ -54,6 +56,9 @@ public class Soins {
 
     public String getObservation() {
         return observation;
+    }
+    public String getDate(){
+        return date;
     }
     
   

@@ -22,7 +22,7 @@ import javax.swing.table.AbstractTableModel;
 public class TableauPrescriptionsInf extends AbstractTableModel{
      private ArrayList<PrescriptionInf> listPrescription= new ArrayList<PrescriptionInf>();
      
-    private final String[] entetes = {"Service ", "Medecin", "Date","Contenu","valider"};
+    private final String[] entetes = {"Service ", "Medecin", "Date","Contenu","valider","Date Validation"};
     String service;
     
     public TableauPrescriptionsInf(PatientHop p,String nomS) {
@@ -31,21 +31,23 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
         String contenu;
         String login=null;
         String nomM;
+        String dateVal;
         Boolean valider;
 
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login,valider FROM Prescription WHERE idP ='"+ p.getId()+"'");
+                ResultSet rs1= s.executeQuery("SELECT date,contenu,login,valider,dateVal FROM Prescription WHERE idP ='"+ p.getId()+"'");
                 while(rs1.next()){
                     date= rs1.getString("date");
                     contenu= rs1.getString("contenu");
                     login =rs1.getString("login");
                     valider=rs1.getBoolean("valider");
+                    dateVal=rs1.getString("dateVal");
                     ResultSet rs2= s.executeQuery("SELECT nom FROM Médecin WHERE login ='"+login+"'AND nomS='"+service+"'" );
                         while(rs2.next()){
                             nomM= rs2.getString("nom");
-                            PrescriptionInf pres=new PrescriptionInf(service,nomM,date,contenu,valider);
+                            PrescriptionInf pres=new PrescriptionInf(service,nomM,date,contenu,valider,dateVal);
                             listPrescription.add(pres);
                         }   
                 
@@ -86,9 +88,13 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
             return String.class;
         case 3:
             return String.class;
-        default:
+        case 4:
             return Boolean.class;
-        }
+        case 5:
+            return String.class;
+        default:
+           return String.class;
+        }    
     }
  
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -103,6 +109,8 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
                 return listPrescription.get(rowIndex).getContenu();
             case 4: 
                 return listPrescription.get(rowIndex).getValider();
+             case 5: 
+                return listPrescription.get(rowIndex).getDateVal();
             default:
                 return null; //Ne devrait jamais arriver
         }
