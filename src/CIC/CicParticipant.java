@@ -21,15 +21,13 @@ public class CicParticipant extends javax.swing.JFrame {
 
     private Etude e;
     private Participant p;
-    private String login;
     private Cic cic;
     
-    public CicParticipant(Etude e,Participant p,String login) {
+    public CicParticipant(Etude e,Participant p,Cic cic) {
         
         this.e = e;
         this.p = p;
-        this.login = login;
-        trouverCic();
+        this.cic = cic;
         initComponents();
         remplirLabel();
         jLabel13.setText(e.getNom());
@@ -67,23 +65,7 @@ public class CicParticipant extends javax.swing.JFrame {
         }
     }
     
-    public void trouverCic(){
-        try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
-                while (rs.next()) {
-                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -396,7 +378,7 @@ public class CicParticipant extends javax.swing.JFrame {
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicEtude etude = new CicEtude(e,login);
+            CicEtude etude = new CicEtude(e,cic);
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -405,7 +387,7 @@ public class CicParticipant extends javax.swing.JFrame {
     private void accueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accueilActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(login);
+            CicAccueil accueil = new CicAccueil(cic.getLogin());
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }

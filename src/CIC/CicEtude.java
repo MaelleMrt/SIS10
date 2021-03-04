@@ -29,14 +29,12 @@ public class CicEtude extends javax.swing.JFrame {
 
     private Etude e;
     private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
-    private String login;
     private Cic cic;
     
-    public CicEtude(Etude e,String login) throws SQLException {
+    public CicEtude(Etude e,Cic cic) throws SQLException {
         
         
-        this.login = login;
-        trouverCic();
+        this.cic = cic;
         initComponents();
         this.e = e;
         jLabel13.setText(this.e.getNom());
@@ -82,23 +80,7 @@ public class CicEtude extends javax.swing.JFrame {
         participants.setModel (model);
      }
     
-    public void trouverCic(){
-        try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
-                while (rs.next()) {
-                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -343,7 +325,7 @@ public class CicEtude extends javax.swing.JFrame {
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(login);
+            CicAccueil accueil = new CicAccueil(cic.getLogin());
         } catch (SQLException ex) {
             Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -372,7 +354,7 @@ public class CicEtude extends javax.swing.JFrame {
                 String type = String.valueOf(participants.getValueAt(i, 3));
                 Participant p = new Participant(nom, prenom, date,type);
                 this.setVisible(false);  
-                CicParticipant part = new CicParticipant(e,p,login);
+                CicParticipant part = new CicParticipant(e,p,cic);
             } catch (ParseException ex) {
                 Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
             }

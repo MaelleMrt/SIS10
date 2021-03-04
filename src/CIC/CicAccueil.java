@@ -255,7 +255,7 @@ public class CicAccueil extends javax.swing.JFrame {
         this.setVisible(false);
         ArrayList<Participant> part = new ArrayList<>();
         ArrayList<Participant> ancienne = new ArrayList<>();
-        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,login);
+        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,cic);
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void etudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etudesMouseClicked
@@ -272,7 +272,7 @@ public class CicAccueil extends javax.swing.JFrame {
             Etude e = new Etude(nom, PH, date, duree);
             this.setVisible(false);
             try {
-                CicEtude etude = new CicEtude(e,login);
+                CicEtude etude = new CicEtude(e,cic);
 
             } catch (SQLException ex) {
                 Logger.getLogger(CicAccueil.class
