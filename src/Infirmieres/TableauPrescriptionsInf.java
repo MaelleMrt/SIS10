@@ -7,7 +7,7 @@ package Infirmieres;
 
 import Medecin.*;
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,7 +25,7 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     String service;
     
-    public TableauPrescriptionsInf(Patient p,String nomS) {
+    public TableauPrescriptionsInf(PatientHop p,String nomS) {
         service=nomS;
         String date;
         String contenu;

@@ -9,7 +9,7 @@ import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -94,7 +94,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
                 {
                     int indRow =jTable1.rowAtPoint(e.getPoint());
                     try{
-                        Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
+                        PatientHop p=new PatientHop(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
                         System.out.println(p.toString());
                         new InfirmierPatient(p, infirmier);
                     }catch(Exception e2){
@@ -152,7 +152,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
                 DefaultTableModel ModeleTest2 = new DefaultTableModel();
                 String texte=jTextField1.getText();
                 int i=0;
-                for (Patient p : listPatient.getListPatient()) {
+                for (PatientHop p : listPatient.getListPatient()) {
                     if(p.getNomUsuel().contains(texte)){
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());

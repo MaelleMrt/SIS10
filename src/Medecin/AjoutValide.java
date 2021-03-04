@@ -5,19 +5,19 @@
  */
 package Medecin;
 
-import Patient.Patient;
+import Patient.PatientHop;
 
 /**
  *
  * @author Maelle
  */
 public class AjoutValide extends javax.swing.JFrame {
-    Patient patient;
+    PatientHop patient;
     Medecin medecin;
     /**
      * Creates new form AjoutValide
      */
-    public AjoutValide(Patient pat,Medecin med) {
+    public AjoutValide(PatientHop pat,Medecin med) {
         patient=pat;
         medecin=med;
         initComponents();

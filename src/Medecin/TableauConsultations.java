@@ -6,7 +6,7 @@
 package Medecin;
 
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +23,7 @@ public class TableauConsultations extends AbstractTableModel {
      
     private final String[] entetes = {"Service ", "Medecin", "Date ","motif"};
     
-    public TableauConsultations(Patient p) {
+    public TableauConsultations(PatientHop p) {
         String date;
         String contenu;
         String login=null;
