@@ -11,6 +11,7 @@ package HL7;
  * Created on 6 févr. 2009, 10:18:51
  */
 import Patient.PatientHop;
+import Secretaire.MessageAdmi;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.text.ParseException;
@@ -295,7 +296,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         fieldDateNaissance.setToolTipText("YYYY-MM-DD");
         fieldDateNaissance.setText(patientHop.getNaissance());
         fieldDateNaissance.setMinimumSize(new java.awt.Dimension(140, 20));
-        fieldDateNaissance.setPreferredSize(new java.awt.Dimension(140, 20));
+        fieldDateNaissance.setPreferredSize(new java.awt.Dimension(140, 26));
         fieldDateNaissance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldDateNaissanceActionPerformed(evt);
@@ -752,7 +753,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         panelPatient1.add(jLabel12, gridBagConstraints);
 
         fieldHost.setMinimumSize(new java.awt.Dimension(128, 20));
-        fieldHost.setPreferredSize(new java.awt.Dimension(128, 20));
+        fieldHost.setPreferredSize(new java.awt.Dimension(128, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -782,7 +783,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         fieldPort.setMinimumSize(new java.awt.Dimension(48, 20));
-        fieldPort.setPreferredSize(new java.awt.Dimension(48, 20));
+        fieldPort.setPreferredSize(new java.awt.Dimension(48, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -940,8 +941,8 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         this.labelFin1.setText("ID message : " + messageAck.getId());
         this.labelFin2.setText(messageAck.getAcknowledgmentCodeString());
         this.labelFin3.setText("ID Ack: " + messageAck.getIdAck());
-        
-        this.accueil.setVisible(true);
+        System.out.println("admission ok");
+        new MessageAdmi(this.accueil,this.patientHop);
         this.setVisible(false);
 
     }//GEN-LAST:event_jButton2ActionPerformed
