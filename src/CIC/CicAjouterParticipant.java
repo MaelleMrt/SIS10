@@ -53,6 +53,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         initComponents();
         remplirTableau();
         erreur.setVisible(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -125,6 +126,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         rechercherTextField = new javax.swing.JTextField();
         erreur = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -235,6 +237,13 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         erreur.setForeground(new java.awt.Color(255, 0, 0));
         erreur.setText("Veuillez sélectionner un/des participant(s)");
 
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -260,6 +269,8 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(erreur, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
@@ -279,7 +290,8 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton4)
-                    .addComponent(erreur))
+                    .addComponent(erreur)
+                    .addComponent(jButton3))
                 .addContainerGap())
         );
 
@@ -372,6 +384,10 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -417,6 +433,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
     private javax.swing.JLabel erreur;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

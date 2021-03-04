@@ -43,6 +43,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         trouverCic();
         initComponents();
         erreur.setVisible(false);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

@@ -21,23 +21,17 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  *
  * @author Elodie
  */
-public class Message extends javax.swing.JFrame {
+public class MessageAdmi extends javax.swing.JFrame {
 
     JFrame accueil;
-    JFrame DMA;
     Date date = new Date();
     int annee = date.getYear() + 1900;
-    String nSecu;
     PatientHop patient;
 
-    public Message(JFrame accueil, String nSecu, JFrame precedent,PatientHop pat) {
-        this.nSecu = nSecu;
-        System.out.println(nSecu);
-        initComponents();
+    public MessageAdmi(JFrame accueil,PatientHop pat) {
         this.accueil = accueil;
-        DMA = precedent;
         patient=pat;
-        jLabel2.setText(generationID());
+        initComponents();
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -45,51 +39,7 @@ public class Message extends javax.swing.JFrame {
 
     }
 
-    private String generationID() {
-        int max = 9999999;
-        int min = 0;
-        String ID = "";
-        ArrayList listID = new ArrayList<>();
-
-        String chiffreAnnee = String.valueOf(annee);
-        char[] tabAnnee = chiffreAnnee.toCharArray();
-
-        Random rand = new Random();
-        int nombreAleatoire = rand.nextInt(max - min + 1) + min;
-
-        try {  // On recupere les id + secu des patients existants
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT id FROM Patient");
-            while (rs.next()) {
-                int idPatient = rs.getInt("id");
-                listID.add(idPatient);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        
-        // generation id pour un patient qui n'est jamais venu
-        ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire;
-        
-        // verif id n'existe pas
-        if (listID.contains(ID)) { 
-            while(listID.contains(ID)){
-                ID = ID.replaceAll(ID, "");
-                ID = ID + tabAnnee[2] + tabAnnee[3] + nombreAleatoire;
-            }      
-        }
-        // enregistrer dans BDD
-        try {
-            Statement s = ExempleJdbc.connexion();
-            s.executeUpdate("UPDATE Patient SET id ='" + ID + "' WHERE secu ='" + nSecu + "'");
-        }catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        
-        return ID;
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,15 +51,13 @@ public class Message extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Le patient");
 
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -119,10 +67,12 @@ public class Message extends javax.swing.JFrame {
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("jLabel2");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("a bien été crée !");
+        jLabel4.setText("L'admission du patient ");
+
+        jLabel5.setText("a bien été transmise ");
+
+        jLabel1.setText(String.valueOf(patient.getId()));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -131,26 +81,33 @@ public class Message extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3))
+                        .addGap(98, 98, 98)
+                        .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(119, 119, 119)
-                        .addComponent(jButton1)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel5)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(21, 21, 21))
         );
@@ -172,8 +129,7 @@ public class Message extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);
-        new Interop_ajoutPatient(patient,accueil);
-        DMA.setVisible(false);
+        this.accueil.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -193,14 +149,15 @@ public class Message extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Message.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MessageAdmi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Message.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MessageAdmi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Message.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MessageAdmi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Message.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MessageAdmi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -215,7 +172,8 @@ public class Message extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

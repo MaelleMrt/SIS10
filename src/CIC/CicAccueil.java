@@ -7,7 +7,7 @@ package CIC;
 
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,6 +38,7 @@ public class CicAccueil extends javax.swing.JFrame {
         trouverCic(); 
         initComponents();
         remplirTableau();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

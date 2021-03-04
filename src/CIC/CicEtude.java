@@ -44,6 +44,7 @@ public class CicEtude extends javax.swing.JFrame {
         date.setText(e.getDate());
         duree.setText(String.valueOf(e.getDuree()) + " semaines" );
         remplirTableau();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
          
    }

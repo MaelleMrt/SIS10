@@ -7,7 +7,7 @@ package Infirmieres;
 
 import Medecin.*;
 import Connexion.ExempleJdbc;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,7 +25,7 @@ public class TableauResultatInf extends AbstractTableModel{
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     public String service;
     
-    public TableauResultatInf(Patient p,String nomS) {
+    public TableauResultatInf(PatientHop p,String nomS) {
         service=nomS;
         String date;
         String contenu;
