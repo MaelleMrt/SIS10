@@ -5,8 +5,10 @@
  */
 package Secretaire;
 
-import HL7.FrameServeur;
+
+import HL7.FrameClientAdmi;
 import Patient.PatientHop;
+import javax.swing.JFrame;
 
 /**
  *
@@ -14,13 +16,13 @@ import Patient.PatientHop;
  */
 public class Interop_ajoutPatient extends javax.swing.JFrame {
     PatientHop patient;
-    Secretaire secretaire;
+    JFrame accueil;
     /**
      * Creates new form Interop_ajoutPatient
      */
-    public Interop_ajoutPatient(PatientHop pat, Secretaire sec) {
+    public Interop_ajoutPatient(PatientHop pat, JFrame acc) {
         patient=pat;
-        secretaire=sec;
+        accueil=acc;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -64,27 +66,26 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jToggleButton2)
-                        .addGap(83, 83, 83)
-                        .addComponent(jToggleButton1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(130, 130, 130)
-                        .addComponent(jLabel1)))
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addGap(190, 190, 190)
+                .addComponent(jToggleButton2)
+                .addGap(75, 75, 75)
+                .addComponent(jToggleButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(141, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(115, 115, 115))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton2)
                     .addComponent(jToggleButton1))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -107,13 +108,14 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        // TODO add your handling code here:
+        this.accueil.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        
-        
-        new FrameServeur(patient,secretaire);
+
+        this.setVisible(false);
+        new FrameClientAdmi(patient,accueil);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**

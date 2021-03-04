@@ -6,6 +6,7 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
+
 import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,17 +28,20 @@ public class Message extends javax.swing.JFrame {
     Date date = new Date();
     int annee = date.getYear() + 1900;
     String nSecu;
+    PatientHop patient;
 
-    public Message(JFrame accueil, String nSecu, JFrame precedent) {
+    public Message(JFrame accueil, String nSecu, JFrame precedent,PatientHop pat) {
         this.nSecu = nSecu;
         System.out.println(nSecu);
         initComponents();
         this.accueil = accueil;
         DMA = precedent;
+        patient=pat;
         jLabel2.setText(generationID());
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        
 
     }
 
@@ -166,8 +170,9 @@ public class Message extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        accueil.setVisible(true);
+        //accueil.setVisible(true);
         this.setVisible(false);
+        new Interop_ajoutPatient(patient,accueil);
         DMA.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

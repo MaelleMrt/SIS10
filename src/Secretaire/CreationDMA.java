@@ -6,6 +6,7 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
+import Patient.PatientHop;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
@@ -132,8 +133,8 @@ public class CreationDMA extends javax.swing.JFrame {
         return result;
     }
 
-    private void enregistrer() {
-
+    private PatientHop enregistrer() {
+        PatientHop patient=null;
         // On récupère les info saisies
         String nomU = jTextField1.getText();
         String nomN = jTextField2.getText();
@@ -146,7 +147,7 @@ public class CreationDMA extends javax.swing.JFrame {
         nSecu = jTextField10.getText();
         String nomM = jTextField11.getText();
         String sexe = genderBDD();
-
+        patient=new PatientHop(nomU,prenom,date);
         // On enregistre le nouveau patient dans BDD
         try {
             Statement s = ExempleJdbc.connexion();
@@ -157,6 +158,7 @@ public class CreationDMA extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return patient;
     }
 
     /**
@@ -508,9 +510,11 @@ public class CreationDMA extends javax.swing.JFrame {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
         } else {
-            enregistrer();
-            JFrame msg = new Message(accueil, nSecu, this);
-            msg.setVisible(true);
+            PatientHop patient=enregistrer();
+            System.out.println("sexe patient"+patient.getSexe());
+            this.setVisible(false);
+            new Message(this.accueil,nSecu,this.accueil,patient);
+            
 
         }
 

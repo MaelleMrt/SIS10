@@ -6,7 +6,7 @@ package HL7;
  */
 
 /*
- * FrameClient.java
+ * FrameClientAdmi.java
  *
  * Created on 6 févr. 2009, 10:18:51
  */
@@ -15,9 +15,12 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import library.interfaces.Action;
 import library.interfaces.ClientHL7;
 import library.interfaces.MessageInterface;
@@ -28,7 +31,7 @@ import library.interfaces.PatientLocation;
  *
  * @author Anthony CROUZET Polytech'Grenoble TIS3
  */
-public class FrameClient extends javax.swing.JFrame {
+public class FrameClientAdmi extends javax.swing.JFrame {
 
     private Patient patient;
     private PatientHop patientHop;
@@ -36,14 +39,17 @@ public class FrameClient extends javax.swing.JFrame {
     private char sex = 'X';
     private String card = "cardAdmettre";
     private int nbr;
-    private final SimpleDateFormat formateur = new SimpleDateFormat("dd/MM/yyyy");
+    private JFrame accueil;
+    private final SimpleDateFormat formateur = new SimpleDateFormat("yyyy-mm-dd");
 
     /** Creates new form FrameClient */
-    public FrameClient(PatientHop patHop) {
+    public FrameClientAdmi(PatientHop patHop,JFrame acc) {
         this.patientHop=patHop;
+        this.accueil=acc;
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         initComponents();
+        this.pack();
 
     }
 
@@ -213,7 +219,7 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         panelPatient.add(jLabel2, gridBagConstraints);
 
-        fieldIdPat.setText( String. valueOf(patientHop.getId()));
+        fieldIdPat.setText(String.valueOf(patientHop.getId()));
         fieldIdPat.setMinimumSize(new java.awt.Dimension(244, 28));
         fieldIdPat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,14 +288,19 @@ public class FrameClient extends javax.swing.JFrame {
         panelPatient.add(jLabel6, gridBagConstraints);
 
         try {
-            fieldDateNaissance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            fieldDateNaissance.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        fieldDateNaissance.setToolTipText("dd/MM/yyyy");
-        fieldDateNaissance.setText(patientHop.getNomNaissance());
-        fieldDateNaissance.setMinimumSize(new java.awt.Dimension(68, 20));
-        fieldDateNaissance.setPreferredSize(new java.awt.Dimension(68, 20));
+        fieldDateNaissance.setToolTipText("YYYY-MM-DD");
+        fieldDateNaissance.setText(patientHop.getNaissance());
+        fieldDateNaissance.setMinimumSize(new java.awt.Dimension(140, 20));
+        fieldDateNaissance.setPreferredSize(new java.awt.Dimension(140, 20));
+        fieldDateNaissance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldDateNaissanceActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -303,7 +314,7 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel9, gridBagConstraints);
 
-        comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { patientHop.getSexe()}));
+        comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { patientHop.getSexe(),"H","F","A"}));
         comboBoxSexe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxSexeActionPerformed(evt);
@@ -332,8 +343,20 @@ public class FrameClient extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel15, gridBagConstraints);
 
-        jFormattedTextFieldDateAdmi.setText("  /  /    ");
-        jFormattedTextFieldDateAdmi.setToolTipText("dd/MM/yyyy");
+        try{
+            jFormattedTextFieldDateAdmi.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldDateAdmi.setToolTipText("yyyy-mm-dd");
+        jFormattedTextFieldDateAdmi.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        jFormattedTextFieldDateAdmi.setPreferredSize(new java.awt.Dimension(140, 26));
+        jFormattedTextFieldDateAdmi.setSize(244,26);
+        jFormattedTextFieldDateAdmi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextFieldDateAdmiActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -785,17 +808,16 @@ public class FrameClient extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .add(jButton2)
-                .addContainerGap())
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .add(jButton2)
-                .addContainerGap())
+                .add(0, 23, Short.MAX_VALUE)
+                .add(jButton2))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -889,9 +911,9 @@ public class FrameClient extends javax.swing.JFrame {
 
             //changer de panel
             java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
-            c.show(this.panelCard, "cardAction");
-            c = (CardLayout) this.panelAction.getLayout();
-            c.show(this.panelAction, card);
+            c.show(this.panelCard, "cardConnexion");
+            //c = (CardLayout) this.panelConexion.getLayout();
+            //c.show(this.panelConexion, card);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -918,7 +940,9 @@ public class FrameClient extends javax.swing.JFrame {
         this.labelFin1.setText("ID message : " + messageAck.getId());
         this.labelFin2.setText(messageAck.getAcknowledgmentCodeString());
         this.labelFin3.setText("ID Ack: " + messageAck.getIdAck());
-
+        
+        this.accueil.setVisible(true);
+        this.setVisible(false);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -971,6 +995,14 @@ public class FrameClient extends javax.swing.JFrame {
     private void comboBoxSexeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxSexeActionPerformed
        
     }//GEN-LAST:event_comboBoxSexeActionPerformed
+
+    private void fieldDateNaissanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldDateNaissanceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldDateNaissanceActionPerformed
+
+    private void jFormattedTextFieldDateAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateAdmiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextFieldDateAdmiActionPerformed
 
     private boolean champsPatOk() {
         boolean r = true;
@@ -1106,16 +1138,16 @@ public class FrameClient extends javax.swing.JFrame {
         Date dateBirth = null;
         String s = this.fieldDateNaissance.getText();
         try {
-            if (!s.equals("  /  /    ")) {
+            if (!s.equals("   -  -  ")) {
                 dateBirth = formateur.parse(s);
                 this.patient.setBirth(dateBirth);
             }
         } catch (ParseException ex) {
-            Logger.getLogger(FrameClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameClientAdmi.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //sexe
-        this.patient.setSex(patientHop.getSexe().charAt(0));
+        System.out.println(patientHop.getSexe());
  
     }
 
