@@ -265,8 +265,10 @@
                       <Font name="Lucida Grande" size="14" style="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
+                  </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.addMouseListener(new MouseAdapter()  {&#xa;            public void mousePressed(MouseEvent e) {&#xa;&#xa;                // clic sur le bouton gauche ou droit&#xa;                if(e.getButton() == MouseEvent.BUTTON1 ||&#xa;                    e.getButton() == MouseEvent.BUTTON3)&#xa;                {&#xa;                    int indRow =jTable1.rowAtPoint(e.getPoint());&#xa;&#xa;                    try{&#xa;                        ResultatPrescription pres=new Prescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());&#xa;                        new ContenuInf(pres,patient,infirmier);&#xa;                    }catch(Exception e2){&#xa;                    }&#xa;&#xa;                }&#xa;            }&#xa;&#xa;        });"/>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
                     <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPrescriptionsInf modele = new TableauPrescriptionsInf(patient,infirmier.service);"/>
                   </AuxValues>

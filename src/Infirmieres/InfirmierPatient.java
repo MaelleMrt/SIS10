@@ -23,6 +23,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
         patient=p;
         infirmier=inf;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

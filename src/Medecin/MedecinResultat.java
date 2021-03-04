@@ -25,6 +25,7 @@ public class MedecinResultat extends javax.swing.JFrame {
         patient =p;
         medecin=med;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -202,7 +203,7 @@ public class MedecinResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        //new MedecinAcceuil();
+        new MedecinAcceuil(medecin.login);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

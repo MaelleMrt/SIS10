@@ -21,6 +21,7 @@ public class AjoutValide extends javax.swing.JFrame {
         patient=pat;
         medecin=med;
         initComponents();
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
