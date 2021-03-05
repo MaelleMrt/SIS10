@@ -20,13 +20,15 @@ import javax.swing.table.AbstractTableModel;
 public class TableauxSoins  extends AbstractTableModel{
      private ArrayList<Soins> listSoins= new ArrayList<Soins>();
      
-    private final String[] entetes = {"Poids ", "Température", "FC","PA","Saturation","Glycemie","Observation","date"};
+    private final String[] entetes = {"Poids ", "Température", "FC","PA","Saturation","Glycemie","Observation","date","infirmier"};
     
     public TableauxSoins(int idp) {
         try{
         Statement s= ExempleJdbc.connexion();
+            
             try{
-                ResultSet r1= s.executeQuery("SELECT poids, temp, fc, pa, saturation, glycemie, observation,date FROM Soin where idP='"+idp+"'" );
+            
+                ResultSet r1= s.executeQuery("SELECT poids, temp, fc, pa, saturation, glycemie, observation,date,login FROM Soin where idP='"+idp+"'" );
                 while(r1.next()){
                     int poids= r1.getInt("poids");
                     int temp= r1.getInt("temp");
@@ -36,7 +38,19 @@ public class TableauxSoins  extends AbstractTableModel{
                     int gly =r1.getInt("glycemie");
                     String observation=r1.getString("observation");
                     String date =r1.getString("date");
-                    listSoins.add(new Soins(poids,temp,pa,fc,sat,gly,observation,date));
+                    String login =r1.getString("login");
+                   try{
+            
+                        ResultSet r2= s.executeQuery("SELECT nom FROM Infirmier where login='"+login+"'");
+                        while(r2.next()){
+                                String nomInf =r2.getString("nom");
+                        listSoins.add(new Soins(poids,temp,pa,fc,sat,gly,observation,date,nomInf));
+                        }
+                    } catch(SQLException e){
+                        System.out.println(e);
+
+                    }
+
                 }
             } catch(SQLException e){
                     System.out.println(e);
@@ -83,6 +97,8 @@ public class TableauxSoins  extends AbstractTableModel{
                 return listSoins.get(rowIndex).getObservation();
             case 7: 
                 return listSoins.get(rowIndex).getDate();
+            case 8: 
+                return listSoins.get(rowIndex).getNomInf();
             default:
                 return null; //Ne devrait jamais arriver
         }

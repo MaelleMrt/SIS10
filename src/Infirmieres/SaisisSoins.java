@@ -9,11 +9,11 @@ import Connexion.ExempleJdbc;
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -312,9 +312,14 @@ public class SaisisSoins extends javax.swing.JFrame {
     try{
         Statement s= ExempleJdbc.connexion();
             try{
-            String date=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                
+               Date aujourdhui = new Date();
+               SimpleDateFormat formater = null;
+            
+               formater = new SimpleDateFormat("yyyy-MM-dd à hh:mm:ss");
+               String date=formater.format(aujourdhui);
 
-                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"','"+date+"')");
+                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"','"+date+"','"+infirmier.login+"')");
           
 
             } catch(SQLException e){

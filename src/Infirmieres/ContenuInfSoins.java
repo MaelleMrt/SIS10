@@ -13,17 +13,18 @@ import Patient.PatientHop;
  *
  * @author Maelle
  */
-public class ContenuInf extends javax.swing.JFrame {
+public class ContenuInfSoins extends javax.swing.JFrame {
     ResultatPrescription respres;
     PatientHop patient;
     Infirmier infirmier;
+    Soins soin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public ContenuInf(ResultatPrescription rp,PatientHop p,Infirmier inf) {
-        infirmier =inf;
-        respres=rp;
-        patient=p;
+    public ContenuInfSoins(Soins s,PatientHop p,Infirmier inf) {
+        this.infirmier =inf;
+        this.soin=s;
+        this.patient=p;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -72,18 +73,18 @@ public class ContenuInf extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Médecin :");
+        jLabel2.setText("Infirmière");
 
-        jLabel4.setText(respres.getMedecin());
+        jLabel4.setText(soin.getNomInf());
 
         jLabel6.setText("Date :");
 
-        jLabel7.setText(respres.getDate());
+        jLabel7.setText(soin.getDate());
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
-        jTextArea1.setText(respres.getContenu());
+        jTextArea1.setText(soin.getObservation());
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel10.setText("Descriptif Hospitalisation/Consultation");
@@ -208,8 +209,8 @@ public class ContenuInf extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          this.dispose();
-         new InfirmiereResultat(patient,infirmier);
-
+         new InfirmiereSoins(this.patient,this.infirmier);
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

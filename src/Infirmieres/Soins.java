@@ -10,16 +10,17 @@ package Infirmieres;
  * @author Maelle
  */
 public class Soins {
-    public int poids;
-    public int temp;
-    public int pa;
-    public int fc;
-    public int saturation;
-    public int gly;
-    public String observation;
-    public String date;
+    private int poids;
+    private int temp;
+    private int pa;
+    private int fc;
+    private int saturation;
+    private int gly;
+    private String observation;
+    private String date;
+    private String nomInf;
 
-    public Soins(int poids, int temp, int pa, int fc, int saturation,int gly ,String observation,String date) {
+    public Soins(int poids, int temp, int pa, int fc, int saturation,int gly ,String observation,String date,String nomInf) {
         this.poids = poids;
         this.temp = temp;
         this.pa = pa;
@@ -28,6 +29,11 @@ public class Soins {
         this.saturation = saturation;
         this.observation = observation;
         this.date=date;
+        this.nomInf=nomInf;
+    }
+
+    public String getNomInf() {
+        return nomInf;
     }
 
     public int getPoids() {
