@@ -5,15 +5,11 @@
  */
 package Secretaire;
 
-import CIC.CicAccueil;
-import CIC.CicEtude;
-import CIC.CicParticipant;
-import CIC.Etude;
-import CIC.Participant;
+
 import Connexion.ExempleJdbc;
 import Medecin.Medecin;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,9 +34,9 @@ public class Secretaire extends javax.swing.JFrame {
     String nom;
     String prenom;
     String service;
-    private ArrayList<Patient> listPatient = new ArrayList<Patient>();
-    private ArrayList<Medecin> listMedecin = new ArrayList<Medecin>();
-    
+    private ArrayList<PatientDansService> listPatient = new ArrayList<>();
+    private ArrayList<Medecin> listMedecin = new ArrayList<>();
+    private ArrayList<PatientHop> listPatient2 = new ArrayList<>();
 
     public Secretaire(String nom, String prenom, String service) {
         this.nom = nom;
@@ -50,7 +46,9 @@ public class Secretaire extends javax.swing.JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         affichageNom();
+        Tableau1();
         Tableau2();
+        System.out.println(listPatient2);
 
     }
 
@@ -87,6 +85,44 @@ public class Secretaire extends javax.swing.JFrame {
         jTable2.setModel(model);
     }
 
+    private void Tableau1() { // affichage des médecins (nom et prénom)
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT id FROM PatientService WHERE service ='" + service + "'");
+            while (rs.next()) {
+                PatientDansService ps = new PatientDansService(rs.getInt("id"), service);
+                listPatient.add(ps);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (PatientDansService e : listPatient) {
+            Vector<Object> v = new Vector<Object>();
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT nomusuel, prenom, datedenaissance FROM Patient WHERE id ='" + e.getId() + "'");
+                while (rs.next()) {
+                    PatientHop p = new PatientHop(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
+                    listPatient2.add(p);
+                }
+
+            } catch (SQLException excp) {
+                System.out.println("ne marche pas");
+            }
+            v.add(listPatient2.get((i)).getNomUsuel());
+            v.add(listPatient2.get((i)).getPrenom());
+            v.add(listPatient2.get((i)).getNaissance());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel(model);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,7 +157,7 @@ public class Secretaire extends javax.swing.JFrame {
 
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jButton1.setText("Créer un nouveau dossier");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,15 +215,28 @@ public class Secretaire extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -197,6 +246,11 @@ public class Secretaire extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTextField1PropertyChange(evt);
             }
         });
 
@@ -253,29 +307,27 @@ public class Secretaire extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 334, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 201, Short.MAX_VALUE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(121, 121, 121))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(119, 119, 119)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(204, 688, Short.MAX_VALUE))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                            .addComponent(jTextField2))))
+                .addGap(93, 93, 93))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(169, 169, 169)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addGap(224, 224, 224))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(143, 143, 143)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,7 +337,7 @@ public class Secretaire extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel7))
@@ -297,9 +349,9 @@ public class Secretaire extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addGap(58, 58, 58))
+                .addGap(71, 71, 71))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -359,7 +411,7 @@ public class Secretaire extends javax.swing.JFrame {
                         v.add(e.getNom());
                         v.add(e.getPrenom());
                         v.add(e.getLogin());
-                      model.setColumnIdentifiers(new String[]{"Nom du médecin", "Prénom du médecin"});
+                        model.setColumnIdentifiers(new String[]{"Nom du médecin", "Prénom du médecin"});
                         model.insertRow(i, v);
                         i++;
                     }
@@ -378,12 +430,62 @@ public class Secretaire extends javax.swing.JFrame {
         if (i < jTable2.getRowCount()) {
             String Nom = String.valueOf(jTable2.getValueAt(i, 0));
             String Prenom = String.valueOf(jTable2.getValueAt(i, 1));
-            ListeRDV lr = new ListeRDV(this,nom,prenom,Nom,Prenom);
+            ListeRDV lr = new ListeRDV(this, nom, prenom, Nom, Prenom);
             lr.setVisible(true);
             this.setVisible(false);
-        }    
-    
+        }
+
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
+         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte = jTextField1.getText();
+                int i = 0;
+                for (PatientHop e : listPatient2) {
+                    if (e.getNomUsuel().toUpperCase().contains(texte.toUpperCase())) {
+                        Vector<Object> v = new Vector<Object>();
+                        v.add(e.getNomUsuel());
+                        v.add(e.getPrenom());
+                        v.add(e.getNaissance());
+                        model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance"});
+                        model.insertRow(i, v);
+                        i++;
+                    }
+                }
+                jTable1.setModel(model);
+            }
+
+        });
+    }//GEN-LAST:event_jTextField1PropertyChange
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+         int i = 0;
+        while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {
+            i++;
+        }
+        if (i < jTable1.getRowCount()) {
+            String Nom = String.valueOf(jTable1.getValueAt(i, 0));
+            String Prenom = String.valueOf(jTable1.getValueAt(i, 1));
+            String date = String.valueOf(jTable1.getValueAt(i, 2));
+            VisualisationDMA dma = new VisualisationDMA(this, prenom + " " + nom, Nom, Prenom, date);
+            dma.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
