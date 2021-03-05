@@ -22,7 +22,7 @@ import javax.swing.table.AbstractTableModel;
 public class TableauPrescriptionsInf extends AbstractTableModel{
      private ArrayList<PrescriptionInf> listPrescription= new ArrayList<PrescriptionInf>();
      
-    private final String[] entetes = {"Service ", "Medecin", "Date","Contenu","valider","Date Validation"};
+    private final String[] entetes = {"Service ", "Medecin", "Date","Contenu","valider","Date Validation","Infirmier"};
     String service;
     
     public TableauPrescriptionsInf(PatientHop p,String nomS) {
@@ -32,22 +32,29 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
         String login=null;
         String nomM;
         String dateVal;
+        String loginInf;
+        String nomInf=null;
         Boolean valider;
 
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login,valider,dateVal FROM Prescription WHERE idP ='"+ p.getId()+"'");
+                ResultSet rs1= s.executeQuery("SELECT date,contenu,login,valider,dateVal,loginInf FROM Prescription WHERE idP ='"+ p.getId()+"'");
                 while(rs1.next()){
                     date= rs1.getString("date");
                     contenu= rs1.getString("contenu");
                     login =rs1.getString("login");
                     valider=rs1.getBoolean("valider");
                     dateVal=rs1.getString("dateVal");
+                    loginInf=rs1.getString("loginInf");
+                    ResultSet rs3= s.executeQuery("SELECT nom FROM Infirmier WHERE login ='"+loginInf+"'");
+                    while(rs3.next()){
+                        nomInf= rs3.getString("nom");
+                        }
                     ResultSet rs2= s.executeQuery("SELECT nom FROM Médecin WHERE login ='"+login+"'AND nomS='"+service+"'" );
                         while(rs2.next()){
                             nomM= rs2.getString("nom");
-                            PrescriptionInf pres=new PrescriptionInf(service,nomM,date,contenu,valider,dateVal);
+                            PrescriptionInf pres=new PrescriptionInf(service,nomM,date,contenu,valider,dateVal,loginInf);
                             listPrescription.add(pres);
                         }   
                 
@@ -109,8 +116,10 @@ public class TableauPrescriptionsInf extends AbstractTableModel{
                 return listPrescription.get(rowIndex).getContenu();
             case 4: 
                 return listPrescription.get(rowIndex).getValider();
-             case 5: 
+            case 5: 
                 return listPrescription.get(rowIndex).getDateVal();
+            case 6: 
+                return listPrescription.get(rowIndex).getNomInf();
             default:
                 return null; //Ne devrait jamais arriver
         }

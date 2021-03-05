@@ -14,13 +14,23 @@ import javafx.scene.text.Text;
  * @author Maelle
  */
 public class PrescriptionInf extends ResultatPrescription{
-  public boolean valider;
-  public String dateVal;
-   public PrescriptionInf(String s,String m, String d,String contenu,boolean valider,String dateVal){
+  private boolean valider;
+  private String dateVal;
+  private String nomInf;
+  
+   public PrescriptionInf(String s,String m, String d,String contenu,boolean valider,String dateVal,String loginInf){
             super(s,m,d,contenu);
             this.valider=valider;
             this.dateVal=dateVal;
-            
+            this.nomInf=loginInf;
+    }
+
+    public boolean isValider() {
+        return valider;
+    }
+
+    public String getNomInf() {
+        return nomInf;
     }
 
 
