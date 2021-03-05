@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Infirmieres;
+package HL7;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import projet.sis.*;
+import library.interfaces.ServeurHL7;
 
 /**
  *
  * @author Maelle
  */
-public class TestInterface {
+public class TestHL7 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new InfirmierAcceuil("jean_nemar");
-
+        EnvoieMessage em=new EnvoieMessage();
+        em.sendMessage("hello", "Hello world", "roshannep27@gmail.com" , "roshannep27@gmail.com" );
     }
     
 }

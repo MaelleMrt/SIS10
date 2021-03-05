@@ -3,23 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Infirmieres;
+package HL7;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import projet.sis.*;
+import Patient.PatientHop;
+import Secretaire.Secretaire;
 
 /**
  *
  * @author Maelle
  */
-public class TestInterface {
+public class testFrameClient {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        new InfirmierAcceuil("jean_nemar");
+        PatientHop patient=new PatientHop("Oster","Clara","2018-12-11");
+        Secretaire secretaire=new Secretaire("nom","prenom","service");
+        secretaire.setVisible(false);
+        new FrameClientAdmi(patient,secretaire);
 
     }
     
