@@ -111,8 +111,6 @@ public class CreationDMA extends javax.swing.JFrame {
         boolean result = false;
         Date dateAjd = new Date();
         int anneeAjd = dateAjd.getYear() + 1900;
-        int moisAjd = dateAjd.getMonth() + 1;
-        int jourAjd = dateAjd.getDate();
         int compteur = 0;
 
         if (RecuperAnnee() <= anneeAjd) {

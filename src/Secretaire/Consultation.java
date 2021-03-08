@@ -85,7 +85,7 @@ public class Consultation {
         String service = new String();
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nomS FROM Médecin WHERE nom + prenom ='" + medecin + "'");
+            ResultSet rs = s.executeQuery("SELECT nomS FROM Médecin WHERE CONCAT(prenom, ' ', nom) LIKE '" + medecin + "'");
             while (rs.next()) {
                 service =rs.getString("nomS");
             }
@@ -93,7 +93,6 @@ public class Consultation {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
         return service;
     }
 }

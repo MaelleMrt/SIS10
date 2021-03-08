@@ -48,7 +48,6 @@ public class Secretaire extends javax.swing.JFrame {
         affichageNom();
         Tableau1();
         Tableau2();
-        System.out.println(listPatient2);
 
     }
 
