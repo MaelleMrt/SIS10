@@ -1,4 +1,4 @@
-
+package HL7;
 import library.interfaces.Patient;
 import library.interfaces.PatientLocation;
 import library.interfaces.ServeurHL7;
@@ -18,18 +18,24 @@ import library.structure.groupe.messages.Message;
  *
  * @author Anthony CROUZET Polytech'Grenoble TIS3
  */
-public class FrameServeur extends javax.swing.JFrame {
+public class FrameServeur extends javax.swing.JFrame implements Runnable {
 
     private Patient patient;
     private Message message;
     private ServeurHL7 c;
+    private int port;
+    private Thread thread;
 
     /** Creates new form FrameServeur */
-    public FrameServeur() {
+    public FrameServeur(int port) {
         initComponents();
         this.patient = null;
         this.message = null;
-    }
+        this.port=port;
+        this.setLocationRelativeTo(null);
+        c = new ServeurHL7();
+        c.connection(this.port);
+    }   
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -44,11 +50,8 @@ public class FrameServeur extends javax.swing.JFrame {
         panelConexion = new javax.swing.JPanel();
         panelPatient1 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        fieldPort = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         labelFin = new javax.swing.JLabel();
         labelFin1 = new javax.swing.JLabel();
@@ -80,6 +83,7 @@ public class FrameServeur extends javax.swing.JFrame {
         labelFin27 = new javax.swing.JLabel();
         labelFin28 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,31 +93,14 @@ public class FrameServeur extends javax.swing.JFrame {
         panelPatient1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelPatient1.setLayout(new java.awt.GridBagLayout());
 
-        jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 16));
-        jLabel12.setText("Connexion");
+        jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 16)); // NOI18N
+        jLabel12.setText("Nouveau message du service radiologie   ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelPatient1.add(jLabel12, gridBagConstraints);
-
-        jLabel14.setText("Port :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        panelPatient1.add(jLabel14, gridBagConstraints);
-
-        fieldPort.setMinimumSize(new java.awt.Dimension(48, 20));
-        fieldPort.setPreferredSize(new java.awt.Dimension(48, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 4);
-        panelPatient1.add(fieldPort, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -124,17 +111,10 @@ public class FrameServeur extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jButton2.setLabel("Connexion");
+        jButton2.setText("Valider");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setLabel("Déconnexion");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -143,20 +123,16 @@ public class FrameServeur extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .add(27, 27, 27)
-                .add(jButton3)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 127, Short.MAX_VALUE)
+                .addContainerGap(156, Short.MAX_VALUE)
                 .add(jButton2)
-                .addContainerGap())
+                .add(131, 131, 131))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton2)
-                    .add(jButton3))
-                .addContainerGap())
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jButton2)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -319,12 +295,15 @@ public class FrameServeur extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 4, 5, 4);
         panelConexion.add(jPanel5, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24));
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Service de chirurgie cardiaque");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         panelConexion.add(jLabel1, gridBagConstraints);
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icone lettre.jpg"))); // NOI18N
+        panelConexion.add(jLabel2, new java.awt.GridBagConstraints());
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -351,12 +330,65 @@ public class FrameServeur extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Integer port = Integer.parseInt(this.fieldPort.getText());
-        c = new ServeurHL7();
-        c.connection(port);
-        c.ecoute();
-        String messageHL7 = c.protocole();
+        this.setVisible(false);
+        c.fermer();
+        this.thread.interrupt();
+        Thread t=new Thread(this);
+        t.start();
         
+}//GEN-LAST:event_jButton2ActionPerformed
+
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JLabel labelFin;
+    private javax.swing.JLabel labelFin1;
+    private javax.swing.JLabel labelFin10;
+    private javax.swing.JLabel labelFin11;
+    private javax.swing.JLabel labelFin12;
+    private javax.swing.JLabel labelFin13;
+    private javax.swing.JLabel labelFin14;
+    private javax.swing.JLabel labelFin15;
+    private javax.swing.JLabel labelFin16;
+    private javax.swing.JLabel labelFin17;
+    private javax.swing.JLabel labelFin18;
+    private javax.swing.JLabel labelFin19;
+    private javax.swing.JLabel labelFin2;
+    private javax.swing.JLabel labelFin20;
+    private javax.swing.JLabel labelFin21;
+    private javax.swing.JLabel labelFin22;
+    private javax.swing.JLabel labelFin23;
+    private javax.swing.JLabel labelFin24;
+    private javax.swing.JLabel labelFin25;
+    private javax.swing.JLabel labelFin26;
+    private javax.swing.JLabel labelFin27;
+    private javax.swing.JLabel labelFin28;
+    private javax.swing.JLabel labelFin3;
+    private javax.swing.JLabel labelFin4;
+    private javax.swing.JLabel labelFin5;
+    private javax.swing.JLabel labelFin6;
+    private javax.swing.JLabel labelFin7;
+    private javax.swing.JLabel labelFin8;
+    private javax.swing.JLabel labelFin9;
+    private javax.swing.JPanel panelConexion;
+    private javax.swing.JPanel panelPatient1;
+    // End of variables declaration//GEN-END:variables
+
+    
+    @Override
+    public void run() {
+
+        System.out.println("tourne");
+        c.ecoute();
+        this.setVisible(true);
+        String messageHL7 = c.protocole();
+        this.setVisible(true);
         System.out.println("Reçu :" + messageHL7);
         this.patient = c.getPatient();
         this.message = c.getMessage();
@@ -450,65 +482,11 @@ public class FrameServeur extends javax.swing.JFrame {
                 this.labelFin26.setText("Type: " + locPat.getPersonLocationType());
             }
         }
-
-
-}//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        this.c.fermer();
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new FrameServeur().setVisible(true);
-            }
-        });
+        c.fermer();
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFormattedTextField fieldPort;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JLabel labelFin;
-    private javax.swing.JLabel labelFin1;
-    private javax.swing.JLabel labelFin10;
-    private javax.swing.JLabel labelFin11;
-    private javax.swing.JLabel labelFin12;
-    private javax.swing.JLabel labelFin13;
-    private javax.swing.JLabel labelFin14;
-    private javax.swing.JLabel labelFin15;
-    private javax.swing.JLabel labelFin16;
-    private javax.swing.JLabel labelFin17;
-    private javax.swing.JLabel labelFin18;
-    private javax.swing.JLabel labelFin19;
-    private javax.swing.JLabel labelFin2;
-    private javax.swing.JLabel labelFin20;
-    private javax.swing.JLabel labelFin21;
-    private javax.swing.JLabel labelFin22;
-    private javax.swing.JLabel labelFin23;
-    private javax.swing.JLabel labelFin24;
-    private javax.swing.JLabel labelFin25;
-    private javax.swing.JLabel labelFin26;
-    private javax.swing.JLabel labelFin27;
-    private javax.swing.JLabel labelFin28;
-    private javax.swing.JLabel labelFin3;
-    private javax.swing.JLabel labelFin4;
-    private javax.swing.JLabel labelFin5;
-    private javax.swing.JLabel labelFin6;
-    private javax.swing.JLabel labelFin7;
-    private javax.swing.JLabel labelFin8;
-    private javax.swing.JLabel labelFin9;
-    private javax.swing.JPanel panelConexion;
-    private javax.swing.JPanel panelPatient1;
-    // End of variables declaration//GEN-END:variables
+    public void ajouterThread(Thread t){
+        this.thread=t;
+    }
+  
 }

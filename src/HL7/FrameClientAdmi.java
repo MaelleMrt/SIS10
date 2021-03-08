@@ -315,6 +315,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel9, gridBagConstraints);
 
+        System.out.println("sexe patient ="+patientHop.getSexe());
         comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { patientHop.getSexe(),"H","F","A"}));
         comboBoxSexe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -14,9 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import HL7.FrameServeur;
 
 /**
  *
@@ -359,7 +359,7 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InterfaceConnexion();
+                //new InterfaceConnexion();
             }
         });
     }

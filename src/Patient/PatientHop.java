@@ -34,7 +34,7 @@ public class PatientHop {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+nom+"' AND prenom='"+prenom+"'" );
+                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+this.nom+"' AND prenom='"+this.prenom+"'AND datedenaissance='"+this.naissance+"'" );
                 while(rs.next()){
                     id=rs.getInt("id");
                     System.out.println("id    "+id);
