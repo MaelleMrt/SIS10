@@ -66,13 +66,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        System.out.println(listConsult);
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Consultation e : listConsult) {
             Vector<Object> v = new Vector<Object>();
             v.add(e.getService());
-            
             v.add(e.getMedecin());
             v.add(e.getMotif());
             v.add(e.getDate());
