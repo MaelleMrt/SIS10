@@ -359,7 +359,7 @@ catch (javax.swing.UnsupportedLookAndFeelException ex) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new InterfaceConnexion();
+                new InterfaceConnexion();
             }
         });
     }
