@@ -97,6 +97,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     
     public boolean verifDate(String s){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setLenient(false);
         try {
             java.util.Date date = format.parse(s);
             return true;

@@ -15,6 +15,9 @@ import PDF.LettreDeSortiePDF;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +30,7 @@ public class LettreSortie extends javax.swing.JFrame {
     private PatientHop patient;
     private Medecin medecin;
     private String medecinTraitant;
-    
+
     public LettreSortie(PatientHop patient, Medecin medecin) {
         this.patient = patient;
         this.medecin = medecin;
@@ -38,11 +41,11 @@ public class LettreSortie extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public void remplirChamps(){
+    public void remplirChamps() {
         try {
             Statement s = ExempleJdbc.connexion();
             try {
-                ResultSet rs = s.executeQuery("SELECT médecintraitant FROM Patient WHERE nomusuel='"+patient.getNomUsuel()+"' AND prenom = '"+patient.getPrenom()+"' AND id = '"+patient.getId()+"'");
+                ResultSet rs = s.executeQuery("SELECT médecintraitant FROM Patient WHERE nomusuel='" + patient.getNomUsuel() + "' AND prenom = '" + patient.getPrenom() + "' AND id = '" + patient.getId() + "'");
                 while (rs.next()) {
                     this.medecinTraitant = rs.getString("médecintraitant");
                 }
@@ -54,6 +57,18 @@ public class LettreSortie extends javax.swing.JFrame {
             System.out.println(e);
         }
     }
+
+    public boolean dateValide(String strdate) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        df.setLenient(false);
+        try {
+            Date date = df.parse(strdate);
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -343,35 +358,39 @@ public class LettreSortie extends javax.swing.JFrame {
     }//GEN-LAST:event_medActionPerformed
 
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
-        MedecinPatient m = new MedecinPatient(patient,medecin);
+        MedecinPatient m = new MedecinPatient(patient, medecin);
         this.setVisible(false);
     }//GEN-LAST:event_annulerActionPerformed
 
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-        if(med.getText().equals("") || pat.getText().equals("") || naissance.getText().equals("") || entree.getText().equals("") || sortie.getText().equals("") || motif.getText().equals("") || exam.getText().equals("") || traitement.getText().equals("") || synthese.getText().equals("") || suivi.getText().equals("")){
+        if (med.getText().equals("") || pat.getText().equals("") || naissance.getText().equals("") || entree.getText().equals("") || sortie.getText().equals("") || motif.getText().equals("") || exam.getText().equals("") || traitement.getText().equals("") || synthese.getText().equals("") || suivi.getText().equals("")) {
+            erreur.setText("Veuillez remplir tous les champs");
             erreur.setVisible(true);
-        }
-        else{
-            erreur.setVisible(false);
-            LettreDeSortie l = new LettreDeSortie(String.valueOf(patient.getId()),medecin.getService(),med.getText(),pat.getText(),naissance.getText(),entree.getText(),sortie.getText(),motif.getText(),exam.getText(),medecin.getNom()+" "+medecin.getPrenom(),traitement.getText(),synthese.getText(),suivi.getText());
-            Statement s;
-            try {
-                s = ExempleJdbc.connexion();
-                s.executeUpdate("INSERT INTO `LettreSortie`(`idPatient`, `ph`, `service`, `medecinTraitant`, `dateEntree`, `dateSortie`, `motif`, `exam`, `traitement`, `synthese`, `suivi`) VALUES ('"+l.getId()+"','"+l.getPH()+"','"+l.getService()+"','"+l.getMedecinTraitant()+"','"+l.getDateEntree()+"','"+l.getDateSortie()+"','"+l.getMotif()+"','"+l.getExam()+"','"+l.getTraitement()+"','"+l.getSynthese()+"','"+l.getSuivi()+"')");
-                
+        } else {
+            if (!dateValide(naissance.getText()) || !dateValide(entree.getText()) || !dateValide(sortie.getText())) {
+                erreur.setText("La date n'est pas valide. Veuillez saisir une date sous la forme yyyy-MM-dd");
+                erreur.setVisible(true);
+            } else {
+                erreur.setVisible(false);
+                LettreDeSortie l = new LettreDeSortie(String.valueOf(patient.getId()), medecin.getService(), med.getText(), pat.getText(), naissance.getText(), entree.getText(), sortie.getText(), motif.getText(), exam.getText(), medecin.getNom() + " " + medecin.getPrenom(), traitement.getText(), synthese.getText(), suivi.getText());
+                Statement s;
+                try {
+                    s = ExempleJdbc.connexion();
+                    s.executeUpdate("INSERT INTO `LettreSortie`(`idPatient`, `ph`, `service`, `medecinTraitant`, `dateEntree`, `dateSortie`, `motif`, `exam`, `traitement`, `synthese`, `suivi`) VALUES ('" + l.getId() + "','" + l.getPH() + "','" + l.getService() + "','" + l.getMedecinTraitant() + "','" + l.getDateEntree() + "','" + l.getDateSortie() + "','" + l.getMotif() + "','" + l.getExam() + "','" + l.getTraitement() + "','" + l.getSynthese() + "','" + l.getSuivi() + "')");
 
-            } catch (SQLException ex) {
-                Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                LettreDeSortiePDF pdf = new LettreDeSortiePDF(l);
+                try {
+                    Desktop.getDesktop().open(new File("C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie" + patient.getId() + ".pdf"));
+                } catch (IOException ex) {
+                    Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                MedecinPatient m = new MedecinPatient(patient, medecin);
+                this.setVisible(false);
             }
-            
-            LettreDeSortiePDF pdf = new LettreDeSortiePDF(l);
-            try {
-                Desktop.getDesktop().open(new File("C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie"+patient.getId()+".pdf"));
-            } catch (IOException ex) {
-                Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            MedecinPatient m = new MedecinPatient(patient,medecin);
-            this.setVisible(false);
         }
     }//GEN-LAST:event_validerActionPerformed
 
