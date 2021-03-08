@@ -208,15 +208,8 @@ public class ContenuInf extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          this.dispose();
+         new InfirmiereResultat(patient,infirmier);
 
-        if(respres.getClass().toString().equals("class Medecin.Prescription")){
-            System.out.println("prescription");
-            new InfirmierPrescription(patient,infirmier);
-        }
-        if(respres.getClass().toString().equals("class Medecin.Resultat")){
-            System.out.println("resultat");
-            new InfirmiereResultat(patient,infirmier);
-        }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
