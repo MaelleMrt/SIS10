@@ -1,4 +1,5 @@
 package HL7;
+import java.text.DateFormat;
 import library.interfaces.Patient;
 import library.interfaces.PatientLocation;
 import library.interfaces.ServeurHL7;
@@ -403,7 +404,11 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
         }
 
         if (patient.getBirth() != null) {
-            this.labelFin5.setText("Né le : " + patient.getBirth().toString());
+            
+            DateFormat shortDateFormat = DateFormat.getDateTimeInstance(
+            DateFormat.SHORT,
+            DateFormat.SHORT);
+            this.labelFin5.setText("Né le : " +shortDateFormat.format(patient.getBirth()));
         }
 
         if (patient.getSex() != null) {
