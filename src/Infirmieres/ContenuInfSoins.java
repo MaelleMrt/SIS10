@@ -100,7 +100,7 @@ public class ContenuInfSoins extends javax.swing.JFrame {
         jLabel7.setText(soin.getDate());
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel10.setText("Soin");
+        jLabel10.setText("Prise Constantes ");
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
