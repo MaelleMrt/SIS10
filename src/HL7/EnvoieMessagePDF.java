@@ -5,21 +5,33 @@
  */
 package HL7;
 
+import static java.lang.ProcessBuilder.Redirect.to;
+import static java.util.Date.from;
 import java.util.Properties;
-import javax.mail.Address;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.activation.DataHandler;
+import javax.mail.Address;
 
 /**
  *
  * @author Maelle
  */
-public class EnvoieMessage {
+public class EnvoieMessagePDF {
     
+    static String message1 = "Voici mon message";
+    private String username = "maelle.mg@gmail.com";
+    private String password = "Polytech26743698!";
     public void sendMessage(String subject, String text, String destinataire, String copyDest) {
     // 1 -> Création de la session
    
@@ -33,17 +45,34 @@ public class EnvoieMessage {
     properties.put("mail.smtp.port",587);
 
     Session session = Session.getInstance(properties);
-    
     MimeMessage message = new MimeMessage(session);
     try {
-        message.setText(text);
-        message.setSubject(subject);
-        message.addRecipients(Message.RecipientType.TO, destinataire);
-        message.addRecipients(Message.RecipientType.CC, copyDest);
-    } catch (MessagingException e) {
-        e.printStackTrace();
-    }
-     // 3 -> Envoi du message
+      // Créer un message
+     // Define message
+      message.setText(text);
+      message.setSubject(subject);
+      message.addRecipients(Message.RecipientType.TO, destinataire);
+      message.addRecipients(Message.RecipientType.CC, copyDest);
+
+    // Create the message part
+    BodyPart messageBodyPart = new MimeBodyPart();
+
+    // Fill the message
+    messageBodyPart.setText("Pardon Ideas");
+
+    Multipart multipart = new MimeMultipart();
+    multipart.addBodyPart(messageBodyPart);
+
+    // Part two is attachment
+    messageBodyPart = new MimeBodyPart();
+    DataSource source = new FileDataSource("src/PDF/LettreSortie123456789.pdf");
+    messageBodyPart.setDataHandler(new DataHandler(source));
+    messageBodyPart.setFileName("src/PDF/LettreSortie123456789.pdf");
+    multipart.addBodyPart(messageBodyPart);
+
+    // Put parts in message
+    message.setContent(multipart);
+    // 3 -> Envoi du message
     Transport transport=null;
     try {
         transport = session.getTransport("smtp");
@@ -63,5 +92,13 @@ public class EnvoieMessage {
         }
     }
         System.out.println("message envoyé");
-    } 
+ 
+    } catch (MessagingException mex) {
+      mex.printStackTrace();
+      Exception ex = null;
+      if ((ex = mex.getNextException()) != null) {
+    ex.printStackTrace();
+      }
+  }
+    }
 }
