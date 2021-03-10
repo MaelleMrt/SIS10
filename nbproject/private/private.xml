@@ -8,6 +8,7 @@
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Prescription.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Acte.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameServeur.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Interop_ajoutPatient.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPrescription.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/LettreDeSortie.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Patient/PatientHop.java</file>
@@ -30,11 +31,15 @@
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauPrescriptionsInf.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinAcceuil.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/testThread1.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Message.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmiereResultat.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/TestThread.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierAcceuil.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameClientAdmi.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Secretaire.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauResultatInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Lancement/Lancement.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Lancement/Test.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPatient.java</file>
         </group>
     </open-files>

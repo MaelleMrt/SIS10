@@ -220,7 +220,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         panelPatient.add(jLabel2, gridBagConstraints);
 
-        fieldIdPat.setText(String.valueOf(patientHop.getId()));
+        fieldIdPat.setText(String.valueOf(this.patientHop.getId()));
         fieldIdPat.setMinimumSize(new java.awt.Dimension(244, 28));
         fieldIdPat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -315,7 +315,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         panelPatient.add(jLabel9, gridBagConstraints);
 
-        System.out.println("sexe patient ="+patientHop.getSexe());
+        System.out.println("sexe patient ="+this.patientHop.getSexe());
         comboBoxSexe.setModel(new javax.swing.DefaultComboBoxModel(new String[] { patientHop.getSexe(),"H","F","A"}));
         comboBoxSexe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

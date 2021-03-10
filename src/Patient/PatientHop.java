@@ -231,7 +231,9 @@ public class PatientHop {
     public String toString() {
         return prenom + " " + nom;
     }
-    
+    public void setID(int id){
+     this.id=id;
+    }
  
 
     public boolean equals(Object o) {

@@ -155,7 +155,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldIdPatActionPerformed"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="fieldIdPat.setText(String.valueOf(patientHop.getId()));"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="fieldIdPat.setText(String.valueOf(this.patientHop.getId()));"/>
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -276,7 +276,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxSexeActionPerformed"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="System.out.println(&quot;sexe patient =&quot;+patientHop.getSexe());"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="System.out.println(&quot;sexe patient =&quot;+this.patientHop.getSexe());"/>
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
