@@ -5,20 +5,20 @@
  */
 package HL7;
 
-import library.interfaces.ServeurHL7;
-
 /**
  *
  * @author Maelle
  */
-public class TestHL7 {
+public class testThread1 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EnvoieMessagePDF em=new EnvoieMessagePDF();
-        em.sendMessage("hello", "Hello world", "maelle.mg@gmail.com" , "maelle.mg@gmail.com" ,123456789);
+        TestThread t = new TestThread("A");
+        TestThread t2 = new TestThread("  B");
+        t.start();
+        t2.start();
     }
     
 }
