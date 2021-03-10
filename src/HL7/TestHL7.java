@@ -18,7 +18,7 @@ public class TestHL7 {
      */
     public static void main(String[] args) {
         EnvoieMessagePDF em=new EnvoieMessagePDF();
-        em.sendMessage("hello", "Hello world", "maelle.mg@gmail.com" , "maelle.mg@gmail.com" );
+        em.sendMessage("hello", "Hello world", "maelle.mg@gmail.com" , "maelle.mg@gmail.com" ,123456789);
     }
     
 }

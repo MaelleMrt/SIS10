@@ -29,10 +29,9 @@ import javax.mail.Address;
  */
 public class EnvoieMessagePDF {
     
-    static String message1 = "Voici mon message";
-    private String username = "maelle.mg@gmail.com";
-    private String password = "Polytech26743698!";
-    public void sendMessage(String subject, String text, String destinataire, String copyDest) {
+
+
+    public void sendMessage(String subject, String text, String destinataire, String copyDest,int idPatient) {
     // 1 -> Création de la session
    
     Properties properties = new Properties();
@@ -58,7 +57,7 @@ public class EnvoieMessagePDF {
     BodyPart messageBodyPart = new MimeBodyPart();
 
     // Fill the message
-    messageBodyPart.setText("Pardon Ideas");
+    messageBodyPart.setText(text);
 
     Multipart multipart = new MimeMultipart();
     multipart.addBodyPart(messageBodyPart);
@@ -67,7 +66,7 @@ public class EnvoieMessagePDF {
     messageBodyPart = new MimeBodyPart();
     DataSource source = new FileDataSource("src/PDF/LettreSortie123456789.pdf");
     messageBodyPart.setDataHandler(new DataHandler(source));
-    messageBodyPart.setFileName("src/PDF/LettreSortie123456789.pdf");
+    messageBodyPart.setFileName("src/PDF/LettreSortie"+idPatient+".pdf");
     multipart.addBodyPart(messageBodyPart);
 
     // Put parts in message
