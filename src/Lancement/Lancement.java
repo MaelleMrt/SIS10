@@ -3,22 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HL7;
+package Lancement;
 
-import library.interfaces.ServeurHL7;
+import HL7.FrameServeur;
+import PageConnexion.InterfaceConnexion;
 
 /**
  *
  * @author Maelle
  */
-public class TestHL7 {
+public class Lancement {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EnvoieMessagePDF em=new EnvoieMessagePDF();
-        em.sendMessage("hello", "Hello world", "maelle.mg@gmail.com" , "maelle.mg@gmail.com" ,123456789);
+        FrameServeur fs=new FrameServeur(6558);
+        Thread t=new Thread(fs);
+        t.start();
+        fs.ajouterThread(t);
+        new InterfaceConnexion();
     }
     
 }

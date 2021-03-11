@@ -7,6 +7,7 @@ package Medecin;
 
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
+import HL7.EnvoyeMailLettreSortie;
 import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -384,11 +386,12 @@ public class LettreSortie extends javax.swing.JFrame {
 
                 LettreDeSortiePDF pdf = new LettreDeSortiePDF(l);
                 try {
-                    Desktop.getDesktop().open(new File("C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie" + patient.getId() + ".pdf"));
+                    Desktop.getDesktop().open(new File("src/PDF/LettreSortie" + patient.getId() + ".pdf"));
                 } catch (IOException ex) {
                     Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                MedecinPatient m = new MedecinPatient(patient, medecin);
+                //MedecinPatient m = new MedecinPatient(patient, medecin);
+                new EnvoyeMailLettreSortie(this.patient,this.medecin);
                 this.setVisible(false);
             }
         }
