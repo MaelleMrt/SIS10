@@ -7,7 +7,7 @@ package Médecinanesthésiste;
 
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
@@ -17,12 +17,12 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class MedecinanésthésisteResultat extends javax.swing.JFrame {
-    public Patient patient;
+    public PatientHop patient;
     public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinanésthésisteResultat(Patient p,Medecin med) {
+    public MedecinanésthésisteResultat(PatientHop p,Medecin med) {
         patient =p;
         medecin=med;
         initComponents();

@@ -7,7 +7,7 @@ package Medecin;
 
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,12 +17,12 @@ import java.sql.Statement;
  * @author Maelle
  */
 public class AffichagePrescription extends javax.swing.JFrame {
-    Patient patient;
+    PatientHop patient;
     Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AffichagePrescription(Patient p,Medecin med) {
+    public AffichagePrescription(PatientHop p,Medecin med) {
         patient=p;
         medecin=med;
         initComponents();

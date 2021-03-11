@@ -7,7 +7,7 @@ package Medecin;
 
 import Médecinanesthésiste.Resultatexamen;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 
 /**
  *
@@ -15,12 +15,12 @@ import Patient.Patient;
  */
 public class Contenu extends javax.swing.JFrame {
     ResultatPrescription respres;
-    Patient patient;
+    PatientHop patient;
     Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public Contenu(ResultatPrescription rp,Patient p,Medecin med) {
+    public Contenu(ResultatPrescription rp,PatientHop p,Medecin med) {
         medecin =med;
         respres=rp;
         patient=p;
@@ -29,7 +29,7 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public Contenu(Resultatexamen res, Patient patient, Medecin medecin) {
+    public Contenu(Resultatexamen res, PatientHop patient, Medecin medecin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -8,7 +8,7 @@ package Médecinanesthésiste;
 import Infirmieres.*;
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 
 /**
  *
@@ -16,12 +16,12 @@ import Patient.Patient;
  */
 public class AlerteCOVID extends javax.swing.JFrame {
     ResultatPrescription respres;
-    Patient patient;
+    PatientHop patient;
     Infirmier infirmier;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AlerteCOVID(ResultatPrescription rp,Patient p,Infirmier inf) {
+    public AlerteCOVID(ResultatPrescription rp,PatientHop p,Infirmier inf) {
         infirmier =inf;
         respres=rp;
         patient=p;

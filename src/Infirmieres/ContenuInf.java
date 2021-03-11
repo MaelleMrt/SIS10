@@ -7,7 +7,7 @@ package Infirmieres;
 
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 
 /**
  *
@@ -15,12 +15,12 @@ import Patient.Patient;
  */
 public class ContenuInf extends javax.swing.JFrame {
     ResultatPrescription respres;
-    Patient patient;
+    PatientHop patient;
     Infirmier infirmier;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public ContenuInf(ResultatPrescription rp,Patient p,Infirmier inf) {
+    public ContenuInf(ResultatPrescription rp,PatientHop p,Infirmier inf) {
         infirmier =inf;
         respres=rp;
         patient=p;

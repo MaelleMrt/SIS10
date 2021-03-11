@@ -7,7 +7,7 @@ package CIC;
 
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

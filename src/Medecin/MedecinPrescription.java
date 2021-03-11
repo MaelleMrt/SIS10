@@ -6,7 +6,7 @@
 package Medecin;
 
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
@@ -16,12 +16,12 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class MedecinPrescription extends javax.swing.JFrame {
-     public Patient patient;
+     public PatientHop patient;
      public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinPrescription(Patient p,Medecin med) {
+    public MedecinPrescription(PatientHop p,Medecin med) {
         patient=p;
         medecin=med;
         initComponents();

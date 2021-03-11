@@ -7,18 +7,18 @@ package Médecinanesthésiste;
 
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 /**
  *
  * @author Maelle
  */
 public class MedecinanésthésistePatient extends javax.swing.JFrame {
-    public Patient patient;
+    public PatientHop patient;
     public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinanésthésistePatient(Patient p,Medecin med) {
+    public MedecinanésthésistePatient(PatientHop p,Medecin med) {
         patient =p;
         medecin=med;
         initComponents();

@@ -6,7 +6,7 @@
 package Infirmieres;
 
 import PageConnexion.InterfaceConnexion;
-import Patient.Patient;
+import Patient.PatientHop;
 import javax.swing.JFrame;
 
 /**
@@ -14,12 +14,12 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class InfirmierPatient extends javax.swing.JFrame {
-    Patient patient;
+    PatientHop patient;
     Infirmier infirmier;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public InfirmierPatient(Patient p,Infirmier inf) {
+    public InfirmierPatient(PatientHop p,Infirmier inf) {
         patient=p;
         infirmier=inf;
         initComponents();
