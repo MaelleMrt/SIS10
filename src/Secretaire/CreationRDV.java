@@ -177,6 +177,59 @@ public class CreationRDV extends javax.swing.JFrame {
         }
         return numero;
     }
+     private void HoraireRDV() {
+        String date = jTextField5.getText();
+        // On ajoute les horaires ArrayList couleurs = new ArrayList();
+        jComboBox3.addItem("9h");
+        jComboBox3.addItem("10h");
+        jComboBox3.addItem("11h");
+        jComboBox3.addItem("12h");
+        jComboBox3.addItem("13h");
+        jComboBox3.addItem("14h");
+        jComboBox3.addItem("15h");
+        jComboBox3.addItem("16h");
+        jComboBox3.addItem("17h");
+        // On récupère les dates des rdv déjà existants
+        ArrayList listeDate = new ArrayList();
+        
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT date FROM RendezVous");
+            while (rs.next()) {
+                String d = rs.getString("date");
+                listeDate.add(d);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        // On regarde si il y a déjà un rdv à la date renseigné
+        if (listeDate.contains(date)) {
+            // on regarde quels horaires sont déjà pris à cette date là
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND idPatient ='" + IPP + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND Médecin ='" + medecin + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,6 +274,7 @@ public class CreationRDV extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel19 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -352,9 +406,14 @@ public class CreationRDV extends javax.swing.JFrame {
 
         jLabel18.setText("jLabel18");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----Choisir-----", "9h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h" }));
-
         jLabel19.setText("Heure :");
+
+        jButton4.setText("Trouver une heure");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -375,10 +434,12 @@ public class CreationRDV extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(56, 56, 56)
+                                .addComponent(jButton4)
+                                .addGap(71, 71, 71)
                                 .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -439,12 +500,13 @@ public class CreationRDV extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
@@ -523,7 +585,7 @@ public class CreationRDV extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
 
         pack();
@@ -630,6 +692,13 @@ public class CreationRDV extends javax.swing.JFrame {
         precedent.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jComboBox3.removeAllItems();
+        jComboBox3.setVisible(true);
+        jLabel4.setVisible(true);
+        HoraireRDV();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -674,6 +743,7 @@ public class CreationRDV extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;

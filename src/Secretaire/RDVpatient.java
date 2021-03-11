@@ -11,7 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFrame;
@@ -41,9 +44,11 @@ public class RDVpatient extends javax.swing.JFrame {
         jCheckBox2.setVisible(false);
         jButton3.setVisible(false);
         jComboBox5.setVisible(false);
+        jComboBox3.setVisible(false);
         jComboBox6.setVisible(false);
         jComboBox7.setVisible(false);
         jLabel11.setVisible(false);
+        jLabel4.setVisible(false);
         jLabel15.setVisible(false);
         jLabel16.setVisible(false);
         jLabel17.setVisible(false);
@@ -202,6 +207,60 @@ public class RDVpatient extends javax.swing.JFrame {
         return numero;
     }
 
+    private void HoraireRDV() {
+        String date = jTextField5.getText();
+        // On ajoute les horaires ArrayList couleurs = new ArrayList();
+        jComboBox3.addItem("9h");
+        jComboBox3.addItem("10h");
+        jComboBox3.addItem("11h");
+        jComboBox3.addItem("12h");
+        jComboBox3.addItem("13h");
+        jComboBox3.addItem("14h");
+        jComboBox3.addItem("15h");
+        jComboBox3.addItem("16h");
+        jComboBox3.addItem("17h");
+        // On récupère les dates des rdv déjà existants
+        ArrayList listeDate = new ArrayList();
+        
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT date FROM RendezVous");
+            while (rs.next()) {
+                String d = rs.getString("date");
+                listeDate.add(d);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        // On regarde si il y a déjà un rdv à la date renseigné
+        if (listeDate.contains(date)) {
+            // on regarde quels horaires sont déjà pris à cette date là
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND idPatient ='" + id + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND Médecin ='" + jComboBox4.getSelectedItem().toString() + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -241,6 +300,7 @@ public class RDVpatient extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jComboBox7 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -317,6 +377,11 @@ public class RDVpatient extends javax.swing.JFrame {
         jLabel13.setText("Date :");
 
         jTextField5.setText("jTextField5");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Service :");
 
@@ -340,7 +405,11 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel4.setText("Heure :");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----Choisir-----", "9h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Vérifier");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -379,6 +448,13 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel18.setText("jLabel18");
 
+        jButton4.setText("Trouver une heure");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -411,9 +487,11 @@ public class RDVpatient extends javax.swing.JFrame {
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59)
+                                .addGap(44, 44, 44)
+                                .addComponent(jButton4)
+                                .addGap(48, 48, 48)
                                 .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
@@ -422,6 +500,7 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(30, 30, 30)
@@ -441,8 +520,7 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox2)
                                 .addGap(96, 96, 96)
-                                .addComponent(jButton3))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton3)))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -466,13 +544,14 @@ public class RDVpatient extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -635,6 +714,21 @@ public class RDVpatient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox4ActionPerformed
 
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jComboBox3.removeAllItems();
+        jComboBox3.setVisible(true);
+        jLabel4.setVisible(true);
+        HoraireRDV();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -674,6 +768,7 @@ public class RDVpatient extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;

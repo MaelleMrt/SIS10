@@ -96,4 +96,36 @@ public class Consultation {
         }
         return service;
     }
+    
+    public String getNomP(){
+        String nom = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT patient FROM RendezVous WHERE idPatient ='" + id + "'");
+            while (rs.next()) {
+                nom = rs.getString("patient");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return nom;
+    }
+    public String getHeure(){
+        // rajouter un idRDV
+        String heure = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE idPatient ='" + id + "', AND ");
+            while (rs.next()) {
+                heure = rs.getString("heure");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return heure;
+    }
 }

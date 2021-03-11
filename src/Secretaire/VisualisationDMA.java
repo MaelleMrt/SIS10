@@ -370,6 +370,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel20.setText("Consultation");
@@ -523,13 +528,24 @@ public class VisualisationDMA extends javax.swing.JFrame {
             i++;
         }
         if (i < jTable2.getRowCount()) {
-            String Nom = String.valueOf(jTable2.getValueAt(i, 0));
-            String Prenom = String.valueOf(jTable2.getValueAt(i, 1));
-            Hospitalisation h = new Hospitalisation(this);
-            h.setVisible(true);
+            Hospitalisations h = listHospit.get(i);
+            AffichageHospitalisation ah = new AffichageHospitalisation(this,h);
+            ah.setVisible(true);
             this.setVisible(false);
         }
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int i = 0;
+        while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {
+            i++;
+        }
+        if (i < jTable1.getRowCount()) {
+            AffichageConsultation ac = new AffichageConsultation(this, listConsult.get(i));
+            ac.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

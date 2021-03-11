@@ -114,6 +114,21 @@ public class Hospitalisations {
 
         return loc;
     }
+    public String getNomP(){
+        String nom = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT patient FROM RendezVous WHERE idPatient ='" + id + "'");
+            while (rs.next()) {
+                nom = rs.getString("patient");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return nom;
+    }
 }
 
 
