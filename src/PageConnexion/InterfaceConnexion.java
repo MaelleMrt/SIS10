@@ -14,9 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -174,9 +174,20 @@ private String Metier(){
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Mot de passe :");
 
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
+
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
             }
         });
 
@@ -185,6 +196,11 @@ private String Metier(){
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton1KeyPressed(evt);
             }
         });
 
@@ -278,6 +294,25 @@ private String Metier(){
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        valider();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+       
+    }//GEN-LAST:event_jButton1KeyPressed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            valider();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            valider();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
+    public void valider(){
         this.Login = RecupereID();
         this.mdp = RecupereMDP();
         String metier = Metier();
@@ -311,8 +346,7 @@ private String Metier(){
         else{
             jLabel5.setVisible(true);
         }       
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
     /**
      * @param args the command line arguments
      */

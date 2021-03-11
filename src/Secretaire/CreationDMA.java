@@ -6,6 +6,7 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
+import Medecin.DateChecker;
 import Patient.PatientHop;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -286,6 +287,13 @@ public class CreationDMA extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Lieu de naissance:");
 
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.setText("yyyy-mm-dd");
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Date de naissance:");
 
@@ -515,12 +523,12 @@ public class CreationDMA extends javax.swing.JFrame {
             JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide ");
             erreur.setVisible(true);
         } 
-        else if (verifDateNaissance() == false) {
+        else if (DateChecker.isValid(this.date)== false) {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
         } else {
             PatientHop patient=enregistrer();
-            System.out.println("sexe patient"+patient.getSexe());
+            System.out.println("sexe patient :"+patient.getSexe());
             this.setVisible(false);
             new Message(this.accueil,nSecu,this.accueil,patient);
             
@@ -557,10 +565,16 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+<<<<<<< HEAD
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
         accueil.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+=======
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+>>>>>>> master
 
     /**
      * @param args the command line arguments

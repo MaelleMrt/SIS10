@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/testFrameClient.java</file>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameServeur.java</file>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameClient.java</file>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Interop_ajoutPatient.java</file>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/EnvoieMessage.java</file>
-            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Message.java</file>
+            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/CicAjouterEtude.java</file>
+            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/CicAjouterParticipant.java</file>
+            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/Patient/PatientHop.java</file>
+            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/Participant.java</file>
+            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/NouveauParticipant.java</file>
         </group>
     </open-files>
 </project-private>

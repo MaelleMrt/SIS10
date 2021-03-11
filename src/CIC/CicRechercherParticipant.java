@@ -29,41 +29,23 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private String nom;
     private String date;
     private int duree;
-    private String login;
     private Cic cic;
 
-    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, String login) {
+    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic) {
 
         this.listeParticipants = listeParticipants;
         this.ancienneListe = ancienneListe;
         this.nom = nom;
         this.date = date;
         this.duree = duree;
-        this.login = login;
-        trouverCic();
+        this.cic = cic;
         initComponents();
         erreur.setVisible(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
-    public void trouverCic() {
-        try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '" + this.login + "'");
-                while (rs.next()) {
-                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+    
 
     public ArrayList<String> Type() {
         ArrayList<String> liste = new ArrayList<>();
@@ -1134,7 +1116,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
             }
             this.setVisible(false);
             try {
-                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, login);
+                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic);
             } catch (SQLException ex) {
                 Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1144,7 +1126,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, login);
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic);
         } catch (SQLException ex) {
             Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }

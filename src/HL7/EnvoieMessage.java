@@ -20,8 +20,6 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnvoieMessage {
     
-    private String username = "maelle.mg@gmail.com";
-    private String password = "Polytech26743698!";
     public void sendMessage(String subject, String text, String destinataire, String copyDest) {
     // 1 -> Création de la session
    
@@ -49,7 +47,7 @@ public class EnvoieMessage {
     Transport transport=null;
     try {
         transport = session.getTransport("smtp");
-        transport.connect("smtp.gmail.com","hopital.princeton@gmail.com", "HopitalPrinceton2021*");
+        transport.connect("smtp.gmail.com","hopital.princeton@gmail.com", "HopitalPrinceton2021!");
 
         transport.sendMessage(message, new Address[] { new InternetAddress(destinataire),
                                                         new InternetAddress(copyDest) });

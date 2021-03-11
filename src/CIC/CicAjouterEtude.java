@@ -34,9 +34,8 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private String dateDemarrage;
     private int dureeEtude;
     private Cic cic;
-    private String login;
 
-    public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, String login) {
+    public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, Cic cic) {
 
         this.ancienneListe = ancienneListe;
         this.nouveaux = nouveaux;
@@ -49,8 +48,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         this.nomEtude = nom;
         this.dateDemarrage = date;
         this.dureeEtude = duree;
-        this.login = login;
-        trouverCic();
+        this.cic = cic;
         initComponents();
 //        this.nom.setText(nomEtude);
 //        this.date.setText(dateDemarrage);
@@ -77,26 +75,11 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         jTable1.setModel(model);
     }
 
-    public void trouverCic() {
-        try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '" + this.login + "'");
-                while (rs.next()) {
-                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+    
     
     public boolean verifDate(String s){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setLenient(false);
         try {
             java.util.Date date = format.parse(s);
             return true;
@@ -382,7 +365,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             System.out.println(e);
         }
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nom.getText(), date.getText(), (int)duree.getValue(), login);
+            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nom.getText(), date.getText(), (int)duree.getValue(), cic);
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -438,7 +421,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                                 java.util.Date d = dateFormat.parse(da);
                                 Date d1 = new Date(d.getTime());
                                 Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), d1, String.valueOf(jTable1.getValueAt(i, 3)));
-                                Etude e = new Etude(nom.getText(), login, date.getText(), (int) duree.getValue());
+                                Etude e = new Etude(nom.getText(), cic.getLogin(), date.getText(), (int) duree.getValue());
                                 
 
 //                                s = ExempleJdbc.connexion();
@@ -457,7 +440,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, "L'étude " + nom.getText() + " a bien été ajoutée", "Message", JOptionPane.WARNING_MESSAGE);
                         this.setVisible(false);
                         try {
-                            CicAccueil a = new CicAccueil(login);
+                            CicAccueil a = new CicAccueil(cic.getLogin());
 
                         } catch (SQLException ex) {
                             Logger.getLogger(CicAjouterEtude.class
@@ -484,7 +467,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(login);
+            CicAccueil accueil = new CicAccueil(cic.getLogin());
 
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class

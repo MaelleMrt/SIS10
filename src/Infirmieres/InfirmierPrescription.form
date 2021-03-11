@@ -83,23 +83,31 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="553" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
+                                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -119,9 +127,11 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="14" max="32767" attributes="0"/>
+                              <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="235" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -269,12 +279,28 @@
                     <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable1MousePressed"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPrescriptionsInf modele = new TableauPrescriptionsInf(patient,infirmier.service);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(listPrescription)"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JComboBox" name="jComboBox1">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="6">
+                    <StringItem index="0" value="Trier par..."/>
+                    <StringItem index="1" value="Service"/>
+                    <StringItem index="2" value="M&#xe9;decin"/>
+                    <StringItem index="3" value="Date"/>
+                    <StringItem index="4" value="Date de validation"/>
+                    <StringItem index="5" value="Infirmier"/>
+                  </StringArray>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

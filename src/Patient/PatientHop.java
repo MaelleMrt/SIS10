@@ -23,6 +23,7 @@ public class PatientHop {
     private String prenom;
     private String naissance;
     private int id;
+    private String nomN;
 
 
 
@@ -34,9 +35,13 @@ public class PatientHop {
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+nom+"' AND prenom='"+prenom+"'" );
+                ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+this.nom+"' AND prenom='"+this.prenom+"'AND datedenaissance='"+this.naissance+"'" );
                 while(rs.next()){
                     id=rs.getInt("id");
+<<<<<<< HEAD
+=======
+//                    System.out.println("id    "+id);
+>>>>>>> master
                 }    
 
             } catch(SQLException e){
@@ -48,6 +53,14 @@ public class PatientHop {
 
         }
         
+    }
+    
+    public PatientHop(String nom, String nomN, String prenom, String naissance, int id){
+        this.nom = nom;
+        this.nomN = nomN;
+        this.prenom = prenom;
+        this.naissance = naissance;
+        this.id = id;
     }
 
     public int getId() {
@@ -134,6 +147,24 @@ public class PatientHop {
 
         }
         return adresse;
+    }
+    
+    public String getVille(){
+        String ville = "";
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT ville FROM Patient WHERE id='"+id+"'" );
+                while(rs.next()){
+                   ville=rs.getString("ville");
+                }    
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        return ville;
     }
     
     public String getSecu() {
@@ -230,7 +261,9 @@ public class PatientHop {
     public String toString() {
         return prenom + " " + nom;
     }
-    
+    public void setID(int id){
+     this.id=id;
+    }
  
 
     public boolean equals(Object o) {
@@ -240,6 +273,10 @@ public class PatientHop {
         } else {
             return false;
         }
+    }
+    
+    public String toString2(){
+        return prenom + " " + nom + " (" + nomN + ")";
     }
 
 }

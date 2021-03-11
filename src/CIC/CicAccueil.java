@@ -8,6 +8,7 @@ package CIC;
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import Tri.Tri;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -115,6 +116,7 @@ public class CicAccueil extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         etudes = new javax.swing.JTable();
         ajouter = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -213,6 +215,13 @@ public class CicAccueil extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Nom", "Praticien Hospitalier", "Date" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,17 +230,22 @@ public class CicAccueil extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(403, 403, 403)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ajouter, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(16, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rechercherTextField))
+                        .addComponent(rechercherTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(403, 403, 403)
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(ajouter, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 964, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 1, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +254,9 @@ public class CicAccueil extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel3)
                 .addGap(37, 37, 37)
-                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -255,7 +271,7 @@ public class CicAccueil extends javax.swing.JFrame {
         this.setVisible(false);
         ArrayList<Participant> part = new ArrayList<>();
         ArrayList<Participant> ancienne = new ArrayList<>();
-        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,login);
+        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,cic);
     }//GEN-LAST:event_ajouterActionPerformed
 
     private void etudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etudesMouseClicked
@@ -272,7 +288,7 @@ public class CicAccueil extends javax.swing.JFrame {
             Etude e = new Etude(nom, PH, date, duree);
             this.setVisible(false);
             try {
-                CicEtude etude = new CicEtude(e,login);
+                CicEtude etude = new CicEtude(e,cic);
 
             } catch (SQLException ex) {
                 Logger.getLogger(CicAccueil.class
@@ -326,6 +342,31 @@ public class CicAccueil extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (jComboBox1.getSelectedItem().equals("Nom")) {
+            listeEtude = new Tri().trierEtudesParNom(listeEtude);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Praticien Hospitalier")) {
+            listeEtude = new Tri().trierEtudesParPH(listeEtude);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date")) {
+            listeEtude = new Tri().trierEtudesParDates(listeEtude);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Etude e : listeEtude) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(e.getNom());
+            v.add(e.getPH());
+            v.add(e.getDate());
+            v.add(e.getDuree());
+            model.setColumnIdentifiers(new String[]{"Nom de l'étude", "Praticien hospitalier porteur", "Date de démarrage", "Durée (semaines)"});
+            model.insertRow(i, v);
+            i++;
+        }
+        etudes.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -376,6 +417,7 @@ public class CicAccueil extends javax.swing.JFrame {
     private javax.swing.JButton ajouter;
     private javax.swing.JButton deconnexion;
     private javax.swing.JTable etudes;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;

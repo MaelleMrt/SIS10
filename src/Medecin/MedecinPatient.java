@@ -7,6 +7,11 @@ package Medecin;
 
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -14,14 +19,16 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class MedecinPatient extends javax.swing.JFrame {
+
     public PatientHop patient;
     public Medecin medecin;
+
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinPatient(PatientHop p,Medecin med) {
-        patient =p;
-        medecin=med;
+    public MedecinPatient(PatientHop p, Medecin med) {
+        patient = p;
+        medecin = med;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -43,13 +50,15 @@ public class MedecinPatient extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jToggleButton4 = new javax.swing.JToggleButton();
         jToggleButton5 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        lettre = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,17 +107,20 @@ public class MedecinPatient extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Nouvelle prescription");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/télécharger.png"))); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Nouveau CR");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        lettre.setBackground(new java.awt.Color(137, 202, 216));
+        lettre.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        lettre.setSelected(true);
+        lettre.setText("Lettre de Sortie");
+        lettre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                lettreActionPerformed(evt);
             }
         });
 
@@ -116,52 +128,47 @@ public class MedecinPatient extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(239, 239, 239))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lettre, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton5))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(205, 205, 205))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(10, 10, 10)
-                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jButton2))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lettre, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -208,6 +215,20 @@ public class MedecinPatient extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Nouvelle prescription");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Nouveau CR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -216,8 +237,15 @@ public class MedecinPatient extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -226,7 +254,11 @@ public class MedecinPatient extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton3))
+                .addContainerGap())
         );
 
         pack();
@@ -234,7 +266,7 @@ public class MedecinPatient extends javax.swing.JFrame {
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.dispose();
-        new DMA(patient,medecin);
+        new DMA(patient, medecin);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -245,28 +277,44 @@ public class MedecinPatient extends javax.swing.JFrame {
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         this.dispose();
-        new MedecinResultat(patient,medecin);
+        new MedecinResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
-        new MedecinPrescription(patient,medecin);
+        new MedecinPrescription(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        new AffichagePrescription(patient,medecin);        // TODO add your handling code here:
+        new AffichagePrescription(patient, medecin);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
-        new AffichageCR(patient,medecin);
+        new AffichageCR(patient, medecin);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
+
+    private void lettreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lettreActionPerformed
+        LettreSortie l = new LettreSortie(patient, medecin);
+        this.setVisible(false);
+    }//GEN-LAST:event_lettreActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
+            if (fichier.exists()) {
+                Desktop.getDesktop().open(fichier);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MedecinPatient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,7 +349,7 @@ public class MedecinPatient extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }
@@ -311,6 +359,7 @@ public class MedecinPatient extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
@@ -320,6 +369,7 @@ public class MedecinPatient extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JToggleButton jToggleButton5;
+    private javax.swing.JToggleButton lettre;
     private javax.swing.JLabel utilisateur;
     // End of variables declaration//GEN-END:variables
 }

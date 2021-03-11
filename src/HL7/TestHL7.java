@@ -17,8 +17,8 @@ public class TestHL7 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        EnvoieMessage em=new EnvoieMessage();
-        em.sendMessage("hello", "Hello world", "roshannep27@gmail.com" , "roshannep27@gmail.com" );
+        EnvoieMessagePDF em=new EnvoieMessagePDF();
+        em.sendMessage("hello", "Hello world", "maelle.mg@gmail.com" , "maelle.mg@gmail.com" ,123456789);
     }
     
 }

@@ -261,7 +261,7 @@ public class AffichagePrescription extends javax.swing.JFrame {
         }
         // sinon on ajoute le CR a la BDD
         else{
-            ajoutCR(jTextField1.getText().toString(),jTextArea1.getText().toString());
+            ajoutPrecription(jTextField1.getText().toString(),jTextArea1.getText().toString());
             new AjoutValide(patient, medecin);
             this.dispose();
 
@@ -274,12 +274,12 @@ public class AffichagePrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_deconnexionActionPerformed
 
     
-    public void ajoutCR(String date,String contenu){
+    public void ajoutPrecription(String date,String contenu){
         try{
         Statement s= ExempleJdbc.connexion();
             try{
                 System.out.println(medecin.getLogin());
-                ResultSet rs= s.executeQuery("INSERT INTO Prescription VALUES ('"+medecin.getLogin()+"','"+patient.getId()+"','"+date+"','"+contenu+"')");
+                ResultSet rs= s.executeQuery("INSERT INTO Prescription (login,idP,date,Contenu) VALUES ('"+medecin.getLogin()+"','"+patient.getId()+"','"+date+"','"+contenu+"')");
           
 
             } catch(SQLException e){
