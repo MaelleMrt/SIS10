@@ -5,6 +5,7 @@
  */
 package Medecin;
 
+import Médecinanesthésiste.Resultatexamen;
 import PageConnexion.InterfaceConnexion;
 import Patient.Patient;
 
@@ -28,9 +29,12 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public Contenu(ResultatPrescription res, Patient patient, Médecinanésthésiste.Medecin medecin) {
+    public Contenu(Resultatexamen res, Patient patient, Medecin medecin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

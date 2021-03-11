@@ -250,7 +250,7 @@ public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
                                         try{
                                         Patient p=new Patient(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
                                         System.out.println(p.toString());
-                                        new MedecinPatient(p,medecin);
+                                        new MedecinanésthésistePatient(p,medecin);
                                         this.dispose();
                                         }catch(Exception e2){
                                         }
