@@ -7,6 +7,7 @@ package CIC;
 
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
+import Tri.Tri;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,14 +30,12 @@ public class CicEtude extends javax.swing.JFrame {
 
     private Etude e;
     private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
-    private String login;
     private Cic cic;
     
-    public CicEtude(Etude e,String login) throws SQLException {
+    public CicEtude(Etude e,Cic cic) throws SQLException {
         
         
-        this.login = login;
-        trouverCic();
+        this.cic = cic;
         initComponents();
         this.e = e;
         jLabel13.setText(this.e.getNom());
@@ -82,23 +81,7 @@ public class CicEtude extends javax.swing.JFrame {
         participants.setModel (model);
      }
     
-    public void trouverCic(){
-        try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
-                while (rs.next()) {
-                    this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -125,6 +108,7 @@ public class CicEtude extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         participants = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -268,6 +252,13 @@ public class CicEtude extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel13.setText("Nom de l'étude");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Nom", "Prénom", "Date de naissance", "Type" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -280,8 +271,7 @@ public class CicEtude extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(rechercherTextField)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -297,7 +287,11 @@ public class CicEtude extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(date)))
-                        .addGap(0, 626, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rechercherTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -326,7 +320,9 @@ public class CicEtude extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addGap(13, 13, 13)
-                .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rechercherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(54, 54, 54))
@@ -343,7 +339,7 @@ public class CicEtude extends javax.swing.JFrame {
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(login);
+            CicAccueil accueil = new CicAccueil(cic.getLogin());
         } catch (SQLException ex) {
             Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -372,7 +368,7 @@ public class CicEtude extends javax.swing.JFrame {
                 String type = String.valueOf(participants.getValueAt(i, 3));
                 Participant p = new Participant(nom, prenom, date,type);
                 this.setVisible(false);  
-                CicParticipant part = new CicParticipant(e,p,login);
+                CicParticipant part = new CicParticipant(e,p,cic);
             } catch (ParseException ex) {
                 Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -420,6 +416,34 @@ public class CicEtude extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (jComboBox1.getSelectedItem().equals("Nom")) {
+            listeParticipants = new Tri().trierParticipantsParNom(listeParticipants);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Prénom")) {
+            listeParticipants = new Tri().trierParticipantsParPrenom(listeParticipants);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date de naissance")) {
+            listeParticipants = new Tri().trierParticipantsParDates(listeParticipants);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Type")) {
+            listeParticipants = new Tri().trierParticipantsParType(listeParticipants);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Participant p : listeParticipants) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getNomU());
+            v.add(p.getPrenom());
+            v.add(p.getDateN());
+            v.add(p.getType());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance", "Type"});
+            model.insertRow(i, v);
+            i++;
+        }
+        participants.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -464,6 +488,7 @@ public class CicEtude extends javax.swing.JFrame {
     private javax.swing.JLabel date;
     private javax.swing.JButton deconnexion;
     private javax.swing.JLabel duree;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

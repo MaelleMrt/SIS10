@@ -6,6 +6,8 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
+import Medecin.DateChecker;
+import Patient.PatientHop;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
@@ -117,10 +119,10 @@ public class CreationDMA extends javax.swing.JFrame {
         if (RecuperAnnee() <= anneeAjd) {
             compteur += 1;
         }
-        if (RecuperMois() <= moisAjd) {
+        if (RecuperMois() <= 12) {
             compteur += 1;
         }
-        if (RecuperJour() <= jourAjd) {
+        if (RecuperJour() <= 31) {
             compteur += 1;
         }
         if (dateNaissance.length == 10) {
@@ -132,8 +134,8 @@ public class CreationDMA extends javax.swing.JFrame {
         return result;
     }
 
-    private void enregistrer() {
-
+    private PatientHop enregistrer() {
+        PatientHop patient=null;
         // On récupère les info saisies
         String nomU = jTextField1.getText();
         String nomN = jTextField2.getText();
@@ -146,7 +148,7 @@ public class CreationDMA extends javax.swing.JFrame {
         nSecu = jTextField10.getText();
         String nomM = jTextField11.getText();
         String sexe = genderBDD();
-
+        patient=new PatientHop(nomU,prenom,date);
         // On enregistre le nouveau patient dans BDD
         try {
             Statement s = ExempleJdbc.connexion();
@@ -157,6 +159,7 @@ public class CreationDMA extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        return patient;
     }
 
     /**
@@ -203,7 +206,6 @@ public class CreationDMA extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(990, 551));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(990, 551));
 
@@ -286,6 +288,13 @@ public class CreationDMA extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Lieu de naissance:");
 
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.setText("yyyy-mm-dd");
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Date de naissance:");
 
@@ -354,7 +363,7 @@ public class CreationDMA extends javax.swing.JFrame {
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(151, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -364,8 +373,7 @@ public class CreationDMA extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jCheckBox2)
-                                .addGap(175, 175, 175)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(375, 375, 375))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -373,8 +381,7 @@ public class CreationDMA extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(99, 99, 99)
-                                        .addGap(427, 427, 427)
+                                        .addGap(526, 526, 526)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -505,13 +512,16 @@ public class CreationDMA extends javax.swing.JFrame {
         else if (verificationNumSecu() == false) {
             JFrame erreur = new MessageErreur("- Numéro de sécurité sociale invalide ");
             erreur.setVisible(true);
-        } else if (verifDateNaissance() == false) {
+        } 
+        else if (DateChecker.isValid(this.date)== false) {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
         } else {
-            enregistrer();
-            JFrame msg = new Message(accueil, nSecu, this);
-            msg.setVisible(true);
+            PatientHop patient=enregistrer();
+            System.out.println("sexe patient :"+patient.getSexe());
+            this.setVisible(false);
+            new Message(this.accueil,nSecu,this.accueil,patient);
+            
 
         }
 
@@ -544,6 +554,10 @@ public class CreationDMA extends javax.swing.JFrame {
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
