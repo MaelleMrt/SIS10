@@ -8,9 +8,13 @@ package Infirmieres;
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import Tri.Tri;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,12 +23,14 @@ import javax.swing.JFrame;
 public class InfirmiereResultat extends javax.swing.JFrame {
     public PatientHop patient;
     public Infirmier infirmier;
+    private TableauResultatInf listResultats;
     /**
      * Creates new form SecretaireAcceuil
      */
     public InfirmiereResultat(PatientHop p,Infirmier inf) {
         patient =p;
         infirmier=inf;
+        listResultats = new TableauResultatInf(patient,infirmier.service);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -42,11 +48,11 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableauResultatInf modele = new TableauResultatInf(patient,infirmier.service);
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
@@ -63,7 +69,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         jLabel6.setText("Résultats");
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTable1.setModel(modele);
+        jTable1.setModel(listResultats);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTable1MousePressed(evt);
@@ -87,23 +93,36 @@ public class InfirmiereResultat extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Service", "Médecin", "Date" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(295, 295, 295)
-                .addComponent(jButton1))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(94, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel7)
-                .addGap(28, 28, 28))
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(305, 305, 305))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 79, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(28, 28, 28))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,15 +133,20 @@ public class InfirmiereResultat extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton2)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(107, 107, 107)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 303, Short.MAX_VALUE)
                         .addComponent(jLabel7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(29, 29, 29)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jComboBox1});
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -153,7 +177,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(91, 91, 91)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(42, 42, 42)
                 .addComponent(utilisateur)
@@ -174,7 +198,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(15, 15, 15))
         );
@@ -183,15 +207,11 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -253,6 +273,32 @@ public class InfirmiereResultat extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        ArrayList<Resultat> list = listResultats.getListResultat();
+        if (jComboBox1.getSelectedItem().equals("Service")) {
+            list = new Tri().trierResultatParService(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Médecin")) {
+            list = new Tri().trierResultatParMedecin(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date")) {
+            list = new Tri().trierResultatParDate(list);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Resultat p : list) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getService());
+            v.add(p.getMedecin());
+            v.add(p.getDate());
+            v.add(p.getContenu());
+            model.setColumnIdentifiers(new String[]{"Service ", "Medecin", "Date","Contenu"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -296,6 +342,7 @@ public class InfirmiereResultat extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

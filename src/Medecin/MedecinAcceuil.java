@@ -10,9 +10,11 @@ import PageConnexion.InterfaceConnexion;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Patient.PatientHop;
+import Tri.Tri;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
@@ -63,6 +65,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         utilisateur4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -135,6 +138,13 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Nom", "Prénom", "Date de naissance" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,11 +160,13 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addGap(342, 342, 342))))
+                        .addGap(342, 342, 342))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(72, 72, 72))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,14 +175,16 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
-        jTextField1.setText("Recherche Patient");
+        jTextField1.setText("Recherche Patient.PatientHop");
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 afficherList();
@@ -186,7 +200,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 DefaultTableModel ModeleTest2 = new DefaultTableModel();
                 String texte=jTextField1.getText();
                 int i=0;
-                for (PatientHop p : listPatient.getListPatient()) {
+                for (Patient.PatientHop p : listPatient.getListPatient()) {
                     if(p.getNomUsuel().contains(texte)){
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());
@@ -257,6 +271,31 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        ArrayList<PatientHop> list = listPatient.getListPatient();
+        if (jComboBox1.getSelectedItem().equals("Nom")) {
+            list = new Tri().trierPatientsParNom(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Prénom")) {
+            list = new Tri().trierPatientsParPrenom(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date de naissance")) {
+            list = new Tri().trierPatientsParDate(list);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (PatientHop p : list) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getNomUsuel());
+            v.add(p.getPrenom());
+            v.add(p.getNaissance());
+            model.setColumnIdentifiers(new String[]{"Nom", "Prénom", "Date de naissance"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     // rechercher le médecin à partir du login 
     public void rechercheMedecin(){
         System.out.println(login);
@@ -317,6 +356,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton deconnexion4;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel19;

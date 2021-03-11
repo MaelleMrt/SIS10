@@ -7,9 +7,13 @@ package Medecin;
 
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import Tri.Tri;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,12 +22,14 @@ import javax.swing.JFrame;
 public class MedecinResultat extends javax.swing.JFrame {
     public PatientHop patient;
     public Medecin medecin;
+    public TableauResultat listResultats;
     /**
      * Creates new form SecretaireAcceuil
      */
     public MedecinResultat(PatientHop p,Medecin med) {
         patient =p;
         medecin=med;
+        listResultats = new TableauResultat(patient);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -41,11 +47,11 @@ public class MedecinResultat extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableauResultat modele = new TableauResultat(patient);
         jTable1 = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel4 = new javax.swing.JPanel();
         deconnexion1 = new javax.swing.JButton();
         utilisateur1 = new javax.swing.JLabel();
@@ -60,7 +66,7 @@ public class MedecinResultat extends javax.swing.JFrame {
         jLabel6.setText("Résultats");
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTable1.setModel(modele);
+        jTable1.setModel(listResultats);
         jScrollPane1.setViewportView(jTable1);
         jTable1.addMouseListener(new MouseAdapter()  {
             public void mousePressed(MouseEvent e) {
@@ -91,10 +97,17 @@ public class MedecinResultat extends javax.swing.JFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
-        jButton1.setText("Acceuil");
+        jButton1.setText("Accueil");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Service", "Médecin", "Date" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -102,18 +115,21 @@ public class MedecinResultat extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton2)
+                .addGap(318, 318, 318)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel7)
-                .addGap(77, 77, 77)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(77, 77, 77)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(283, 283, 283)
-                .addComponent(jButton1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,17 +137,20 @@ public class MedecinResultat extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addGap(51, 51, 51)
+                        .addComponent(jLabel6))
+                    .addComponent(jButton2)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(19, 19, 19)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
                         .addComponent(jLabel7))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
@@ -181,19 +200,17 @@ public class MedecinResultat extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -221,6 +238,32 @@ public class MedecinResultat extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        ArrayList<Resultat> list = listResultats.getListResultats();
+        if (jComboBox1.getSelectedItem().equals("Service")) {
+            list = new Tri().trierResultatParService(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Médecin")) {
+            list = new Tri().trierResultatParMedecin(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date")) {
+            list = new Tri().trierResultatParDate(list);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (Resultat p : list) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getService());
+            v.add(p.getMedecin());
+            v.add(p.getDate());
+            v.add(p.getContenu());
+            model.setColumnIdentifiers(new String[]{"Service ", "Medecin", "Date","Contenu"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,22 +305,18 @@ public class MedecinResultat extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton deconnexion;
     private javax.swing.JButton deconnexion1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JLabel utilisateur;
     private javax.swing.JLabel utilisateur1;
     // End of variables declaration//GEN-END:variables
 }

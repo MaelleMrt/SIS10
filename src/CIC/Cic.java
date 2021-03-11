@@ -20,6 +20,10 @@ public class Cic {
         this.login = login;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
     public String getNom() {
         return nom;
     }
