@@ -5,6 +5,7 @@
  */
 package HL7;
 
+import Medecin.Medecin;
 import Patient.PatientHop;
 
 /**
@@ -13,11 +14,12 @@ import Patient.PatientHop;
  */
 public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
     private  PatientHop patient;
-    
+    private Medecin medecin;
     /**
      * Creates new form EnvoyeMailLettreSortie
      */
-    public EnvoyeMailLettreSortie(PatientHop patient ) {
+    public EnvoyeMailLettreSortie(PatientHop patient,Medecin med) {
+        this.medecin =med;
         this.patient=patient;
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -44,7 +46,8 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextFieldContenu = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextAreaContenu = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,11 +88,9 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
 
         jLabel8.setText("Contenu :");
 
-        jTextFieldContenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldContenuActionPerformed(evt);
-            }
-        });
+        jTextAreaContenu.setColumns(20);
+        jTextAreaContenu.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaContenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,9 +104,6 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
                         .addGap(77, 77, 77)
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(312, 312, 312)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -113,18 +111,22 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldDestinataire)
+                            .addComponent(jTextFieldDestinataire, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
                             .addComponent(JTextFieldSujet)
-                            .addComponent(jTextFieldContenu, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(225, 225, 225)))
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(295, 295, 295))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,16 +149,19 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(JTextFieldSujet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextFieldDestinataire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDestinataire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jTextFieldContenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addComponent(jButton1)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(65, Short.MAX_VALUE))))
         );
 
         pack();
@@ -172,12 +177,10 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         EnvoieMessagePDF em=new EnvoieMessagePDF();
-        em.sendMessage(JTextFieldSujet.getText(), jTextFieldContenu.getText(), jTextFieldDestinataire.getText() , jTextFieldDestinataire.getText(),this.patient.getId());
+        em.sendMessage(JTextFieldSujet.getText(), jTextAreaContenu.getText(), jTextFieldDestinataire.getText() , jTextFieldDestinataire.getText(),this.patient.getId());
+        this.dispose();
+        new ValidationEnvoieMail(this.patient,this.medecin);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextFieldContenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldContenuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldContenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,8 +212,7 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PatientHop patient=new PatientHop("Oster","Clara","2018-12-11");
-                new EnvoyeMailLettreSortie(patient);
+
             }
         });
     }
@@ -226,7 +228,8 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextFieldContenu;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextAreaContenu;
     private javax.swing.JTextField jTextFieldDestinataire;
     // End of variables declaration//GEN-END:variables
 }

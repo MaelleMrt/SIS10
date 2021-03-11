@@ -49,7 +49,7 @@ public class LettreDeSortiePDF {
     public LettreDeSortiePDF(LettreDeSortie lettre) {
         try {
             this.lettre = lettre;
-            this.FILE = "C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie"+this.lettre.getId()+".pdf";
+            this.FILE = "src/PDF/LettreSortie"+this.lettre.getId()+".pdf";
             
             //On crée un nouveau document
             Document document = new Document();

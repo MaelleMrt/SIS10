@@ -275,7 +275,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         try {
-            File fichier = new File("C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie" + patient.getId() + ".pdf");
+            File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
             if (fichier.exists()) {
                 Desktop.getDesktop().open(fichier);
             }

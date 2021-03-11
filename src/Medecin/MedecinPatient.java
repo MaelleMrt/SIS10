@@ -307,7 +307,7 @@ public class MedecinPatient extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
-            File fichier = new File("C:/Users/clara/Desktop/TIS4/S8/Projet SIS/Code/SIS10/src/PDF/LettreSortie" + patient.getId() + ".pdf");
+            File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
             if (fichier.exists()) {
                 Desktop.getDesktop().open(fichier);
             }
