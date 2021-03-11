@@ -478,9 +478,14 @@ public class NouveauParticipant extends javax.swing.JFrame {
     }//GEN-LAST:event_patientActionPerformed
 
     private void patientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientsActionPerformed
-        for (PatientHop p : listePatients) {
-            String s = p.toString() + " (" + p.getNomNaissance() + ")";
-            if (s.equals(patients.getSelectedItem())) {
+        int i = 0;
+        String s = listePatients.get(i).toString() + " (" + listePatients.get(i).getNomNaissance() + ")";
+        while (i<listePatients.size() && !s.equals(patients.getSelectedItem())) {
+            i++;
+            s = listePatients.get(i).toString() + " (" + listePatients.get(i).getNomNaissance() + ")";
+        }          
+            if (i<listePatients.size()) {
+                PatientHop p = listePatients.get(i);
                 nomU.setText(p.getNomUsuel());
                 nomN.setText(p.getNomNaissance());
                 prenom.setText(p.getPrenom());
@@ -492,7 +497,8 @@ public class NouveauParticipant extends javax.swing.JFrame {
                     H.setSelected(true);
                 }
             }
-        }
+        
+        
     }//GEN-LAST:event_patientsActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
