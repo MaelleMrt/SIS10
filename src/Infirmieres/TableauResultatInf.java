@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Maelle
  */
 public class TableauResultatInf extends AbstractTableModel{
-     private ArrayList<Prescription> listPrescription= new ArrayList<Prescription>();
+     private ArrayList<Resultat> listResultat = new ArrayList<Resultat>();
      
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     public String service;
@@ -45,8 +45,8 @@ public class TableauResultatInf extends AbstractTableModel{
                         while(rs2.next()){
                             nomM= rs2.getString("nom");
 
-                            Prescription pres=new Prescription(service,nomM,date,contenu);
-                            listPrescription.add(pres);
+                            Resultat res=new Resultat(service,nomM,date,contenu);
+                            listResultat.add(res);
                         }   
                 
                 }
@@ -64,7 +64,7 @@ public class TableauResultatInf extends AbstractTableModel{
    
     
       public int getRowCount() {
-        return listPrescription.size();
+        return listResultat.size();
         
     }
  
@@ -79,20 +79,20 @@ public class TableauResultatInf extends AbstractTableModel{
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
-                return listPrescription.get(rowIndex).getService();
+                return listResultat.get(rowIndex).getService();
             case 1:
-                return listPrescription.get(rowIndex).getMedecin();
+                return listResultat.get(rowIndex).getMedecin();
             case 2: 
-                return listPrescription.get(rowIndex).getDate();
+                return listResultat.get(rowIndex).getDate();
             case 3: 
-                return listPrescription.get(rowIndex).getContenu();
+                return listResultat.get(rowIndex).getContenu();
             default:
                 return null; //Ne devrait jamais arriver
         }
 
     }
     
-    public ArrayList<Prescription> getListPrescription(){
-        return listPrescription;
+    public ArrayList<Resultat> getListResultat(){
+        return listResultat;
     }
 }

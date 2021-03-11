@@ -9,7 +9,11 @@ import Infirmieres.PrescriptionInf;
 import Infirmieres.TableauPrescriptionsInf;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import Tri.Tri;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 import static sun.text.normalizer.NormalizerImpl.convert;
 
 /**
@@ -19,12 +23,14 @@ import static sun.text.normalizer.NormalizerImpl.convert;
 public class MedecinPrescription extends javax.swing.JFrame {
      public PatientHop patient;
      public Medecin medecin;
+     public TableauPrescriptionsInf listPrescription;
     /**
      * Creates new form SecretaireAcceuil
      */
     public MedecinPrescription(PatientHop p,Medecin med) {
         patient=p;
         medecin=med;
+        listPrescription = new TableauPrescriptionsInf(patient,medecin.getService());
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -42,11 +48,11 @@ public class MedecinPrescription extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableauPrescriptionsInf modele = new TableauPrescriptionsInf(patient,medecin.service);
-        jTable1 = new javax.swing.JTable(modele);
+        jTable1 = new javax.swing.JTable(listPrescription);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
@@ -69,7 +75,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
-        jButton1.setText("Acceuil");
+        jButton1.setText("Accueil");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -84,16 +90,17 @@ public class MedecinPrescription extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Service", "Médecin", "Date", "Date de validation", "Infirmier" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jLabel7)
-                .addGap(28, 28, 28))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton2)
@@ -102,23 +109,35 @@ public class MedecinPrescription extends javax.swing.JFrame {
                 .addGap(254, 254, 254)
                 .addComponent(jButton1)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel7)
+                .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jLabel7))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                        .addComponent(jLabel6))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel7)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
@@ -223,6 +242,46 @@ public class MedecinPrescription extends javax.swing.JFrame {
 
                 }
     }//GEN-LAST:event_jTable1MousePressed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        ArrayList<PrescriptionInf> list = listPrescription.getListPrescription();
+        if (jComboBox1.getSelectedItem().equals("Service")) {
+            list = new Tri().trierPrescriptionParService(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Médecin")) {
+            list = new Tri().trierPrescriptionParMedecin(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date")) {
+            list = new Tri().trierPrescriptionParDate(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Date de validation")) {
+            list = new Tri().trierPrescriptionParDateValid(list);
+        }
+        else if (jComboBox1.getSelectedItem().equals("Infirmier")) {
+            list = new Tri().trierPrescriptionParInf(list);
+        }
+        DefaultTableModel model = new DefaultTableModel(){
+            public Class getColumnClass(int column) {
+                //renvoie Boolean.class
+                return getValueAt(0, column).getClass();
+            }
+        };
+        int i = 0;
+        for (PrescriptionInf p : list) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getService());
+            v.add(p.getMedecin());
+            v.add(p.getDate());
+            v.add(p.getContenu());
+            v.add(p.getValider());
+            v.add(p.getDateVal());
+            v.add(p.getNomInf());
+            model.setColumnIdentifiers(new String[]{"Service ", "Medecin", "Date","Contenu","valider","Date Validation","Infirmier"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable1.setModel(model);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
     //convertir un string en boolean
     boolean convert(String s) {
             if(s.equals("true")) return true;
@@ -270,6 +329,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
