@@ -90,6 +90,12 @@ public class Message extends javax.swing.JFrame {
         }catch (SQLException e) {
             System.out.println(e);
         }
+         try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("UPDATE PatientService SET id ='" + ID + "' WHERE id ='0'");
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
 
         return ID;
     }
