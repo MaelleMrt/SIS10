@@ -185,6 +185,11 @@ private String Metier(){
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
 
         jButton1.setBackground(java.awt.SystemColor.activeCaption);
         jButton1.setText("Se connecter");
@@ -301,6 +306,12 @@ private String Metier(){
             valider();
         }
     }//GEN-LAST:event_jPasswordField1KeyPressed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            valider();
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
     public void valider(){
         this.Login = RecupereID();
         this.mdp = RecupereMDP();
