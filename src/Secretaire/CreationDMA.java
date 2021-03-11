@@ -565,16 +565,16 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-<<<<<<< HEAD
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
         accueil.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-=======
+
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
->>>>>>> master
+
 
     /**
      * @param args the command line arguments

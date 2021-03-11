@@ -30,8 +30,10 @@ public class ListeRDV extends javax.swing.JFrame {
     String nomM;
     String prenomM;
     private ArrayList<RendezVous> listRDV = new ArrayList<RendezVous>();
+    private ArrayList liste;
+    String service;
 
-    public ListeRDV(JFrame precedent, String nomS, String prenomS, String nomM, String prenomM) {
+    public ListeRDV(JFrame precedent, String nomS, String prenomS, String nomM, String prenomM, ArrayList liste, String service) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.precedent = precedent;
@@ -39,6 +41,8 @@ public class ListeRDV extends javax.swing.JFrame {
         this.prenomS = prenomS;
         this.nomM = nomM;
         this.prenomM = prenomM;
+        this.liste = liste;
+        this.service = service;
         affichageNom();
         Tableau();
     }
@@ -262,7 +266,7 @@ public class ListeRDV extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        CreationRDV nouveau = new CreationRDV(precedent, nomM, prenomM);
+        CreationRDV nouveau = new CreationRDV(precedent, nomM, prenomM, liste, service);
         nouveau.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

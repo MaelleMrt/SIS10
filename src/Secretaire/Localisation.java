@@ -24,11 +24,12 @@ public class Localisation {
     private String idLocalisation;
     private String service;
 
-    public Localisation(String patient, String chambre, String lit, String service) {
+    public Localisation(String patient, String chambre, String lit, String service, String id) {
         this.chambre = chambre;
         this.lit = lit;
         this.patient = patient;
         this.service = service;
+        idLocalisation = id;
     }
 
     /**
@@ -117,20 +118,16 @@ public class Localisation {
 
     public boolean dejaOccupee() {
         boolean result = false;
-        ArrayList<String> stat = new ArrayList();
-        ArrayList<String> ids = new ArrayList();
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idLocalisation, statut FROM Localisation ");
+            ResultSet rs = s.executeQuery("SELECT statut FROM Localisation WHERE idLocalisation ='" + idLocalisation + "'");
             while (rs.next()) {
-                ids.add(rs.getString("idLocalisation"));
-                stat.add(rs.getString("statut"));
+                statut = rs.getString("statut");
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
-        if(ids.contains(idLocalisation) && statut.equals("Occupée")){
+        if(statut.equals("Occupée")){
             result = true;
         }
         return result;

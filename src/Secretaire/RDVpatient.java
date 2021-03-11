@@ -25,10 +25,14 @@ public class RDVpatient extends javax.swing.JFrame {
     String service;
     private ArrayList<Medecin> listMedecin = new ArrayList<>();
     private ArrayList<String> listService = new ArrayList<>();
+    private ArrayList<String> listPatient = new ArrayList<>();
     JFrame precedent;
     String id;
     String patient;
     String localisation;
+    Localisation l;
+    String type;
+    String type2;
 
     public RDVpatient(String secretaire, String patient, String id, JFrame precedent) {
         initComponents();
@@ -49,6 +53,7 @@ public class RDVpatient extends javax.swing.JFrame {
         jLabel2.setText(secretaire);
         this.precedent = precedent;
         this.id = id;
+        System.out.println(id);
         this.patient = patient;
 
     }
@@ -75,7 +80,7 @@ public class RDVpatient extends javax.swing.JFrame {
         // On regarde si le patient est déjà dans le service concerné
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT service  FROM PatientService WHERE id ='" + id + "'");
+            ResultSet rs = s.executeQuery("SELECT service FROM PatientService WHERE id ='" + id + "'");
             while (rs.next()) {
                 String ser = rs.getString("service");
                 listService.add(ser);
@@ -98,43 +103,95 @@ public class RDVpatient extends javax.swing.JFrame {
         try {
             Statement s = ExempleJdbc.connexion();
             s.executeUpdate("INSERT INTO RendezVous(idPatient, patient, Médecin, Motif, Date, Catégorie, Localisation)"
-                    + " VALUES ('" + id + "', '" + patient + "', '" + jComboBox4.getSelectedItem() + "', '" + jTextField2.getText() + "', '" + jTextField5.getText() + "', '"  + jComboBox1.getSelectedItem() + "', '" + localisation + "')");
+                    + " VALUES ('" + id + "', '" + patient + "', '" + jComboBox4.getSelectedItem() + "', '" + jTextField2.getText() + "', '" + jTextField5.getText() + "', '" + jComboBox1.getSelectedItem() + "', '" + localisation + "')");
         } catch (SQLException e) {
             System.out.println(e);
-        }                     
+        }
+        // On vérifie si le patient est déjà dans une autre chambre 
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT idPatient FROM Localisation");
+            while (rs.next()) {
+                int p = rs.getInt("idPatient");
+                listPatient.add(String.valueOf(p));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        if (listPatient.contains(id)) {
+            try {
+                Statement s = ExempleJdbc.connexion();
+                s.executeUpdate("UPDATE  Localisation set idPatient = '0', statut = 'Non occupée' WHERE idPatient ='" + id + "'");
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+
+        // On modifie la statut de la localisation à Occupée si c'est une hospitalisation 
+        if (type2.equals("Hospitalisation")) {
+            try {
+                Statement s = ExempleJdbc.connexion();
+                s.executeUpdate("UPDATE  Localisation set idPatient ='" + id + "', statut = 'Occupée' WHERE idLocalisation ='" + localisation + "'");
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
     }
-    
-    private String associerServiceNum(){
+
+    private String associerServiceNum() {
         String numero = new String();
-        if (service.equals("Oncologie")){
+        if (service.equals("Oncologie")) {
             numero = "1";
         }
-        if (service.equals("Gynécologie")){
+        if (service.equals("Gynécologie")) {
             numero = "2";
         }
         return numero;
     }
-    
-    private void associerChambreLit(){
-        String type = jComboBox5.getSelectedItem().toString();
+
+    private void associerChambreLit() {
+        type = jComboBox5.getSelectedItem().toString();
         String numService = associerServiceNum();
-        if (type.equals("Simple")){
-            for (int i = 0; i< 5; i++){
+        if (type.equals("Simple")) {
+            for (int i = 0; i < 5; i++) {
                 jComboBox6.addItem(numService + "0" + i);
                 jComboBox7.addItem(i);
-            }           
+                jCheckBox1.setVisible(false);
+                jCheckBox2.setVisible(false);
+            }
+            // On veut enlever les lits et les chambres simples étant déjà pris
+            ArrayList listLit = new ArrayList();
+            ArrayList listChambre = new ArrayList();
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT lit, chambre FROM Localisation WHERE statut = 'Occupée' AND chambre < 5");
+                while (rs.next()) {
+                    String lit = rs.getString("lit");
+                    listLit.add(lit);
+                    String ch = rs.getString("chambre");
+                    listChambre.add(ch);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            for (Object l : listLit) {
+                jComboBox6.removeItem(l);
+            }
         }
-        if (type.equals("Double")){
+        if (type.equals("Double")) {
             jCheckBox1.setVisible(true);
             jCheckBox2.setVisible(true);
             jComboBox7.setVisible(true);
-            for (int i = 5; i< 10; i++){
+            for (int i = 5; i < 10; i++) {
                 jComboBox6.addItem(numService + "0" + i);
                 jComboBox7.addItem(i);
-            }           
+            }
         }
+
     }
-    
+
     private String coteLit() { // De quel cote de la chambre se trouve le lit ?
         String numero = "";
         if (jCheckBox1.isSelected()) {
@@ -144,9 +201,6 @@ public class RDVpatient extends javax.swing.JFrame {
         }
         return numero;
     }
-    
-   
-   
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -507,8 +561,8 @@ public class RDVpatient extends javax.swing.JFrame {
             jLabel16.setVisible(true);
             jComboBox7.setVisible(true);
             jLabel17.setVisible(true);
-            
-            
+            type2 = "Hospitalisation";
+
         } else {
             jLabel11.setVisible(false);
             jButton3.setVisible(false);
@@ -520,7 +574,8 @@ public class RDVpatient extends javax.swing.JFrame {
             jComboBox7.setVisible(false);
             jLabel17.setVisible(false);
             localisation = "";
-            
+            type2 = "Consultation";
+
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
@@ -562,17 +617,15 @@ public class RDVpatient extends javax.swing.JFrame {
         String chambre = jComboBox7.getSelectedItem().toString();
         String lit = jComboBox6.getSelectedItem().toString() + coteLit();
         jLabel18.setVisible(false);
-        Localisation l = new Localisation(id,chambre,lit,patient);
-        l.setIdLocalisation(associerServiceNum() + chambre + lit);
+        String lo = associerServiceNum() + chambre + lit;
+        l = new Localisation(id, chambre, lit, service, lo);
         localisation = l.getIdLocalisation();
-        l.setStatut("Occupée");
-        
+
         // vérification disponiblilité
-        if(l.dejaOccupee()){
-            MessageErreur me = new MessageErreur("Un patient se trouve déjà dans à cette localiation " + localisation);
+        if (l.dejaOccupee()) {
+            MessageErreur me = new MessageErreur("Un patient se trouve déjà à cette localiation " + localisation);
             me.setVisible(true);
-        }
-        else{
+        } else {
             jLabel18.setText("Cette localisation est disponible : " + localisation);
             jLabel18.setVisible(true);
         }

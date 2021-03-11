@@ -38,10 +38,6 @@ public class PatientHop {
                 ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+this.nom+"' AND prenom='"+this.prenom+"'AND datedenaissance='"+this.naissance+"'" );
                 while(rs.next()){
                     id=rs.getInt("id");
-<<<<<<< HEAD
-=======
-//                    System.out.println("id    "+id);
->>>>>>> master
                 }    
 
             } catch(SQLException e){

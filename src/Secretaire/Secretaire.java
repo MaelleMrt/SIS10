@@ -429,7 +429,7 @@ public class Secretaire extends javax.swing.JFrame {
         if (i < jTable2.getRowCount()) {
             String Nom = String.valueOf(jTable2.getValueAt(i, 0));
             String Prenom = String.valueOf(jTable2.getValueAt(i, 1));
-            ListeRDV lr = new ListeRDV(this, nom, prenom, Nom, Prenom);
+            ListeRDV lr = new ListeRDV(this, nom, prenom, Nom, Prenom, listPatient2, service);
             lr.setVisible(true);
             this.setVisible(false);
         }

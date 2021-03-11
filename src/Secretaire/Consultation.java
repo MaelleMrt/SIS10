@@ -87,7 +87,8 @@ public class Consultation {
             Statement s = ExempleJdbc.connexion();
             ResultSet rs = s.executeQuery("SELECT nomS FROM Médecin WHERE CONCAT(prenom, ' ', nom) LIKE '" + medecin + "'");
             while (rs.next()) {
-                service =rs.getString("nomS");
+                service = rs.getString("nomS");
+
             }
 
         } catch (SQLException e) {

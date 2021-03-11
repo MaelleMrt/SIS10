@@ -404,6 +404,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jLabel21.setText("Hospitalisation");
@@ -511,6 +516,20 @@ public class VisualisationDMA extends javax.swing.JFrame {
         RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),this);
         p.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int i = 0;
+        while (i < jTable2.getRowCount() && !jTable2.isRowSelected(i)) {
+            i++;
+        }
+        if (i < jTable2.getRowCount()) {
+            String Nom = String.valueOf(jTable2.getValueAt(i, 0));
+            String Prenom = String.valueOf(jTable2.getValueAt(i, 1));
+            Hospitalisation h = new Hospitalisation(this);
+            h.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
 
     /**
      * @param args the command line arguments
