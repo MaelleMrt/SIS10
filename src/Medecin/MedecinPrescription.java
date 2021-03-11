@@ -5,12 +5,11 @@
  */
 package Medecin;
 
-import Infirmieres.PrescriptionInf;
-import Infirmieres.TableauPrescriptionsInf;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import static sun.text.normalizer.NormalizerImpl.convert;
+import javax.swing.JFrame;
 
 /**
  *
@@ -42,7 +41,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableauPrescriptionsInf modele = new TableauPrescriptionsInf(patient,medecin.service);
+        TableauPrescriptions modele = new TableauPrescriptions(patient);
         jTable1 = new javax.swing.JTable(modele);
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -61,12 +60,26 @@ public class MedecinPrescription extends javax.swing.JFrame {
         jLabel6.setText("Prescriptions");
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTable1MousePressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTable1);
+        jTable1.addMouseListener(new MouseAdapter()  {
+            public void mousePressed(MouseEvent e) {
+
+                // clic sur le bouton gauche ou droit
+                if(e.getButton() == MouseEvent.BUTTON1 ||
+                    e.getButton() == MouseEvent.BUTTON3)
+                {
+                    int indRow =jTable1.rowAtPoint(e.getPoint());
+
+                    try{
+                        ResultatPrescription pres=new Prescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        new Contenu(pres,patient,medecin);
+                    }catch(Exception e2){
+                    }
+
+                }
+            }
+
+        });
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
         jButton1.setText("Acceuil");
@@ -196,10 +209,13 @@ public class MedecinPrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Clic sur le bouton Retour ramene a l'interface PatientHop
+        //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        this.setVisible(false);
         new MedecinPatient(patient,medecin);
+
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
@@ -207,27 +223,6 @@ public class MedecinPrescription extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
-    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-          // clic sur le bouton gauche ou droit
-                if(evt.getButton() == MouseEvent.BUTTON1 ||
-                    evt.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(evt.getPoint());
-
-                    try{
-                        PrescriptionInf pres=new PrescriptionInf(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString(),convert(jTable1.getValueAt(indRow, 4).toString()),jTable1.getValueAt(indRow, 5).toString(),jTable1.getValueAt(indRow, 6).toString());
-                        this.dispose();
-                        new ContenuPrescriptionMedecin(pres,patient,medecin);
-                    }catch(Exception e2){
-                    }
-
-                }
-    }//GEN-LAST:event_jTable1MousePressed
-    //convertir un string en boolean
-    boolean convert(String s) {
-            if(s.equals("true")) return true;
-            else return false;
-    }
     /**
      * @param args the command line arguments
      */

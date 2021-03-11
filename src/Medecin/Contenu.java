@@ -29,7 +29,7 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public Contenu(Resultatexamen res, Patient patient, Medecin medecin) {
+    public Contenu(Resultatexamen res, PatientHop patient, Medecin medecin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
