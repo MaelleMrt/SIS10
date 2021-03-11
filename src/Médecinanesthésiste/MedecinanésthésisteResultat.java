@@ -73,7 +73,7 @@ public class MedecinanésthésisteResultat extends javax.swing.JFrame {
                     int indRow =jTable1.rowAtPoint(e.getPoint());
 
                     try{
-                        ResultatPrescription res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        Resultatexamen res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
                         new Contenu(res,patient,medecin);
                     }catch(Exception e2){
                     }
@@ -204,14 +204,14 @@ public class MedecinanésthésisteResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        new MedecinAcceuil(medecin.login);
+        new MedecinanésthésisteAcceuil(medecin.getLogin());
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        new MedecinPatient(patient,medecin);
+        new MedecinanésthésistePatient(patient,medecin);
 
         
         
