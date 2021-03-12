@@ -3,11 +3,45 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/CicAjouterEtude.java</file>
-            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/CicAjouterParticipant.java</file>
-            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/Patient/PatientHop.java</file>
-            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/Participant.java</file>
-            <file>file:/C:/Users/clara/Desktop/TIS4/S8/Projet%20SIS/Code/SIS10/src/CIC/NouveauParticipant.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/testFrameClient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/DMA.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Prescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Acte.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameServeur.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Interop_ajoutPatient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/LettreDeSortie.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Patient/PatientHop.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/CreationDMA.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/AffichagePrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/PDF/LettreDeSortiePDF.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/ContenuPrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/SaisisSoins.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/PrescriptionInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierPrescription.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/PageConnexion/InterfaceConnexion.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierPatient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauxSoins.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauPatientInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/TestHL7.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/ContenuInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmiereSoins.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TestInterface.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauPrescriptionsInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinAcceuil.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/testThread1.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Message.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmiereResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/TestThread.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmierAcceuil.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameClientAdmi.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/EnvoyeMailLettreSortie.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Secretaire.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauResultatInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Lancement/Lancement.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Lancement/Test.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinPatient.java</file>
         </group>
     </open-files>
 </project-private>
