@@ -8,9 +8,12 @@ package Secretaire;
 import Connexion.ExempleJdbc;
 import Medecin.DateChecker;
 import Patient.PatientHop;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
@@ -160,6 +163,23 @@ public class CreationDMA extends javax.swing.JFrame {
             System.out.println(e);
         }
         return patient;
+    }
+    
+    public boolean VerifPatient(String secu){
+        //renvoie true si le patient est déjà dans la BD
+        boolean result = false;
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT secu FROM Patient");
+                while (rs.next()) {
+                    if(rs.getString("secu").equals(secu)){
+                        result = true;
+                    }
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(CreationDMA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     /**
@@ -516,7 +536,12 @@ public class CreationDMA extends javax.swing.JFrame {
         else if (DateChecker.isValid(this.date)== false) {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
-        } else {
+        } 
+        else if(VerifPatient(jTextField10.getText())){
+            JFrame erreur = new MessageErreur("- Ce patient existe déjà ");
+            erreur.setVisible(true);
+            
+        }else {
             PatientHop patient=enregistrer();
             System.out.println("sexe patient :"+patient.getSexe());
             this.setVisible(false);
