@@ -15,16 +15,14 @@ import Patient.PatientHop;
  * @author Maelle
  */
 public class Questionnaire1 extends javax.swing.JFrame {
-    ResultatPrescription respres;
-    PatientHop patient;
-    Infirmier infirmier;
+    private PatientHop patient;
+    private Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public Questionnaire1(ResultatPrescription rp,PatientHop p,Infirmier inf) {
-        infirmier =inf;
-        respres=rp;
-        patient=p;
+    public Questionnaire1(PatientHop p,Medecin med) {
+        this.medecin=med;
+        this.patient=p;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -51,24 +49,33 @@ public class Questionnaire1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldTaille = new javax.swing.JTextField();
+        jTextFieldPoids = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBoxOui1 = new javax.swing.JCheckBox();
+        jCheckBoxNon2 = new javax.swing.JCheckBox();
+        jCheckBoxOui3 = new javax.swing.JCheckBox();
+        jCheckBoxNon3 = new javax.swing.JCheckBox();
+        jCheckBoxOui4 = new javax.swing.JCheckBox();
+        jCheckBoxNon4 = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jCheckBoxOui2 = new javax.swing.JCheckBox();
+        jCheckBoxNon1 = new javax.swing.JCheckBox();
+        jLabelNonRempli = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jTextFieldAllergie = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jCheckBoxSuffisant = new javax.swing.JCheckBox();
+        jCheckBoxPetite = new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,11 +107,11 @@ public class Questionnaire1 extends javax.swing.JFrame {
             }
         });
 
-        utilisateur.setText(infirmier.getPrenom() + " " + infirmier.getNom());
+        utilisateur.setText(this.medecin.getPrenom() + " " + this.medecin.getNom());
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/pngegg.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/medecinProfil.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -138,15 +145,15 @@ public class Questionnaire1 extends javax.swing.JFrame {
 
         jLabel11.setText("Poids:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldTaille.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldTailleActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldPoids.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldPoidsActionPerformed(evt);
             }
         });
 
@@ -154,13 +161,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
 
         jLabel4.setText("Vit seul:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         jLabel12.setText("Antécédents");
 
         jLabel13.setText("Maladie resperatoire:");
@@ -169,90 +170,148 @@ public class Questionnaire1 extends javax.swing.JFrame {
 
         jLabel19.setText("Autre maladie/ Remarque:");
 
-        jLabel20.setText("1/2");
+        jButton1.setText("Valider");
+        jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        jButton1.setText("Suivant");
+        jCheckBoxOui1.setText("Oui");
 
-        jCheckBox1.setText("Oui");
+        jCheckBoxNon2.setText("Non");
 
-        jCheckBox2.setText("Non");
+        jCheckBoxOui3.setText("Oui");
 
-        jCheckBox3.setText("Oui");
+        jCheckBoxNon3.setText("Non");
 
-        jCheckBox4.setText("Non");
+        jCheckBoxOui4.setText("Oui");
 
-        jCheckBox5.setText("Oui");
+        jCheckBoxNon4.setText("Non");
 
-        jCheckBox6.setText("Non");
+        jLabel6.setText("cm");
+
+        jLabel7.setText("Kg");
+
+        jCheckBoxOui2.setText("Oui");
+
+        jCheckBoxNon1.setText("Non");
+
+        jLabelNonRempli.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelNonRempli.setText("Questions non remplis");
+        jLabelNonRempli.setVisible(false);
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Allergies");
+
+        jTextFieldAllergie.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextFieldAllergie.setText("Remarques");
+        jTextFieldAllergie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldAllergieActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel15.setText("Ouverture de bouche:");
+
+        jCheckBoxSuffisant.setText("Suffisante");
+
+        jCheckBoxPetite.setText("Petite");
+
+        jButton3.setBackground(new java.awt.Color(204, 0, 0));
+        jButton3.setText("Alerte Corona Virus");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel20)
-                .addGap(35, 35, 35))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(71, 71, 71)
+                            .addComponent(jLabelNonRempli))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(28, 28, 28)
-                            .addComponent(jButton2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel9)
+                                .addComponent(jLabel19)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel11))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel10))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(71, 71, 71)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jTextFieldTaille, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jLabel6))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jTextFieldPoids, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jLabel7))))
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel11)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jTextField1)))
-                                    .addGap(139, 139, 139)
+                                    .addComponent(jButton2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel4))
-                                    .addGap(28, 28, 28)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel9)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jCheckBox1)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jCheckBox2))))
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(71, 71, 71)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel4))
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jLabel10))
+                                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                                    .addGap(33, 33, 33)
+                                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jCheckBoxOui2)
+                                                            .addGap(18, 18, 18)
+                                                            .addComponent(jCheckBoxNon2))
+                                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                            .addComponent(jCheckBoxOui1)
+                                                            .addGap(18, 18, 18)
+                                                            .addComponent(jCheckBoxNon1)
+                                                            .addGap(78, 78, 78)
+                                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                            .addComponent(jTextFieldAllergie, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel13)
-                                        .addComponent(jLabel16))
+                                    .addComponent(jLabel16)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(jCheckBoxOui4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jCheckBoxNon4))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel13)
                                     .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jCheckBox3)
-                                        .addComponent(jCheckBox5))
+                                    .addComponent(jCheckBoxOui3)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jCheckBox4)
-                                        .addComponent(jCheckBox6)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel19)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                                    .addComponent(jCheckBoxNon3)
+                                    .addGap(168, 168, 168)
+                                    .addComponent(jLabel15)
+                                    .addGap(32, 32, 32)
+                                    .addComponent(jCheckBoxSuffisant)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jCheckBoxPetite))
+                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(79, 79, 79))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,39 +325,53 @@ public class Questionnaire1 extends javax.swing.JFrame {
                         .addComponent(jLabel10)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTaille, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(jCheckBoxOui1)
+                    .addComponent(jCheckBoxNon1)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldAllergie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
                     .addComponent(jLabel4)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2))
+                    .addComponent(jCheckBoxOui2)
+                    .addComponent(jCheckBoxNon2))
                 .addGap(27, 27, 27)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4))
-                .addGap(15, 15, 15)
+                    .addComponent(jCheckBoxOui3)
+                    .addComponent(jCheckBoxNon3)
+                    .addComponent(jLabel15)
+                    .addComponent(jCheckBoxSuffisant)
+                    .addComponent(jCheckBoxPetite))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jCheckBox5)
-                    .addComponent(jCheckBox6))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCheckBoxOui4)
+                    .addComponent(jCheckBoxNon4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel20)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1))
+                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelNonRempli)
+                        .addGap(25, 25, 25))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -319,16 +392,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         this.dispose();
-
-        if(respres.getClass().toString().equals("class Medecin.Prescription")){
-            System.out.println("prescription");
-            new InfirmierPrescription(patient,infirmier);
-        }
-        if(respres.getClass().toString().equals("class Medecin.Resultat")){
-            System.out.println("resultat");
-            new InfirmiereResultat(patient,infirmier);
-        }
+     
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -337,17 +401,34 @@ public class Questionnaire1 extends javax.swing.JFrame {
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldTailleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTailleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldTailleActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jTextFieldPoidsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPoidsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jTextFieldPoidsActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        jLabelNonRempli.setVisible(false);
+        if((jCheckBoxSuffisant.isSelected()==false && jCheckBoxPetite.isSelected()==false )||(jCheckBoxOui1.isSelected()==false && jCheckBoxNon1.isSelected()==false ) || (jCheckBoxOui2.isSelected()==false && jCheckBoxNon2.isSelected()==false ) ||(jCheckBoxOui3.isSelected()==false && jCheckBoxNon3.isSelected()==false ) ||(jCheckBoxOui4.isSelected()==false && jCheckBoxNon4.isSelected()==false )){
+            jLabelNonRempli.setVisible(true);
+        }else if( jTextFieldPoids.getText()==null||jTextFieldTaille.getText()==null||jTextFieldAllergie.getText()==null){
+            jLabelNonRempli.setVisible(true);
+            
+        }else{
+            this.dispose();
+            new ValidationFormulaire(this.patient,this.medecin);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldAllergieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAllergieActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTextFieldAllergieActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        //new AlerteCOVID(this.patient,this.medecin);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,32 +472,41 @@ public class Questionnaire1 extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBoxNon1;
+    private javax.swing.JCheckBox jCheckBoxNon2;
+    private javax.swing.JCheckBox jCheckBoxNon3;
+    private javax.swing.JCheckBox jCheckBoxNon4;
+    private javax.swing.JCheckBox jCheckBoxOui1;
+    private javax.swing.JCheckBox jCheckBoxOui2;
+    private javax.swing.JCheckBox jCheckBoxOui3;
+    private javax.swing.JCheckBox jCheckBoxOui4;
+    private javax.swing.JCheckBox jCheckBoxPetite;
+    private javax.swing.JCheckBox jCheckBoxSuffisant;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelNonRempli;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTextFieldAllergie;
+    private javax.swing.JTextField jTextFieldPoids;
+    private javax.swing.JTextField jTextFieldTaille;
     private javax.swing.JLabel utilisateur;
     // End of variables declaration//GEN-END:variables
 }
