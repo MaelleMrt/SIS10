@@ -753,6 +753,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelPatient1.add(jLabel12, gridBagConstraints);
 
+        fieldHost.setText("82.65.192.5");
         fieldHost.setMinimumSize(new java.awt.Dimension(128, 20));
         fieldHost.setPreferredSize(new java.awt.Dimension(128, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -784,6 +785,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         fieldPort.setMinimumSize(new java.awt.Dimension(48, 20));
+        fieldPort.setText("1527");
         fieldPort.setPreferredSize(new java.awt.Dimension(48, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -1149,7 +1151,15 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         }
 
         //sexe
-        System.out.println(patientHop.getSexe());
+        System.out.println("sexe patient "+comboBoxSexe.getSelectedItem().toString().charAt(0));
+        this.sex=comboBoxSexe.getSelectedItem().toString().charAt(0);
+        if (this.sex != 'X') {
+            if(this.sex=='H'){
+                this.patient.setSex('M');
+            }else{
+            this.patient.setSex('F');
+            }
+        }
  
     }
 
