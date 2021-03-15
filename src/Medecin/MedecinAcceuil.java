@@ -38,6 +38,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         login=log;
         rechercheMedecin();
         listPatient= new TableauPatient(login);
+        System.out.println("medecin =" +this.medecin.nom);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
