@@ -38,7 +38,6 @@ public class PatientHop {
                 ResultSet rs= s.executeQuery("SELECT id FROM Patient WHERE nomusuel='"+this.nom+"' AND prenom='"+this.prenom+"'AND datedenaissance='"+this.naissance+"'" );
                 while(rs.next()){
                     id=rs.getInt("id");
-//                    System.out.println("id    "+id);
                 }    
 
             } catch(SQLException e){
@@ -130,8 +129,8 @@ public class PatientHop {
                 ResultSet rs= s.executeQuery("SELECT rue,ville,codepostale FROM Patient WHERE id='"+id+"'" );
                 while(rs.next()){
                    adresse+="rue "+rs.getString("rue")+"  ";
-                   adresse+=rs.getString("codepostale")+"   ";
-                   adresse+="\n"+rs.getString("ville")+"   ";
+                   adresse+=rs.getString("codepostale")+"  ";
+                   adresse+="\n"+rs.getString("ville")+"  ";
                 }    
 
             } catch(SQLException e){
