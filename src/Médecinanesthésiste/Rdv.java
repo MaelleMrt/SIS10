@@ -9,7 +9,7 @@ package Médecinanesthésiste;
  *
  * @author amira
  */
-class Rdv {
+ public class Rdv {
     String motif;
     String date;
     String heure;

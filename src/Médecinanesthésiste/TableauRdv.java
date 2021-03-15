@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author amira
  */
-class TableauRdv extends AbstractTableModel {
+public class TableauRdv extends AbstractTableModel {
      private ArrayList<Rdv> listRdv= new ArrayList<Rdv>();
      private PatientHop patient;
      private Medecin medecin;
@@ -37,11 +37,11 @@ class TableauRdv extends AbstractTableModel {
             try{
                 ResultSet rdv= s.executeQuery("SELECT Motif, Date, Heure  FROM RendezVous WHERE idPatient ='"+ patient.getId()+"'" );
                 while(rdv.next()){
-                    date= rdv.getString("Date");
                     motif= rdv.getString("Motif");
                     System.out.println(motif);
+                    date= rdv.getString("Date");
                     heure =rdv.getString("Heure");
-                    Rdv rd = new Rdv(date,motif,heure);
+                    Rdv rd = new Rdv(motif,date,heure);
                     listRdv.add(rd);
                    
                 
