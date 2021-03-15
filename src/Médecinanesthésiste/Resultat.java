@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HL7;
+package Médecinanesthésiste;
+
+import Medecin.*;
+import java.util.Date;
 
 /**
  *
  * @author Maelle
  */
-public class testThread1 {
+public class Resultat extends Resultatexamen{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-       new FrameServeur(6558);
+    public Resultat(String s, String m, String d, String contenu) {
+        super(s, m, d, contenu);
     }
     
 }
