@@ -506,12 +506,15 @@ public class CreationDMA extends javax.swing.JFrame {
             }
 
             public void afficherList() {
+                System.out.println("modification");
                 // on met à jour les items
-                for(int i=0;i<jComboBox1.getItemCount();i++){
-                    jComboBox1.removeItemAt(i);
-                }
-                String texte=jTextField1.getText();
+                jComboBox1.removeAllItems();
+                // on recupere le contenu de la JtexField
+                String texte=jTextField8.getText();
+                System.out.println("texte = "+texte);
+                // on crée une arrayList avec toutes les villes qui commence par texte
                 ArrayList<String> listeVilles=VilleCodePostale(texte);
+                // on ajout les villes
                 for (String ville : listeVilles) {
                     jComboBox1.addItem(ville);
 
@@ -620,7 +623,7 @@ public class CreationDMA extends javax.swing.JFrame {
          try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rs1= s.executeQuery("SELECT nom_commune_postal FROM CodePostal WHERE code_postal LIKE '%"+codePostal+"'" );
+                ResultSet rs1= s.executeQuery("SELECT nom_commune_postal FROM CodePostal WHERE code_postal LIKE '"+codePostal+"%'" );
                 while(rs1.next()){
                     listVille.add(rs1.getString("nom_commune_postal"));
                 }     
