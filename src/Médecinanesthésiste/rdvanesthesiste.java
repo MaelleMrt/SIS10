@@ -228,7 +228,7 @@ public class rdvanesthesiste extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        new MedecinanésthésisteAcceuil(medecin.getLogin());
+        new MedecinanésthésistePatient(patient,medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
           
     /**
