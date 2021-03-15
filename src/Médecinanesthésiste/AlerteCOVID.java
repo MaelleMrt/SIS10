@@ -7,8 +7,10 @@ package Médecinanesthésiste;
 
 import Infirmieres.*;
 import Medecin.*;
+import PDF.QuestionnaireCovidPDF;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -170,17 +172,15 @@ public class AlerteCOVID extends javax.swing.JFrame {
 
         jLabel7.setText("Toux:");
 
-        jLabel8.setText("Difficulté à respirer:");
+        jLabel8.setText("Difficultés à respirer:");
 
         jLabel9.setText("Perte du goût ou de l'odorat:");
 
         jLabel11.setText("Syndrome grippal:");
 
-        jLabel12.setText("Contact avec une personne porteuse de la covid:");
+        jLabel12.setText("Contact sans masque avec une personne porteuse de la covid:");
 
-        jLabel15.setText("Etes-vous revenu d’un voyage à l’étranger ou d’un");
-
-        jLabel16.setText("rassemblement de nombreuses personnes :");
+        jLabel15.setText("Etes-vous revenu d’un voyage à l’étranger ou d’un rassemblement de nombreuses personnes :");
 
         oui1.setBackground(new java.awt.Color(244, 91, 91));
         oui1.setText("Oui");
@@ -259,8 +259,8 @@ public class AlerteCOVID extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel12)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(oui7)
@@ -342,18 +342,15 @@ public class AlerteCOVID extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(oui6)
                         .addComponent(non6)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(oui7)
-                            .addComponent(non7))))
-                .addGap(153, 153, 153)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(oui7)
+                        .addComponent(non7)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addGap(165, 165, 165)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -395,6 +392,50 @@ public class AlerteCOVID extends javax.swing.JFrame {
         else{
             this.setVisible(false);
             new Questionnaire(patient,medecin);
+            ArrayList<Boolean> l = new ArrayList<>();
+            if(oui1.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui2.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui3.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui4.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui5.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui6.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            if(oui7.isSelected()){
+                l.add(true);
+            }
+            else{
+                l.add(false);
+            }
+            new QuestionnaireCovidPDF(l,patient);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -435,7 +476,7 @@ public class AlerteCOVID extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PatientHop p = new PatientHop("Oster","Clara","1999-05-22");
+                PatientHop p = new PatientHop("Oster","Oster","Clara","1999-05-22",123456789);
                 Medecin m = new Medecin("Martinet","Maelle","Dermatologie","maelle_martinet");
                 new AlerteCOVID(p,m);
                 
