@@ -13,19 +13,22 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author Maelle
  */
 public class MedecinanésthésistePatient extends javax.swing.JFrame {
+
     public PatientHop patient;
     public Medecin medecin;
+
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinanésthésistePatient(PatientHop p,Medecin med) {
-        patient =p;
-        medecin=med;
+    public MedecinanésthésistePatient(PatientHop p, Medecin med) {
+        patient = p;
+        medecin = med;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -49,7 +52,7 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         deconnexion = new javax.swing.JButton();
         utilisateur = new javax.swing.JLabel();
@@ -107,7 +110,9 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
         jLabel4.setText("jLabel4");
 
         jButton3.setBackground(new java.awt.Color(137, 202, 216));
+        jButton3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/télécharger.png"))); // NOI18N
+        jButton3.setSelected(true);
         jButton3.setText("Questionnaires");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,23 +142,19 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton3)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(239, 239, 239))))
+                        .addGap(245, 245, 245))))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton3, jToggleButton2});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -174,14 +175,12 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(15, 15, 15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27))
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, jToggleButton2});
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -253,7 +252,7 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.dispose();
-        new rdvanesthesiste(patient,medecin);
+        new rdvanesthesiste(patient, medecin);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -264,13 +263,13 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
-        new MedecinanésthésisteResultat(patient,medecin);
+        new MedecinanésthésisteResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        new Questionnaire1(patient,medecin);
-               
+        new Questionnaire1(patient, medecin);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
@@ -279,24 +278,23 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-            File fichier1 = new File("src/PDF/QuestionnaireAnesthésie" + patient.getId() + ".pdf");
-            if (fichier1.exists()) {
-                try {
-                    Desktop.getDesktop().open(fichier1);
-                } catch (IOException ex) {
-                    Logger.getLogger(MedecinanésthésistePatient.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        File fichier1 = new File("src/PDF/QuestionnaireAnesthésie" + patient.getId() + ".pdf");
+        if (fichier1.exists()) {
+            try {
+                Desktop.getDesktop().open(fichier1);
+            } catch (IOException ex) {
+                Logger.getLogger(MedecinanésthésistePatient.class.getName()).log(Level.SEVERE, null, ex);
             }
-            File fichier2 = new File("src/PDF/QuestionnaireCovid" + patient.getId() + ".pdf");
-            if (fichier2.exists()) {
-                try {
-                    Desktop.getDesktop().open(fichier2);
-                } catch (IOException ex) {
-                    Logger.getLogger(MedecinanésthésistePatient.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        }
+        File fichier2 = new File("src/PDF/QuestionnaireCovid" + patient.getId() + ".pdf");
+        if (fichier2.exists()) {
+            try {
+                Desktop.getDesktop().open(fichier2);
+            } catch (IOException ex) {
+                Logger.getLogger(MedecinanésthésistePatient.class.getName()).log(Level.SEVERE, null, ex);
             }
-        
+        }
+        jButton3.setSelected(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -332,7 +330,7 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }
@@ -341,7 +339,7 @@ public class MedecinanésthésistePatient extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JToggleButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
