@@ -22,6 +22,8 @@ public class ValidationFormulaire extends javax.swing.JFrame {
         this.patient =pat;
         this.medecin=med;
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     /**

@@ -67,23 +67,11 @@ public class QuestionnaireCovidPDF {
             Chunk c = new Chunk("   Fièvre (>38°):", font);
             p1.add(c);
             if (this.reponses.get(0).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p1.add(c1);
-                p1.add(c2);
-                p1.add(c3);
-                p1.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p1.add(c1);
-                p1.add(c2);
-                p1.add(c3);
-                p1.add(c4);
             }
             paragraphe.add(p1);
             addEmptyLine(paragraphe, 1);
@@ -92,23 +80,11 @@ public class QuestionnaireCovidPDF {
             Chunk a = new Chunk("   Toux :", font);
             p2.add(a);
             if (this.reponses.get(1).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p2.add(c1);
-                p2.add(c2);
-                p2.add(c3);
-                p2.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p2.add(c1);
-                p2.add(c2);
-                p2.add(c3);
-                p2.add(c4);
             }
             paragraphe.add(p2);
             addEmptyLine(paragraphe, 1);
@@ -117,23 +93,11 @@ public class QuestionnaireCovidPDF {
             Chunk z = new Chunk("   Difficultés à respirer :", font);
             p3.add(z);
             if (this.reponses.get(2).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p3.add(c1);
-                p3.add(c2);
-                p3.add(c3);
-                p3.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p3.add(c1);
-                p3.add(c2);
-                p3.add(c3);
-                p3.add(c4);
             }
             paragraphe.add(p3);
             addEmptyLine(paragraphe, 1);
@@ -142,23 +106,11 @@ public class QuestionnaireCovidPDF {
             Chunk e = new Chunk("   Perte du goût ou de l'odorat :", font);
             p4.add(e);
             if (this.reponses.get(3).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p4.add(c1);
-                p4.add(c2);
-                p4.add(c3);
-                p4.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p4.add(c1);
-                p4.add(c2);
-                p4.add(c3);
-                p4.add(c4);
             }
             paragraphe.add(p4);
             addEmptyLine(paragraphe, 1);
@@ -167,23 +119,11 @@ public class QuestionnaireCovidPDF {
             Chunk r = new Chunk("   Syndrome grippal :", font);
             p5.add(r);
             if (this.reponses.get(4).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p5.add(c1);
-                p5.add(c2);
-                p5.add(c3);
-                p5.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p5.add(c1);
-                p5.add(c2);
-                p5.add(c3);
-                p5.add(c4);
             }
             paragraphe.add(p5);
             addEmptyLine(paragraphe, 1);
@@ -192,23 +132,11 @@ public class QuestionnaireCovidPDF {
             Chunk t = new Chunk("   Contact sans masque avec une personne porteuse de la covid :", font);
             p6.add(t);
             if (this.reponses.get(5).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p6.add(c1);
-                p6.add(c2);
-                p6.add(c3);
-                p6.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p6.add(c1);
-                p6.add(c2);
-                p6.add(c3);
-                p6.add(c4);
             }
             paragraphe.add(p6);
             addEmptyLine(paragraphe, 1);
@@ -217,23 +145,11 @@ public class QuestionnaireCovidPDF {
             Chunk y = new Chunk("   Etes-vous revenu d’un voyage à l’étranger ou d’un rassemblement de nombreuses personnes :", font);
             p7.add(y);
             if (this.reponses.get(6).equals(Boolean.TRUE)) {
-                Chunk c1 = new Chunk(String.valueOf(checked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(unchecked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Oui", font);
                 p7.add(c1);
-                p7.add(c2);
-                p7.add(c3);
-                p7.add(c4);
             } else {
-                Chunk c1 = new Chunk(String.valueOf(unchecked));
-                Chunk c2 = new Chunk("oui     ", font);
-                Chunk c3 = new Chunk(String.valueOf(checked));
-                Chunk c4 = new Chunk("non", font);
+                Chunk c1 = new Chunk(" Non", font);
                 p7.add(c1);
-                p7.add(c2);
-                p7.add(c3);
-                p7.add(c4);
             }
             paragraphe.add(p7);
 
