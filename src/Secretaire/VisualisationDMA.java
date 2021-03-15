@@ -56,9 +56,9 @@ public class VisualisationDMA extends javax.swing.JFrame {
     private void remplissageConsultations(){
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
+            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
-                Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"));
+                Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listConsult.add(consult);
                 
             }
@@ -83,9 +83,9 @@ public class VisualisationDMA extends javax.swing.JFrame {
     private void remplissageHospitalisations(){
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
+            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
-                Hospitalisations hospit = new Hospitalisations(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"));
+                Hospitalisations hospit = new Hospitalisations(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listHospit.add(hospit);
             }
 
@@ -101,7 +101,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
             v.add(e.getMedecin());
             v.add(e.getMotif());
             v.add(e.getDate());
-            v.add(e.getLocalisation());
+            v.add(e.getLocalisationChiffre());
             model.setColumnIdentifiers(new String[]{"Service","Médecin","Motif","Date","Localisation"});
             model.insertRow(i, v);
             i++;
@@ -518,7 +518,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),this);
+        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),precedent);
         p.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

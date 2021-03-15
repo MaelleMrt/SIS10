@@ -29,9 +29,14 @@ public class AffichageHospitalisation extends javax.swing.JFrame {
         jLabel16.setText(h.getMotif());
         jLabel11.setText(h.getService());
         jLabel17.setText(h.getDate());
-        jLabel19.setText(h.getLocalisation());
+        jLabel19.setText(h.getLocalisationPhrase());
         jLabel14.setText(h.getNomP());
+        jLabel21.setText(h.getHeure());
     }
+     
+     public void correspondance(){
+         
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.

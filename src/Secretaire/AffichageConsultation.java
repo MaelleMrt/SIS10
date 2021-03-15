@@ -31,6 +31,7 @@ public class AffichageConsultation extends javax.swing.JFrame {
         jLabel17.setText(c.getDate());
         jLabel16.setText(c.getMotif());
         jLabel11.setText(c.getService());
+        jLabel21.setText(c.getHeure());
     }
 
     /**

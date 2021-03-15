@@ -5,6 +5,12 @@
  */
 package Secretaire;
 
+import Connexion.ExempleJdbc;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JFrame;
 
 /**
@@ -15,13 +21,14 @@ public class MessageValidation extends javax.swing.JFrame {
 
     JFrame accueil;
     JFrame RDV;
-    
+
     public MessageValidation(JFrame accueil, JFrame RDV) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.RDV = RDV;
         this.accueil = accueil;
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

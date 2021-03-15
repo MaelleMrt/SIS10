@@ -20,12 +20,15 @@ public class Hospitalisations {
     private int id;
     private String motif;
     private String date;
+    private int rdv;
+    private Localisation loca;
 
-    public Hospitalisations(String medecin, int id, String motif, String date) {
+    public Hospitalisations(String medecin, int id, String motif, String date, int rdv) {
         this.medecin = medecin;
         this.id = id;
         this.motif = motif;
         this.date = date;
+        this.rdv = rdv;
     }
 
     /**
@@ -99,11 +102,12 @@ public class Hospitalisations {
 
         return service;
     }
-    public String getLocalisation() {
+
+    public String getLocalisationChiffre() {
         String loc = new String();
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT Localisation FROM RendezVous WHERE Médecin ='" + medecin + "' AND Date ='" + date + "' AND idPatient ='" + id + "' AND Motif ='" + motif + "'");
+            ResultSet rs = s.executeQuery("SELECT Localisation FROM RendezVous WHERE idRdv ='" + rdv + "'");
             while (rs.next()) {
                 loc = rs.getString("Localisation");
             }
@@ -114,7 +118,8 @@ public class Hospitalisations {
 
         return loc;
     }
-    public String getNomP(){
+
+    public String getNomP() {
         String nom = new String();
         try {
             Statement s = ExempleJdbc.connexion();
@@ -129,6 +134,41 @@ public class Hospitalisations {
         }
         return nom;
     }
+
+    public String getHeure() {
+        // rajouter un idRDV
+        String heure = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE idRdv ='" + rdv + "'");
+            while (rs.next()) {
+                heure = rs.getString("heure");
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return heure;
+    }
+
+    public String getLocalisationPhrase() {
+        String loc = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT Localisation FROM RendezVous WHERE idRdv ='" + rdv + "'");
+            while (rs.next()) {
+                loc = rs.getString("Localisation");
+                loca = new Localisation(loc);
+                loc = loca.getLocalisation();
+                
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return loc;
+    }
+
 }
-
-
