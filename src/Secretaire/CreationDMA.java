@@ -28,14 +28,16 @@ public class CreationDMA extends javax.swing.JFrame {
     String nSecu;
     String date;
     char[] dateNaissance;
+    String service;
 
-    public CreationDMA(JFrame precedent, String nom, String prenom) {
+    public CreationDMA(JFrame precedent, String nom, String prenom, String service) {
         this.accueil = precedent;
         initComponents();
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         affichageNom(nom, prenom);
+        this.service = service;
 
     }
 
@@ -151,6 +153,7 @@ public class CreationDMA extends javax.swing.JFrame {
         String nomM = jTextField11.getText();
         String sexe = genderBDD();
         patient=new PatientHop(nomU,prenom,date);
+        
         // On enregistre le nouveau patient dans BDD
         try {
             Statement s = ExempleJdbc.connexion();
@@ -161,6 +164,14 @@ public class CreationDMA extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        // On associe le patient au service (pas encore d'IPP)
+         try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("INSERT INTO PatientService (id,service) VALUES ('0','')");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
         return patient;
     }
 

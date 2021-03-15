@@ -56,9 +56,9 @@ public class ListeRDV extends javax.swing.JFrame {
     private void Tableau() { // affichage des médecins (nom et prénom)
         try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, patient, Motif, Date, Catégorie, Localisation FROM RendezVous WHERE Médecin ='" + prenomM + " " + nomM + "'");
+            ResultSet rs = s.executeQuery("SELECT idPatient, patient, Motif, Date, Catégorie, Localisation, Heure FROM RendezVous WHERE Médecin ='" + prenomM + " " + nomM + "'");
             while (rs.next()) {
-                RendezVous rdv = new RendezVous(rs.getString("Date"), rs.getString("patient"), rs.getString("Localisation"), rs.getString("Motif"), rs.getString("Catégorie"), prenomM + " " + nomM, rs.getInt("idPatient"));
+                RendezVous rdv = new RendezVous(rs.getString("Date"), rs.getString("patient"), rs.getString("Localisation"), rs.getString("Motif"), rs.getString("Catégorie"), prenomM + " " + nomM, rs.getInt("idPatient"), rs.getString("Heure"));
                 listRDV.add(rdv);
             }
         } catch (SQLException e) {
@@ -321,12 +321,9 @@ public class ListeRDV extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int i = 0;
-
-        // requête SQL pour trouver les infos manquantes
         while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {
             i++;
         }
-
         if (i < jTable1.getRowCount()) {
             String id = listRDV.get(i).getId();
             String categorie = listRDV.get(i).getCategorie();
@@ -335,7 +332,8 @@ public class ListeRDV extends javax.swing.JFrame {
             String patient = String.valueOf(jTable1.getValueAt(i, 0));
             String motif = String.valueOf(jTable1.getValueAt(i, 1));
             String date = String.valueOf(jTable1.getValueAt(i, 2));
-            RDV rdv = new RDV(this, patient, id, motif, date, categorie, localisation, medecin, prenomS, nomS);
+            String heure = listRDV.get(i).getHeure();
+            RDV rdv = new RDV(this, patient, id, motif, date, categorie, localisation, medecin, prenomS, nomS, heure);
             rdv.setVisible(true);
             this.setVisible(false);
         }

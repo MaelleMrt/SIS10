@@ -17,8 +17,9 @@ public class RendezVous {
     private String categorie;
     private String médecin;
     private int id;
+    private String heure;
     
-    public RendezVous(String date, String patient, String localisation, String motif, String categorie, String médecin, int id){
+    public RendezVous(String date, String patient, String localisation, String motif, String categorie, String médecin, int id, String heure){
         this.date = date;
         this.patient = patient;
         this.localisation = localisation;
@@ -26,6 +27,7 @@ public class RendezVous {
         this.categorie = categorie;
         this.médecin = médecin;
         this.id = id;
+        this.heure = heure;
     }   
 
     public String getDate() {
@@ -82,6 +84,20 @@ public class RendezVous {
 
     public void setMédecin(String médecin) {
         this.médecin = médecin;
+    }
+
+    /**
+     * @return the heure
+     */
+    public String getHeure() {
+        return heure;
+    }
+
+    /**
+     * @param heure the heure to set
+     */
+    public void setHeure(String heure) {
+        this.heure = heure;
     }
     
     

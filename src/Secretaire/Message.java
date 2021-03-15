@@ -61,7 +61,7 @@ public class Message extends javax.swing.JFrame {
         Random rand = new Random();
         int nombreAleatoire = rand.nextInt(max - min + 1) + min;
 
-        try {  // On recupere les id + secu des patients existants
+        try {  // On recupere les id des patients existants
             Statement s = ExempleJdbc.connexion();
             ResultSet rs = s.executeQuery("SELECT id FROM Patient");
             while (rs.next()) {
@@ -87,6 +87,12 @@ public class Message extends javax.swing.JFrame {
         try {
             Statement s = ExempleJdbc.connexion();
             s.executeUpdate("UPDATE Patient SET id ='" + ID + "' WHERE secu ='" + nSecu + "'");
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
+         try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("UPDATE PatientService SET id ='" + ID + "' WHERE id ='0'");
         }catch (SQLException e) {
             System.out.println(e);
         }

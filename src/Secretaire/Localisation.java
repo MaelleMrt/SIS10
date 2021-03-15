@@ -31,6 +31,9 @@ public class Localisation {
         this.service = service;
         idLocalisation = id;
     }
+    public Localisation(String id){
+        idLocalisation = id;
+    }
 
     /**
      * @return the patient
@@ -126,10 +129,21 @@ public class Localisation {
             }
         } catch (SQLException e) {
             System.out.println(e);
+            
         }
         if(statut.equals("Occupée")){
             result = true;
         }
+       
         return result;
+    }
+    
+    public String getLocalisation(){
+        String localisation = new String();
+        String s = idLocalisation.substring(0,1);
+        String c = idLocalisation.substring(1,2);
+        String l = idLocalisation.substring(2);
+        localisation = "Le patient se trouve dans le service " + s + ", dans la chambre " + c + ", dans le lit " + l;
+        return localisation;
     }
 }
