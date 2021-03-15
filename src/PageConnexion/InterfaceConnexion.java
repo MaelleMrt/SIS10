@@ -9,7 +9,7 @@ import CIC.CicAccueil;
 import Connexion.ExempleJdbc;
 import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
-import Médecinanesthésiste.MedecinanésthésisteAcceuil;
+import Médecinanesthésiste.MedecinAnesthesisteAcceuil;
 import Secretaire.Secretaire;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -345,7 +345,7 @@ private String Service( ){
                     break;
                 case "médecin" :
                     if("Anésthésie".equals(Service())){
-                        MedecinanésthésisteAcceuil m = new MedecinanésthésisteAcceuil(Login);
+                        MedecinAnesthesisteAcceuil m = new MedecinAnesthesisteAcceuil(Login);
                     }
                     else{
                         MedecinAcceuil m = new MedecinAcceuil(Login);

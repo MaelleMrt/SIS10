@@ -16,13 +16,13 @@ import javax.swing.JFrame;
  *
  * @author Maelle
  */
-public class MedecinanésthésisteResultat extends javax.swing.JFrame {
+public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
     public PatientHop patient;
     public Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public MedecinanésthésisteResultat(PatientHop p,Medecin med) {
+    public MedecinAnesthesisteResultat(PatientHop p,Medecin med) {
         patient =p;
         medecin=med;
         initComponents();
@@ -204,14 +204,14 @@ public class MedecinanésthésisteResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Acceuil ramene a l'interface acceuil
         this.dispose();
-        new MedecinanésthésisteAcceuil(medecin.getLogin());
+        new MedecinAnesthesisteAcceuil(medecin.getLogin());
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface Patient
         this.dispose();
-        new MedecinanésthésistePatient(patient,medecin);
+        new MedecinAnesthesistePatient(patient,medecin);
 
         
         

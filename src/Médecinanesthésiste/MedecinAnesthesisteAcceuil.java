@@ -24,16 +24,16 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Maelle
+ * @author amira
  */
-public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
+public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     String login;
     TableauPatient listPatient;
     Medecin medecin;
-    /**
-     * Creates new form SecretaireAcceuil
-     */
-    public MedecinanésthésisteAcceuil (String log) {
+    /*
+    Création d'une classe MedecinanésthésisteAcceuil 
+    */
+    public MedecinAnesthesisteAcceuil (String log) {
         login=log;
         rechercheMedecin();
         listPatient= new TableauPatient(login);
@@ -171,7 +171,7 @@ public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
         );
 
         jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
-        jTextField1.setText("Recherche Patient");
+        jTextField1.setText("Recherche Patient.PatientHop");
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 afficherList();
@@ -187,7 +187,7 @@ public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
                 DefaultTableModel ModeleTest2 = new DefaultTableModel();
                 String texte=jTextField1.getText();
                 int i=0;
-                for (PatientHop p : listPatient.getListPatient()) {
+                for (Patient.PatientHop p : listPatient.getListPatient()) {
                     if(p.getNomUsuel().contains(texte)){
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());
@@ -250,7 +250,7 @@ public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
                                         try{
                                         PatientHop p=new PatientHop(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString());
                                         System.out.println(p.toString());
-                                        new MedecinanésthésistePatient(p,medecin);
+                                        new MedecinAnesthesistePatient(p,medecin);
                                         this.dispose();
                                         }catch(Exception e2){
                                         }
@@ -294,14 +294,22 @@ public class MedecinanésthésisteAcceuil extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MedecinanésthésisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAnesthesisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MedecinanésthésisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAnesthesisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MedecinanésthésisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAnesthesisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MedecinanésthésisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MedecinAnesthesisteAcceuil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
