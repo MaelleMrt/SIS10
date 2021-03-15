@@ -604,7 +604,8 @@ public class CreationDMA extends javax.swing.JFrame {
             PatientHop patient=enregistrer();
             System.out.println("sexe patient :"+patient.getSexe());
             this.setVisible(false);
-            new Message(this.accueil,nSecu,this.accueil,patient);
+            Message message = new Message(this.accueil,nSecu,this.accueil,patient, service);
+            message.setVisible(true);
             
 
         }

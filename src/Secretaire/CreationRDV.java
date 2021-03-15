@@ -133,7 +133,6 @@ public class CreationRDV extends javax.swing.JFrame {
         String type = jComboBox5.getSelectedItem().toString();
         String numService = associerServiceNum();
         if (type.equals("Simple")) {
-            System.out.println("Simple");
             jCheckBox1.setVisible(false);
             jCheckBox2.setVisible(false);
             for (int i = 0; i < 5; i++) {
@@ -160,7 +159,6 @@ public class CreationRDV extends javax.swing.JFrame {
         if (type.equals("Double")) {
             jCheckBox1.setVisible(true);
             jCheckBox2.setVisible(true);
-            System.out.println("Double");
             for (int i = 5; i < 10; i++) {
                 jComboBox6.addItem(numService + "0" + i);
             }
@@ -168,18 +166,18 @@ public class CreationRDV extends javax.swing.JFrame {
             ArrayList listLitD = new ArrayList();
             try {
                 Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre < 5 GROUP BY lit HAVING COUNT(*) = 2");
+                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre > 4 GROUP BY chambre HAVING COUNT(chambre) = 2");
                 while (rs.next()) {
                     String lit = rs.getString("lit");
                     listLitD.add(lit);
-                    System.out.println("u" + lit);
                 }
 
             } catch (SQLException e) {
                 System.out.println(e);
             }
             for (Object l : listLitD) {
-                jComboBox6.removeItem(l);
+                String lit = l.toString();
+                jComboBox6.removeItem(lit.substring(0,3));
             }
         }
     }

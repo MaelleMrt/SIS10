@@ -55,6 +55,7 @@ public class RDVpatient extends javax.swing.JFrame {
         jLabel16.setVisible(false);
         jLabel17.setVisible(false);
         jLabel18.setVisible(false);
+        jLabel20.setVisible(false);
         jLabel8.setText(patient);
         jLabel14.setText(id);
         jLabel2.setText(secretaire);
@@ -194,18 +195,18 @@ public class RDVpatient extends javax.swing.JFrame {
             ArrayList listLitD = new ArrayList();
             try {
                 Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre < 5 GROUP BY lit HAVING COUNT(*) = 2");
+                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre > 4 GROUP BY chambre HAVING COUNT(chambre) = 2");
                 while (rs.next()) {
                     String lit = rs.getString("lit");
                     listLitD.add(lit);
-                    System.out.println("u" + lit);
                 }
 
             } catch (SQLException e) {
                 System.out.println(e);
             }
             for (Object l : listLitD) {
-                jComboBox6.removeItem(l);
+                String lit = l.toString();
+                jComboBox6.removeItem(lit.substring(0,3));
             }
         }
 
@@ -563,12 +564,7 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel17)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel20))
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -591,7 +587,11 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox2)
-                                .addGap(187, 187, 187)
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel20)
+                                .addGap(38, 38, 38)
                                 .addComponent(jButton3)))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
@@ -727,8 +727,6 @@ public class RDVpatient extends javax.swing.JFrame {
             jLabel11.setVisible(true);
             jLabel15.setVisible(true);
             jLabel16.setVisible(true);
-
-            jLabel17.setVisible(true);
             type2 = "Hospitalisation";
 
         } else {
@@ -739,8 +737,8 @@ public class RDVpatient extends javax.swing.JFrame {
             jLabel11.setVisible(false);
             jLabel15.setVisible(false);
             jLabel16.setVisible(false);
-
             jLabel17.setVisible(false);
+            jLabel20.setVisible(false);
             localisation = "";
             type2 = "Consultation";
 
@@ -798,7 +796,9 @@ public class RDVpatient extends javax.swing.JFrame {
         l = new Localisation(id, chambre, lit, service, lo);
         localisation = l.getIdLocalisation();
         if (type2.equals("Hospitalisation")) {
-            verificationChambreDouble();
+            if (jComboBox5.getSelectedItem().toString().equals("Double")){
+                verificationChambreDouble();
+            }           
         }
         // vérification disponiblilité
         if (l.dejaOccupee()) {
