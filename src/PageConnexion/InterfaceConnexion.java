@@ -135,7 +135,7 @@ private String Metier(){
             ResultSet rs = s.executeQuery("SELECT type FROM Utilisateur WHERE login='" + Login +"'");
             while (rs.next()) {
                 metier = rs.getString("type");
-                System.out.println(metier);
+                
                 
             }
         } catch (SQLException e) {

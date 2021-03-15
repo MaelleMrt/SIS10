@@ -19,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Maelle
  */
 public class TableauPrescriptions extends AbstractTableModel{
-     private ArrayList<Prescription> listPrescription= new ArrayList<Prescription>();
+   private ArrayList<Prescription> listPrescription= new ArrayList<Prescription>();
      
     private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
     
