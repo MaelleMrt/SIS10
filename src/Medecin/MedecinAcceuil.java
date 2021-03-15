@@ -68,8 +68,8 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        TableauPatient modele = listPatient;
-        jTable2 = new javax.swing.JTable(modele);
+        TableauRdvMedecin modeleRdv = new TableauRdvMedecin(this.medecin);
+        jTable2 = new javax.swing.JTable(modeleRdv);
         jComboBox2 = new javax.swing.JComboBox();
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
@@ -183,26 +183,27 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(81, 81, 81)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(49, 49, 49))
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(341, 341, 341))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel6)
+                .addGap(341, 341, 341))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,7 +229,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         );
 
         jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
-        jTextField1.setText("Recherche Patient.PatientHop");
+        jTextField1.setText("Recherche Patient");
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 afficherList();
@@ -252,49 +253,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                         v.add(p.getNaissance());
                         ModeleTest2.setColumnIdentifiers(new String[]{"Nom","Prenom","Date de Naissance"});
                         ModeleTest2.insertRow(i,v) ;
-                        System.out.println("ajout vecteur "+p.getNomUsuel()+" "+p.getNaissance());
-                        i++;
-                    }
-                }
-                jTable1.setModel(ModeleTest2);
-            }
-        });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        /*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
-            }
-        });*/
-        jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
-        jTextField1.setText("Recherche Patient.PatientHop");
-        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
-                afficherList();
-            }
-            public void removeUpdate(DocumentEvent e) {
-                afficherList();
-            }
-            public void insertUpdate(DocumentEvent e) {
-                afficherList();
-            }
 
-            public void afficherList() {
-                DefaultTableModel ModeleTest2 = new DefaultTableModel();
-                String texte=jTextField1.getText();
-                int i=0;
-                for (Patient.PatientHop p : listPatient.getListPatient()) {
-                    if(p.getNomUsuel().contains(texte)){
-                        Vector<String> v=new Vector<String>();
-                        v.add(p.getNomUsuel());
-                        v.add(p.getPrenom());
-                        v.add(p.getNaissance());
-                        ModeleTest2.setColumnIdentifiers(new String[]{"Nom","Prenom","Date de Naissance"});
-                        ModeleTest2.insertRow(i,v) ;
-                        System.out.println("ajout vecteur "+p.getNomUsuel()+" "+p.getNaissance());
                         i++;
                     }
                 }
@@ -387,7 +346,20 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
-        // TODO add your handling code here:
+         if(evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3){ 
+            int indRow =jTable2.rowAtPoint(evt.getPoint()); 
+            try{
+                RdvMedecin rdvMed=new RdvMedecin(jTable2.getValueAt(indRow, 0).toString(),jTable2.getValueAt(indRow, 1).toString(),jTable2.getValueAt(indRow, 2).toString(),jTable2.getValueAt(indRow, 3).toString(),jTable2.getValueAt(indRow, 4).toString(),jTable2.getValueAt(indRow, 5).toString());
+                PatientHop patient=rdvMed.getPatient();
+                System.out.println("patient =" +patient.getNomUsuel());
+                System.out.println("medecin = "+this.medecin.nom);
+                System.out.println("rdv ="+ rdvMed.getMotif());
+                new ContenuRdv(patient,this.medecin,rdvMed);
+                this.dispose();
+            }catch(Exception e2){
+            }
+
+    }
     }//GEN-LAST:event_jTable2MousePressed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -402,7 +374,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
             try{
                 ResultSet rs= s.executeQuery("SELECT nom, prenom, nomS FROM Médecin WHERE login='"+login+"'");
                 while(rs.next()){
-                   medecin=new Medecin(rs.getString("nom"),rs.getString("prenom"),rs.getString("nomS"),login);
+                   this.medecin=new Medecin(rs.getString("nom"),rs.getString("prenom"),rs.getString("nomS"),login);
                 }
                 
             } catch(SQLException e){

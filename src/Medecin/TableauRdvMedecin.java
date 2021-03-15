@@ -5,10 +5,9 @@
  */
 package Medecin;
 
-import Médecinanesthésiste.*;
+import Médecinanesthésiste.Rdv;
 import Connexion.ExempleJdbc;
-import Medecin.Medecin;
-import Patient.PatientHop;
+import Secretaire.RDV;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,32 +19,49 @@ import javax.swing.table.AbstractTableModel;
  * @author amira
  */
 class TableauRdvMedecin extends AbstractTableModel {
-     private ArrayList<Rdv> listRdv= new ArrayList<Rdv>();
-     private PatientHop patient;
+     private ArrayList<RdvMedecin> listRdv= new ArrayList<RdvMedecin>();
+
      private Medecin medecin;
      
-    private final String[] entetes = {"Motif ", "Date", "Heure"};
+    private final String[] entetes = {"Motif ", "Date", "Heure","Nom","Prenom","Date de Naissance",};
     
-    public TableauRdvMedecin(PatientHop p, Medecin m) {
-        patient=p;
+    public TableauRdvMedecin(Medecin m) {
+ 
         medecin=m;
         String motif;
         String date;
         String heure;
-       
+        String nomPrenomPat;
+        String nomPrenomMed= this.medecin.getPrenom()+" "+this.medecin.getNom();
+        int idPat;
+        String prenom=null;
+        String nom=null;
+        String dateN=null;
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rdv= s.executeQuery("SELECT Motif, Date, Heure  FROM RendezVous WHERE idPatient ='"+ patient.getId()+"'" );
+                ResultSet rdv= s.executeQuery("SELECT Motif, Date, Heure, Patient, idPatient FROM RendezVous WHERE Médecin ='"+nomPrenomMed+"'" );
                 while(rdv.next()){
+                    idPat=rdv.getInt("idPatient");
                     date= rdv.getString("Date");
                     motif= rdv.getString("Motif");
                     System.out.println(motif);
                     heure =rdv.getString("Heure");
-                    Rdv rd = new Rdv(date,motif,heure);
-                    listRdv.add(rd);
-                   
-                
+                    try{
+                        ResultSet id= s.executeQuery("SELECT nomusuel, prenom, datedenaissance from Patient WHERE id ='"+idPat+"'");
+                        while(id.next()){
+                            prenom=id.getString("prenom");
+                            nom =id.getString("nomusuel");
+                            dateN =id.getString("datedenaissance");
+                            RdvMedecin rd = new RdvMedecin(motif,date,heure,nom,prenom,dateN);
+                            System.out.println(motif+date+heure+nom+prenom+dateN);
+                            listRdv.add(rd);
+                            System.out.println("ajout rdv");
+                        }
+                    } catch(SQLException e){
+                    System.out.println(e);
+                    }
+
                 }
                 
             } catch(SQLException e){
@@ -79,6 +95,12 @@ class TableauRdvMedecin extends AbstractTableModel {
                 return listRdv.get(rowIndex).getDate();
             case 2: 
                 return listRdv.get(rowIndex).getHeure();
+            case 3:
+                return listRdv.get(rowIndex).getNom();
+            case 4:
+                return listRdv.get(rowIndex).getPrenom();
+            case 5:
+                return listRdv.get(rowIndex).getDataNaissance();
            
             default:
                 return null; //Ne devrait jamais arriver
@@ -88,7 +110,7 @@ class TableauRdvMedecin extends AbstractTableModel {
 
     
     
-    public ArrayList<Rdv> getListRdv(){
+    public ArrayList<RdvMedecin> getListRdv(){
         return listRdv;
     }
     

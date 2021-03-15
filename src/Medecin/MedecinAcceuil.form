@@ -65,33 +65,33 @@
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jComboBox1" min="-2" pref="137" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane1" alignment="0" min="-2" pref="373" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jTextField1" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox1" min="-2" pref="137" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jScrollPane1" min="-2" pref="335" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jTextField2" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jComboBox2" min="-2" pref="137" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jScrollPane2" alignment="1" min="-2" pref="335" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jComboBox2" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="341" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" pref="472" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="341" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -149,7 +149,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextField1.setFont(new java.awt.Font(&quot;Bell MT&quot;, 0, 13)); // NOI18N&#xa;        jTextField1.setText(&quot;Recherche Patient.PatientHop&quot;);&#xa;        jTextField1.getDocument().addDocumentListener(new DocumentListener() {&#xa;            public void changedUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void removeUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void insertUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;&#xa;            public void afficherList() {&#xa;                DefaultTableModel ModeleTest2 = new DefaultTableModel();&#xa;                String texte=jTextField1.getText();&#xa;                int i=0;&#xa;                for (Patient.PatientHop p : listPatient.getListPatient()) {&#xa;                    if(p.getNomUsuel().contains(texte)){&#xa;                        Vector&lt;String&gt; v=new Vector&lt;String&gt;();&#xa;                        v.add(p.getNomUsuel());&#xa;                        v.add(p.getPrenom());&#xa;                        v.add(p.getNaissance());&#xa;                        ModeleTest2.setColumnIdentifiers(new String[]{&quot;Nom&quot;,&quot;Prenom&quot;,&quot;Date de Naissance&quot;});&#xa;                        ModeleTest2.insertRow(i,v) ;&#xa;                        System.out.println(&quot;ajout vecteur &quot;+p.getNomUsuel()+&quot; &quot;+p.getNaissance());&#xa;                        i++;&#xa;                    }&#xa;                }&#xa;                jTable1.setModel(ModeleTest2);&#xa;            }&#xa;        });&#xa;jTextField1.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                jTextField1ActionPerformed(evt);&#xa;            }&#xa;        });&#xa;/*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;            public void keyTyped(java.awt.event.KeyEvent evt) {&#xa;                jTextField1KeyTyped(evt);&#xa;            }&#xa;        });*/"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextField1.setFont(new java.awt.Font(&quot;Bell MT&quot;, 0, 13)); // NOI18N&#xa;        jTextField1.setText(&quot;Recherche Patient&quot;);&#xa;        jTextField1.getDocument().addDocumentListener(new DocumentListener() {&#xa;            public void changedUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void removeUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void insertUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;&#xa;            public void afficherList() {&#xa;                DefaultTableModel ModeleTest2 = new DefaultTableModel();&#xa;                String texte=jTextField1.getText();&#xa;                int i=0;&#xa;                for (Patient.PatientHop p : listPatient.getListPatient()) {&#xa;                    if(p.getNomUsuel().contains(texte)){&#xa;                        Vector&lt;String&gt; v=new Vector&lt;String&gt;();&#xa;                        v.add(p.getNomUsuel());&#xa;                        v.add(p.getPrenom());&#xa;                        v.add(p.getNaissance());&#xa;                        ModeleTest2.setColumnIdentifiers(new String[]{&quot;Nom&quot;,&quot;Prenom&quot;,&quot;Date de Naissance&quot;});&#xa;                        ModeleTest2.insertRow(i,v) ;&#xa;&#xa;                        i++;&#xa;                    }&#xa;                }&#xa;                jTable1.setModel(ModeleTest2);&#xa;            }&#xa;        });&#xa;jTextField1.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                jTextField1ActionPerformed(evt);&#xa;            }&#xa;        });&#xa;/*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;            public void keyTyped(java.awt.event.KeyEvent evt) {&#xa;                jTextField1KeyTyped(evt);&#xa;            }&#xa;        });*/"/>
           </AuxValues>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -277,9 +277,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextField1.setFont(new java.awt.Font(&quot;Bell MT&quot;, 0, 13)); // NOI18N&#xa;        jTextField1.setText(&quot;Recherche Patient.PatientHop&quot;);&#xa;        jTextField1.getDocument().addDocumentListener(new DocumentListener() {&#xa;            public void changedUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void removeUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;            public void insertUpdate(DocumentEvent e) {&#xa;                afficherList();&#xa;            }&#xa;&#xa;            public void afficherList() {&#xa;                DefaultTableModel ModeleTest2 = new DefaultTableModel();&#xa;                String texte=jTextField1.getText();&#xa;                int i=0;&#xa;                for (Patient.PatientHop p : listPatient.getListPatient()) {&#xa;                    if(p.getNomUsuel().contains(texte)){&#xa;                        Vector&lt;String&gt; v=new Vector&lt;String&gt;();&#xa;                        v.add(p.getNomUsuel());&#xa;                        v.add(p.getPrenom());&#xa;                        v.add(p.getNaissance());&#xa;                        ModeleTest2.setColumnIdentifiers(new String[]{&quot;Nom&quot;,&quot;Prenom&quot;,&quot;Date de Naissance&quot;});&#xa;                        ModeleTest2.insertRow(i,v) ;&#xa;                        System.out.println(&quot;ajout vecteur &quot;+p.getNomUsuel()+&quot; &quot;+p.getNaissance());&#xa;                        i++;&#xa;                    }&#xa;                }&#xa;                jTable1.setModel(ModeleTest2);&#xa;            }&#xa;        });&#xa;jTextField1.addActionListener(new java.awt.event.ActionListener() {&#xa;            public void actionPerformed(java.awt.event.ActionEvent evt) {&#xa;                jTextField1ActionPerformed(evt);&#xa;            }&#xa;        });&#xa;/*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {&#xa;            public void keyTyped(java.awt.event.KeyEvent evt) {&#xa;                jTextField1KeyTyped(evt);&#xa;            }&#xa;        });*/"/>
-          </AuxValues>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
@@ -298,8 +295,8 @@
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable2MousePressed"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modele)"/>
-                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauPatient modele = listPatient;"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable(modeleRdv)"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="TableauRdvMedecin modeleRdv = new TableauRdvMedecin(this.medecin);"/>
               </AuxValues>
             </Component>
           </SubComponents>
