@@ -5,8 +5,8 @@
  */
 package Medecin;
 
+import MedecinAnesthesiste.AlerteCOVID;
 import MedecinAnesthesiste.MedecinAnesthesisteAcceuil;
-import MedecinAnesthesiste.MedecinAnesthesistePatient;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 
@@ -244,7 +244,7 @@ public class ContenuRdv extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
         if(this.medecin.getService().equals("Anésthésie")){
-            new MedecinAnesthesistePatient(this.patient,this.medecin);
+            new AlerteCOVID(this.patient,this.medecin,this.rdvMed);
         }else{
             new AffichageCR(patient, medecin,rdvMed);
         }

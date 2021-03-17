@@ -5,12 +5,12 @@
  */
 package MedecinAnesthesiste;
 
-import Infirmieres.*;
 import Medecin.*;
 import PDF.QuestionnaireCovidPDF;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,11 +21,14 @@ public class AlerteCOVID extends javax.swing.JFrame {
     
     private PatientHop patient;
     private Medecin medecin;
+    private RdvMedecin rdvMed;
+
     
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AlerteCOVID(PatientHop p,Medecin medecin) {
+    public AlerteCOVID(PatientHop p,Medecin medecin,RdvMedecin rdv) {
+        this.rdvMed=rdv;
         this.patient=p;
         this.medecin = medecin;
         initComponents();
@@ -377,7 +380,7 @@ public class AlerteCOVID extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        new Questionnaire1(patient,medecin);
+        new Questionnaire1(this.patient, this.medecin,this.rdvMed);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
@@ -391,7 +394,7 @@ public class AlerteCOVID extends javax.swing.JFrame {
         }
         else{
             this.setVisible(false);
-            new Questionnaire1(patient,medecin);
+            new Questionnaire1(this.patient,this.medecin,this.rdvMed);
             ArrayList<Boolean> l = new ArrayList<>();
             if(oui1.isSelected()){
                 l.add(true);
@@ -476,9 +479,8 @@ public class AlerteCOVID extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PatientHop p = new PatientHop("Oster","Oster","Clara","1999-05-22",123456789);
-                Medecin m = new Medecin("Martinet","Maelle","Dermatologie","maelle_martinet");
-                new AlerteCOVID(p,m);
+   
+
                 
             }
         });

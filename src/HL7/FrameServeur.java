@@ -331,6 +331,8 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // quand on valide le message on relance une pile d'execution
+        // dans l'attente d'un nouveau message
         this.setVisible(false);
         c.fermer();
         this.thread.interrupt();
@@ -423,9 +425,6 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
             }
         }
 
-        // if (patient.getDateDicharge() != null) {
-        // this.labelFin9.setText("Admi le: " + patient.get());
-        //}
 
         if (patient.getDateDicharge() != null) {
             System.out.println("patient.getDateDicharge() != null");

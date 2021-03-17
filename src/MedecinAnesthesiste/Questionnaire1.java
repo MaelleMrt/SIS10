@@ -5,11 +5,15 @@
  */
 package MedecinAnesthesiste;
 
+import Connexion.ExempleJdbc;
 import Infirmieres.*;
 import Medecin.*;
 import PDF.QuestionnairePDF;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -19,10 +23,12 @@ import java.util.ArrayList;
 public class Questionnaire1 extends javax.swing.JFrame {
     private PatientHop patient;
     private Medecin medecin;
+    private RdvMedecin rdvMed;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public Questionnaire1(PatientHop p,Medecin med) {
+    public Questionnaire1(PatientHop p,Medecin med,RdvMedecin rdv) {
+        this.rdvMed=rdv;
         this.medecin=med;
         this.patient=p;
         initComponents();
@@ -82,7 +88,6 @@ public class Questionnaire1 extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextFieldAllergie = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
         jCheckBoxOui1 = new javax.swing.JRadioButton();
         jCheckBoxNon1 = new javax.swing.JRadioButton();
         jCheckBoxOui2 = new javax.swing.JRadioButton();
@@ -217,14 +222,6 @@ public class Questionnaire1 extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel15.setText("Ouverture de bouche:");
 
-        jButton3.setBackground(new java.awt.Color(204, 0, 0));
-        jButton3.setText("Alerte Corona Virus");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
         jCheckBoxOui1.setText("Oui");
 
         jCheckBoxNon1.setText("Non");
@@ -274,7 +271,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel16)
-                                    .addGap(18, 18, 18)
+                                    .addGap(24, 24, 24)
                                     .addComponent(jCheckBoxOui4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jCheckBoxNon4))
@@ -336,10 +333,6 @@ public class Questionnaire1 extends javax.swing.JFrame {
                                         .addComponent(jTextFieldAllergie, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 864, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(79, 79, 79))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,9 +385,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
                 .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(57, 57, 57)
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -421,7 +412,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        new MedecinanésthésistePatient(this.patient,this.medecin);
+        new MedecinAnesthesistePatient(this.patient,this.medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
@@ -445,6 +436,7 @@ public class Questionnaire1 extends javax.swing.JFrame {
             jLabelNonRempli.setVisible(true);
             
         }else{
+            SupprimerRdv();
             ArrayList<String> l = new ArrayList<>();
             l.add(jTextFieldTaille.getText());
             l.add(jTextFieldPoids.getText());
@@ -491,11 +483,6 @@ public class Questionnaire1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldAllergieActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new AlerteCOVID(patient,medecin);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jCheckBoxOui2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOui2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxOui2ActionPerformed
@@ -503,7 +490,23 @@ public class Questionnaire1 extends javax.swing.JFrame {
     private void jCheckBoxOui4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOui4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxOui4ActionPerformed
+    public void SupprimerRdv(){
+         try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("DELETE FROM RendezVous WHERE Motif='"+rdvMed.getMotif()+"' AND Date ='"+rdvMed.getDate()+"' AND Heure='"+rdvMed.getHeure()+"' AND idPatient ='"+rdvMed.getPatient().getId()+"'");
+          
 
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -551,7 +554,6 @@ public class Questionnaire1 extends javax.swing.JFrame {
     private javax.swing.JButton deconnexion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JRadioButton jCheckBoxNon1;
     private javax.swing.JRadioButton jCheckBoxNon2;
     private javax.swing.JRadioButton jCheckBoxNon3;
