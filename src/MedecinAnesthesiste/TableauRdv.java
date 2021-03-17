@@ -22,6 +22,7 @@ public class TableauRdv extends AbstractTableModel {
      private ArrayList<Rdv> listRdv= new ArrayList<Rdv>();
      private PatientHop patient;
      private Medecin medecin;
+    
      
     private final String[] entetes = {"Motif ", "Date", "Heure"};
     
@@ -31,22 +32,24 @@ public class TableauRdv extends AbstractTableModel {
         String motif;
         String date;
         String heure;
+        
        
         try{
         Statement s= ExempleJdbc.connexion();
             try{
-                ResultSet rdv= s.executeQuery("SELECT Motif, Date, Heure  FROM RendezVous WHERE idPatient ='"+ patient.getId()+"'" );
-                while(rdv.next()){
-                    motif= rdv.getString("Motif");
+                ResultSet rs= s.executeQuery("SELECT Motif, Date, Heure  FROM RendezVous WHERE idPatient ='"+ patient.getId()+"'AND Médecin ='" +medecin.getPrenom()+" "+medecin.getNom()+"'");
+                while(rs.next()){
+                    motif= rs.getString("Motif");
                     System.out.println(motif);
-                    date= rdv.getString("Date");
-                    heure =rdv.getString("Heure");
-                    Rdv rd = new Rdv(motif,date,heure);
-                    listRdv.add(rd);
-                   
-                
-                }
-                
+                    date= rs.getString("Date");
+                    heure =rs.getString("Heure");
+                    Rdv rdv =new Rdv(motif,date,heure);
+                    listRdv.add(rdv);
+                           }
+                               
+                           
+
+             
             } catch(SQLException e){
                     System.out.println(e);
             }

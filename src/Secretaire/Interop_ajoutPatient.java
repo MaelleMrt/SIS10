@@ -6,8 +6,13 @@
 package Secretaire;
 
 
+import Connexion.ExempleJdbc;
 import HL7.FrameClientAdmi;
+import Medecin.Medecin;
 import Patient.PatientHop;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 
 /**
@@ -17,15 +22,35 @@ import javax.swing.JFrame;
 public class Interop_ajoutPatient extends javax.swing.JFrame {
     PatientHop patient;
     JFrame accueil;
+    String service;
+    String nom;
+    String prenom;
     /**
      * Creates new form Interop_ajoutPatient
      */
-    public Interop_ajoutPatient(PatientHop pat, JFrame acc) {
+    public Interop_ajoutPatient(PatientHop pat, JFrame acc, String service) {
         patient=pat;
         accueil=acc;
+        this.service = service;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+    }
+    
+    private void recupSecretaire(){
+        String nom = new String();
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT nom, prenom FROM Secrétaire WHERE nomS ='" + service + "'");
+            while (rs.next()) {
+               nom = rs.getString("nom");
+               prenom = rs.getString("prenom");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
     }
 
     /**
@@ -108,7 +133,7 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        this.accueil.setVisible(true);
+        Secretaire s = new Secretaire(nom, prenom, service);
         this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
