@@ -5,7 +5,7 @@
  */
 package Medecin;
 
-import Médecinanesthésiste.Resultatexamen;
+import MedecinAnesthesiste.Resultatexamen;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 

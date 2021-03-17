@@ -5,7 +5,7 @@
  */
 package Medecin;
 
-import Médecinanesthésiste.Rdv;
+import MedecinAnesthesiste.Rdv;
 import Connexion.ExempleJdbc;
 import Secretaire.RDV;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author amira
  */
-class TableauRdvMedecin extends AbstractTableModel {
+public class TableauRdvMedecin extends AbstractTableModel {
      private ArrayList<RdvMedecin> listRdv= new ArrayList<RdvMedecin>();
 
      private Medecin medecin;
@@ -54,9 +54,7 @@ class TableauRdvMedecin extends AbstractTableModel {
                             nom =id.getString("nomusuel");
                             dateN =id.getString("datedenaissance");
                             RdvMedecin rd = new RdvMedecin(motif,date,heure,nom,prenom,dateN);
-                            System.out.println(motif+date+heure+nom+prenom+dateN);
                             listRdv.add(rd);
-                            System.out.println("ajout rdv");
                         }
                     } catch(SQLException e){
                     System.out.println(e);

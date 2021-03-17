@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Médecinanesthésiste;
+package MedecinAnesthesiste;
 
 import Medecin.Medecin;
 import Patient.PatientHop;
@@ -94,7 +94,7 @@ public class ValidationFormulaire extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
-        new MedecinanésthésistePatient(this.patient,this.medecin);
+        new MedecinAnesthesistePatient(this.patient,this.medecin);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

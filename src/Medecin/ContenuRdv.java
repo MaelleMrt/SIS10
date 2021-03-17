@@ -5,7 +5,8 @@
  */
 package Medecin;
 
-import Médecinanesthésiste.Resultatexamen;
+import MedecinAnesthesiste.MedecinAnesthesisteAcceuil;
+import MedecinAnesthesiste.MedecinAnesthesistePatient;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 
@@ -132,7 +133,7 @@ public class ContenuRdv extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jButton3.setText("Nouveau CR");
+        jButton3.setText("Compte Rendu");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -228,7 +229,11 @@ public class ContenuRdv extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        new MedecinAcceuil(this.medecin.login);
+        if(this.medecin.getService().equals("Anésthésie")){
+            new MedecinAnesthesisteAcceuil(this.medecin.login);
+        }else{
+            new MedecinAcceuil(this.medecin.login);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
@@ -238,7 +243,11 @@ public class ContenuRdv extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.dispose();
-        new AffichageCR(patient, medecin,rdvMed);
+        if(this.medecin.getService().equals("Anésthésie")){
+            new MedecinAnesthesistePatient(this.patient,this.medecin);
+        }else{
+            new AffichageCR(patient, medecin,rdvMed);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
