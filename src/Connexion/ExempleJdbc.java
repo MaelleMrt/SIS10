@@ -26,7 +26,7 @@ public class ExempleJdbc {
          // on essaye de se connecter a l'aide d'un identifiant et un mdp
         Class.forName("org.mariadb.jdbc.Driver");
         String urlDB = "jdbc:mysql://mysql-projetsis.alwaysdata.net:3306/projetsis_a"; // ouverture d’une nouvelle connexion à la BD 
-        Connection conn= DriverManager.getConnection( urlDB, "projetsis_elo", "Caramel95$"); 
+        Connection conn= DriverManager.getConnection( urlDB, "projetsis_cl", "Clos22BD"); 
         st = conn.createStatement();
         
         
