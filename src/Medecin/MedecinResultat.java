@@ -67,26 +67,12 @@ public class MedecinResultat extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(listResultats);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.addMouseListener(new MouseAdapter()  {
-            public void mousePressed(MouseEvent e) {
-
-                // clic sur le bouton gauche ou droit
-                if(e.getButton() == MouseEvent.BUTTON1 ||
-                    e.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(e.getPoint());
-
-                    try{
-                        ResultatPrescription res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
-                        new Contenu(res,patient,medecin);
-                    }catch(Exception e2){
-                    }
-
-                }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
             }
-
         });
+        jScrollPane1.setViewportView(jTable1);
 
         jButton2.setBackground(new java.awt.Color(209, 235, 245));
         jButton2.setText("Retour");
@@ -218,7 +204,7 @@ public class MedecinResultat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Clic sur le bouton Acceuil ramene a l'interface acceuil
+        //Clic sur le bouton Accueil ramene a l'interface acceuil
         this.dispose();
         new MedecinAcceuil(medecin.login);
 
@@ -264,6 +250,22 @@ public class MedecinResultat extends javax.swing.JFrame {
         }
         jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        if(evt.getButton() == MouseEvent.BUTTON1 ||
+                    evt.getButton() == MouseEvent.BUTTON3)
+                {
+                    int indRow =jTable1.rowAtPoint(evt.getPoint());
+
+                    try{
+                        ResultatPrescription res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        this.setVisible(false);
+                        new Contenu(res,patient,medecin);
+                    }catch(Exception e2){
+                    }
+
+                }
+    }//GEN-LAST:event_jTable1MousePressed
 
     /**
      * @param args the command line arguments

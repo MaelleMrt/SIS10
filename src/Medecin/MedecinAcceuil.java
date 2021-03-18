@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 public class MedecinAcceuil extends javax.swing.JFrame {
     String login;
     TableauPatient listPatient;
+    TableauRdvMedecin listeRDV;
     Medecin medecin;
     /**
      * Creates new form SecretaireAcceuil
@@ -38,7 +39,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         login=log;
         rechercheMedecin();
         listPatient= new TableauPatient(login);
-        System.out.println("medecin =" +this.medecin.nom);
+        listeRDV = new TableauRdvMedecin(this.medecin);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -59,8 +60,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TableauPatient modele = listPatient;
-        jTable1 = new javax.swing.JTable(modele);
+        jTable1 = new javax.swing.JTable(listPatient);
         jPanel8 = new javax.swing.JPanel();
         deconnexion4 = new javax.swing.JButton();
         utilisateur4 = new javax.swing.JLabel();
@@ -69,8 +69,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        TableauRdvMedecin modeleRdv = new TableauRdvMedecin(this.medecin);
-        jTable2 = new javax.swing.JTable(modeleRdv);
+        jTable2 = new javax.swing.JTable(listeRDV);
         jComboBox2 = new javax.swing.JComboBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -91,6 +90,11 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTextField1PropertyChange(evt);
             }
         });
 
@@ -156,10 +160,15 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         jTextField2.setBackground(new java.awt.Color(204, 204, 204));
         jTextField2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTextField2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField2.setText("               Recherche Patient");
+        jTextField2.setText("               Recherche Rendez-vous");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
+            }
+        });
+        jTextField2.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTextField2PropertyChange(evt);
             }
         });
 
@@ -171,7 +180,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Nom", "Prénom", "Date de naissance" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Trier par...", "Date", "Nom", "Prénom", "Date de naissance" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -261,7 +270,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 String texte=jTextField1.getText();
                 int i=0;
                 for (Patient.PatientHop p : listPatient.getListPatient()) {
-                    if(p.getNomUsuel().contains(texte)){
+                    if(p.getNomUsuel().toUpperCase().contains(texte.toUpperCase())){
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());
                         v.add(p.getPrenom());
@@ -275,16 +284,49 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 jTable1.setModel(ModeleTest2);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+
         /*jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField1KeyTyped(evt);
             }
         });*/
+        jTextField2.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
+        jTextField2.setText("Recherche Rendez-vous");
+        jTextField2.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                DefaultTableModel model = new DefaultTableModel();
+                String texte = jTextField2.getText();
+                int i = 0;
+                for (RdvMedecin p : listeRDV.getListRdv()) {
+                    if (p.getNom().toUpperCase().contains(texte.toUpperCase())) {
+                        Vector<Object> v = new Vector<Object>();
+                        v.add(p.getMotif());
+                        v.add(p.getDate());
+                        v.add(p.getHeure());
+                        v.add(p.getNom());
+                        v.add(p.getPrenom());
+                        v.add(p.getDateN());
+                        model.setColumnIdentifiers(new String[]{"Motif ", "Date", "Heure", "Nom", "Prenom", "Date de Naissance"});
+                        model.insertRow(i, v);
+                        i++;
+                    }
+                }
+                jTable2.setModel(model);
+            }
+
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -378,8 +420,43 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MousePressed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
+        ArrayList<RdvMedecin> list = listeRDV.getListRdv();
+        if (jComboBox2.getSelectedItem().equals("Nom")) {
+            list = new Tri().trierRDVParNom(list);
+        }
+        else if (jComboBox2.getSelectedItem().equals("Prénom")) {
+            list = new Tri().trierRDVParPrenom(list);
+        }
+        else if (jComboBox2.getSelectedItem().equals("Date")) {
+            list = new Tri().trierRDVParDate(list);
+        }
+        else if (jComboBox2.getSelectedItem().equals("Date de naissance")) {
+            list = new Tri().trierRDVParNaissance(list);
+        }
+        DefaultTableModel model = new DefaultTableModel();
+        int i = 0;
+        for (RdvMedecin p : list) {
+            Vector<Object> v = new Vector<Object>();
+            v.add(p.getMotif());
+            v.add(p.getDate());
+            v.add(p.getHeure());
+            v.add(p.getNom());
+            v.add(p.getPrenom());
+            v.add(p.getDateN());
+            model.setColumnIdentifiers(new String[]{"Motif ", "Date", "Heure","Nom","Prenom","Date de Naissance"});
+            model.insertRow(i, v);
+            i++;
+        }
+        jTable2.setModel(model);
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
+        
+    }//GEN-LAST:event_jTextField1PropertyChange
+
+    private void jTextField2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField2PropertyChange
+        
+    }//GEN-LAST:event_jTextField2PropertyChange
 
     // rechercher le médecin à partir du login 
     public void rechercheMedecin(){
