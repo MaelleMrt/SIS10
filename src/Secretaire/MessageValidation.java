@@ -5,12 +5,7 @@
  */
 package Secretaire;
 
-import Connexion.ExempleJdbc;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Random;
+import Patient.PatientHop;
 import javax.swing.JFrame;
 
 /**
@@ -19,14 +14,18 @@ import javax.swing.JFrame;
  */
 public class MessageValidation extends javax.swing.JFrame {
 
-    JFrame accueil;
-    JFrame RDV;
-
-    public MessageValidation(JFrame accueil, JFrame RDV) {
-        initComponents();
+    private JFrame accueil;
+    private JFrame RDV;
+    private int id;
+    private Localisation localisation;
+    public MessageValidation(JFrame accueil, JFrame RDV,int id,Localisation l) {
         this.setLocationRelativeTo(null);
         this.RDV = RDV;
         this.accueil = accueil;
+        this.id=id;
+        this.localisation=l;
+        initComponents();
+        
     }
 
 
@@ -104,9 +103,11 @@ public class MessageValidation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        accueil.setVisible(true);
+        //accueil.setVisible(true);
         this.setVisible(false);
-        RDV.setVisible(false);
+        //RDV.setVisible(false);
+        PatientHop patient=new PatientHop(this.id);
+        new Interop_ajoutPatient(patient,this.accueil,this.localisation);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

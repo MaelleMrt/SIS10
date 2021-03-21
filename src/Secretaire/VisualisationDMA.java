@@ -28,6 +28,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
    PatientHop patient;
    private ArrayList<Consultation> listConsult = new ArrayList<>();
    private ArrayList<Hospitalisations> listHospit = new ArrayList<>();
+    private Statement connexion;
     
     public VisualisationDMA(JFrame precedent, String nomS, String nomP, String prenomP, String dateN) {
         initComponents();
@@ -35,6 +36,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
         nomSecrétaire = nomS;
         jLabel2.setText(nomSecrétaire);
         patient = new PatientHop(nomP,prenomP,dateN);
+        try{
+            this.connexion=new ExempleJdbc().connexion();
+         } catch (SQLException e) {
+                System.out.println(e);
+         }
         this.setLocationRelativeTo(null);
         remplissageDonnées();
         remplissageConsultations();
@@ -55,8 +61,8 @@ public class VisualisationDMA extends javax.swing.JFrame {
     }
     private void remplissageConsultations(){
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
                 Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listConsult.add(consult);
@@ -82,8 +88,8 @@ public class VisualisationDMA extends javax.swing.JFrame {
     }
     private void remplissageHospitalisations(){
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
                 Hospitalisations hospit = new Hospitalisations(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listHospit.add(hospit);

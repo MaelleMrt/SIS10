@@ -37,8 +37,14 @@ public class Secretaire extends javax.swing.JFrame {
     private ArrayList<PatientDansService> listPatient = new ArrayList<>();
     private ArrayList<Medecin> listMedecin = new ArrayList<>();
     private ArrayList<PatientHop> listPatient2 = new ArrayList<>();
+    private Statement connexion;
 
     public Secretaire(String nom, String prenom, String service) {
+        try{
+            this.connexion=new ExempleJdbc().connexion();
+         } catch (SQLException e) {
+                System.out.println(e);
+         }
         this.nom = nom;
         this.prenom = prenom;
         this.service = service;
@@ -59,8 +65,8 @@ public class Secretaire extends javax.swing.JFrame {
 
     private void Tableau2() { // affichage des médecins (nom et prénom)
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom, login FROM Médecin WHERE nomS ='" + service + "'");
+   
+            ResultSet rs = connexion.executeQuery("SELECT nom, prenom, login FROM Médecin WHERE nomS ='" + service + "'");
             while (rs.next()) {
                 Medecin medecin = new Medecin(rs.getString("nom"), rs.getString("prenom"), service, rs.getString("login"));
                 listMedecin.add(medecin);
@@ -86,8 +92,8 @@ public class Secretaire extends javax.swing.JFrame {
 
     private void Tableau1() { // affichage des médecins (nom et prénom)
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT id FROM PatientService WHERE service ='" + service + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT id FROM PatientService WHERE service ='" + service + "'");
             while (rs.next()) {
                 PatientDansService ps = new PatientDansService(rs.getInt("id"), service);
                 listPatient.add(ps);
@@ -102,8 +108,8 @@ public class Secretaire extends javax.swing.JFrame {
         for (PatientDansService e : listPatient) {
             Vector<Object> v = new Vector<Object>();
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT nomusuel, prenom, datedenaissance FROM Patient WHERE id ='" + e.getId() + "'");
+
+                ResultSet rs = connexion.executeQuery("SELECT nomusuel, prenom, datedenaissance FROM Patient WHERE id ='" + e.getId() + "'");
                 while (rs.next()) {
                     PatientHop p = new PatientHop(rs.getString("nomusuel"), rs.getString("prenom"), rs.getString("datedenaissance"));
                     listPatient2.add(p);

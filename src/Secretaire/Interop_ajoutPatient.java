@@ -6,13 +6,8 @@
 package Secretaire;
 
 
-import Connexion.ExempleJdbc;
-import HL7.FrameClientAdmi;
-import Medecin.Medecin;
+import HL7.FrameClientLoca;
 import Patient.PatientHop;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JFrame;
 
 /**
@@ -20,38 +15,40 @@ import javax.swing.JFrame;
  * @author Maelle
  */
 public class Interop_ajoutPatient extends javax.swing.JFrame {
-    PatientHop patient;
-    JFrame accueil;
-    String service;
-    String nom;
-    String prenom;
+    private PatientHop patient;
+    private JFrame accueil;
+    private String service;
+    private String nom;
+    private String prenom;
+    private Localisation localisation;
     /**
      * Creates new form Interop_ajoutPatient
      */
-    public Interop_ajoutPatient(PatientHop pat, JFrame acc, String service) {
+    public Interop_ajoutPatient(PatientHop pat, JFrame acc,Localisation loc) {
         patient=pat;
         accueil=acc;
         this.service = service;
+        this.localisation=loc;
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
     
-    private void recupSecretaire(){
-        String nom = new String();
-        try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom FROM Secrétaire WHERE nomS ='" + service + "'");
-            while (rs.next()) {
-               nom = rs.getString("nom");
-               prenom = rs.getString("prenom");
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-    }
+//    private void recupSecretaire(){
+//        String nom = new String();
+//        try {
+//            Statement s = ExempleJdbc.connexion();
+//            ResultSet rs = s.executeQuery("SELECT nom, prenom FROM Secrétaire WHERE nomS ='" + service + "'");
+//            while (rs.next()) {
+//               nom = rs.getString("nom");
+//               prenom = rs.getString("prenom");
+//            }
+//
+//        } catch (SQLException e) {
+//            System.out.println(e);
+//        }
+//
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -133,14 +130,13 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        Secretaire s = new Secretaire(nom, prenom, service);
-        this.setVisible(false);
+      this.accueil.setVisible(true);
+      this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-
         this.setVisible(false);
-        new FrameClientAdmi(patient,accueil);
+        new FrameClientLoca(patient,accueil,localisation);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
