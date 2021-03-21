@@ -331,6 +331,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         panelPatient.add(comboBoxSexe, gridBagConstraints);
 
         comboBoxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Urgence", "Hospitalisé", "Externe", "Pré-admission", "Récurrent", "Obstétrique", "Compte commercial", "Non applicable", "Inconnu" }));
+        comboBoxClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxClassActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -911,7 +916,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         // on verifie les champs patients 
         // si c'est bon on cree un nouveau patient et on lui donne les valeurs recupereees
         if (this.champsPatOk()) {
-            this.creePatient();
+            try {
+                this.creePatient();
+            } catch (ParseException ex) {
+                Logger.getLogger(FrameClientAdmi.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.setValPatient();
             //changer de panel
             java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
@@ -1008,6 +1017,10 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private void jFormattedTextFieldDateAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateAdmiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDateAdmiActionPerformed
+
+    private void comboBoxClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxClassActionPerformed
     // verification des champs patients
     private boolean champsPatOk() {
         boolean r = true;
@@ -1072,7 +1085,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         this.jLabelType.setEnabled(b);
     }
 
-    private void creePatient() {
+    private void creePatient() throws ParseException {
         try {
             //Nom de famille
             String surname;
@@ -1128,6 +1141,9 @@ public class FrameClientAdmi extends javax.swing.JFrame {
                 }
 
                 this.patient = new Patient(id, surname, classe);
+                 
+                
+                
             }
         } catch (NumberFormatException e) {
             System.out.println("Erreur d'identification patient : " + e.getMessage());

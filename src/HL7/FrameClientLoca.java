@@ -866,6 +866,9 @@ public class FrameClientLoca extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
      if (this.champsPatOk()) {
+
+        this.creePatient();
+        this.setValPatient();
         this.panelAction.setVisible(true);
         this.panelMessage.setVisible(false);
      }
@@ -923,17 +926,12 @@ public class FrameClientLoca extends javax.swing.JFrame {
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
         
         //Assigne Patient Location
-        if (nbr == 0 || nbr == 1) {
-            PatientLocation assignedLocation = new PatientLocation(this.patient);
-            assignedLocation = this.setValPatLoc(assignedLocation);
-            System.out.println(assignedLocation==null);
-            this.patient.setAssignedPatLocation(assignedLocation);
-        }
-        if (nbr == 2) {
-            PatientLocation priorLocation = new PatientLocation(this.patient);
-            priorLocation = this.setValPatLocAvt(priorLocation);
-            this.patient.setPriorPatLocation(priorLocation);
-        }
+        PatientLocation assignedLocation = new PatientLocation(this.patient);
+        System.out.println("patient "+this.patient);
+        assignedLocation = this.setValPatLoc(assignedLocation);
+        this.patient.setAssignedPatLocation(assignedLocation);
+
+
 
 
         //changer de panel
@@ -1138,6 +1136,26 @@ public class FrameClientLoca extends javax.swing.JFrame {
         if (field != null) {
             patLocation.setStatus(field);
         }
+        //Facility
+
+        //Status
+        field = this.jTextFieldStatus.getText();
+        if (field != null) {
+            patLocation.setStatus(field);
+        }
+
+        //PersonLocationType
+        patLocation.setPersonLocationType("C");
+
+          
+
+
+        //Batiment
+        patLocation.setBuilding("hopital central Princeton");
+        
+
+        //Etage
+        patLocation.setFloor("1er");
 
         return patLocation;
     }
@@ -1168,7 +1186,24 @@ public class FrameClientLoca extends javax.swing.JFrame {
         if (field != null) {
             patLocation.setStatus(field);
         }
+           //Status
+        field = this.jTextFieldStatus.getText();
+        if (field != null) {
+            patLocation.setStatus(field);
+        }
+
+        //PersonLocationType
+        patLocation.setPersonLocationType("C");
+
+          
+
+
+        //Batiment
+        patLocation.setBuilding("hopital central Princeton");
         
+
+        //Etage
+        patLocation.setFloor("1er");
 
         return patLocation;
     }

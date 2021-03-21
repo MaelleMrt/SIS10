@@ -722,6 +722,7 @@ public class RDVpatient extends javax.swing.JFrame {
             erreur.setVisible(true);
         } else {
             enregistrer();
+            System.out.println("identifiant "+ id);
             MessageValidation mv = new MessageValidation(precedent, this,Integer.valueOf(this.id),this.l);
             mv.setVisible(true);
         }
