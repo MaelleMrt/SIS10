@@ -28,6 +28,7 @@ public class InfirmiereSoins extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public InfirmiereSoins(PatientHop p,Infirmier inf) {
+        // on initialise nos variables
         patient =p;
         infirmier=inf;
         listSoins = new TableauxSoins(patient.getId());
@@ -241,12 +242,15 @@ public class InfirmiereSoins extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-          if(evt.getButton() == MouseEvent.BUTTON1 ||
+        // affiche detail du soin en cliquant sur la ligne
+        // correspondante
+        if(evt.getButton() == MouseEvent.BUTTON1 ||
                     evt.getButton() == MouseEvent.BUTTON3)
                 {
                     int indRow =jTable1.rowAtPoint(evt.getPoint());

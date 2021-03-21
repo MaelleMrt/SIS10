@@ -182,7 +182,7 @@ public class Message extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);
-        new Interop_ajoutPatient(this.patient,accueil,null);
+        new Interop_ajoutPatientAdmission(this.patient,accueil);
         DMA.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

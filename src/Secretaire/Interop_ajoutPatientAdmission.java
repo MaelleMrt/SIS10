@@ -6,7 +6,7 @@
 package Secretaire;
 
 
-import HL7.FrameClientLoca;
+import HL7.FrameClientAdmi;
 import Patient.PatientHop;
 import javax.swing.JFrame;
 
@@ -14,26 +14,28 @@ import javax.swing.JFrame;
  *
  * @author Maelle
  */
-public class Interop_ajoutPatient extends javax.swing.JFrame {
+public class Interop_ajoutPatientAdmission extends javax.swing.JFrame {
     private PatientHop patient;
     private JFrame accueil;
     private String service;
     private String nom;
     private String prenom;
-    private Localisation localisation;
+
     /**
      * Creates new form Interop_ajoutPatient
      */
-    public Interop_ajoutPatient(PatientHop pat, JFrame acc,Localisation loc) {
+    public Interop_ajoutPatientAdmission(PatientHop pat, JFrame acc) {
         patient=pat;
         accueil=acc;
         this.service = service;
-        this.localisation=loc;
+
         initComponents();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
     }
     
+
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,7 +123,7 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.setVisible(false);
-        new FrameClientLoca(patient,accueil,localisation);
+        new FrameClientAdmi(patient,accueil);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
@@ -141,14 +143,15 @@ public class Interop_ajoutPatient extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interop_ajoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interop_ajoutPatientAdmission.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interop_ajoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interop_ajoutPatientAdmission.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interop_ajoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interop_ajoutPatientAdmission.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interop_ajoutPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Interop_ajoutPatientAdmission.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

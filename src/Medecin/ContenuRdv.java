@@ -23,6 +23,7 @@ public class ContenuRdv extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public ContenuRdv(PatientHop p,Medecin med,RdvMedecin rdvMed) {
+        // on initialise les composants
         this.medecin =med;
         this.rdvMed=rdvMed;
         this.patient=p;
@@ -228,6 +229,7 @@ public class ContenuRdv extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // on affiche le contenu des rdc suivant le service du medecin
         this.dispose();
         if(this.medecin.getService().equals("Anésthésie")){
             new MedecinAnesthesisteAcceuil(this.medecin.login);
@@ -237,11 +239,14 @@ public class ContenuRdv extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // On cree un nouveau CR ou un nouveau questionnaire 
+        // suivant le service
         this.dispose();
         if(this.medecin.getService().equals("Anésthésie")){
             new AlerteCOVID(this.patient,this.medecin,this.rdvMed);

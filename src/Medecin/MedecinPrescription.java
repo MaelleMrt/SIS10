@@ -28,6 +28,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public MedecinPrescription(PatientHop p,Medecin med) {
+        // on initialise les composants
         patient=p;
         medecin=med;
         listPrescription = new TableauPrescriptionsInf(patient,medecin.getService());
@@ -228,6 +229,8 @@ public class MedecinPrescription extends javax.swing.JFrame {
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
           // clic sur le bouton gauche ou droit
+          // on affiche le detail de la prescription suivant la
+          // ligne selectionne
                 if(evt.getButton() == MouseEvent.BUTTON1 ||
                     evt.getButton() == MouseEvent.BUTTON3)
                 {
@@ -244,6 +247,7 @@ public class MedecinPrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // tri
         ArrayList<PrescriptionInf> list = listPrescription.getListPrescription();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierPrescriptionParService(list);

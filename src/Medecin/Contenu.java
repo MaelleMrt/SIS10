@@ -21,6 +21,7 @@ public class Contenu extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public Contenu(ResultatPrescription rp,PatientHop p,Medecin med) {
+        // initialisation des composants
         medecin =med;
         respres=rp;
         patient=p;
@@ -29,9 +30,6 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-    public Contenu(Resultatexamen res, PatientHop patient, Medecin medecin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
    
     
@@ -214,17 +212,15 @@ public class Contenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // on retourne a la liste des resultats
         this.dispose();
-        if(respres.getClass().equals("Prescription")){
-            new MedecinPrescription(patient,medecin);
-        }
-        if(respres.getClass().equals("Resultat")){
-            new MedecinPrescription(patient,medecin);
-        }
+        new MedecinResultat(patient,medecin);
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed

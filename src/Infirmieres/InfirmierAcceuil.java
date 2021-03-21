@@ -35,6 +35,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public InfirmierAcceuil (String log) {
+        // on initialise nos variables
         login=log;
         rechercheInfirmiere();
         listPatient= new TableauPatientInf(infirmier.getService());
@@ -260,11 +261,13 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // si on clic sur une ligne on ouvre le dossier du patient correspondant
         if(evt.getButton() == MouseEvent.BUTTON1 ||
 						evt.getButton() == MouseEvent.BUTTON3) 
 				{
@@ -281,16 +284,20 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-         ArrayList<PatientHop> list = listPatient.getListPatient();
+        // tri par nom 
+        ArrayList<PatientHop> list = listPatient.getListPatient();
         if (jComboBox1.getSelectedItem().equals("Nom")) {
             list = new Tri().trierPatientsParNom(list);
         }
+        // tri par prenom
         else if (jComboBox1.getSelectedItem().equals("Prénom")) {
             list = new Tri().trierPatientsParPrenom(list);
         }
+        // tri par date de naissance
         else if (jComboBox1.getSelectedItem().equals("Date de naissance")) {
             list = new Tri().trierPatientsParDate(list);
         }
+        // on tri suivant la valeur selectionne 
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (PatientHop p : list) {

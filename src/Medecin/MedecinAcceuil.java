@@ -35,6 +35,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public MedecinAcceuil (String log) {
+        // initialisation des composants
         login=log;
         rechercheMedecin();
         listPatient= new TableauPatient(login);
@@ -311,11 +312,13 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void deconnexion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion4ActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion4ActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // on affiche le dossier du patient par rapport a la ligne selectionne
         if(evt.getButton() == MouseEvent.BUTTON1 ||
 						evt.getButton() == MouseEvent.BUTTON3) 
 				{
@@ -332,6 +335,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // tri
         ArrayList<PatientHop> list = listPatient.getListPatient();
         if (jComboBox1.getSelectedItem().equals("Nom")) {
             list = new Tri().trierPatientsParNom(list);
@@ -361,7 +365,8 @@ public class MedecinAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
-         if(evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3){ 
+        // on affiche le contenu d'un rdv suivant la ligne selectionne
+        if(evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3){ 
             int indRow =jTable2.rowAtPoint(evt.getPoint()); 
             try{
                 RdvMedecin rdvMed=new RdvMedecin(jTable2.getValueAt(indRow, 0).toString(),jTable2.getValueAt(indRow, 1).toString(),jTable2.getValueAt(indRow, 2).toString(),jTable2.getValueAt(indRow, 3).toString(),jTable2.getValueAt(indRow, 4).toString(),jTable2.getValueAt(indRow, 5).toString());

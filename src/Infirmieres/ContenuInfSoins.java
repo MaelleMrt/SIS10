@@ -14,6 +14,7 @@ import Patient.PatientHop;
  * @author Maelle
  */
 public class ContenuInfSoins extends javax.swing.JFrame {
+    
     ResultatPrescription respres;
     PatientHop patient;
     Infirmier infirmier;
@@ -22,6 +23,7 @@ public class ContenuInfSoins extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public ContenuInfSoins(Soins s,PatientHop p,Infirmier inf) {
+        // on initialise nos variables
         this.infirmier =inf;
         this.soin=s;
         this.patient=p;
@@ -332,13 +334,15 @@ public class ContenuInfSoins extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         this.dispose();
-         new InfirmiereSoins(this.patient,this.infirmier);
+        // retour a la liste de soins
+        this.dispose();
+        new InfirmiereSoins(this.patient,this.infirmier);
         
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // decconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed

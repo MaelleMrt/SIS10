@@ -18,10 +18,13 @@ public class Lancement {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // on attend un message HL7 en permanence
         FrameServeur fs=new FrameServeur(6558);
+        // on cree une pile d'execution
         Thread t=new Thread(fs);
         t.start();
         fs.ajouterThread(t);
+        // on lance l'interface de connexion
         new InterfaceConnexion();
     }
     

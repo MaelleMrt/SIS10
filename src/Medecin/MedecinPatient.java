@@ -31,6 +31,7 @@ public class MedecinPatient extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public MedecinPatient(PatientHop p, Medecin med) {
+        // initialisation des composants
         patient = p;
         medecin = med;
         initComponents();
@@ -41,7 +42,7 @@ public class MedecinPatient extends javax.swing.JFrame {
     }
     
     public void localisation(){
-        
+        // on recherche la localisation puis on l'affiche sur le dossier patient
         try {
             Statement s = ExempleJdbc.connexion();
             try {
@@ -293,42 +294,50 @@ public class MedecinPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // on cree un nouveau dma
         this.dispose();
         new DMA(patient, medecin);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // retour a l'acceuil
         this.dispose();
         new MedecinAcceuil(medecin.login);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        // affiche les resultats
         this.dispose();
         new MedecinResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+       // affiche les prescriptions
         this.dispose();
         new MedecinPrescription(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // on cree une nouvelle prescription
         this.dispose();
         new AffichagePrescription(patient, medecin);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void lettreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lettreActionPerformed
+        // on cree une  lettre de sortie
         LettreSortie l = new LettreSortie(patient, medecin);
         this.setVisible(false);
     }//GEN-LAST:event_lettreActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        //  on affiche la derniere lettre de sortie
         try {
             File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
             if (fichier.exists()) {
