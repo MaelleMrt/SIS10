@@ -24,7 +24,7 @@ public class AffichageCR extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public AffichageCR(PatientHop p,Medecin med,RdvMedecin rdvMed) {
-        
+        // initialisation des composants
         this.patient=p;
         this.medecin=med;
         this.rdvMed =rdvMed;
@@ -286,6 +286,7 @@ public class AffichageCR extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // retour a l'accueil
         this.dispose();
         new MedecinAcceuil(this.medecin.login);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -323,11 +324,13 @@ public class AffichageCR extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     public void SupprimerRDV(){
+        // on supprime le rdv lorsque le CR est ecrit
         try{
         Statement s= ExempleJdbc.connexion();
             try{
@@ -346,6 +349,7 @@ public class AffichageCR extends javax.swing.JFrame {
         }
     }
     public void ajoutCR(String date,String contenu){
+        // on ajoute le CR a la bdd
         try{
         Statement s= ExempleJdbc.connexion();
             try{

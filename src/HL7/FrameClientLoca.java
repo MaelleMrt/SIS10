@@ -11,6 +11,7 @@ package HL7;
  * Created on 6 févr. 2009, 10:18:51
  */
 import Patient.PatientHop;
+import Secretaire.Localisation;
 import Secretaire.MessageAdmi;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -32,7 +33,7 @@ import library.interfaces.PatientLocation;
  *
  * @author Anthony CROUZET Polytech'Grenoble TIS3
  */
-public class FrameClientAdmi extends javax.swing.JFrame {
+public class FrameClientLoca extends javax.swing.JFrame {
 
     private Patient patient;
     private PatientHop patientHop;
@@ -42,10 +43,12 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private int nbr;
     private JFrame accueil;
     private final SimpleDateFormat formateur = new SimpleDateFormat("yyyy-mm-dd");
+    private Localisation localisation;
 
     /** Creates new form FrameClient */
-    public FrameClientAdmi(PatientHop patHop,JFrame acc) {
+    public FrameClientLoca(PatientHop patHop,JFrame acc,Localisation loc) {
         // on initialise nos composants
+        this.localisation=loc;
         this.patientHop=patHop;
         this.accueil=acc;
         this.setVisible(true);
@@ -101,18 +104,12 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabelPointOfCare = new javax.swing.JLabel();
         jTextFieldPointOfCare = new javax.swing.JTextField();
-        jLabelType = new javax.swing.JLabel();
         jTextFieldChambre = new javax.swing.JTextField();
         jLabelLit = new javax.swing.JLabel();
         jTextFieldLit = new javax.swing.JTextField();
         jLabelStatus = new javax.swing.JLabel();
         jTextFieldStatus = new javax.swing.JTextField();
-        jLabelBatiment = new javax.swing.JLabel();
-        jTextFieldEtage = new javax.swing.JTextField();
-        jLabelEtage = new javax.swing.JLabel();
-        jTextFieldBatiment = new javax.swing.JTextField();
         jLabelChambre = new javax.swing.JLabel();
-        jComboBoxTypeLoc = new javax.swing.JComboBox();
         jPanel8 = new javax.swing.JPanel();
         jLabelPointOfCare1 = new javax.swing.JLabel();
         jTextFieldPointOfCare1 = new javax.swing.JTextField();
@@ -331,11 +328,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         panelPatient.add(comboBoxSexe, gridBagConstraints);
 
         comboBoxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Urgence", "Hospitalisé", "Externe", "Pré-admission", "Récurrent", "Obstétrique", "Compte commercial", "Non applicable", "Inconnu" }));
-        comboBoxClass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxClassActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -520,21 +512,16 @@ public class FrameClientAdmi extends javax.swing.JFrame {
 
         jTextFieldPointOfCare.setMinimumSize(new java.awt.Dimension(140, 28));
         jTextFieldPointOfCare.setPreferredSize(new java.awt.Dimension(140, 28));
+        jTextFieldPointOfCare.setText(this.localisation.getService());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel7.add(jTextFieldPointOfCare, gridBagConstraints);
 
-        jLabelType.setText("Type");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanel7.add(jLabelType, gridBagConstraints);
-
         jTextFieldChambre.setMinimumSize(new java.awt.Dimension(140, 28));
         jTextFieldChambre.setPreferredSize(new java.awt.Dimension(140, 28));
+        jTextFieldChambre.setText(this.localisation.getChambre());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -550,6 +537,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
 
         jTextFieldLit.setMinimumSize(new java.awt.Dimension(140, 28));
         jTextFieldLit.setPreferredSize(new java.awt.Dimension(140, 28));
+        jTextFieldLit.setText(this.localisation.getChambre());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -565,41 +553,12 @@ public class FrameClientAdmi extends javax.swing.JFrame {
 
         jTextFieldStatus.setMinimumSize(new java.awt.Dimension(140, 28));
         jTextFieldStatus.setPreferredSize(new java.awt.Dimension(140, 28));
+        jTextFieldStatus.setText(this.localisation.getStatut());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel7.add(jTextFieldStatus, gridBagConstraints);
-
-        jLabelBatiment.setText("Bâtiment");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanel7.add(jLabelBatiment, gridBagConstraints);
-
-        jTextFieldEtage.setMinimumSize(new java.awt.Dimension(140, 28));
-        jTextFieldEtage.setPreferredSize(new java.awt.Dimension(140, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanel7.add(jTextFieldEtage, gridBagConstraints);
-
-        jLabelEtage.setText("Etage");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanel7.add(jLabelEtage, gridBagConstraints);
-
-        jTextFieldBatiment.setMinimumSize(new java.awt.Dimension(140, 28));
-        jTextFieldBatiment.setPreferredSize(new java.awt.Dimension(140, 28));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
-        jPanel7.add(jTextFieldBatiment, gridBagConstraints);
 
         jLabelChambre.setText("Chambre");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -607,13 +566,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         jPanel7.add(jLabelChambre, gridBagConstraints);
-
-        jComboBoxTypeLoc.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Clinic", "Department", "Home", "Nursing Unit", "Provider Office", "Phone", "SNF" }));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel7.add(jComboBoxTypeLoc, gridBagConstraints);
 
         jTabbedPane1.addTab("Localisation attribuée", jPanel7);
 
@@ -913,20 +865,13 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // on verifie les champs patients 
-        // si c'est bon on cree un nouveau patient et on lui donne les valeurs recupereees
-        if (this.champsPatOk()) {
-            try {
-                this.creePatient();
-            } catch (ParseException ex) {
-                Logger.getLogger(FrameClientAdmi.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.setValPatient();
-            //changer de panel
-            java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
-            c.show(this.panelCard, "cardConnexion");
+     if (this.champsPatOk()) {
 
-        }
+        this.creePatient();
+        this.setValPatient();
+        this.panelAction.setVisible(true);
+        this.panelMessage.setVisible(false);
+     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -979,18 +924,14 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxADTActionPerformed
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
- 
+        
         //Assigne Patient Location
-        if (nbr == 0 || nbr == 1) {
-            PatientLocation assignedLocation = new PatientLocation(this.patient);
-            assignedLocation = this.setValPatLoc(assignedLocation);
-            this.patient.setAssignedPatLocation(assignedLocation);
-        }
-        if (nbr == 2) {
-            PatientLocation priorLocation = new PatientLocation(this.patient);
-            priorLocation = this.setValPatLocAvt(priorLocation);
-            this.patient.setPriorPatLocation(priorLocation);
-        }
+        PatientLocation assignedLocation = new PatientLocation(this.patient);
+        System.out.println("patient "+this.patient);
+        assignedLocation = this.setValPatLoc(assignedLocation);
+        this.patient.setAssignedPatLocation(assignedLocation);
+
+
 
 
         //changer de panel
@@ -1017,10 +958,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private void jFormattedTextFieldDateAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateAdmiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDateAdmiActionPerformed
-
-    private void comboBoxClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_comboBoxClassActionPerformed
     // verification des champs patients
     private boolean champsPatOk() {
         boolean r = true;
@@ -1069,23 +1006,20 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }
 
     private void enableTabLoc(boolean b) {
-        this.jTextFieldBatiment.setEnabled(b);
-        this.jLabelBatiment.setEnabled(b);
+
+
         this.jTextFieldChambre.setEnabled(b);
         this.jLabelChambre.setEnabled(b);
-        this.jTextFieldEtage.setEnabled(b);
-        this.jLabelEtage.setEnabled(b);
         this.jTextFieldLit.setEnabled(b);
         this.jLabelLit.setEnabled(b);
         this.jTextFieldPointOfCare.setEnabled(b);
         this.jLabelPointOfCare.setEnabled(b);
         this.jTextFieldStatus.setEnabled(b);
         this.jLabelStatus.setEnabled(b);
-        this.jComboBoxTypeLoc.setEnabled(b);
-        this.jLabelType.setEnabled(b);
+
     }
 
-    private void creePatient() throws ParseException {
+    private void creePatient() {
         try {
             //Nom de famille
             String surname;
@@ -1141,9 +1075,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
                 }
 
                 this.patient = new Patient(id, surname, classe);
-                 
-                
-                
             }
         } catch (NumberFormatException e) {
             System.out.println("Erreur d'identification patient : " + e.getMessage());
@@ -1164,7 +1095,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
                 this.patient.setBirth(dateBirth);
             }
         } catch (ParseException ex) {
-            Logger.getLogger(FrameClientAdmi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FrameClientLoca.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         //sexe
@@ -1200,6 +1131,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             patLocation.setBed(field);
         }
 
+        //Status
+        field = this.jTextFieldStatus.getText();
+        if (field != null) {
+            patLocation.setStatus(field);
+        }
         //Facility
 
         //Status
@@ -1209,50 +1145,17 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         }
 
         //PersonLocationType
-        int nbrItem = this.jComboBoxTypeLoc.getSelectedIndex();
-        switch (nbrItem) {
-            case 1: {
-                patLocation.setPersonLocationType("C");
-                break;
-            }
-            case 2: {
-                patLocation.setPersonLocationType("D");
-                break;
-            }
-            case 3: {
-                patLocation.setPersonLocationType("H");
-                break;
-            }
-            case 4: {
-                patLocation.setPersonLocationType("N");
-                break;
-            }
-            case 5: {
-                patLocation.setPersonLocationType("O");
-                break;
-            }
-            case 6: {
-                patLocation.setPersonLocationType("P");
-                break;
-            }
-            case 7: {
-                patLocation.setPersonLocationType("S");
-                break;
-            }
+        patLocation.setPersonLocationType("C");
 
-        }
+          
+
 
         //Batiment
-        field = this.jTextFieldBatiment.getText();
-        if (field != null) {
-            patLocation.setBuilding(field);
-        }
+        patLocation.setBuilding("hopital central Princeton");
+        
 
         //Etage
-        field = this.jTextFieldEtage.getText();
-        if (field != null) {
-            patLocation.setFloor(field);
-        }
+        patLocation.setFloor("1er");
 
         return patLocation;
     }
@@ -1283,52 +1186,24 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         if (field != null) {
             patLocation.setStatus(field);
         }
+           //Status
+        field = this.jTextFieldStatus.getText();
+        if (field != null) {
+            patLocation.setStatus(field);
+        }
 
         //PersonLocationType
-        int nbrItem = this.jComboBoxTypeLoc1.getSelectedIndex();
-        switch (nbrItem) {
-            case 1: {
-                patLocation.setPersonLocationType("C");
-                break;
-            }
-            case 2: {
-                patLocation.setPersonLocationType("D");
-                break;
-            }
-            case 3: {
-                patLocation.setPersonLocationType("H");
-                break;
-            }
-            case 4: {
-                patLocation.setPersonLocationType("N");
-                break;
-            }
-            case 5: {
-                patLocation.setPersonLocationType("O");
-                break;
-            }
-            case 6: {
-                patLocation.setPersonLocationType("P");
-                break;
-            }
-            case 7: {
-                patLocation.setPersonLocationType("S");
-                break;
-            }
+        patLocation.setPersonLocationType("C");
 
-        }
+          
+
 
         //Batiment
-        field = this.jTextFieldBatiment1.getText();
-        if (field != null) {
-            patLocation.setBuilding(field);
-        }
+        patLocation.setBuilding("hopital central Princeton");
+        
 
         //Etage
-        field = this.jTextFieldEtage1.getText();
-        if (field != null) {
-            patLocation.setFloor(field);
-        }
+        patLocation.setFloor("1er");
 
         return patLocation;
     }
@@ -1367,7 +1242,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonConnexion;
-    private javax.swing.JComboBox jComboBoxTypeLoc;
     private javax.swing.JComboBox jComboBoxTypeLoc1;
     private javax.swing.JFormattedTextField jFormattedTextFieldDateAdmi;
     private javax.swing.JLabel jLabel1;
@@ -1385,12 +1259,10 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelBatiment;
     private javax.swing.JLabel jLabelBatiment1;
     private javax.swing.JLabel jLabelChambre;
     private javax.swing.JLabel jLabelChambre1;
     private javax.swing.JLabel jLabelDateAdmi;
-    private javax.swing.JLabel jLabelEtage;
     private javax.swing.JLabel jLabelEtage1;
     private javax.swing.JLabel jLabelLit;
     private javax.swing.JLabel jLabelLit1;
@@ -1398,7 +1270,6 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPointOfCare1;
     private javax.swing.JLabel jLabelStatus;
     private javax.swing.JLabel jLabelStatus1;
-    private javax.swing.JLabel jLabelType;
     private javax.swing.JLabel jLabelType1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1408,11 +1279,9 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextFieldBatiment;
     private javax.swing.JTextField jTextFieldBatiment1;
     private javax.swing.JTextField jTextFieldChambre;
     private javax.swing.JTextField jTextFieldChambre1;
-    private javax.swing.JTextField jTextFieldEtage;
     private javax.swing.JTextField jTextFieldEtage1;
     private javax.swing.JTextField jTextFieldLit;
     private javax.swing.JTextField jTextFieldLit1;

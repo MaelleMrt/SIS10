@@ -58,6 +58,27 @@ public class PatientHop {
         this.naissance = naissance;
         this.id = id;
     }
+    public PatientHop(int id){
+        this.id = id;
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs= s.executeQuery("SELECT nomusuel, prenom,datedenaissance FROM Patient WHERE id='"+this.id+"'" );
+                while(rs.next()){
+                    this.nom=rs.getString("nomusuel");
+                    this.prenom=rs.getString("prenom");
+                    this.naissance=rs.getString("datedenaissance");
+                }    
+
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+    }
 
     public int getId() {
         return id;

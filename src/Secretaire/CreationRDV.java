@@ -19,18 +19,24 @@ import javax.swing.JFrame;
  * @author Elodie
  */
 public class CreationRDV extends javax.swing.JFrame {
-    String medecin;
-    JFrame precedent;
+    private String medecin;
+    private JFrame precedent;
     private ArrayList liste;
     private String IPP;
-    Localisation l;
-    String service;
-    String type2;
-    int compteur;
+    private Localisation l;
+    private String service;
+    private String type2;
+    private int compteur;
+    private Statement connexion;
 
     public CreationRDV(JFrame precedent, String nom, String prenom, ArrayList liste, String service) {
         initComponents();
         affichage(nom, prenom);
+        try{
+            this.connexion=new ExempleJdbc().connexion();
+         } catch (SQLException e) {
+                System.out.println(e);
+         }
         this.precedent = precedent;
         this.liste = liste;
         jCheckBox1.setVisible(false);
@@ -69,8 +75,8 @@ public class CreationRDV extends javax.swing.JFrame {
 
         // On enregistre le nouveau patient dans BDD
         try {
-            Statement s = ExempleJdbc.connexion();
-            s.executeUpdate("INSERT INTO RendezVous(idPatient, patient, Médecin, Motif, Date, Catégorie, Localisation,Heure, idRdv)"
+
+            connexion.executeUpdate("INSERT INTO RendezVous(idPatient, patient, Médecin, Motif, Date, Catégorie, Localisation,Heure, idRdv)"
                     + " VALUES ('" + IPP + "', '" + patient + "', '" + medecin + "', '" + motif + "', '" + date + "', '" + catégorie + "', '" + l.getIdLocalisation() + "', '" + jComboBox3.getSelectedItem() + "', '" + generationIdRdv() + "')");
         } catch (SQLException e) {
             System.out.println(e);
@@ -79,8 +85,8 @@ public class CreationRDV extends javax.swing.JFrame {
         // On vérifie si le patient est déjà dans une autre chambre 
         ArrayList listPatient = new ArrayList();
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient FROM Localisation");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient FROM Localisation");
             while (rs.next()) {
                 int p = rs.getInt("idPatient");
                 listPatient.add(String.valueOf(p));
@@ -91,8 +97,8 @@ public class CreationRDV extends javax.swing.JFrame {
         }
         if (listPatient.contains(IPP)) {
             try {
-                Statement s = ExempleJdbc.connexion();
-                s.executeUpdate("UPDATE  Localisation set idPatient = '0', statut = 'Non occupée' WHERE idPatient ='" + IPP + "'");
+                connexion.executeUpdate("UPDATE  Localisation set idPatient = '0', statut = 'Non occupée' WHERE idPatient ='" + IPP + "'");
+
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -101,8 +107,8 @@ public class CreationRDV extends javax.swing.JFrame {
         // On modifie la statut de la localisation à Occupée si c'est une hospitalisation 
         if (type2.equals("Hospitalisation")) {
             try {
-                Statement s = ExempleJdbc.connexion();
-                s.executeUpdate("UPDATE  Localisation set idPatient ='" + IPP + "', statut = 'Occupée' WHERE idLocalisation ='" + l.getIdLocalisation() + "'");
+                connexion.executeUpdate("UPDATE  Localisation set idPatient ='" + IPP + "', statut = 'Occupée' WHERE idLocalisation ='" + l.getIdLocalisation() + "'");
+
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -141,8 +147,8 @@ public class CreationRDV extends javax.swing.JFrame {
             // On veut enlever les lits simples étant déjà pris
             ArrayList listLit = new ArrayList();
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre < 5");
+
+                ResultSet rs = connexion.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre < 5");
                 while (rs.next()) {
                     String lit = rs.getString("lit");
                     listLit.add(lit);
@@ -165,8 +171,7 @@ public class CreationRDV extends javax.swing.JFrame {
             // On veut enlever les lits doubles étant déjà pris
             ArrayList listLitD = new ArrayList();
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre > 4 GROUP BY chambre HAVING COUNT(chambre) = 2");
+                ResultSet rs = connexion.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre > 4 GROUP BY chambre HAVING COUNT(chambre) = 2");
                 while (rs.next()) {
                     String lit = rs.getString("lit");
                     listLitD.add(lit);
@@ -208,8 +213,7 @@ public class CreationRDV extends javax.swing.JFrame {
         ArrayList listeDate = new ArrayList();
 
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT date FROM RendezVous");
+            ResultSet rs = connexion.executeQuery("SELECT date FROM RendezVous");
             while (rs.next()) {
                 String d = rs.getString("date");
                 listeDate.add(d);
@@ -222,8 +226,7 @@ public class CreationRDV extends javax.swing.JFrame {
         if (listeDate.contains(date)) {
             // on regarde quels horaires sont déjà pris à cette date là
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND idPatient ='" + IPP + "'");
+                ResultSet rs = connexion.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND idPatient ='" + IPP + "'");
                 while (rs.next()) {
                     String h = rs.getString("heure");
                     jComboBox3.removeItem(h);
@@ -233,8 +236,7 @@ public class CreationRDV extends javax.swing.JFrame {
                 System.out.println(e);
             }
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND Médecin ='" + medecin + "'");
+                ResultSet rs = connexion.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND Médecin ='" + medecin + "'");
                 while (rs.next()) {
                     String h = rs.getString("heure");
                     jComboBox3.removeItem(h);
@@ -264,8 +266,8 @@ public class CreationRDV extends javax.swing.JFrame {
 
         // On récupère les id de rdv déjà existants
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idRdv FROM RendezVous");
+
+            ResultSet rs = connexion.executeQuery("SELECT idRdv FROM RendezVous");
             while (rs.next()) {
                 int idPatient = rs.getInt("id");
                 listID.add(idPatient);
@@ -664,7 +666,7 @@ public class CreationRDV extends javax.swing.JFrame {
             erreur.setVisible(true);
         } else {
             enregistrer();
-            MessageValidation mv = new MessageValidation(precedent, this);
+            MessageValidation mv = new MessageValidation(precedent, this,Integer.valueOf(this.IPP),this.l);
             mv.setVisible(true);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -699,8 +701,8 @@ public class CreationRDV extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // On récupère l'IPP du patient sélectionné
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT id FROM Patient WHERE CONCAT(prenom, ' ', nomusuel) LIKE '" + jComboBox2.getSelectedItem().toString() + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT id FROM Patient WHERE CONCAT(prenom, ' ', nomusuel) LIKE '" + jComboBox2.getSelectedItem().toString() + "'");
             while (rs.next()) {
                 int i = rs.getInt("id");
                 IPP = String.valueOf(i);
@@ -709,9 +711,11 @@ public class CreationRDV extends javax.swing.JFrame {
                 jLabel12.setVisible(true);
             }
 
+
         } catch (SQLException e) {
             System.out.println(e);
         }
+        
 
     }//GEN-LAST:event_jComboBox2ActionPerformed
 

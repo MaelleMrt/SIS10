@@ -34,6 +34,7 @@ public class LettreSortie extends javax.swing.JFrame {
     private String medecinTraitant;
 
     public LettreSortie(PatientHop patient, Medecin medecin) {
+        
         this.patient = patient;
         this.medecin = medecin;
         remplirChamps();

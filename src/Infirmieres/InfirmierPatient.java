@@ -29,6 +29,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public InfirmierPatient(PatientHop p,Infirmier inf) {
+        // on initialise nos variables
         patient=p;
         infirmier=inf;
         initComponents();
@@ -39,7 +40,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
     }
     
      public void localisation(){
-        
+        // on affiche la localisation du patient
         try {
             Statement s = ExempleJdbc.connexion();
             try {
@@ -292,32 +293,38 @@ public class InfirmierPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // on affiche les resultats des examens precedents
         new InfirmiereResultat(patient, infirmier);
         this.dispose();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // retourne a l'accueil
         this.dispose();
         InfirmierAcceuil init1=new InfirmierAcceuil(infirmier.login);
         init1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+        // on affiche les soins passe 
         this.dispose();
         new InfirmiereSoins(this.patient,this.infirmier);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // saisis d'un nouveau soin
         this.dispose();
         new SaisisSoins(this.patient,this.infirmier);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
+        // on affiche la dernier lettre de sortie
         try {
             File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
             if (fichier.exists()) {
@@ -329,6 +336,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+        // on affiche les prescriptions
         new InfirmierPrescription(patient, infirmier);
         this.dispose();
     }//GEN-LAST:event_jToggleButton3ActionPerformed

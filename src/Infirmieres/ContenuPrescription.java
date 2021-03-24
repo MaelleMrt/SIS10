@@ -27,6 +27,7 @@ public class ContenuPrescription extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public ContenuPrescription(PrescriptionInf rp,PatientHop p,Infirmier inf) {
+        // on initialise nos variables
         infirmier =inf;
         prescription=rp;
         patient=p;
@@ -260,14 +261,16 @@ public class ContenuPrescription extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         this.dispose();
-         new InfirmierPrescription(patient,infirmier);
+        // on retourne a la liste des prescriptions
+        this.dispose();
+        new InfirmierPrescription(patient,infirmier);
   
        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed

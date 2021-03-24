@@ -27,6 +27,7 @@ public class MedecinResultat extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public MedecinResultat(PatientHop p,Medecin med) {
+        // on initialise les composants
         patient =p;
         medecin=med;
         listResultats = new TableauResultat(patient);
@@ -221,11 +222,13 @@ public class MedecinResultat extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion1ActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // tri
         ArrayList<Resultat> list = listResultats.getListResultats();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierResultatParService(list);

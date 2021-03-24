@@ -6,6 +6,7 @@
 package HL7;
 
 import Patient.PatientHop;
+import Secretaire.Localisation;
 import Secretaire.Secretaire;
 
 /**
@@ -21,7 +22,8 @@ public class testFrameClient {
         PatientHop patient=new PatientHop("Oster","Clara","2018-12-11");
         Secretaire secretaire=new Secretaire("nom","prenom","service");
         secretaire.setVisible(false);
-        new FrameClientAdmi(patient,secretaire);
+        Localisation loc=new Localisation(" Elodie Collet ","1","201","Gynécologie","211364592");
+        new FrameClientLoca(patient,secretaire,loc);
 
     }
     

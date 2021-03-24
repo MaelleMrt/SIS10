@@ -18,6 +18,7 @@ public class AjoutValide extends javax.swing.JFrame {
      * Creates new form AjoutValide
      */
     public AjoutValide(PatientHop pat,Medecin med) {
+        // initialisation des composants
         patient=pat;
         medecin=med;
         initComponents();
@@ -93,6 +94,7 @@ public class AjoutValide extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // retour a l'accueil patient
         new MedecinPatient(patient, medecin);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
