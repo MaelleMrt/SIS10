@@ -8,11 +8,17 @@ package Secretaire;
 import Connexion.ExempleJdbc;
 import Medecin.DateChecker;
 import Patient.PatientHop;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -24,14 +30,16 @@ public class CreationDMA extends javax.swing.JFrame {
     String nSecu;
     String date;
     char[] dateNaissance;
+    String service;
 
-    public CreationDMA(JFrame precedent, String nom, String prenom) {
+    public CreationDMA(JFrame precedent, String nom, String prenom, String service) {
         this.accueil = precedent;
         initComponents();
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         affichageNom(nom, prenom);
+        this.service = service;
 
     }
 
@@ -141,12 +149,13 @@ public class CreationDMA extends javax.swing.JFrame {
         String nationalite = jTextField6.getText();
         String rue = jTextField7.getText();
         String codeP = jTextField8.getText();
-        String ville = jTextField9.getText();
+        String ville = jComboBox1.getSelectedItem().toString();
         String lieuN = jTextField5.getText();
         nSecu = jTextField10.getText();
         String nomM = jTextField11.getText();
         String sexe = genderBDD();
         patient=new PatientHop(nomU,prenom,date);
+        
         // On enregistre le nouveau patient dans BDD
         try {
             Statement s = ExempleJdbc.connexion();
@@ -157,7 +166,32 @@ public class CreationDMA extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
+        // On associe le patient au service (pas encore d'IPP)
+         try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("INSERT INTO PatientService (id,service) VALUES ('0','')");
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        
         return patient;
+    }
+    
+    public boolean VerifPatient(String secu){
+        //renvoie true si le patient est déjà dans la BD
+        boolean result = false;
+        try {
+            Statement s = ExempleJdbc.connexion();
+            ResultSet rs = s.executeQuery("SELECT secu FROM Patient");
+                while (rs.next()) {
+                    if(rs.getString("secu").equals(secu)){
+                        result = true;
+                    }
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(CreationDMA.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
     }
 
     /**
@@ -192,7 +226,6 @@ public class CreationDMA extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextField7 = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTextField10 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -203,6 +236,7 @@ public class CreationDMA extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -306,6 +340,7 @@ public class CreationDMA extends javax.swing.JFrame {
             }
         });
 
+        jTextField8.setAutoscrolls(false);
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField8ActionPerformed(evt);
@@ -342,6 +377,12 @@ public class CreationDMA extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -383,7 +424,7 @@ public class CreationDMA extends javax.swing.JFrame {
                                 .addComponent(jCheckBox2)
                                 .addGap(375, 375, 375))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -411,13 +452,13 @@ public class CreationDMA extends javax.swing.JFrame {
                                                 .addGap(323, 323, 323)
                                                 .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(29, 29, 29)
-                                                .addComponent(jLabel17)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jLabel17))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(jLabel16))))
+                                                .addComponent(jLabel16)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -430,7 +471,7 @@ public class CreationDMA extends javax.swing.JFrame {
                         .addGap(106, 106, 106))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField10, jTextField11, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7, jTextField9});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField10, jTextField11, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -440,7 +481,7 @@ public class CreationDMA extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(jButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -463,8 +504,8 @@ public class CreationDMA extends javax.swing.JFrame {
                     .addComponent(jLabel16)
                     .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,12 +517,40 @@ public class CreationDMA extends javax.swing.JFrame {
                     .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(36, 36, 36))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField10, jTextField11, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7, jTextField8, jTextField9});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField10, jTextField11, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6, jTextField7, jTextField8});
+
+        jTextField8.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void removeUpdate(DocumentEvent e) {
+                afficherList();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                afficherList();
+            }
+
+            public void afficherList() {
+                System.out.println("modification");
+                // on met à jour les items
+                jComboBox1.removeAllItems();
+                // on recupere le contenu de la JtexField
+                String texte=jTextField8.getText();
+                System.out.println("texte = "+texte);
+                // on crée une arrayList avec toutes les villes qui commence par texte
+                ArrayList<String> listeVilles=VilleCodePostale(texte);
+                // on ajout les villes
+                for (String ville : listeVilles) {
+                    jComboBox1.addItem(ville);
+
+                }
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -515,7 +584,7 @@ public class CreationDMA extends javax.swing.JFrame {
         date = jTextField4.getText();
         dateNaissance = date.toCharArray();
         // vérification présence des informations
-        if (jTextField11.getText().equals("") || jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("") || jTextField9.getText().equals("") || jTextField10.getText().equals("") || jTextField10.getText().equals("") || (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false)) {
+        if (jTextField11.getText().equals("") || jTextField1.getText().equals("") || jTextField2.getText().equals("") || jTextField3.getText().equals("") || jTextField4.getText().equals("") || jTextField5.getText().equals("") || jTextField6.getText().equals("") || jTextField7.getText().equals("") || jTextField8.getText().equals("")  || jTextField10.getText().equals("") || jTextField10.getText().equals("") || (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false)) {
             JFrame erreur = new MessageErreur("- Des informations n'ont pas été saisies ");
             erreur.setVisible(true);
         } // vérification format + validité n° sécu
@@ -526,11 +595,17 @@ public class CreationDMA extends javax.swing.JFrame {
         else if (DateChecker.isValid(this.date)== false) {
             JFrame erreur = new MessageErreur("- Le format de la date de naissance n'est pas valide ");
             erreur.setVisible(true);
-        } else {
+        } 
+        else if(VerifPatient(jTextField10.getText())){
+            JFrame erreur = new MessageErreur("- Ce patient existe déjà ");
+            erreur.setVisible(true);
+            
+        }else {
             PatientHop patient=enregistrer();
             System.out.println("sexe patient :"+patient.getSexe());
             this.setVisible(false);
-            new Message(this.accueil,nSecu,this.accueil,patient);
+            Message message = new Message(this.accueil,nSecu,this.accueil,patient, service);
+            message.setVisible(true);
             
 
         }
@@ -575,6 +650,28 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    public ArrayList<String> VilleCodePostale(String codePostal){
+        ArrayList<String> listVille= new ArrayList<String>();
+         try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                ResultSet rs1= s.executeQuery("SELECT nom_commune_postal FROM CodePostal WHERE code_postal LIKE '"+codePostal+"%'" );
+                while(rs1.next()){
+                    listVille.add(rs1.getString("nom_commune_postal"));
+                }     
+            } catch(SQLException e){
+                    System.out.println(e);
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+        }
+        return listVille;
+    }
 
     /**
      * @param args the command line arguments
@@ -618,6 +715,7 @@ public class CreationDMA extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -647,6 +745,5 @@ public class CreationDMA extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,14 +29,15 @@ public class Message extends javax.swing.JFrame {
     int annee = date.getYear() + 1900;
     String nSecu;
     PatientHop patient;
+    String service;
 
-    public Message(JFrame accueil, String nSecu, JFrame precedent,PatientHop pat) {
+    public Message(JFrame accueil, String nSecu, JFrame precedent,PatientHop pat, String service) {
         this.nSecu = nSecu;
         System.out.println(nSecu);
         this.accueil = accueil;
         DMA = precedent;
         this.patient=pat;
-     
+        this.service = service;
         initComponents();
         String idgen =generationID();
         this.patient.setID(Integer.valueOf(idgen));
@@ -61,7 +62,7 @@ public class Message extends javax.swing.JFrame {
         Random rand = new Random();
         int nombreAleatoire = rand.nextInt(max - min + 1) + min;
 
-        try {  // On recupere les id + secu des patients existants
+        try {  // On recupere les id des patients existants
             Statement s = ExempleJdbc.connexion();
             ResultSet rs = s.executeQuery("SELECT id FROM Patient");
             while (rs.next()) {
@@ -87,6 +88,12 @@ public class Message extends javax.swing.JFrame {
         try {
             Statement s = ExempleJdbc.connexion();
             s.executeUpdate("UPDATE Patient SET id ='" + ID + "' WHERE secu ='" + nSecu + "'");
+        }catch (SQLException e) {
+            System.out.println(e);
+        }
+         try {
+            Statement s = ExempleJdbc.connexion();
+            s.executeUpdate("UPDATE PatientService SET id ='" + ID + "', service ='" + service + "' WHERE id ='0'");
         }catch (SQLException e) {
             System.out.println(e);
         }
@@ -175,7 +182,7 @@ public class Message extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);
-        new Interop_ajoutPatient(this.patient,accueil);
+        new Interop_ajoutPatientAdmission(this.patient,accueil);
         DMA.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -45,6 +45,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
 
     /** Creates new form FrameClient */
     public FrameClientAdmi(PatientHop patHop,JFrame acc) {
+        // on initialise nos composants
         this.patientHop=patHop;
         this.accueil=acc;
         this.setVisible(true);
@@ -330,6 +331,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         panelPatient.add(comboBoxSexe, gridBagConstraints);
 
         comboBoxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Urgence", "Hospitalisé", "Externe", "Pré-admission", "Récurrent", "Obstétrique", "Compte commercial", "Non applicable", "Inconnu" }));
+        comboBoxClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxClassActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -753,6 +759,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         panelPatient1.add(jLabel12, gridBagConstraints);
 
+        fieldHost.setText("82.65.192.5");
         fieldHost.setMinimumSize(new java.awt.Dimension(128, 20));
         fieldHost.setPreferredSize(new java.awt.Dimension(128, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -784,6 +791,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         fieldPort.setMinimumSize(new java.awt.Dimension(48, 20));
+        fieldPort.setText("1527");
         fieldPort.setPreferredSize(new java.awt.Dimension(48, 26));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -905,24 +913,28 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // on verifie les champs patients 
+        // si c'est bon on cree un nouveau patient et on lui donne les valeurs recupereees
         if (this.champsPatOk()) {
-
-            this.creePatient();
-
+            try {
+                this.creePatient();
+            } catch (ParseException ex) {
+                Logger.getLogger(FrameClientAdmi.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.setValPatient();
-
             //changer de panel
             java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
             c.show(this.panelCard, "cardConnexion");
-            //c = (CardLayout) this.panelConexion.getLayout();
-            //c.show(this.panelConexion, card);
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // on recupere le port et l'adresse IP de host
         String host = this.fieldHost.getText();
         Integer port = Integer.parseInt(this.fieldPort.getText());
         ClientHL7 c = new ClientHL7();
+        // on se connecte
         c.connexion(host, port);
         switch (this.nbr) {
             case 0: {
@@ -938,6 +950,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
                 break;
             }
         }
+        // on signale que l'admission est ok 
         MessageInterface messageAck = c.getMsg();
         this.labelFin1.setText("ID message : " + messageAck.getId());
         this.labelFin2.setText(messageAck.getAcknowledgmentCodeString());
@@ -949,6 +962,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void comboBoxADTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxADTActionPerformed
+        //on definit les actions de nos combobox
         String[] button = {"Admettre", "Transférer", "Décharger"};
         String[] cads = {"cardAdmettre", "cardTrans", "cardDecharger"};
         this.nbr = this.comboBoxADT.getSelectedIndex();
@@ -965,9 +979,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }//GEN-LAST:event_comboBoxADTActionPerformed
 
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-        
-      
-
+ 
         //Assigne Patient Location
         if (nbr == 0 || nbr == 1) {
             PatientLocation assignedLocation = new PatientLocation(this.patient);
@@ -1006,6 +1018,10 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDateAdmiActionPerformed
 
+    private void comboBoxClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxClassActionPerformed
+    // verification des champs patients
     private boolean champsPatOk() {
         boolean r = true;
         this.initBackgroundField();
@@ -1034,7 +1050,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         return r;
 
     }
-
+    
     private void enableTabLocAvt(boolean b) {
         this.jTextFieldBatiment1.setEnabled(b);
         this.jLabelBatiment1.setEnabled(b);
@@ -1069,7 +1085,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         this.jLabelType.setEnabled(b);
     }
 
-    private void creePatient() {
+    private void creePatient() throws ParseException {
         try {
             //Nom de famille
             String surname;
@@ -1125,6 +1141,9 @@ public class FrameClientAdmi extends javax.swing.JFrame {
                 }
 
                 this.patient = new Patient(id, surname, classe);
+                 
+                
+                
             }
         } catch (NumberFormatException e) {
             System.out.println("Erreur d'identification patient : " + e.getMessage());
@@ -1149,7 +1168,15 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         }
 
         //sexe
-        System.out.println(patientHop.getSexe());
+        System.out.println("sexe patient "+comboBoxSexe.getSelectedItem().toString().charAt(0));
+        this.sex=comboBoxSexe.getSelectedItem().toString().charAt(0);
+        if (this.sex != 'X') {
+            if(this.sex=='H'){
+                this.patient.setSex('M');
+            }else{
+            this.patient.setSex('F');
+            }
+        }
  
     }
 

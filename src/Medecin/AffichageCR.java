@@ -19,12 +19,15 @@ import java.sql.Statement;
 public class AffichageCR extends javax.swing.JFrame {
     PatientHop patient;
     Medecin medecin;
+    RdvMedecin rdvMed;
     /**
      * Creates new form SecretaireAcceuil
      */
-    public AffichageCR(PatientHop p,Medecin med) {
-        patient=p;
-        medecin=med;
+    public AffichageCR(PatientHop p,Medecin med,RdvMedecin rdvMed) {
+        // initialisation des composants
+        this.patient=p;
+        this.medecin=med;
+        this.rdvMed =rdvMed;
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -239,8 +242,9 @@ public class AffichageCR extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // retour a l'accueil
         this.dispose();
-        new MedecinPatient(patient, medecin);
+        new MedecinAcceuil(this.medecin.login);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -268,6 +272,7 @@ public class AffichageCR extends javax.swing.JFrame {
         // sinon on ajoute le CR a la BDD
         else{
             ajoutCR(jTextField1.getText().toString(),jTextArea1.getText().toString());
+            SupprimerRDV();
             new AjoutValide(patient, medecin);
             this.dispose();
 
@@ -275,12 +280,32 @@ public class AffichageCR extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
-    
+    public void SupprimerRDV(){
+        // on supprime le rdv lorsque le CR est ecrit
+        try{
+        Statement s= ExempleJdbc.connexion();
+            try{
+                System.out.println(medecin.getLogin());
+                ResultSet rs= s.executeQuery("DELETE FROM RendezVous WHERE Motif='"+rdvMed.getMotif()+"' AND Date ='"+rdvMed.getDate()+"' AND Heure='"+rdvMed.getHeure()+"' AND idPatient ='"+rdvMed.getPatient().getId()+"'");
+          
+
+            } catch(SQLException e){
+                    System.out.println(e);
+
+            }
+
+        } catch (SQLException e){
+            System.out.println(e);
+
+        }
+    }
     public void ajoutCR(String date,String contenu){
+        // on ajoute le CR a la bdd
         try{
         Statement s= ExempleJdbc.connexion();
             try{

@@ -3,19 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Médecinanesthésiste;
+package MedecinAnesthesiste;
 
 import Medecin.*;
 import Connexion.ExempleJdbc;
 import PageConnexion.InterfaceConnexion;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Patient.PatientHop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
-import javax.swing.JFrame;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -30,9 +28,16 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     String login;
     TableauPatient listPatient;
     Medecin medecin;
+<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesisteAcceuil.java
     /*
-    Création d'une classe MedecinanésthésisteAcceuil 
+    Création d'une classe MedecinanésthésisteAcceuil afin d'afficher la liste des patients du médecin anesthésiste
+    Declaration d'un tableau listPatient de type TableauPatient 
     */
+=======
+    /**
+     * Creates new form SecretaireAcceuil
+     */
+>>>>>>> master:src/Médecinanesthésiste/MedecinanésthésisteAcceuil.java
     public MedecinAnesthesisteAcceuil (String log) {
         login=log;
         rechercheMedecin();
@@ -64,6 +69,9 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         utilisateur4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TableauRdvMedecin modeleRdv = new TableauRdvMedecin(this.medecin);
+        jTable2 = new javax.swing.JTable(modeleRdv);
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/AtlanTISpng.png"))); // NOI18N
 
@@ -136,26 +144,38 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jTable2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable2MousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(261, 261, 261)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 728, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(364, 364, 364)
                         .addComponent(jLabel6)
-                        .addGap(342, 342, 342))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,11 +183,14 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25))
         );
 
         jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
@@ -236,7 +259,7 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-
+// Bouton déconnexion qui nous permet de retourner sur la page de connexion
     private void deconnexion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion4ActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
@@ -258,7 +281,30 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
                                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesisteAcceuil.java
+    /*
+    Récupération les coordonnées  du médecin anesthésiste ( nom, prénom, et nom du service) à l'aide d'une requête SQL
+    */
+=======
+    private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
+        if(evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3){
+            int indRow =jTable2.rowAtPoint(evt.getPoint());
+            try{
+                RdvMedecin rdvMed=new RdvMedecin(jTable2.getValueAt(indRow, 0).toString(),jTable2.getValueAt(indRow, 1).toString(),jTable2.getValueAt(indRow, 2).toString(),jTable2.getValueAt(indRow, 3).toString(),jTable2.getValueAt(indRow, 4).toString(),jTable2.getValueAt(indRow, 5).toString());
+                PatientHop patient=rdvMed.getPatient();
+                System.out.println("patient =" +patient.getNomUsuel());
+                System.out.println("medecin = "+this.medecin.getNom());
+                System.out.println("rdv ="+ rdvMed.getMotif());
+                new ContenuRdv(patient,this.medecin,rdvMed);
+                this.dispose();
+            }catch(Exception e2){
+            }
+
+        }
+    }//GEN-LAST:event_jTable2MousePressed
+
     // rechercher le médecin à partir du login 
+>>>>>>> master:src/Médecinanesthésiste/MedecinanésthésisteAcceuil.java
     public void rechercheMedecin(){
         System.out.println(login);
          try{
@@ -337,7 +383,9 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel utilisateur4;
     // End of variables declaration//GEN-END:variables

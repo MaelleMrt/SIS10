@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Médecinanesthésiste;
+package MedecinAnesthesiste;
 
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
@@ -73,7 +73,7 @@ public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
                     int indRow =jTable1.rowAtPoint(e.getPoint());
 
                     try{
-                        Resultatexamen res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        ResultatExamen res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
                         new Contenu(res,patient,medecin);
                     }catch(Exception e2){
                     }

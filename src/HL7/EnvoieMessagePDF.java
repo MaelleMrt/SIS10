@@ -27,13 +27,14 @@ import javax.mail.Address;
  *
  * @author Maelle
  */
+// envoie message avec une piece jointe
 public class EnvoieMessagePDF {
     
 
 
     public void sendMessage(String subject, String text, String destinataire, String copyDest,int idPatient) {
     // 1 -> Création de la session
-   
+
     Properties properties = new Properties();
     properties.setProperty("mail.transport.protocol", "smtp");
     properties.setProperty("mail.smtp.host", "smtp.gmail.com");

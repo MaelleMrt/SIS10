@@ -29,6 +29,7 @@ public class DMA extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public DMA(PatientHop p, Medecin med) {
+        // initialisation des composants
         medecin = med;
         patient = p;
         listHospitalisations = new TableauHospitalisations(patient);
@@ -403,16 +404,20 @@ public class DMA extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // on retourne a l'accueil patient
         this.dispose();
         new MedecinPatient(patient, medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
+        // on affiche le detail des hospitalisations suivant la ligne 
+        // selectionne
         if (evt.getButton() == MouseEvent.BUTTON1
                 || evt.getButton() == MouseEvent.BUTTON3) {
             int indRow = jTable1.rowAtPoint(evt.getPoint());
@@ -428,6 +433,8 @@ public class DMA extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MousePressed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // on affiche le detail des consultations suivant la ligne 
+        // selectionne
         if (evt.getButton() == MouseEvent.BUTTON1
                 || evt.getButton() == MouseEvent.BUTTON3) {
             int indRow = jTable1.rowAtPoint(evt.getPoint());
@@ -444,6 +451,7 @@ public class DMA extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // tri
         ArrayList<Hospitalisations> list = listHospitalisations.getListHospitalisations();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierHospitParService(list);
@@ -470,6 +478,7 @@ public class DMA extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // tri
         ArrayList<Consultations> list = listConsultations.getListConsultations();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierConsultParService(list);

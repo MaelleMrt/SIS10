@@ -5,11 +5,15 @@
  */
 package PageConnexion;
 
+import MedecinAnesthesiste.MedecinAnesthesisteAcceuil;
 import CIC.CicAccueil;
 import Connexion.ExempleJdbc;
 import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
+<<<<<<< HEAD
 import Médecinanesthésiste.MedecinAnesthesisteAcceuil;
+=======
+>>>>>>> master
 import Secretaire.Secretaire;
 import java.sql.ResultSet;
 import java.sql.SQLException;

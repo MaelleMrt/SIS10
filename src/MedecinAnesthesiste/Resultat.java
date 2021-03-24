@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Médecinanesthésiste;
+package MedecinAnesthesiste;
 
 import Medecin.*;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Maelle
  */
-public class Resultat extends Resultatexamen{
+public class Resultat extends ResultatExamen{
 
     public Resultat(String s, String m, String d, String contenu) {
         super(s, m, d, contenu);

@@ -28,6 +28,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
    PatientHop patient;
    private ArrayList<Consultation> listConsult = new ArrayList<>();
    private ArrayList<Hospitalisations> listHospit = new ArrayList<>();
+    private Statement connexion;
     
     public VisualisationDMA(JFrame precedent, String nomS, String nomP, String prenomP, String dateN) {
         initComponents();
@@ -35,6 +36,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
         nomSecrétaire = nomS;
         jLabel2.setText(nomSecrétaire);
         patient = new PatientHop(nomP,prenomP,dateN);
+        try{
+            this.connexion=new ExempleJdbc().connexion();
+         } catch (SQLException e) {
+                System.out.println(e);
+         }
         this.setLocationRelativeTo(null);
         remplissageDonnées();
         remplissageConsultations();
@@ -55,10 +61,10 @@ public class VisualisationDMA extends javax.swing.JFrame {
     }
     private void remplissageConsultations(){
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
-                Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"));
+                Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listConsult.add(consult);
                 
             }
@@ -82,10 +88,10 @@ public class VisualisationDMA extends javax.swing.JFrame {
     }
     private void remplissageHospitalisations(){
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient, Médecin, Motif, Date FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
-                Hospitalisations hospit = new Hospitalisations(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"));
+                Hospitalisations hospit = new Hospitalisations(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listHospit.add(hospit);
             }
 
@@ -101,7 +107,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
             v.add(e.getMedecin());
             v.add(e.getMotif());
             v.add(e.getDate());
-            v.add(e.getLocalisation());
+            v.add(e.getLocalisationChiffre());
             model.setColumnIdentifiers(new String[]{"Service","Médecin","Motif","Date","Localisation"});
             model.insertRow(i, v);
             i++;
@@ -370,6 +376,11 @@ public class VisualisationDMA extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel20.setText("Consultation");
@@ -513,7 +524,7 @@ public class VisualisationDMA extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),this);
+        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),precedent);
         p.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -523,13 +534,24 @@ public class VisualisationDMA extends javax.swing.JFrame {
             i++;
         }
         if (i < jTable2.getRowCount()) {
-            String Nom = String.valueOf(jTable2.getValueAt(i, 0));
-            String Prenom = String.valueOf(jTable2.getValueAt(i, 1));
-            Hospitalisation h = new Hospitalisation(this);
-            h.setVisible(true);
+            Hospitalisations h = listHospit.get(i);
+            AffichageHospitalisation ah = new AffichageHospitalisation(this,h);
+            ah.setVisible(true);
             this.setVisible(false);
         }
     }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int i = 0;
+        while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {
+            i++;
+        }
+        if (i < jTable1.getRowCount()) {
+            AffichageConsultation ac = new AffichageConsultation(this, listConsult.get(i));
+            ac.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

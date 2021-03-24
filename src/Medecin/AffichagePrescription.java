@@ -23,6 +23,7 @@ public class AffichagePrescription extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public AffichagePrescription(PatientHop p,Medecin med) {
+        // initialisation des composants
         patient=p;
         medecin=med;
         initComponents();
@@ -269,12 +270,14 @@ public class AffichagePrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     
     public void ajoutPrecription(String date,String contenu){
+        // on ajoute la prescription a la bdd
         try{
         Statement s= ExempleJdbc.connexion();
             try{

@@ -6,12 +6,17 @@
 package Secretaire;
 
 import Connexion.ExempleJdbc;
+import Medecin.DateChecker;
 import Medecin.Medecin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFrame;
@@ -26,43 +31,51 @@ public class RDVpatient extends javax.swing.JFrame {
     private ArrayList<Medecin> listMedecin = new ArrayList<>();
     private ArrayList<String> listService = new ArrayList<>();
     private ArrayList<String> listPatient = new ArrayList<>();
-    JFrame precedent;
-    String id;
-    String patient;
-    String localisation;
-    Localisation l;
-    String type;
-    String type2;
+    private JFrame precedent;
+    private String id;
+    private String patient;
+    private String localisation;
+    private Localisation l;
+    private String type;
+    private String type2;
+    private int compteur;
+    private Statement connexion;
 
     public RDVpatient(String secretaire, String patient, String id, JFrame precedent) {
         initComponents();
+        try{
+            this.connexion=new ExempleJdbc().connexion();
+         } catch (SQLException e) {
+                System.out.println(e);
+         }
         this.setLocationRelativeTo(null);
         jCheckBox1.setVisible(false);
         jCheckBox2.setVisible(false);
         jButton3.setVisible(false);
         jComboBox5.setVisible(false);
+        jComboBox3.setVisible(false);
         jComboBox6.setVisible(false);
-        jComboBox7.setVisible(false);
         jLabel11.setVisible(false);
+        jLabel4.setVisible(false);
         jLabel15.setVisible(false);
         jLabel16.setVisible(false);
         jLabel17.setVisible(false);
         jLabel18.setVisible(false);
+        jLabel20.setVisible(false);
         jLabel8.setText(patient);
         jLabel14.setText(id);
         jLabel2.setText(secretaire);
         this.precedent = precedent;
         this.id = id;
-        System.out.println(id);
         this.patient = patient;
+        compteur = 0;
 
     }
 
     private void remplirMedecins() {
         service = jComboBox2.getSelectedItem().toString();
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom, prenom, login FROM Médecin WHERE nomS ='" + service + "'");
+            ResultSet rs = connexion.executeQuery("SELECT nom, prenom, login FROM Médecin WHERE nomS ='" + service + "'");
             while (rs.next()) {
                 Medecin medecin = new Medecin(rs.getString("nom"), rs.getString("prenom"), service, rs.getString("login"));
                 listMedecin.add(medecin);
@@ -79,8 +92,8 @@ public class RDVpatient extends javax.swing.JFrame {
     private void enregistrer() {
         // On regarde si le patient est déjà dans le service concerné
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT service FROM PatientService WHERE id ='" + id + "'");
+
+            ResultSet rs = connexion.executeQuery("SELECT service FROM PatientService WHERE id ='" + id + "'");
             while (rs.next()) {
                 String ser = rs.getString("service");
                 listService.add(ser);
@@ -92,25 +105,26 @@ public class RDVpatient extends javax.swing.JFrame {
         if (!listService.contains(service)) {
             // On enregistre le patient dans le nouveau service
             try {
-                Statement s = ExempleJdbc.connexion();
-                s.executeUpdate("INSERT INTO PatientService(id, service)"
+
+                connexion.executeUpdate("INSERT INTO PatientService(id, service)"
                         + " VALUES ('" + id + "', '" + service + "')");
             } catch (SQLException e) {
                 System.out.println(e);
             }
         }
         // On enregistre le nouveau rdv dans BDD
+
         try {
-            Statement s = ExempleJdbc.connexion();
-            s.executeUpdate("INSERT INTO RendezVous(idPatient, patient, Médecin, Motif, Date, Catégorie, Localisation)"
-                    + " VALUES ('" + id + "', '" + patient + "', '" + jComboBox4.getSelectedItem() + "', '" + jTextField2.getText() + "', '" + jTextField5.getText() + "', '" + jComboBox1.getSelectedItem() + "', '" + localisation + "')");
+
+            connexion.executeUpdate("INSERT INTO RendezVous(idPatient, patient, Médecin, Motif, Date, Catégorie, Localisation, Heure, idRdv)"
+                    + " VALUES ('" + id + "', '" + patient + "', '" + jComboBox4.getSelectedItem() + "', '" + jTextField2.getText() + "', '" + jTextField5.getText() + "', '" + jComboBox1.getSelectedItem() + "', '" + localisation + "', '" + jComboBox3.getSelectedItem() + "', '" + generationIdRdv() + "')");
         } catch (SQLException e) {
             System.out.println(e);
         }
         // On vérifie si le patient est déjà dans une autre chambre 
         try {
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT idPatient FROM Localisation");
+
+            ResultSet rs = connexion.executeQuery("SELECT idPatient FROM Localisation");
             while (rs.next()) {
                 int p = rs.getInt("idPatient");
                 listPatient.add(String.valueOf(p));
@@ -121,8 +135,9 @@ public class RDVpatient extends javax.swing.JFrame {
         }
         if (listPatient.contains(id)) {
             try {
-                Statement s = ExempleJdbc.connexion();
-                s.executeUpdate("UPDATE  Localisation set idPatient = '0', statut = 'Non occupée' WHERE idPatient ='" + id + "'");
+
+                System.out.println(id);
+                connexion.executeUpdate("UPDATE  Localisation set idPatient = '0', statut = 'Non occupée' WHERE idPatient ='" + id + "'");
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -131,8 +146,8 @@ public class RDVpatient extends javax.swing.JFrame {
         // On modifie la statut de la localisation à Occupée si c'est une hospitalisation 
         if (type2.equals("Hospitalisation")) {
             try {
-                Statement s = ExempleJdbc.connexion();
-                s.executeUpdate("UPDATE  Localisation set idPatient ='" + id + "', statut = 'Occupée' WHERE idLocalisation ='" + localisation + "'");
+                System.out.println(id);
+                connexion.executeUpdate("UPDATE  Localisation set idPatient ='" + id + "', statut = 'Occupée' WHERE idLocalisation ='" + localisation + "'");
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -154,25 +169,21 @@ public class RDVpatient extends javax.swing.JFrame {
         type = jComboBox5.getSelectedItem().toString();
         String numService = associerServiceNum();
         if (type.equals("Simple")) {
+            jCheckBox1.setVisible(false);
+            jCheckBox2.setVisible(false);
             for (int i = 0; i < 5; i++) {
                 jComboBox6.addItem(numService + "0" + i);
-                jComboBox7.addItem(i);
-                jCheckBox1.setVisible(false);
-                jCheckBox2.setVisible(false);
+
             }
-            // On veut enlever les lits et les chambres simples étant déjà pris
+            // On veut enlever les lits simples étant déjà pris
             ArrayList listLit = new ArrayList();
-            ArrayList listChambre = new ArrayList();
             try {
-                Statement s = ExempleJdbc.connexion();
-                ResultSet rs = s.executeQuery("SELECT lit, chambre FROM Localisation WHERE statut = 'Occupée' AND chambre < 5");
+
+                ResultSet rs = connexion.executeQuery("SELECT lit, chambre FROM Localisation WHERE statut = 'Occupée' AND chambre < 5");
                 while (rs.next()) {
                     String lit = rs.getString("lit");
                     listLit.add(lit);
-                    String ch = rs.getString("chambre");
-                    listChambre.add(ch);
                 }
-
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -183,10 +194,25 @@ public class RDVpatient extends javax.swing.JFrame {
         if (type.equals("Double")) {
             jCheckBox1.setVisible(true);
             jCheckBox2.setVisible(true);
-            jComboBox7.setVisible(true);
             for (int i = 5; i < 10; i++) {
                 jComboBox6.addItem(numService + "0" + i);
-                jComboBox7.addItem(i);
+            }
+            // On veut enlever les lits doubles étant déjà pris
+            ArrayList listLitD = new ArrayList();
+            try {
+
+                ResultSet rs = connexion.executeQuery("SELECT lit FROM Localisation WHERE statut = 'Occupée' AND chambre > 4 GROUP BY chambre HAVING COUNT(chambre) = 2");
+                while (rs.next()) {
+                    String lit = rs.getString("lit");
+                    listLitD.add(lit);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            for (Object l : listLitD) {
+                String lit = l.toString();
+                jComboBox6.removeItem(lit.substring(0,3));
             }
         }
 
@@ -200,6 +226,105 @@ public class RDVpatient extends javax.swing.JFrame {
             numero = "F"; // il est à la fenêtre
         }
         return numero;
+    }
+
+    private void HoraireRDV() {
+        String date = jTextField5.getText();
+        // On ajoute les horaires ArrayList couleurs = new ArrayList();
+        jComboBox3.addItem("9h");
+        jComboBox3.addItem("10h");
+        jComboBox3.addItem("11h");
+        jComboBox3.addItem("12h");
+        jComboBox3.addItem("13h");
+        jComboBox3.addItem("14h");
+        jComboBox3.addItem("15h");
+        jComboBox3.addItem("16h");
+        jComboBox3.addItem("17h");
+        // On récupère les dates des rdv déjà existants
+        ArrayList listeDate = new ArrayList();
+
+        try {
+
+            ResultSet rs = connexion.executeQuery("SELECT date FROM RendezVous");
+            while (rs.next()) {
+                String d = rs.getString("date");
+                listeDate.add(d);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        // On regarde si il y a déjà un rdv à la date renseigné
+        if (listeDate.contains(date)) {
+            // on regarde quels horaires sont déjà pris à cette date là
+            try {
+
+                ResultSet rs = connexion.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND idPatient ='" + id + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+            try {
+
+                ResultSet rs = connexion.executeQuery("SELECT heure FROM RendezVous WHERE date ='" + date + "' AND Médecin ='" + jComboBox4.getSelectedItem().toString() + "'");
+                while (rs.next()) {
+                    String h = rs.getString("heure");
+                    jComboBox3.removeItem(h);
+                }
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    private void verificationChambreDouble() {
+        if (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false) {
+            MessageErreur me = new MessageErreur("Le côté de la chambre n'a pas été saisi ");
+            me.setVisible(true);
+        }
+    }
+
+    private void verificationSelectionService() {
+        if (jComboBox2.getSelectedItem().toString().equals("-----Choisir-----")) {
+            MessageErreur me = new MessageErreur("Le service n'a pas été choisi ");
+            me.setVisible(true);
+        }
+    }
+
+    private String generationIdRdv() {
+        int max = 9999;
+        int min = 0;
+        ArrayList listID = new ArrayList<>();
+        String ID = new String();
+        Random rand = new Random();
+        int nombreAleatoire = rand.nextInt(max - min + 1) + min;
+        ID = String.valueOf(nombreAleatoire);
+
+        // On récupère les id de rdv déjà existants
+        try {
+
+            ResultSet rs = connexion.executeQuery("SELECT idRdv FROM RendezVous");
+            while (rs.next()) {
+                int idPatient = rs.getInt("id");
+                listID.add(idPatient);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        // on vérifie l'unicité de l'id
+        if (listID.contains(ID)) {
+            while (listID.contains(ID)) {
+                ID.replace(ID, String.valueOf(nombreAleatoire));
+            }
+        }
+        return ID;
     }
 
     @SuppressWarnings("unchecked")
@@ -238,9 +363,10 @@ public class RDVpatient extends javax.swing.JFrame {
         jComboBox6 = new javax.swing.JComboBox();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jLabel17 = new javax.swing.JLabel();
-        jComboBox7 = new javax.swing.JComboBox();
         jLabel18 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -302,7 +428,11 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel11.setText("Localisation :");
 
-        jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setMaximumRowCount(3);
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----Choisir-----", "Hospitalisation", "Consultation" }));
@@ -316,7 +446,12 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel13.setText("Date :");
 
-        jTextField5.setText("jTextField5");
+        jTextField5.setText("YYYY-MM-DD");
+        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField5ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Service :");
 
@@ -340,7 +475,11 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel4.setText("Heure :");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-----Choisir-----", "9h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h" }));
+        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox3ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Vérifier");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -361,6 +500,12 @@ public class RDVpatient extends javax.swing.JFrame {
 
         jLabel16.setText("Lit :");
 
+        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox6ActionPerformed(evt);
+            }
+        });
+
         jCheckBox1.setText("P");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -375,9 +520,18 @@ public class RDVpatient extends javax.swing.JFrame {
             }
         });
 
-        jLabel17.setText("Numéro :");
-
         jLabel18.setText("jLabel18");
+
+        jButton4.setText("Trouver une heure");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setText("N° chambre :");
+
+        jLabel20.setText("jLabel20");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -399,22 +553,15 @@ public class RDVpatient extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel14))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton4)
+                        .addGap(48, 48, 48)
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(59, 59, 59)
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,17 +569,14 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
+                                .addGap(30, 30, 30)
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -440,9 +584,25 @@ public class RDVpatient extends javax.swing.JFrame {
                                 .addComponent(jCheckBox1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox2)
-                                .addGap(96, 96, 96)
-                                .addComponent(jButton3))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(40, 40, 40)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel20)
+                                .addGap(38, 38, 38)
+                                .addComponent(jButton3))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel7))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -466,28 +626,31 @@ public class RDVpatient extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4))
+                .addGap(21, 21, 21)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(jButton3)
-                    .addComponent(jLabel15)
-                    .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jLabel17)
-                    .addComponent(jComboBox7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(jLabel20))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel15)
+                        .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16)
+                        .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCheckBox1)
+                        .addComponent(jCheckBox2)))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel18)
                 .addContainerGap(17, Short.MAX_VALUE))
@@ -525,7 +688,7 @@ public class RDVpatient extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
         );
 
@@ -544,9 +707,26 @@ public class RDVpatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        enregistrer();
-        MessageValidation mv = new MessageValidation(precedent, this);
-        mv.setVisible(true);
+        String date = jTextField5.getText();
+        if (jComboBox1.getSelectedItem().toString().equals("-----Choisir-----")) {
+            MessageErreur me = new MessageErreur("Le type de rendez-vous n'a pas été choisi ");
+            me.setVisible(true);
+        } else if (jTextField2.getText().equals("") || jTextField5.getText().equals("")) {
+            MessageErreur me = new MessageErreur("Des informations n'ont pas été saisies ");
+            me.setVisible(true);
+        } else if (compteur == 0) {
+            MessageErreur me = new MessageErreur("L'heure de rendez-vous n'a pas été choisie ");
+            me.setVisible(true);
+        } else if (DateChecker.isValid(date) == false) {
+            JFrame erreur = new MessageErreur("- Le format de la date n'est pas valide ");
+            erreur.setVisible(true);
+        } else {
+            enregistrer();
+            System.out.println("identifiant "+ id);
+            MessageValidation mv = new MessageValidation(precedent, this,Integer.valueOf(this.id),this.l);
+            mv.setVisible(true);
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -559,8 +739,6 @@ public class RDVpatient extends javax.swing.JFrame {
             jLabel11.setVisible(true);
             jLabel15.setVisible(true);
             jLabel16.setVisible(true);
-            jComboBox7.setVisible(true);
-            jLabel17.setVisible(true);
             type2 = "Hospitalisation";
 
         } else {
@@ -571,12 +749,13 @@ public class RDVpatient extends javax.swing.JFrame {
             jLabel11.setVisible(false);
             jLabel15.setVisible(false);
             jLabel16.setVisible(false);
-            jComboBox7.setVisible(false);
             jLabel17.setVisible(false);
+            jLabel20.setVisible(false);
             localisation = "";
             type2 = "Consultation";
 
         }
+        verificationSelectionService();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -592,7 +771,6 @@ public class RDVpatient extends javax.swing.JFrame {
 
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
         jComboBox6.removeAllItems();
-        jComboBox7.removeAllItems();
         associerChambreLit();
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
@@ -613,14 +791,27 @@ public class RDVpatient extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // à faire autre part 
-        String chambre = jComboBox7.getSelectedItem().toString();
+        String numLit = jComboBox6.getSelectedItem().toString();
+        String chambre = new String();
+        if (jComboBox5.getSelectedItem().toString().equals("Simple")) {
+            chambre = numLit.substring(2);
+        } else {
+            chambre = numLit.substring(2, 3);
+        }
+        jLabel20.setText(chambre);
+        jLabel17.setVisible(true);
+        jLabel20.setVisible(true);
+        
         String lit = jComboBox6.getSelectedItem().toString() + coteLit();
         jLabel18.setVisible(false);
         String lo = associerServiceNum() + chambre + lit;
         l = new Localisation(id, chambre, lit, service, lo);
         localisation = l.getIdLocalisation();
-
+        if (type2.equals("Hospitalisation")) {
+            if (jComboBox5.getSelectedItem().toString().equals("Double")){
+                verificationChambreDouble();
+            }           
+        }
         // vérification disponiblilité
         if (l.dejaOccupee()) {
             MessageErreur me = new MessageErreur("Un patient se trouve déjà à cette localiation " + localisation);
@@ -634,6 +825,30 @@ public class RDVpatient extends javax.swing.JFrame {
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox4ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+
+    }//GEN-LAST:event_jTextField5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        jComboBox3.removeAllItems();
+        jComboBox3.setVisible(true);
+        jLabel4.setVisible(true);
+        HoraireRDV();
+        compteur = 1;
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -674,6 +889,7 @@ public class RDVpatient extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox jComboBox1;
@@ -682,7 +898,6 @@ public class RDVpatient extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBox4;
     private javax.swing.JComboBox jComboBox5;
     private javax.swing.JComboBox jComboBox6;
-    private javax.swing.JComboBox jComboBox7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -694,6 +909,7 @@ public class RDVpatient extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

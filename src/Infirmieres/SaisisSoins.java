@@ -28,6 +28,7 @@ public class SaisisSoins extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public SaisisSoins(PatientHop p,Infirmier inf) {
+        // on initialise les composants
         infirmier =inf;
         patient=p;
         initComponents();
@@ -75,6 +76,7 @@ public class SaisisSoins extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jLabelErreur = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -187,13 +189,22 @@ public class SaisisSoins extends javax.swing.JFrame {
 
         jLabel17.setText("g/L");
 
+        jLabelErreur.setForeground(new java.awt.Color(255, 51, 51));
+        jLabelErreur.setText("champs non saisis");
+        jLabelErreur.setVisible(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(194, 194, 194)
-                .addComponent(jLabel16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(194, 194, 194)
+                        .addComponent(jLabel16))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabelErreur)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -280,10 +291,15 @@ public class SaisisSoins extends javax.swing.JFrame {
                             .addComponent(jTextFieldGly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(8, 8, 8))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelErreur)
+                                .addGap(19, 19, 19))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(17, 17, 17))))
@@ -310,12 +326,14 @@ public class SaisisSoins extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         this.dispose();    
-         new InfirmierPatient(this.patient,this.infirmier);
+         //retour au dossier patient
+        this.dispose();    
+        new InfirmierPatient(this.patient,this.infirmier);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
@@ -329,7 +347,20 @@ public class SaisisSoins extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldFCActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.out.println("poids "+JTextFieldPoids.getText());
+        // valider le soins
+        
+        jLabelErreur.setVisible(true);
+        // on test si tous les champs sont remplis
+        if(JTextFieldPoids.getText()==null ||
+        jTextFieldTemp.getText()==null ||
+        jTextFieldPA.getText()==null ||
+        jTextFieldFC.getText()==null ||
+        jTextFieldSat.getText()==null ||
+        jTextFieldGly.getText()==null ||
+        jTextAreaOb.getText()==null){
+            jLabelErreur.setVisible(true);
+        }
+        
         int poids=Integer.parseInt(JTextFieldPoids.getText());
         int temp=Integer.parseInt(jTextFieldTemp.getText());
         int pa=Integer.parseInt(jTextFieldPA.getText());
@@ -344,6 +375,7 @@ public class SaisisSoins extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public void creerNouveauSoin(int poids,int temp, int pa, int fc,int sat,int gly,String ob){
+    // on ajoute le soin a la bdd
     try{
         Statement s= ExempleJdbc.connexion();
             try{
@@ -427,6 +459,7 @@ public class SaisisSoins extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelErreur;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane2;

@@ -20,6 +20,7 @@ public class Motif extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public Motif(Acte a,PatientHop p,Medecin med ) {
+        // initialisation des composants
         acte=a;
         patient=p;
         medecin=med;
@@ -212,12 +213,14 @@ public class Motif extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // affiche le DMA
         this.dispose();
         new DMA(patient,medecin);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion1ActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion1ActionPerformed

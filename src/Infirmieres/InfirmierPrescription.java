@@ -30,6 +30,7 @@ public class InfirmierPrescription extends javax.swing.JFrame {
      * Creates new form SecretaireAcceuil
      */
     public InfirmierPrescription(PatientHop p, Infirmier inf) {
+        // on initialise nos variables
         patient = p;
         infirmier = inf;
         listPrescription = new TableauPrescriptionsInf(patient, infirmier.service);
@@ -256,11 +257,14 @@ public class InfirmierPrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
+        // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        // on affiche le detail de la prescription quand on clic sur la ligne
+        // correspondante
         if (evt.getButton() == MouseEvent.BUTTON1
                 || evt.getButton() == MouseEvent.BUTTON3) {
             int indRow = jTable1.rowAtPoint(evt.getPoint());
@@ -277,6 +281,7 @@ public class InfirmierPrescription extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+       // tri
         ArrayList<PrescriptionInf> list = listPrescription.getListPrescription();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierPrescriptionParService(list);

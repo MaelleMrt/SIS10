@@ -18,11 +18,11 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Maelle
  */
+// envoie mail medecin traitant
 public class EnvoieMessage {
     
     public void sendMessage(String subject, String text, String destinataire, String copyDest) {
     // 1 -> Création de la session
-   
     Properties properties = new Properties();
     properties.setProperty("mail.transport.protocol", "smtp");
     properties.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -33,9 +33,10 @@ public class EnvoieMessage {
     properties.put("mail.smtp.port",587);
 
     Session session = Session.getInstance(properties);
-    
+    // creation du message
     MimeMessage message = new MimeMessage(session);
     try {
+        // on ajoute le texte le sujet
         message.setText(text);
         message.setSubject(subject);
         message.addRecipients(Message.RecipientType.TO, destinataire);
@@ -47,6 +48,7 @@ public class EnvoieMessage {
     Transport transport=null;
     try {
         transport = session.getTransport("smtp");
+        // on se connecte a l'adresse de l hopital
         transport.connect("smtp.gmail.com","hopital.princeton@gmail.com", "HopitalPrinceton2021!");
 
         transport.sendMessage(message, new Address[] { new InternetAddress(destinataire),
@@ -62,6 +64,5 @@ public class EnvoieMessage {
             e.printStackTrace();
         }
     }
-        System.out.println("message envoyé");
     } 
 }

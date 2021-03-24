@@ -34,6 +34,7 @@ public class LettreSortie extends javax.swing.JFrame {
     private String medecinTraitant;
 
     public LettreSortie(PatientHop patient, Medecin medecin) {
+        
         this.patient = patient;
         this.medecin = medecin;
         remplirChamps();
@@ -375,16 +376,17 @@ public class LettreSortie extends javax.swing.JFrame {
             } else {
                 erreur.setVisible(false);
                 LettreDeSortie l = new LettreDeSortie(String.valueOf(patient.getId()), medecin.getService(), med.getText(), pat.getText(), naissance.getText(), entree.getText(), sortie.getText(), motif.getText(), exam.getText(), medecin.getNom() + " " + medecin.getPrenom(), traitement.getText(), synthese.getText(), suivi.getText());
+                LettreDeSortiePDF pdf = new LettreDeSortiePDF(l);
                 Statement s;
                 try {
                     s = ExempleJdbc.connexion();
-                    s.executeUpdate("INSERT INTO `LettreSortie`(`idPatient`, `ph`, `service`, `medecinTraitant`, `dateEntree`, `dateSortie`, `motif`, `exam`, `traitement`, `synthese`, `suivi`) VALUES ('" + l.getId() + "','" + l.getPH() + "','" + l.getService() + "','" + l.getMedecinTraitant() + "','" + l.getDateEntree() + "','" + l.getDateSortie() + "','" + l.getMotif() + "','" + l.getExam() + "','" + l.getTraitement() + "','" + l.getSynthese() + "','" + l.getSuivi() + "')");
-
+                    s.executeUpdate("UPDATE `Localisation` SET `idPatient`=0,`statut`='Non occupée' WHERE idPatient = "+patient.getId());
+                    
                 } catch (SQLException ex) {
                     Logger.getLogger(LettreSortie.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                LettreDeSortiePDF pdf = new LettreDeSortiePDF(l);
+                
                 try {
                     Desktop.getDesktop().open(new File("src/PDF/LettreSortie" + patient.getId() + ".pdf"));
                 } catch (IOException ex) {
@@ -393,6 +395,7 @@ public class LettreSortie extends javax.swing.JFrame {
                 //MedecinPatient m = new MedecinPatient(patient, medecin);
                 new EnvoyeMailLettreSortie(this.patient,this.medecin);
                 this.setVisible(false);
+                
             }
         }
     }//GEN-LAST:event_validerActionPerformed
