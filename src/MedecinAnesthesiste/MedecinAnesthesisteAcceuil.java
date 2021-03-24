@@ -22,22 +22,18 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author amira
+ * @author Maelle
  */
+/*
+Création d'interface MedecinAnesthesisteAcceuil ou on va afficher la liste des patients du médecin anesthésiste
+*/
 public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     String login;
     TableauPatient listPatient;
     Medecin medecin;
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesisteAcceuil.java
-    /*
-    Création d'une classe MedecinanésthésisteAcceuil afin d'afficher la liste des patients du médecin anesthésiste
-    Declaration d'un tableau listPatient de type TableauPatient 
-    */
-=======
     /**
      * Creates new form SecretaireAcceuil
      */
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésisteAcceuil.java
     public MedecinAnesthesisteAcceuil (String log) {
         login=log;
         rechercheMedecin();
@@ -259,12 +255,12 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-// Bouton déconnexion qui nous permet de retourner sur la page de connexion
+//Boutton déconnexion
     private void deconnexion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion4ActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion4ActionPerformed
-
+// Tableau pour afficher la liste des patients du médecin anesthésiste 
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         if(evt.getButton() == MouseEvent.BUTTON1 ||
 						evt.getButton() == MouseEvent.BUTTON3) 
@@ -280,12 +276,7 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
 
                                 }
     }//GEN-LAST:event_jTable1MousePressed
-
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesisteAcceuil.java
-    /*
-    Récupération les coordonnées  du médecin anesthésiste ( nom, prénom, et nom du service) à l'aide d'une requête SQL
-    */
-=======
+// Tableau pour afficher les RDV du médecin anesthésiste
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
         if(evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3){
             int indRow =jTable2.rowAtPoint(evt.getPoint());
@@ -304,7 +295,6 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable2MousePressed
 
     // rechercher le médecin à partir du login 
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésisteAcceuil.java
     public void rechercheMedecin(){
         System.out.println(login);
          try{

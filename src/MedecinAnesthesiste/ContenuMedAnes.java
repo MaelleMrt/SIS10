@@ -219,7 +219,7 @@ public class ContenuMedAnes extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
+//Bouton déconnexion
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();

@@ -15,13 +15,13 @@ import java.awt.event.MouseEvent;
  *
  * @author Haouas
  */
-public class RdvAnesthesiste extends javax.swing.JFrame {
+public class rdvanesthesiste extends javax.swing.JFrame {
     public PatientHop patient;
     public Medecin medecin;
    
    
      
-    public RdvAnesthesiste(PatientHop p,Medecin med) {
+    public rdvanesthesiste(PatientHop p,Medecin med) {
         patient=p;
         medecin=med;
         initComponents();
@@ -228,11 +228,7 @@ public class RdvAnesthesiste extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-<<<<<<< HEAD:src/MedecinAnesthesiste/RdvAnesthesiste.java
-        new MedecinAnesthesisteAcceuil(medecin.getLogin());
-=======
         new MedecinAnesthesistePatient(patient,medecin);
->>>>>>> master:src/MedecinAnesthesiste/rdvanesthesiste.java
     }//GEN-LAST:event_jButton2ActionPerformed
           
     /**

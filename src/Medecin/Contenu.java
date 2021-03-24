@@ -5,11 +5,7 @@
  */
 package Medecin;
 
-<<<<<<< HEAD
-import Médecinanesthésiste.ResultatExamen;
-=======
 import MedecinAnesthesiste.Resultatexamen;
->>>>>>> master
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 
@@ -34,12 +30,6 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
-<<<<<<< HEAD
-    public Contenu(ResultatExamen res, PatientHop patient, Medecin medecin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-=======
->>>>>>> master
 
    
     

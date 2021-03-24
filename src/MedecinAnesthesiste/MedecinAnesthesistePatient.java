@@ -19,27 +19,16 @@ import java.util.logging.Logger;
  * @author Maelle
  */
 public class MedecinAnesthesistePatient extends javax.swing.JFrame {
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesistePatient.java
-=======
 
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésistePatient.java
     public PatientHop patient;
     public Medecin medecin;
 
     /**
-     * Creation d'une classe MedecinAnesthesistePatient  pour afficher l'interface du patient sélectionné.
-     * Sur cette interface on peut y accéder aux résultats du patient, lui prendre un Rdv pour une consultation
-     * 
+     * Creates new form SecretaireAcceuil
      */
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesistePatient.java
-    public MedecinAnesthesistePatient(PatientHop p,Medecin med) {
-        patient =p;
-        medecin=med;
-=======
     public MedecinAnesthesistePatient(PatientHop p, Medecin med) {
         patient = p;
         medecin = med;
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésistePatient.java
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -217,43 +206,23 @@ public class MedecinAnesthesistePatient extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesistePatient.java
-    //Boutton d'accés à l'interface Rdv anesthésie du patient
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-        this.dispose();
-        new RdvAnesthesiste(patient,medecin);
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
-   //Boutton de retour sur la page d'acceuil du médecin anesthésiste
-=======
 
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésistePatient.java
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new MedecinAnesthesisteAcceuil(medecin.getLogin());
 
     }//GEN-LAST:event_jButton2ActionPerformed
-  //Boutton qui permet l'affichage du résultat pour un patient X 
+// Permet l'affichage de l'interface résultat du patient sélectionné
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
-<<<<<<< HEAD:src/MedecinAnesthesiste/MedecinAnesthesistePatient.java
-        new MedecinAnesthesisteResultat(patient,medecin);
-    }//GEN-LAST:event_jToggleButton5ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
-               // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-     // Boutton de déconnexion
-=======
         new MedecinAnesthesisteResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
-
->>>>>>> master:src/Médecinanesthésiste/MedecinanésthésistePatient.java
+// Boutton de déconnexion
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
-
+// Permet l'affichage du questionnaire
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         File fichier1 = new File("src/PDF/QuestionnaireAnesthésie" + patient.getId() + ".pdf");
         if (fichier1.exists()) {

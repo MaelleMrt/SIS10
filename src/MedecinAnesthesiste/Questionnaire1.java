@@ -427,7 +427,9 @@ public class Questionnaire1 extends javax.swing.JFrame {
     private void jTextFieldPoidsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPoidsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPoidsActionPerformed
-
+// Verification si le questionnaire  est bien rempli
+    // ensuite création du formulaire sous forme PDF 
+    //Validation du formulaire
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jLabelNonRempli.setVisible(false);
         if((jCheckBoxSuffisant.isSelected()==false && jCheckBoxPetite.isSelected()==false )||(jCheckBoxOui1.isSelected()==false && jCheckBoxNon1.isSelected()==false ) || (jCheckBoxOui2.isSelected()==false && jCheckBoxNon2.isSelected()==false ) ||(jCheckBoxOui3.isSelected()==false && jCheckBoxNon3.isSelected()==false ) ||(jCheckBoxOui4.isSelected()==false && jCheckBoxNon4.isSelected()==false )){
