@@ -62,26 +62,15 @@ public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
 
         jTable1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         jTable1.setModel(modele);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.addMouseListener(new MouseAdapter()  {
-            public void mousePressed(MouseEvent e) {
-
-                // clic sur le bouton gauche ou droit
-                if(e.getButton() == MouseEvent.BUTTON1 ||
-                    e.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(e.getPoint());
-
-                    try{
-                        Resultatexamen res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
-                        new Contenu(res,patient,medecin);
-                    }catch(Exception e2){
-                    }
-
-                }
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
-
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
         });
+        jScrollPane1.setViewportView(jTable1);
 
         jButton2.setBackground(new java.awt.Color(209, 235, 245));
         jButton2.setText("Retour");
@@ -92,7 +81,7 @@ public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
         });
 
         jButton1.setBackground(new java.awt.Color(209, 235, 245));
-        jButton1.setText("Acceuil");
+        jButton1.setText("Accueil");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -222,6 +211,30 @@ public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
+        
+
+                // clic sur le bouton gauche ou droit
+                if(evt.getButton() == MouseEvent.BUTTON1 ||
+                    evt.getButton() == MouseEvent.BUTTON3)
+                {
+                    int indRow =jTable1.rowAtPoint(evt.getPoint());
+
+                    try{
+                        ResultatPrescription res=new ResultatPrescription(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
+                        new Contenu(res,patient,medecin);
+                        this.setVisible(false);
+                    }catch(Exception e2){
+                    }
+
+                }
+            
+    }//GEN-LAST:event_jTable1MousePressed
 
     /**
      * @param args the command line arguments

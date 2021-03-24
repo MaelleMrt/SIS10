@@ -12,6 +12,7 @@ import Infirmieres.Soins;
 import Medecin.Consultations;
 import Medecin.Hospitalisations;
 import Medecin.Prescription;
+import Medecin.RdvMedecin;
 import Medecin.Resultat;
 import Patient.PatientHop;
 import java.util.ArrayList;
@@ -537,6 +538,86 @@ public class Tri {
             for (int i = 1; i < copieListe.size(); i++) {
                 Soins p2 = copieListe.get(i);
                 if (p2.getDate().compareTo(p1.getDate()) < 0) {
+                    imin = i;
+                    p1 = p2;
+                }
+            }
+            listeTriee.add(p1);
+            copieListe.remove(imin);
+        }
+        return listeTriee;
+    }
+    
+    public ArrayList<RdvMedecin> trierRDVParNom(ArrayList<RdvMedecin> liste) {
+        ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
+        ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
+        
+        while (!copieListe.isEmpty()) {
+            int imin = 0;
+            RdvMedecin p1 = copieListe.get(imin);
+            for (int i = 1; i < copieListe.size(); i++) {
+                RdvMedecin p2 = copieListe.get(i);
+                if (p2.getNom().toUpperCase().compareTo(p1.getNom().toUpperCase()) < 0) {
+                    imin = i;
+                    p1 = p2;
+                }
+            }
+            listeTriee.add(p1);
+            copieListe.remove(imin);
+        }
+        return listeTriee;
+    }
+    
+    public ArrayList<RdvMedecin> trierRDVParPrenom(ArrayList<RdvMedecin> liste) {
+        ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
+        ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
+        
+        while (!copieListe.isEmpty()) {
+            int imin = 0;
+            RdvMedecin p1 = copieListe.get(imin);
+            for (int i = 1; i < copieListe.size(); i++) {
+                RdvMedecin p2 = copieListe.get(i);
+                if (p2.getPrenom().toUpperCase().compareTo(p1.getPrenom().toUpperCase()) < 0) {
+                    imin = i;
+                    p1 = p2;
+                }
+            }
+            listeTriee.add(p1);
+            copieListe.remove(imin);
+        }
+        return listeTriee;
+    }
+    
+    public ArrayList<RdvMedecin> trierRDVParDate(ArrayList<RdvMedecin> liste) {
+        ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
+        ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
+        
+        while (!copieListe.isEmpty()) {
+            int imin = 0;
+            RdvMedecin p1 = copieListe.get(imin);
+            for (int i = 1; i < copieListe.size(); i++) {
+                RdvMedecin p2 = copieListe.get(i);
+                if (p2.getDate().compareTo(p1.getDate()) < 0) {
+                    imin = i;
+                    p1 = p2;
+                }
+            }
+            listeTriee.add(p1);
+            copieListe.remove(imin);
+        }
+        return listeTriee;
+    }
+    
+    public ArrayList<RdvMedecin> trierRDVParNaissance(ArrayList<RdvMedecin> liste) {
+        ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
+        ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
+        
+        while (!copieListe.isEmpty()) {
+            int imin = 0;
+            RdvMedecin p1 = copieListe.get(imin);
+            for (int i = 1; i < copieListe.size(); i++) {
+                RdvMedecin p2 = copieListe.get(i);
+                if (p2.getDateN().compareTo(p1.getDateN()) < 0) {
                     imin = i;
                     p1 = p2;
                 }
