@@ -96,6 +96,7 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
 
         jLabel9.setForeground(new java.awt.Color(255, 51, 51));
         jLabel9.setText("Champs incomplets");
+        jLabel9.setVisible(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -166,7 +167,7 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1)
                             .addComponent(jLabel9))
                         .addGap(18, 18, 18))

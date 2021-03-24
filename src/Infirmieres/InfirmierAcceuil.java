@@ -139,7 +139,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         );
 
         jTextField1.setFont(new java.awt.Font("Bell MT", 0, 13)); // NOI18N
-        jTextField1.setText("Recherche Patient.PatientHop");
+        jTextField1.setText("Recherche Patient");
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 afficherList();
