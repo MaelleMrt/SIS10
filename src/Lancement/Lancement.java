@@ -9,7 +9,8 @@ import HL7.FrameServeur;
 import PageConnexion.InterfaceConnexion;
 
 /**
- *
+ * Lancement de l'interface de connexion
+ * et du serveur qui écoute les messages HL7
  * @author Maelle
  */
 public class Lancement {
