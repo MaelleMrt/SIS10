@@ -19,7 +19,13 @@ import java.util.logging.Logger;
  */
 // connexion à la base de donnees
 public class ExempleJdbc {
-    
+ /**
+  * Connexion a la base de donnees
+  * 
+  * @return Statement utilise pour faire
+  * les requetes SQL
+  * @throws SQLException 
+  */
  public static Statement connexion() throws SQLException {
      Statement st=null;
      try{

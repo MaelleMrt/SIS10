@@ -23,7 +23,7 @@ public class testFrameClient {
         Secretaire secretaire=new Secretaire("nom","prenom","service");
         secretaire.setVisible(false);
         Localisation loc=new Localisation(" Elodie Collet ","1","201","Gynécologie","211364592");
-        new FrameClientAdmi(patient,secretaire);
+        new FrameClientLoca(patient,secretaire,loc);
 
     }
     

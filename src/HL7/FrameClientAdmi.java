@@ -983,7 +983,17 @@ public class FrameClientAdmi extends javax.swing.JFrame {
  * @param evt 
  */
     private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
-
+          //Assigne Patient Location
+        if (nbr == 0 || nbr == 1) {
+            PatientLocation assignedLocation = new PatientLocation(this.patient);
+            //assignedLocation = this.setValPatLoc(assignedLocation);
+            this.patient.setAssignedPatLocation(assignedLocation);
+        }
+        if (nbr == 2) {
+            PatientLocation priorLocation = new PatientLocation(this.patient);
+            //priorLocation = this.setValPatLocAvt(priorLocation);
+            this.patient.setPriorPatLocation(priorLocation);
+        }
         //changer de panel
         java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
         c.show(this.panelCard, "cardConnexion");
