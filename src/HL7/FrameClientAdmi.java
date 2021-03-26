@@ -924,9 +924,10 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             this.setValPatient();
             //changer de panel
            
-        //String host = "82.65.192.5";
-        String host = "localhost";
-        Integer port = 6558;
+        String host = "82.65.192.5";
+        //String host = "localhost";
+        //Integer port = 6558;
+        Integer port =4444;
         ClientHL7 c = new ClientHL7();
         // on se connecte
         c.connexion(host, port);
