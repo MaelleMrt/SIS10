@@ -923,16 +923,10 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             }
             this.setValPatient();
             //changer de panel
-            java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
-            c.show(this.panelCard, "cardConnexion");
-
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // on recupere le port et l'adresse IP de host
-        String host = this.fieldHost.getText();
-        Integer port = Integer.parseInt(this.fieldPort.getText());
+           
+        //String host = "82.65.192.5";
+        String host = "localhost";
+        Integer port = 6558;
         ClientHL7 c = new ClientHL7();
         // on se connecte
         c.connexion(host, port);
@@ -958,6 +952,38 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         System.out.println("admission ok");
         new MessageAdmi(this.accueil,this.patientHop);
         this.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // on recupere le port et l'adresse IP de host
+//        String host = "82.65.192.5";
+//        Integer port = 4444;
+//        ClientHL7 c = new ClientHL7();
+//        // on se connecte
+//        c.connexion(host, port);
+//        switch (this.nbr) {
+//            case 0: {
+//                c.admit(patient);
+//                break;
+//            }
+//            case 1: {
+//                c.transPat(patient);
+//                break;
+//            }
+//            case 2: {
+//                c.endPat(patient);
+//                break;
+//            }
+//        }
+//        // on signale que l'admission est ok 
+//        MessageInterface messageAck = c.getMsg();
+//        this.labelFin1.setText("ID message : " + messageAck.getId());
+//        this.labelFin2.setText(messageAck.getAcknowledgmentCodeString());
+//        this.labelFin3.setText("ID Ack: " + messageAck.getIdAck());
+//        System.out.println("admission ok");
+//        new MessageAdmi(this.accueil,this.patientHop);
+//        this.setVisible(false);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 

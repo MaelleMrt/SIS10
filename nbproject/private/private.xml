@@ -25,14 +25,18 @@
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Hospitalisations.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/EnvoyeMailLettreSortie.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Connexion/test.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/MedecinAnesthesiste/MedecinAnesthesisteResultat.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/ContenuRdv.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/TableauResultatInf.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/ValidationEnvoieMail.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Lancement/Lancement.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/EnvoieMessage.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/testFrameClient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/MedecinAnesthesiste/Questionnaire1.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/EnvoieMessagePDF.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameServeur.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/HL7/FrameClient.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/MedecinAnesthesiste/MedecinAnesthesistePatient.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Interop_ajoutPatient.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Patient/PatientHop.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Localisation.java</file>
@@ -44,10 +48,12 @@
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/PageConnexion/InterfaceConnexion.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/RDVpatient.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/ContenuInf.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Infirmieres/InfirmiereSoins.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/MedecinAcceuil.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/CreationRDV.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Connexion/ExempleJdbc.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/VisualisationDMA.java</file>
+            <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/MedecinAnesthesiste/MedecinAnesthesisteAcceuil.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Secretaire/Secretaire.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/Resultat.java</file>
             <file>file:/Users/Maelle/NetBeansProjects/SIS10/src/Medecin/TableauPrescriptions.java</file>

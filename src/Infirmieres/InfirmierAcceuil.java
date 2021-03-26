@@ -156,7 +156,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
                 String texte=jTextField1.getText();
                 int i=0;
                 for (Patient.PatientHop p : listPatient.getListPatient()) {
-                    if(p.getNomUsuel().contains(texte)){
+                    if(p.getNomUsuel().toUpperCase().contains(texte.toUpperCase())){
                         Vector<String> v=new Vector<String>();
                         v.add(p.getNomUsuel());
                         v.add(p.getPrenom());
