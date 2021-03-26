@@ -10,13 +10,10 @@ import CIC.CicAccueil;
 import Connexion.ExempleJdbc;
 import Infirmieres.InfirmierAcceuil;
 import Medecin.MedecinAcceuil;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import Médecinanesthésiste.MedecinAnesthesisteAcceuil;
-=======
->>>>>>> master
-=======
->>>>>>> master
+
+
 import Secretaire.Secretaire;
 import java.sql.ResultSet;
 import java.sql.SQLException;
