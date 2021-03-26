@@ -17,7 +17,9 @@ public class ValidationEnvoieMail extends javax.swing.JFrame {
     private PatientHop patient;
     private Medecin medecin;       
     /**
-     * Creates new form ValidationEnvoieMail
+     * Constructeur ValidationEnvoieMail
+     * @param pat patient
+     * @param med medecin
      */
     public ValidationEnvoieMail(PatientHop pat,Medecin med) {
         this.patient=pat;
@@ -75,7 +77,10 @@ public class ValidationEnvoieMail extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Validation lecture du message
+ * @param evt evenement parru
+ */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
         new MedecinPatient(this.patient,this.medecin);

@@ -16,7 +16,9 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
     private  PatientHop patient;
     private Medecin medecin;
     /**
-     * Creates new form EnvoyeMailLettreSortie
+     * Constructeur EnvoyeMailLettreSortie 
+     * @param patient patient concerne
+     * @param med medecin concerne
      */
     public EnvoyeMailLettreSortie(PatientHop patient,Medecin med) {
         // on initialise nos variables
@@ -186,7 +188,10 @@ public class EnvoyeMailLettreSortie extends javax.swing.JFrame {
     private void jTextFieldDestinataireActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDestinataireActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldDestinataireActionPerformed
-
+    /**
+     * Listener bouton envoyer
+     * @param evt evenement parru
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // on verifie que les champs sont completes
         jLabel9.setVisible(false);

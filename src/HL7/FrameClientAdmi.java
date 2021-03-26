@@ -29,7 +29,7 @@ import library.interfaces.Patient;
 import library.interfaces.PatientLocation;
 
 /**
- *
+ * 
  * @author Anthony CROUZET Polytech'Grenoble TIS3
  */
 public class FrameClientAdmi extends javax.swing.JFrame {
@@ -43,7 +43,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private JFrame accueil;
     private final SimpleDateFormat formateur = new SimpleDateFormat("yyyy-mm-dd");
 
-    /** Creates new form FrameClient */
+    /** 
+     * Constructeur FrameClientAdmi
+     * @param patHop patient admi
+     * @param acc JFrame d'accueil
+     */
     public FrameClientAdmi(PatientHop patHop,JFrame acc) {
         // on initialise nos composants
         this.patientHop=patHop;
@@ -188,7 +192,7 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         panelMessage.add(jPanel1, gridBagConstraints);
 
-        comboBoxADT.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admission d’un patient hospitalisé", "Mutation d’un patient ", "Sortie hôpital d’un patient" }));
+        comboBoxADT.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Admission d’un patient hospitalisé" }));
         comboBoxADT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxADTActionPerformed(evt);
@@ -911,7 +915,12 @@ public class FrameClientAdmi extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Listener Bouton valider 
+ * On verifie les champs
+ * On se connecte au service radiologie
+ * @param evt evenement parru
+ */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // on verifie les champs patients 
         // si c'est bon on cree un nouveau patient et on lui donne les valeurs recupereees
@@ -956,68 +965,24 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // on recupere le port et l'adresse IP de host
-//        String host = "82.65.192.5";
-//        Integer port = 4444;
-//        ClientHL7 c = new ClientHL7();
-//        // on se connecte
-//        c.connexion(host, port);
-//        switch (this.nbr) {
-//            case 0: {
-//                c.admit(patient);
-//                break;
-//            }
-//            case 1: {
-//                c.transPat(patient);
-//                break;
-//            }
-//            case 2: {
-//                c.endPat(patient);
-//                break;
-//            }
-//        }
-//        // on signale que l'admission est ok 
-//        MessageInterface messageAck = c.getMsg();
-//        this.labelFin1.setText("ID message : " + messageAck.getId());
-//        this.labelFin2.setText(messageAck.getAcknowledgmentCodeString());
-//        this.labelFin3.setText("ID Ack: " + messageAck.getIdAck());
-//        System.out.println("admission ok");
-//        new MessageAdmi(this.accueil,this.patientHop);
-//        this.setVisible(false);
+
 
     }//GEN-LAST:event_jButton2ActionPerformed
-
+/**
+ * Listener ComboBox
+ * Choix d'action
+ * @param evt evenement parru
+ */
     private void comboBoxADTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxADTActionPerformed
-        //on definit les actions de nos combobox
-        String[] button = {"Admettre", "Transférer", "Décharger"};
-        String[] cads = {"cardAdmettre", "cardTrans", "cardDecharger"};
-        this.nbr = this.comboBoxADT.getSelectedIndex();
-        this.card = cads[nbr];
-        this.jButton1.setText(button[nbr]);
-        if (nbr == 0 || nbr == 1) {
-            this.enableTabLocAvt(false);
-            this.enableTabLoc(true);
-        }
-        if (nbr == 2) {
-            this.enableTabLocAvt(true);
-            this.enableTabLoc(false);
-        }
-    }//GEN-LAST:event_comboBoxADTActionPerformed
-
-    private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
  
-        //Assigne Patient Location
-        if (nbr == 0 || nbr == 1) {
-            PatientLocation assignedLocation = new PatientLocation(this.patient);
-            assignedLocation = this.setValPatLoc(assignedLocation);
-            this.patient.setAssignedPatLocation(assignedLocation);
-        }
-        if (nbr == 2) {
-            PatientLocation priorLocation = new PatientLocation(this.patient);
-            priorLocation = this.setValPatLocAvt(priorLocation);
-            this.patient.setPriorPatLocation(priorLocation);
-        }
-
+    }//GEN-LAST:event_comboBoxADTActionPerformed
+/**
+ * Listener connexion
+ * On ajoute les valeurs saisis au patient pour 
+ * la localisation
+ * @param evt 
+ */
+    private void jButtonConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConnexionActionPerformed
 
         //changer de panel
         java.awt.CardLayout c = (CardLayout) this.panelCard.getLayout();
@@ -1043,7 +1008,11 @@ public class FrameClientAdmi extends javax.swing.JFrame {
     private void jFormattedTextFieldDateAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldDateAdmiActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextFieldDateAdmiActionPerformed
-
+/**
+ * Listener Combobox type admission
+ * 
+ * @param evt evenement parru
+ */
     private void comboBoxClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxClassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxClassActionPerformed
@@ -1076,41 +1045,13 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         return r;
 
     }
-    
-    private void enableTabLocAvt(boolean b) {
-        this.jTextFieldBatiment1.setEnabled(b);
-        this.jLabelBatiment1.setEnabled(b);
-        this.jTextFieldChambre1.setEnabled(b);
-        this.jLabelChambre1.setEnabled(b);
-        this.jTextFieldEtage1.setEnabled(b);
-        this.jLabelEtage1.setEnabled(b);
-        this.jTextFieldLit1.setEnabled(b);
-        this.jLabelLit1.setEnabled(b);
-        this.jTextFieldPointOfCare1.setEnabled(b);
-        this.jLabelPointOfCare1.setEnabled(b);
-        this.jTextFieldStatus1.setEnabled(b);
-        this.jLabelStatus1.setEnabled(b);
-        this.jComboBoxTypeLoc1.setEnabled(b);
-        this.jLabelType1.setEnabled(b);
-    }
 
-    private void enableTabLoc(boolean b) {
-        this.jTextFieldBatiment.setEnabled(b);
-        this.jLabelBatiment.setEnabled(b);
-        this.jTextFieldChambre.setEnabled(b);
-        this.jLabelChambre.setEnabled(b);
-        this.jTextFieldEtage.setEnabled(b);
-        this.jLabelEtage.setEnabled(b);
-        this.jTextFieldLit.setEnabled(b);
-        this.jLabelLit.setEnabled(b);
-        this.jTextFieldPointOfCare.setEnabled(b);
-        this.jLabelPointOfCare.setEnabled(b);
-        this.jTextFieldStatus.setEnabled(b);
-        this.jLabelStatus.setEnabled(b);
-        this.jComboBoxTypeLoc.setEnabled(b);
-        this.jLabelType.setEnabled(b);
-    }
 
+  /**
+   * Creation patient
+   *
+   * @throws ParseException 
+   */
     private void creePatient() throws ParseException {
         try {
             //Nom de famille
@@ -1175,7 +1116,9 @@ public class FrameClientAdmi extends javax.swing.JFrame {
             System.out.println("Erreur d'identification patient : " + e.getMessage());
         }
     }
-
+    /**
+     * Attribue les valeurs au patient
+     */
     private void setValPatient() {
         //Prénom de famille
         this.patient.setFirstName(this.fieldPrenomPat.getText());
@@ -1205,165 +1148,20 @@ public class FrameClientAdmi extends javax.swing.JFrame {
         }
  
     }
-
-    private PatientLocation setValPatLoc(PatientLocation patLocation) {
-
-        //Point of care
-        String field = this.jTextFieldPointOfCare.getText();
-        if (field != null) {
-            patLocation.setPointOfCare(field);
-        }
-
-        //Chambre
-        field = this.jTextFieldChambre.getText();
-        if (field != null) {
-            patLocation.setRoom(field);
-        }
-
-        //Lit
-        field = this.jTextFieldLit.getText();
-        if (field != null) {
-            patLocation.setBed(field);
-        }
-
-        //Facility
-
-        //Status
-        field = this.jTextFieldStatus.getText();
-        if (field != null) {
-            patLocation.setStatus(field);
-        }
-
-        //PersonLocationType
-        int nbrItem = this.jComboBoxTypeLoc.getSelectedIndex();
-        switch (nbrItem) {
-            case 1: {
-                patLocation.setPersonLocationType("C");
-                break;
-            }
-            case 2: {
-                patLocation.setPersonLocationType("D");
-                break;
-            }
-            case 3: {
-                patLocation.setPersonLocationType("H");
-                break;
-            }
-            case 4: {
-                patLocation.setPersonLocationType("N");
-                break;
-            }
-            case 5: {
-                patLocation.setPersonLocationType("O");
-                break;
-            }
-            case 6: {
-                patLocation.setPersonLocationType("P");
-                break;
-            }
-            case 7: {
-                patLocation.setPersonLocationType("S");
-                break;
-            }
-
-        }
-
-        //Batiment
-        field = this.jTextFieldBatiment.getText();
-        if (field != null) {
-            patLocation.setBuilding(field);
-        }
-
-        //Etage
-        field = this.jTextFieldEtage.getText();
-        if (field != null) {
-            patLocation.setFloor(field);
-        }
-
-        return patLocation;
-    }
-
-    private PatientLocation setValPatLocAvt(PatientLocation patLocation) {
-        //Point of care
-        String field = this.jTextFieldPointOfCare1.getText();
-        if (field != null) {
-            patLocation.setPointOfCare(field);
-        }
-
-        //Chambre
-        field = this.jTextFieldChambre1.getText();
-        if (field != null) {
-            patLocation.setRoom(field);
-        }
-
-        //Lit
-        field = this.jTextFieldLit1.getText();
-        if (field != null) {
-            patLocation.setBed(field);
-        }
-
-        //Facility
-
-        //Status
-        field = this.jTextFieldStatus1.getText();
-        if (field != null) {
-            patLocation.setStatus(field);
-        }
-
-        //PersonLocationType
-        int nbrItem = this.jComboBoxTypeLoc1.getSelectedIndex();
-        switch (nbrItem) {
-            case 1: {
-                patLocation.setPersonLocationType("C");
-                break;
-            }
-            case 2: {
-                patLocation.setPersonLocationType("D");
-                break;
-            }
-            case 3: {
-                patLocation.setPersonLocationType("H");
-                break;
-            }
-            case 4: {
-                patLocation.setPersonLocationType("N");
-                break;
-            }
-            case 5: {
-                patLocation.setPersonLocationType("O");
-                break;
-            }
-            case 6: {
-                patLocation.setPersonLocationType("P");
-                break;
-            }
-            case 7: {
-                patLocation.setPersonLocationType("S");
-                break;
-            }
-
-        }
-
-        //Batiment
-        field = this.jTextFieldBatiment1.getText();
-        if (field != null) {
-            patLocation.setBuilding(field);
-        }
-
-        //Etage
-        field = this.jTextFieldEtage1.getText();
-        if (field != null) {
-            patLocation.setFloor(field);
-        }
-
-        return patLocation;
-    }
-
+/**
+ * initialisation des fonds des field
+ */
     private void initBackgroundField() {
         this.fieldIdPat.setBackground(Color.WHITE);
         this.fieldNomPat.setBackground(Color.WHITE);
 
     }
+ /**
+  * Conversion patientHop en patient HL7
+  * @param patHop patient de l'hopital
+  * @param classe type d'action
+  * @return 
+  */   
     public Patient conversionPatient(PatientHop patHop,char classe){
        return patient=new Patient(patHop.getId(),patHop.getPrenom(),classe);
     }

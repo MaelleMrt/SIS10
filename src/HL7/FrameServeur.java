@@ -27,7 +27,10 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
     private int port;
     private Thread thread;
 
-    /** Creates new form FrameServeur */
+    /**
+     * Constructeur FrameServeur
+     * @param port port d'écoute
+     */
     public FrameServeur(int port) {
         initComponents();
         this.patient = null;
@@ -329,7 +332,12 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Listener validation message reçu
+ * On valide le message on attend un nouveau message
+ * 
+ * @param evt evenement parru
+ */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // quand on valide le message on relance une pile d'execution
         // dans l'attente d'un nouveau message
@@ -383,7 +391,9 @@ public class FrameServeur extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelPatient1;
     // End of variables declaration//GEN-END:variables
 
-    
+    /**
+     * Reception message HL7
+     */
     @Override
     public void run() {
 
