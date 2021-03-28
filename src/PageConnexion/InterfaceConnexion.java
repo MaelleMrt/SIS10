@@ -88,9 +88,12 @@ public class InterfaceConnexion extends javax.swing.JFrame {
 
     private String RecupereMDP() {
         char[] motPasse;
-        motPasse = jPasswordField1.getPassword();
-        String MDP= new String(motPasse);
-        return MDP;
+        motPasse=jPasswordField1.getPassword();
+        String MDP =(String) motPasse;
+        System.out.println("mdpNC ="+MDP);
+        motPasse = Cryptage.Cryptage.chiffre(5,jPasswordField1.getPassword().toString());
+        System.out.println("mdpC = "+ motPasse);
+        return motPasse;
     }
 
     private boolean Connexion() {
