@@ -14,18 +14,35 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Fenêtre de saisie du questionnaire covid
  * @author Maelle
  */
 public class AlerteCOVID extends javax.swing.JFrame {
     
-    private PatientHop patient;
-    private Medecin medecin;
-    private RdvMedecin rdvMed;
+    /**
+     * le patient
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * le médecin
+     * @see Medecin
+     */
+    Medecin medecin;
+    /**
+     * le rdv
+     * @see RdvMedecin
+     */
+    RdvMedecin rdvMed;
 
     
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur AlerteCOVID
+     * Creates new form AlerteCOVID
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param medecin le médecin
+     * @param rdv le rdv
      */
     public AlerteCOVID(PatientHop p,Medecin medecin,RdvMedecin rdv) {
         this.rdvMed=rdv;
@@ -378,16 +395,30 @@ public class AlerteCOVID extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * annule le questionnaire, renvoie à la page précédente
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        new Questionnaire1(this.patient, this.medecin,this.rdvMed);
+        new ContenuRdv(this.patient, this.medecin,this.rdvMed);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Déconnexion : fermeture de la fenêtre actuelle et ouverture de la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * On vérifie qu'on a remplit tous les champs
+     * On valide le questionnaire covid et on crée un fichier PDF
+     * Fermeture de la fenêtre actuelle et ouverture du questionnaire anesthésie
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (buttonGroup1.getSelection() == null || buttonGroup2.getSelection() == null || buttonGroup3.getSelection() == null || buttonGroup4.getSelection() == null || buttonGroup5.getSelection() == null || buttonGroup6.getSelection() == null || buttonGroup7.getSelection() == null){
             JOptionPane.showMessageDialog(null, "Veuillez remplir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);

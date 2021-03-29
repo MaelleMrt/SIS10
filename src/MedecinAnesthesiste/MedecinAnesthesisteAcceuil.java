@@ -21,18 +21,32 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Page d'accueil d'un médecin anesthésiste
  * @author Maelle
  */
 public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
 
-    String login;
-    TableauPatient listPatient;
-    TableauRdvMedecin listeRDV;
-    Medecin medecin;
-
     /**
-     * Creates new form SecretaireAcceuil
+     * login du médecin
+     */
+    String login;
+    /**
+     * tableau avec la liste des patients du médecin
+     */
+    TableauPatient listPatient;
+    /**
+     * tableau avec la liste des rdv du médecin
+     */
+    TableauRdvMedecin listeRDV;
+    /**
+     * médecin
+     */
+    Medecin medecin;
+    /**
+     * Constructeur MedecinAnesthesisteAcceuil
+     * Creates new form MedecinAnesthesisteAcceuil
+     * initialisation des attributs et des éléments de la fenêtre
+     * @param log login du médecin
      */
     public MedecinAnesthesisteAcceuil(String log) {
         login = log;
@@ -363,11 +377,21 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexion4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion4ActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion4ActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, on affiche le dossier du patient correspondant
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         if (evt.getButton() == MouseEvent.BUTTON1
                 || evt.getButton() == MouseEvent.BUTTON3) {
@@ -383,6 +407,10 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche le contenu du rdv correspondant
+     * @param evt 
+     */
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
         if (evt.getButton() == MouseEvent.BUTTON1 || evt.getButton() == MouseEvent.BUTTON3) {
             int indRow = jTable2.rowAtPoint(evt.getPoint());
@@ -400,6 +428,10 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable2MousePressed
 
+    /**
+     * trie les rdv par nom, prénom, date de naissance du patient ou par date selon la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         ArrayList<RdvMedecin> list = listeRDV.getListRdv();
         if (jComboBox2.getSelectedItem().equals("Nom")) {
@@ -428,6 +460,10 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         jTable2.setModel(model);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    /**
+     * trie la liste des patient par nom, prénom ou date de naissance selon la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         ArrayList<PatientHop> list = listPatient.getListPatient();
         if (jComboBox1.getSelectedItem().equals("Nom")) {
@@ -463,7 +499,9 @@ public class MedecinAnesthesisteAcceuil extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField2PropertyChange
 
-    // rechercher le médecin à partir du login 
+    /**
+     * recherche le médecin à partir du login en interrogeant la base de données
+     */
     public void rechercheMedecin() {
         System.out.println(login);
         try {
