@@ -17,15 +17,26 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre qui affiche les résultats d'un patient
  * @author Maelle
  */
 public class InfirmiereResultat extends javax.swing.JFrame {
+    /**
+     * le patient
+     */
     public PatientHop patient;
+    /**
+     * l'infirmière qui est connectée
+     */
     public Infirmier infirmier;
+    /**
+     * le modèle qui va remplir le tableau avec la liste des résultats 
+     */
     private TableauResultatInf listResultats;
     /**
-     * Creates new form SecretaireAcceuil
+     * Cpnstructeur InfirmierResultat
+     * Creates new form InfirmierResultat
+     * initialise les attributs et les éléments de la fenêtre
      */
     public InfirmiereResultat(PatientHop p,Infirmier inf) {
         // on initialise nos variables
@@ -236,29 +247,46 @@ public class InfirmiereResultat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page d'accueil quand on clique sur le bouton     * 
+     * @param evt 
+     * @see InfirmierAcceuil
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Clic sur le bouton Acceuil ramene a l'interface acceuil
+        //Clic sur le bouton Accueil ramene a l'interface accueil
         this.dispose();
         new InfirmierAcceuil(infirmier.login);
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente
+     * ferme la fenêtre actuelle et renvoie à la page du dossier patient
+     * @param evt 
+     * @see InfirmierPatient
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface PatientHop
-   
         new InfirmierPatient(patient,infirmier);
-        this.dispose();
-        
-        
-        
+        this.dispose();    
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter 
+     * ferme la fenêtre actuelle et renvoie à la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, on affiche les détails de l'examen correspondant
+     * ferme la fenêtre actuelle et renvoie à la page ContenuInf
+     * @param evt 
+     * @see ContenuInf
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // affiche detail de l'examen en cliquant sur la ligne
         // correspondante
@@ -277,6 +305,10 @@ public class InfirmiereResultat extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trie les résultats par service, nom de médecin ou date suivant la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // tri
         ArrayList<Resultat> list = listResultats.getListResultat();

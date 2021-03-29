@@ -13,15 +13,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Fenêtre qui permet au médecin de rédiger un compte rendu
  * @author Maelle
  */
 public class AffichageCR extends javax.swing.JFrame {
+    /**
+     * le patient
+     * @see PatientHop
+     */
     PatientHop patient;
+    /**
+     * le médecin
+     * @see Medecin
+     */
     Medecin medecin;
+    /**
+     * le rdv
+     * @see RdvMedecin
+     */
     RdvMedecin rdvMed;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur AffichageCR
+     * Creates new form AffichageCR
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin
+     * @param rdvMed le rdv
      */
     public AffichageCR(PatientHop p,Medecin med,RdvMedecin rdvMed) {
         // initialisation des composants
@@ -35,8 +52,11 @@ public class AffichageCR extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation(){
-        
         try {
             Statement s = ExempleJdbc.connexion();
             try {
@@ -59,8 +79,6 @@ public class AffichageCR extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
-        
     }
 
 
@@ -284,7 +302,11 @@ public class AffichageCR extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Retour à la page d'accueil
+     * fermeture de la fenêtre actuelle et ouverture de la page d'accueil
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // retour a l'accueil
         this.dispose();
@@ -295,6 +317,11 @@ public class AffichageCR extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * On vérifie qu'il n'y a pas d'erreur de saisie (contenu non vide, date valide)
+     * Si tout est bon, on ajoute le compte rendu à la base de données
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //on n'affiche plus les messages d'erreurs
         jLabel4.setVisible(false);
@@ -323,12 +350,19 @@ public class AffichageCR extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Déconnexion : fermeture de la fenêtre actuelle et ouverture de la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * on supprime le rdv de la base de données quand le CR est écrit
+     */
     public void SupprimerRDV(){
         // on supprime le rdv lorsque le CR est ecrit
         try{
@@ -348,6 +382,12 @@ public class AffichageCR extends javax.swing.JFrame {
 
         }
     }
+    
+    /**
+     * ajout du CR à la base de données
+     * @param date la date 
+     * @param contenu le contenu
+     */
     public void ajoutCR(String date,String contenu){
         // on ajoute le CR a la bdd
         try{

@@ -19,16 +19,28 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenêtre affichant le dossier patient
  * @author Maelle
  */
 public class MedecinPatient extends javax.swing.JFrame {
 
+    /**
+     * le patient
+     * @see PatientHop
+     */
     public PatientHop patient;
+    /**
+     * le médecin qui est connecté
+     * @see Medecin
+     */
     public Medecin medecin;
 
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur MedecinPatient
+     * Creates new form MedecinPatient
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin connecté
      */
     public MedecinPatient(PatientHop p, Medecin med) {
         patient = p;
@@ -40,6 +52,10 @@ public class MedecinPatient extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation(){
         
         try {
@@ -293,42 +309,78 @@ public class MedecinPatient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Affiche le DMA du patient quand on clique sur le bouton
+     * @param evt 
+     */
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.dispose();
         new DMA(patient, medecin);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page d'accueil du médecin
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new MedecinAcceuil(medecin.login);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Affiche les résultats du patient quand on clique sur le bouton
+     * @param evt 
+     */
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         this.dispose();
         new MedecinResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    /**
+     * Affiche les prescriptions du patient quand on clique sur le bouton
+     * @param evt 
+     */
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
         new MedecinPrescription(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
+    /**
+     * Affiche la page de saisie d'une nouvelle prescription quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
         new AffichagePrescription(patient, medecin);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Affiche la page de saisie d'une nouvelle lettre de sortie quand on clique sur le bouton
+     * @param evt 
+     */
     private void lettreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lettreActionPerformed
         LettreSortie l = new LettreSortie(patient, medecin);
         this.setVisible(false);
     }//GEN-LAST:event_lettreActionPerformed
 
+    /**
+     * Ouvre le fichier PDF correspondant à la dernière lettre de sortie du patient
+     * ne fait rien si le patient n'a pas encore de lettre de sortie
+     * @param evt 
+     */
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");

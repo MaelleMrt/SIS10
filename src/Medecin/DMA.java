@@ -15,18 +15,36 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre affichant le DMA d'un patient
  * @author Maelle
  */
 public class DMA extends javax.swing.JFrame {
 
-    public PatientHop patient;
+    /**
+     * le patient
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * Le médecin qui est connecté
+     * @see Medecin
+     */
     public Medecin medecin;
+    /**
+     * le modèle de tableau permettant de remplir la tableau d'hospitalisations avec toutes les hospitalisations du patient
+     */
     private TableauHospitalisations listHospitalisations;
+    /**
+     * le modèle de tableau permettant de remplir la tableau de consultations avec toutes les consultations du patient
+     */
     private TableauConsultations listConsultations;
 
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur DMA
+     * Creates new form DMA
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin qui est connecté
      */
     public DMA(PatientHop p, Medecin med) {
         // initialisation des composants
@@ -403,18 +421,33 @@ public class DMA extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page avec le dossier patient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // on retourne a l'accueil patient
         this.dispose();
         new MedecinPatient(patient, medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * quand on clique sur une ligne du tableau, on affiche le detail de l'hospitalisation correspondante
+     * @param evt 
+     */
     private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
         // on affiche le detail des hospitalisations suivant la ligne 
         // selectionne
@@ -432,6 +465,10 @@ public class DMA extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable2MousePressed
 
+    /**
+     * quand on clique sur une ligne du tableau, on affiche le detail de la consultation correspondante
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // on affiche le detail des consultations suivant la ligne 
         // selectionne
@@ -450,6 +487,10 @@ public class DMA extends javax.swing.JFrame {
   
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trie les hospitalisations par service, médecin ou date 
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // tri
         ArrayList<Hospitalisations> list = listHospitalisations.getListHospitalisations();
@@ -477,6 +518,10 @@ public class DMA extends javax.swing.JFrame {
         jTable2.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    /**
+     * trie les consultations par service, médecin ou date 
+     * @param evt 
+     */
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // tri
         ArrayList<Consultations> list = listConsultations.getListConsultations();

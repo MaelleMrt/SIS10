@@ -10,15 +10,32 @@ import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
 
 /**
- *
+ * Fenêtre affichant le contenu d'un résultat d'une consultation ou d'une hospitalisation dans l'interface infirmière
  * @author Maelle
  */
 public class ContenuInf extends javax.swing.JFrame {
+    /**
+     * le résultat dont on veut afficher le contenu
+     * @see ResultatPrescription
+     */
     ResultatPrescription respres;
+    /**
+     * le patient
+     * @see PatientHop
+     */
     PatientHop patient;
+    /**
+     * L'infirmière qui est connectée
+     * @see Infirmier
+     */
     Infirmier infirmier;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur ContenuInf
+     * Creates new form ContenuInf
+     * initialise les attributs et les éléments de la fenêtre
+     * @param rp le résultat dont on veut afficher le contenu
+     * @param p le patient
+     * @param inf L'infirmière qui est connectée
      */
     public ContenuInf(ResultatPrescription rp,PatientHop p,Infirmier inf) {
         // on initialise les composants
@@ -209,6 +226,11 @@ public class ContenuInf extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page avec tous les résultats d'un patient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          // retour aux resultats
         this.dispose();
@@ -217,6 +239,12 @@ public class ContenuInf extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);

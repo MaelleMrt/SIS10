@@ -8,14 +8,26 @@ package Secretaire;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenêtre affichant une consultation d'un patient
  * @author Elodie
  */
 public class AffichageConsultation extends javax.swing.JFrame {
-
+    /**
+     * page précédente
+     */
     JFrame precedent; 
+    /**
+     * la consultation à afficher
+     */
     Consultation c;
     
+    /**
+     * Constructeur AffichageConsultation
+     * Creates new form AffichageConsultation
+     * initialise les attributs et les éléments de la fenêtre
+     * @param precedent la page précédente
+     * @param c la consultation
+     */
     public AffichageConsultation(JFrame precedent, Consultation c) {
         initComponents();
         this.precedent = precedent;
@@ -24,6 +36,9 @@ public class AffichageConsultation extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
     
+    /**
+     * remplit les labels avec les informations correspondantes
+     */
     private void affichageInfo(){
         jLabel14.setText(c.getNomP());
         jLabel15.setText(String.valueOf(c.getId()));
@@ -280,6 +295,9 @@ public class AffichageConsultation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);

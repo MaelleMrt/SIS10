@@ -20,81 +20,123 @@ import java.util.logging.Logger;
 import java.awt.event.KeyEvent;
 
 /**
+ * Interface de connexion
  *
  * @author Elodie
  */
 public class InterfaceConnexion extends javax.swing.JFrame {
 
+    /**
+     * login de l'utilisateur
+     */
     String Login;
+    /**
+     * mot de passe de l'utilisateur
+     */
     String mdp;
 
+    /**
+     * Constructeur InterfaceConnexion initialise les commposants de la fenêtre
+     */
     public InterfaceConnexion() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         jLabel5.setVisible(false);
-        
+
     }
-    
-    private String RecupereNom(String table){
+
+    /**
+     * récupère le nom de l'utilisateur en interrogeant la base de données
+     *
+     * @param table la table dans laquelle on va chercher le nom
+     * @return le nom
+     */
+    private String RecupereNom(String table) {
         String nom = null;
-        try {  
+        try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nom FROM " + table +" WHERE login='" + Login +"'");
-                while (rs.next()) {
-                    nom = rs.getString("nom");    
-                }
+            ResultSet rs = s.executeQuery("SELECT nom FROM " + table + " WHERE login='" + Login + "'");
+            while (rs.next()) {
+                nom = rs.getString("nom");
             }
-            catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
-            }
+        }
         return nom;
     }
-    private String RecuperePrenom(String table){
+
+    /**
+     * récupère le prénom de l'utilisateur en interrogeant la base de données
+     *
+     * @param table la table dans laquelle on va chercher le prénom
+     * @return le prénom
+     */
+    private String RecuperePrenom(String table) {
         String prenom = null;
-        try {  
+        try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT prenom FROM " + table +" WHERE login='" + Login +"'");
-                while (rs.next()) {
-                    prenom = rs.getString("prenom");    
-                }
+            ResultSet rs = s.executeQuery("SELECT prenom FROM " + table + " WHERE login='" + Login + "'");
+            while (rs.next()) {
+                prenom = rs.getString("prenom");
             }
-            catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
-            }
+        }
         return prenom;
     }
-    
-    private String RecupereNomS(String table){
+
+    /**
+     * récupère le nom du service en interrogeant la base de données
+     *
+     * @param table la table dans laquelle on va chercher le nom
+     * @return le nom
+     */
+    private String RecupereNomS(String table) {
         String nomS = null;
-        try {  
+        try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT  nomS FROM " + table +" WHERE login='" + Login +"'");
-                while (rs.next()) {
-                    nomS = rs.getString("nomS");    
-                }
+            ResultSet rs = s.executeQuery("SELECT  nomS FROM " + table + " WHERE login='" + Login + "'");
+            while (rs.next()) {
+                nomS = rs.getString("nomS");
             }
-            catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e);
-            }
+        }
         return nomS;
     }
 
+    /**
+     * récupère l'identifiant qu'on a rentré dans le champ de texte
+     *
+     * @return l'identifiant
+     */
     private String RecupereID() {
         String id;
         id = jTextField1.getText();
         return id;
     }
 
+    /**
+     * récupère le mot de passe qu'on a rentré dans le champ de texte
+     *
+     * @return le mot de passe
+     */
     private String RecupereMDP() {
         char[] motPasse;
         motPasse = jPasswordField1.getPassword();
-        String MDP= new String(motPasse);
+        String MDP = new String(motPasse);
         return MDP;
     }
 
+    /**
+     * Vérifie si la connexion est 'valide' : si les identifiant et mot de passe
+     * sont bons
+     *
+     * @return true si c'est valide, false sinon
+     */
     private boolean Connexion() {
-        boolean result = false; 
+        boolean result = false;
         String MDP = null;
         ArrayList listlogin = new ArrayList<>();
 
@@ -107,59 +149,65 @@ public class InterfaceConnexion extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             System.out.println(e);
-        }   
+        }
 
-        if(listlogin.contains(Login)){ // On vérifie que les identifiants sont bons
-            try {  
-            Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT mdp FROM Utilisateur WHERE login='" + Login +"'");
+        if (listlogin.contains(Login)) { // On vérifie que les identifiants sont bons
+            try {
+                Statement s = ExempleJdbc.connexion();
+                ResultSet rs = s.executeQuery("SELECT mdp FROM Utilisateur WHERE login='" + Login + "'");
                 while (rs.next()) {
-                    MDP = rs.getString("mdp");               
+                    MDP = rs.getString("mdp");
                 }
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-            catch (SQLException e) {
-            System.out.println(e);
-            }
-            if (mdp.equals(MDP)){
+            if (mdp.equals(MDP)) {
                 result = true;
             }
         }
-        
-    return result ;
-}
 
-private String Metier(){
+        return result;
+    }
+
+    /**
+     * on récupère le métier de l'utilisateur en interrogeant la base de données
+     * @return le métier
+     */
+    private String Metier() {
         String metier = null;
         try {  // On recupee le metier de la personne qui se connecte 
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT type FROM Utilisateur WHERE login='" + Login +"'");
+            ResultSet rs = s.executeQuery("SELECT type FROM Utilisateur WHERE login='" + Login + "'");
             while (rs.next()) {
                 metier = rs.getString("type");
-                
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e);
-        } 
+        }
         return metier;
     }
-private String Service( ){
-    String service = null;
-     try {  
+
+    /**
+     * on récupère le service du médecin si l'utilisateur est un médecin
+     * @return le service
+     */
+    private String Service() {
+        String service = null;
+        try {
             Statement s = ExempleJdbc.connexion();
-            ResultSet rs = s.executeQuery("SELECT nomS  FROM Médecin WHERE login='" + Login +"'");
+            ResultSet rs = s.executeQuery("SELECT nomS  FROM Médecin WHERE login='" + Login + "'");
             while (rs.next()) {
                 service = rs.getString("nomS");
                 System.out.println(service);
-                
+
             }
         } catch (SQLException e) {
             System.out.println(e);
-        } 
-    
-    return service;
-}
-    
+        }
+
+        return service;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -315,60 +363,64 @@ private String Service( ){
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
-       
+
     }//GEN-LAST:event_jButton1KeyPressed
 
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
-         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             valider();
         }
     }//GEN-LAST:event_jPasswordField1KeyPressed
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             valider();
         }
     }//GEN-LAST:event_jTextField1KeyPressed
-    public void valider(){
+    
+    /**
+     * on valide la connexion
+     * si la connexion est valide, renvoie à la page d'accueil de l'utilisateur en fonction de son métier
+     */
+    public void valider() {
         this.Login = RecupereID();
         this.mdp = RecupereMDP();
         String metier = Metier();
-        if (Connexion()==true){           
+        if (Connexion() == true) {
             this.setVisible(false);
-            switch(metier){
+            switch (metier) {
                 case "secrétaire":
                     String nom = RecupereNom("Secrétaire");
                     String prenom = RecuperePrenom("Secrétaire");
                     String service = RecupereNomS("Secrétaire");
-                    Secretaire s = new Secretaire(nom,prenom,service);
+                    Secretaire s = new Secretaire(nom, prenom, service);
                     s.setVisible(true);
                     break;
-                case "médecin" :
-                    if("Anésthésie".equals(Service())){
+                case "médecin":
+                    if ("Anésthésie".equals(Service())) {
                         MedecinAnesthesisteAcceuil m = new MedecinAnesthesisteAcceuil(Login);
-                    }
-                    else{
+                    } else {
                         MedecinAcceuil m = new MedecinAcceuil(Login);
                     }
                     break;
-                case "infirmière" :
+                case "infirmière":
                     InfirmierAcceuil i = new InfirmierAcceuil(Login);
                     break;
-                case "CIC" :
-            
-                try {
-                    CicAccueil c = new CicAccueil(Login);
-                } catch (SQLException ex) {
-                    Logger.getLogger(InterfaceConnexion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
+                case "CIC":
+
+                    try {
+                        CicAccueil c = new CicAccueil(Login, ExempleJdbc.connexion());
+                    } catch (SQLException ex) {
+                        Logger.getLogger(InterfaceConnexion.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
             }
-                    
-        }
-        else{
+
+        } else {
             jLabel5.setVisible(true);
-        }       
+        }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -383,32 +435,21 @@ private String Service( ){
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-
-catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfaceConnexion.class  
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(InterfaceConnexion.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

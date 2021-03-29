@@ -14,17 +14,39 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * fenêtre qui affiche toutes les informations d'un participant
  * @author clara
  */
 public class CicParticipant extends javax.swing.JFrame {
 
+    /**
+     * L'étude clinique à laquelle le participant participe
+     */
     private Etude e;
+    /**
+     * le participant dont on veut afficher les informations
+     */
     private Participant p;
+    /**
+     * le PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
     
-    public CicParticipant(Etude e,Participant p,Cic cic) {
-        
+    /**
+     * Constructeur CicParticipant
+     * initialise les élément de la fenêtre
+     * 
+     * @param e
+     * @param p
+     * @param cic
+     * @param s 
+     */
+    public CicParticipant(Etude e,Participant p,Cic cic,Statement s) {
+        this.s = s;
         this.e = e;
         this.p = p;
         this.cic = cic;
@@ -35,9 +57,10 @@ public class CicParticipant extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * remplit les labels avec les informations du participant en interrogeant la base de données
+     */
     public void remplirLabel(){
-        try{
-        Statement s= ExempleJdbc.connexion();
             try{
                 ResultSet rs= s.executeQuery("SELECT * FROM Participant JOIN Etude ON(etude = nom)  WHERE (nomUsuel = '"+p.getNomU()+"' and dateDeNaissance = '"+p.getDateN()+"' and prenom = '"+p.getPrenom()+"')");
                 while(rs.next()){
@@ -59,10 +82,6 @@ public class CicParticipant extends javax.swing.JFrame {
             } catch(SQLException e){
                     System.out.println(e);
             }
-
-        } catch (SQLException e){
-            System.out.println(e);
-        }
     }
     
     
@@ -375,24 +394,39 @@ public class CicParticipant extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ferme la fenêtre actuelle et renvoie à la page précédente
+     * @param evt 
+     * @see CicEtude
+     */
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicEtude etude = new CicEtude(e,cic);
+            CicEtude etude = new CicEtude(e,cic,s);
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_retourActionPerformed
 
+    /**
+     * ferme la fenêtre actuelle et renvoie à la page d'accueil
+     * @param evt 
+     * @see CicAccueil
+     */
     private void accueilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accueilActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(cic.getLogin());
+            CicAccueil accueil = new CicAccueil(cic.getLogin(),s);
         } catch (SQLException ex) {
             Logger.getLogger(CicParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_accueilActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la page actuelle et ouvre la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();

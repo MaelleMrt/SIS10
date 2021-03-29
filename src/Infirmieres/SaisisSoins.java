@@ -17,15 +17,25 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * Fenêtre de saisie des soins
  * @author Maelle
  */
 public class SaisisSoins extends javax.swing.JFrame {
-    ResultatPrescription respres;
+    
+    /**
+     * le patient
+     */
     PatientHop patient;
+    /**
+     * l'infirmière
+     */
     Infirmier infirmier;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur SaisisSoins
+     * Creates new form SaisisSoins
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p patient
+     * @param inf l'infirmière
      */
     public SaisisSoins(PatientHop p,Infirmier inf) {
         // on initialise les composants
@@ -325,19 +335,28 @@ public class SaisisSoins extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ferme la fenêtre actuelle et permet de retourner à la page précédente avec le dossier patient
+     * @see InfirmierPatient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          //retour au dossier patient
         this.dispose();    
         new InfirmierPatient(this.patient,this.infirmier);
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter, ferme la fenêtre actuelle et renvoie à la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    
     private void JTextFieldPoidsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextFieldPoidsActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTextFieldPoidsActionPerformed
@@ -346,6 +365,11 @@ public class SaisisSoins extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFCActionPerformed
 
+    /**
+     * permet de valider le soin saisi quand on clique sur le bouton valider et de l'ajouter à la base de données
+     * ferme la fenêtre actuelle et renvoie à la fenêtre du dossier patient
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // valider le soins
         
@@ -374,6 +398,16 @@ public class SaisisSoins extends javax.swing.JFrame {
         new InfirmierPatient(this.patient,this.infirmier);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * ajoute le soin à la base de données
+     * @param poids le poids du patient
+     * @param temp la température du patient
+     * @param pa la pression artérielle du patient
+     * @param fc la fréquence cardiaque du patient
+     * @param sat la saturation en oxygène du patient
+     * @param gly la glycémie du patient
+     * @param ob observation faite par l'infirmière
+     */
     public void creerNouveauSoin(int poids,int temp, int pa, int fc,int sat,int gly,String ob){
     // on ajoute le soin a la bdd
     try{

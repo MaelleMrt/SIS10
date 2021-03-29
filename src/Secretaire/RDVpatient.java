@@ -22,25 +22,73 @@ import java.util.Vector;
 import javax.swing.JFrame;
 
 /**
- *
+ * fenêtre de saisie d'un nouveau rdv pour un patient
  * @author Elodie
  */
 public class RDVpatient extends javax.swing.JFrame {
 
+    /**
+     * service
+     */
     String service;
+    /**
+     * liste des médecins
+     */
     private ArrayList<Medecin> listMedecin = new ArrayList<>();
+    /**
+     * liste des services
+     */
     private ArrayList<String> listService = new ArrayList<>();
+    /**
+     * liste des patients
+     */
     private ArrayList<String> listPatient = new ArrayList<>();
+    /**
+     * page précédente
+     */
     private JFrame precedent;
+    /**
+     * identifiant du patient
+     */
     private String id;
+    /**
+     * patient
+     */
     private String patient;
+    /**
+     * localisation
+     */
     private String localisation;
+    /**
+     * localisation
+     * @see Localisation
+     */
     private Localisation l;
+    /**
+     * type de la chambre
+     */
     private String type;
+    /**
+     * type du rdv
+     */
     private String type2;
+    /**
+     * un compteur qui vaut 0 quand on a pas choisi d'heure du rdv et 1 sinon
+     */
     private int compteur;
+    /**
+     * connexion à la base de données
+     */
     private Statement connexion;
 
+    /**
+     * Constructeur RDVpatient
+     * initialise les attributs et les éléments de la fenêtre
+     * @param secretaire secrétaire
+     * @param patient patient
+     * @param id identifiant du patient
+     * @param precedent page précédente
+     */
     public RDVpatient(String secretaire, String patient, String id, JFrame precedent) {
         initComponents();
         try{
@@ -69,9 +117,11 @@ public class RDVpatient extends javax.swing.JFrame {
         this.id = id;
         this.patient = patient;
         compteur = 0;
-
     }
 
+    /**
+     * remplit la liste des médecins en fonction du service
+     */
     private void remplirMedecins() {
         service = jComboBox2.getSelectedItem().toString();
         try {
@@ -89,6 +139,13 @@ public class RDVpatient extends javax.swing.JFrame {
 
     }
 
+    /**
+     * on regarde si le patient est déjà dans le service concerné
+     * on enregistre le patient dans le nouveau service
+     * on enregistre le rdv dans la base de données
+     * on vérifie si le patient est déjà dans une autre chambre
+     * On modifie la statut de la localisation à Occupée si c'est une hospitalisation 
+     */
     private void enregistrer() {
         // On regarde si le patient est déjà dans le service concerné
         try {
@@ -154,6 +211,10 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * on associe un numéro au service
+     * @return le numéro
+     */
     private String associerServiceNum() {
         String numero = new String();
         if (service.equals("Oncologie")) {
@@ -165,6 +226,9 @@ public class RDVpatient extends javax.swing.JFrame {
         return numero;
     }
 
+    /**
+     * on associe un lit à la chambre
+     */
     private void associerChambreLit() {
         type = jComboBox5.getSelectedItem().toString();
         String numService = associerServiceNum();
@@ -218,6 +282,10 @@ public class RDVpatient extends javax.swing.JFrame {
 
     }
 
+    /**
+     * 
+     * @return de quel côté de la chambre se trouve le lit (porte ou fenêtre)
+     */
     private String coteLit() { // De quel cote de la chambre se trouve le lit ?
         String numero = "";
         if (jCheckBox1.isSelected()) {
@@ -228,6 +296,9 @@ public class RDVpatient extends javax.swing.JFrame {
         return numero;
     }
 
+    /**
+     * affiche dans le combo box la liste des horaires disponibles
+     */
     private void HoraireRDV() {
         String date = jTextField5.getText();
         // On ajoute les horaires ArrayList couleurs = new ArrayList();
@@ -282,6 +353,9 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Vérifie si on a bien choisi un lit si c'est une chambre double
+     */
     private void verificationChambreDouble() {
         if (jCheckBox1.isSelected() == false && jCheckBox2.isSelected() == false) {
             MessageErreur me = new MessageErreur("Le côté de la chambre n'a pas été saisi ");
@@ -289,6 +363,9 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Vérification qu'on a bien sélectionné un service
+     */
     private void verificationSelectionService() {
         if (jComboBox2.getSelectedItem().toString().equals("-----Choisir-----")) {
             MessageErreur me = new MessageErreur("Le service n'a pas été choisi ");
@@ -296,6 +373,10 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * génère un identifiant pour le rdv
+     * @return l'identifiant
+     */
     private String generationIdRdv() {
         int max = 9999;
         int min = 0;
@@ -706,6 +787,10 @@ public class RDVpatient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * valide le rdv : affiche un message de validation
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String date = jTextField5.getText();
         if (jComboBox1.getSelectedItem().toString().equals("-----Choisir-----")) {
@@ -729,6 +814,10 @@ public class RDVpatient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * on remplit les labels selon le type hospitalisation ou consultation
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String catégorie = jComboBox1.getSelectedItem().toString();
         if (catégorie.equals("Hospitalisation")) {
@@ -758,22 +847,38 @@ public class RDVpatient extends javax.swing.JFrame {
         verificationSelectionService();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    /**
+     * remplit le combo box avec la liste des médecins
+     * @param evt 
+     */
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         jComboBox4.removeAllItems();
         remplirMedecins();
         associerServiceNum();
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * associe un lit à la chambre sélectionnée
+     * @param evt 
+     */
     private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
         jComboBox6.removeAllItems();
         associerChambreLit();
     }//GEN-LAST:event_jComboBox5ActionPerformed
 
+    /**
+     * impose la condition 'une seule case pour le lit peut être cochée'
+     * @param evt 
+     */
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (jCheckBox1.isSelected()) {
             jCheckBox2.setEnabled(false);
@@ -782,6 +887,10 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    /**
+     * impose la condition 'une seule case pour le lit peut être cochée'
+     * @param evt 
+     */
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         if (jCheckBox2.isSelected()) {
             jCheckBox1.setEnabled(false);
@@ -790,6 +899,9 @@ public class RDVpatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
+    /**
+     * On vérifie la disponibilité de la chambre
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         String numLit = jComboBox6.getSelectedItem().toString();
         String chambre = new String();
@@ -834,6 +946,10 @@ public class RDVpatient extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    /**
+     * permet de trouver une heure pour le rdv
+     * @param evt 
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         jComboBox3.removeAllItems();
         jComboBox3.setVisible(true);

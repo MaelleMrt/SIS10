@@ -24,25 +24,53 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * correspond à la page permettant d'ajouter des participants à une étude qu'on est en train de créer
  * @author clara
  */
 public class CicAjouterParticipant extends javax.swing.JFrame {
 
+    /**
+     * la liste des participants qui va permettre de remplir le tableau
+     */
     private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    /**
+     * la liste des participants qui va contenir les participants qu'on veut ajouter à l'étude
+     */
     private ArrayList<Participant> nouveaux = new ArrayList<Participant>();
+    /**
+     * la liste des participants qui participent déjà à l'étude
+     */
     private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    /**
+     * le nom de l'étude
+     */
     private String nom;
+    /**
+     * la date de démarrage de l'étude
+     */
     private String date;
+    /**
+     * la durée de l'étude
+     */
     private int duree;
-    private ArrayList<Participant> supp = new ArrayList<>();
+    /**
+     * le PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
 
     /**
+     * Constructeur CicAjouterParticipant
      * Creates new form CicAjouterParticipant
+     * initialise les éléments de la fenêtre
+     * remplit le tableau la liste des participants qui ne participent pas encore à cette étude
+     * 
      */
-    public CicAjouterParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree,Cic cic) throws SQLException {
-        
+    public CicAjouterParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree,Cic cic,Statement s) throws SQLException {
+        this.s = s;
         this.ancienneListe = ancienneListe;
         this.listeParticipants = listeParticipants;
         this.nom = nom;
@@ -56,8 +84,14 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * remplit le tableau avec la liste listeParticipants
+     * on supprime d'abord de la liste de tous les participants, ceux qui participent déjà à cette étude (qui sont dans la liste ancienneListe)
+     * 
+     * @throws SQLException 
+     */
     public void remplirTableau() throws SQLException {
-
+        ArrayList<Participant> supp = new ArrayList<>();
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {
@@ -69,9 +103,11 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                 supp.add(p);
             }
         }
+        // on supprime de la liste les participants qui participent déjà à l'étude
         for (Participant p1 : supp) {
             listeParticipants.remove(p1);
         }
+        // on remplit le tableau
         for (Participant part : listeParticipants) {
             Vector<Object> v = new Vector<Object>();
             v.add(part.getNomU());
@@ -300,17 +336,33 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rechercherTextFieldActionPerformed
 
+    /**
+     * renvoie à la page où l'on peut faire une recherche selon différents critères pour trouver des participants
+     * @param evt 
+     * @see CicRechercherParticipant
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        CicRechercherParticipant r = new CicRechercherParticipant(ancienneListe, listeParticipants, nom, date, duree,cic);
+        CicRechercherParticipant r = new CicRechercherParticipant(ancienneListe, listeParticipants, nom, date, duree,cic,s);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * annuler l'ajout de participant : renvoie à la page ajouter une étude clinique mais n'a pas ajouté de participant
+     * @param evt 
+     * @see CicAjouterEtude
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
-        CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree,cic);
+        CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree,cic,s);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Ajouter les participants sélectionnés à l'étude qu'on est en train de créer
+     * @param evt 
+     * @see CicAjouterEtude
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        //Pour chaque ligne sélectionnée, on crée un nouveau participant qu'on ajoute à la liste nouveaux 
         for (int i = 0; i < participants.getRowCount(); i++) {
             if (participants.isRowSelected(i)) {
                 try {
@@ -325,6 +377,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
                 }
             }
         }
+        // si la liste nouveaux est vide, càd si on a pas ajouté de participants, message d'erreur apparait
         if (nouveaux.isEmpty()) {
             erreur.setVisible(true);
         } else {
@@ -333,14 +386,20 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
             for (Participant p : nouveaux) {
                 s += p.getPrenom() + " " + p.getNomU() + ", ";
             }
+            // Message pop-up pour confirmer l'ajout des participants
             JOptionPane.showMessageDialog(null, s + "a/ont bien été ajouté(s)", "Message", JOptionPane.WARNING_MESSAGE);
            
             this.setVisible(false);
-            CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree,cic);
+            CicAjouterEtude a = new CicAjouterEtude(ancienneListe, nouveaux, nom, date, duree,cic,this.s);
         }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    /**
+     * permet de faire une recherche par le nom du participant
+     * affiche la liste des participants ayant un nom contenant le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
         rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -376,21 +435,34 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
 
         });
     }//GEN-LAST:event_rechercherTextFieldPropertyChange
-
+    /**
+     * permet de se déconnecter
+     * ferme la page actuelle et ouvre la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * ferme la page actuelle et ouvre la page sur laquelle on peut créer un nouveau participant qui n'est pas encore dans la base de données
+     * @param evt 
+     * @see NouveauParticipant
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            NouveauParticipant n = new NouveauParticipant(ancienneListe,listeParticipants,nom,date,duree,cic);
+            NouveauParticipant n = new NouveauParticipant(ancienneListe,listeParticipants,nom,date,duree,cic,s);
         } catch (ParseException ex) {
             Logger.getLogger(CicAjouterParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * permet de trier les participants par nom, prénom, date de naissance ou type
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (jComboBox1.getSelectedItem().equals("Nom")) {
             listeParticipants = new Tri().trierParticipantsParNom(listeParticipants);
@@ -404,6 +476,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
         else if (jComboBox1.getSelectedItem().equals("Type")) {
             listeParticipants = new Tri().trierParticipantsParType(listeParticipants);
         }
+        // on remplit le tableau avec la liste triée
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {

@@ -10,10 +10,15 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
- *
+ * Vérifie si une date donnée en String est bien dans le bon format
  * @author Maelle
  */
 public class DateChecker {
+    /**
+     * 
+     * @param strdate la date donnée en String
+     * @return true si la date est valide et false sinon
+     */
     public static boolean isValid(String strdate) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setLenient(false);

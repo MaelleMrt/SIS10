@@ -13,34 +13,55 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
+ * Fenêtre qui permet au médecin de rédiger une prescription
  *
  * @author Maelle
  */
 public class AffichagePrescription extends javax.swing.JFrame {
-    PatientHop patient;
-    Medecin medecin;
+
     /**
-     * Creates new form SecretaireAcceuil
+     * le patient
+     *
+     * @see PatientHop
      */
-    public AffichagePrescription(PatientHop p,Medecin med) {
+    PatientHop patient;
+    /**
+     * le médecin
+     *
+     * @see Medecin
+     */
+    Medecin medecin;
+
+    /**
+     * Constructeur AffichagePrescription Creates new form AffichagePrescription
+     * initialise les attributs et les éléments de la fenêtre
+     *
+     * @param p le patient
+     * @param med le médecin
+     */
+    public AffichagePrescription(PatientHop p, Medecin med) {
         // initialisation des composants
-        patient=p;
-        medecin=med;
+        patient = p;
+        medecin = med;
         initComponents();
         jLabel5.setVisible(false);
         localisation();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
-    public void localisation(){
-        
+
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
+    public void localisation() {
+
         try {
             Statement s = ExempleJdbc.connexion();
             try {
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE idPatient ="+patient.getId());
+                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE idPatient =" + patient.getId());
                 rs.last();
-                if (rs.getRow() > 0){
+                if (rs.getRow() > 0) {
                     rs.beforeFirst();
                     while (rs.next()) {
                         jLabel5.setText(rs.getString("lit"));
@@ -48,7 +69,6 @@ public class AffichagePrescription extends javax.swing.JFrame {
                         jLabel5.setVisible(true);
                     }
                 }
-                
 
             } catch (SQLException e) {
                 System.out.println(e);
@@ -57,10 +77,8 @@ public class AffichagePrescription extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
-        
-    }
 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -270,15 +288,25 @@ public class AffichagePrescription extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Retour à la page précédente
+     * fermeture de la fenêtre actuelle et ouverture de la page du dossier patient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
-        new MedecinPatient(patient,medecin);
+        new MedecinPatient(patient, medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * On vérifie qu'il n'y a pas d'erreur de saisie (contenu non vide, date valide)
+     * Si tout est bon, on ajoute la prescription à la base de données
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //on n'affiche plus les messages d'erreurs
         jLabel4.setVisible(false);
@@ -286,52 +314,57 @@ public class AffichagePrescription extends javax.swing.JFrame {
         jLabel6.setVisible(false);
         new DateChecker();
         //on test si la jTextField date est vide
-        if(jTextField1.getText()==null){
+        if (jTextField1.getText() == null) {
             jLabel4.setVisible(true);
-        }
-        // on verifie la validite de la date
-        else if(!DateChecker.isValid(jTextField1.getText())){
+        } // on verifie la validite de la date
+        else if (!DateChecker.isValid(jTextField1.getText())) {
             jLabel7.setVisible(true);
-        }
-        //on test si la jTextField contenu est vide
-        else if(jTextArea1.getText()==null){
+        } //on test si la jTextField contenu est vide
+        else if (jTextArea1.getText() == null) {
             jLabel6.setVisible(true);
-        }
-        // sinon on ajoute le CR a la BDD
-        else{
-            ajoutPrecription(jTextField1.getText().toString(),jTextArea1.getText().toString());
+        } // sinon on ajoute le CR a la BDD
+        else {
+            ajoutPrecription(jTextField1.getText().toString(), jTextArea1.getText().toString());
             new AjoutValide(patient, medecin);
             this.dispose();
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Déconnexion : fermeture de la fenêtre actuelle et ouverture de la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
-    
-    public void ajoutPrecription(String date,String contenu){
+    /**
+     * ajout de la prescription à la base de données
+     * @param date la date
+     * @param contenu le contenu
+     */
+    public void ajoutPrecription(String date, String contenu) {
         // on ajoute la prescription a la bdd
-        try{
-        Statement s= ExempleJdbc.connexion();
-            try{
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
                 System.out.println(medecin.getLogin());
-                ResultSet rs= s.executeQuery("INSERT INTO Prescription (login,idP,date,Contenu) VALUES ('"+medecin.getLogin()+"','"+patient.getId()+"','"+date+"','"+contenu+"')");
-          
+                ResultSet rs = s.executeQuery("INSERT INTO Prescription (login,idP,date,Contenu) VALUES ('" + medecin.getLogin() + "','" + patient.getId() + "','" + date + "','" + contenu + "')");
 
-            } catch(SQLException e){
-                    System.out.println(e);
+            } catch (SQLException e) {
+                System.out.println(e);
 
             }
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
 
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -365,7 +398,7 @@ public class AffichagePrescription extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }

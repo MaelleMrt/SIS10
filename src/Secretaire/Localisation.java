@@ -12,18 +12,44 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author Elodie
  */
 public class Localisation {
 
+    /**
+     * le patient
+     */
     private String patient;
+    /**
+     * la chambre
+     */
     private String chambre;
+    /**
+     * le lit
+     */
     private String lit;
+    /**
+     * le statut de la chambre : occupée ou non occupée
+     */
     private String statut;
+    /**
+     * identifiant de la localisation
+     */
     private String idLocalisation;
+    /**
+     * service
+     */
     private String service;
 
+    /**
+     * Constructeur Localisation
+     * @param patient le patient
+     * @param chambre la chambre
+     * @param lit le lit
+     * @param service le service
+     * @param id l'identifiant de la localisation
+     */
     public Localisation(String patient, String chambre, String lit, String service, String id) {
         this.chambre = chambre;
         this.lit = lit;
@@ -31,6 +57,11 @@ public class Localisation {
         this.service = service;
         idLocalisation = id;
     }
+    
+    /**
+     * 2e constructeur Localisation
+     * @param id l'identifiant de la localisation
+     */
     public Localisation(String id){
         idLocalisation = id;
     }
@@ -119,6 +150,10 @@ public class Localisation {
         this.service = service;
     }
 
+    /**
+     * vérifie si la chambre est déjà occupée
+     * @return true si elle est occupée, false sinon
+     */
     public boolean dejaOccupee() {
         boolean result = false;
         try {
@@ -138,6 +173,10 @@ public class Localisation {
         return result;
     }
     
+    /**
+     * 
+     * @return la localisation
+     */
     public String getLocalisation(){
         String localisation = new String();
         String s = idLocalisation.substring(0,1);

@@ -16,20 +16,41 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Fenêtre affichant tous les résultats d'un patient
  *
  * @author Maelle
  */
 public class MedecinResultat extends javax.swing.JFrame {
-    public PatientHop patient;
-    public Medecin medecin;
-    public TableauResultat listResultats;
+
     /**
-     * Creates new form SecretaireAcceuil
+     * le patient
+     *
+     * @see PatientHop
      */
-    public MedecinResultat(PatientHop p,Medecin med) {
+    public PatientHop patient;
+    /**
+     * le médecin qui est connecté
+     *
+     * @see Medecin
+     */
+    public Medecin medecin;
+    /**
+     * le tableau avec la liste des résultats
+     * @see TableauResultat
+     */
+    public TableauResultat listResultats;
+
+    /**
+     * Constructeur MedecinResultat
+     * Creates new form MedecinResultat
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin connecté
+     */
+    public MedecinResultat(PatientHop p, Medecin med) {
         // on initialise les composants
-        patient =p;
-        medecin=med;
+        patient = p;
+        medecin = med;
         listResultats = new TableauResultat(patient);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -204,6 +225,10 @@ public class MedecinResultat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Renvoie à la page d'accueil quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Accueil ramene a l'interface acceuil
         this.dispose();
@@ -211,32 +236,40 @@ public class MedecinResultat extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page du dossier patient
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Clic sur le bouton Retour ramene a l'interface PatientHop
+        //Clic sur le bouton Retour ramene a l'interface MedecinPatient
         this.dispose();
-        new MedecinPatient(patient,medecin);
-
-        
-        
-        
+        new MedecinPatient(patient, medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion1ActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexion1ActionPerformed
 
+    /**
+     * trie les résultats par service, médecin ou date selon la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // tri
         ArrayList<Resultat> list = listResultats.getListResultats();
         if (jComboBox1.getSelectedItem().equals("Service")) {
             list = new Tri().trierResultatParService(list);
-        }
-        else if (jComboBox1.getSelectedItem().equals("Médecin")) {
+        } else if (jComboBox1.getSelectedItem().equals("Médecin")) {
             list = new Tri().trierResultatParMedecin(list);
-        }
-        else if (jComboBox1.getSelectedItem().equals("Date")) {
+        } else if (jComboBox1.getSelectedItem().equals("Date")) {
             list = new Tri().trierResultatParDate(list);
         }
         DefaultTableModel model = new DefaultTableModel();
@@ -247,27 +280,30 @@ public class MedecinResultat extends javax.swing.JFrame {
             v.add(p.getMedecin());
             v.add(p.getDate());
             v.add(p.getContenu());
-            model.setColumnIdentifiers(new String[]{"Service ", "Medecin", "Date","Contenu"});
+            model.setColumnIdentifiers(new String[]{"Service ", "Medecin", "Date", "Contenu"});
             model.insertRow(i, v);
             i++;
         }
         jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche les détails du résultat correspondant
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
-        if(evt.getButton() == MouseEvent.BUTTON1 ||
-                    evt.getButton() == MouseEvent.BUTTON3)
-                {
-                    int indRow =jTable1.rowAtPoint(evt.getPoint());
+        if (evt.getButton() == MouseEvent.BUTTON1
+                || evt.getButton() == MouseEvent.BUTTON3) {
+            int indRow = jTable1.rowAtPoint(evt.getPoint());
 
-                    try{
-                        ResultatPrescription res=new Resultat(jTable1.getValueAt(indRow, 0).toString(),jTable1.getValueAt(indRow, 1).toString(),jTable1.getValueAt(indRow, 2).toString(),jTable1.getValueAt(indRow, 3).toString());
-                        this.setVisible(false);
-                        new Contenu(res,patient,medecin);
-                    }catch(Exception e2){
-                    }
+            try {
+                ResultatPrescription res = new Resultat(jTable1.getValueAt(indRow, 0).toString(), jTable1.getValueAt(indRow, 1).toString(), jTable1.getValueAt(indRow, 2).toString(), jTable1.getValueAt(indRow, 3).toString());
+                this.setVisible(false);
+                new Contenu(res, patient, medecin);
+            } catch (Exception e2) {
+            }
 
-                }
+        }
     }//GEN-LAST:event_jTable1MousePressed
 
     /**
@@ -304,7 +340,6 @@ public class MedecinResultat extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 
-                
             }
         });
     }

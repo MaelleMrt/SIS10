@@ -15,16 +15,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Fenêtre affichant le contenu d'un rdv dans l'interface médecin
  * @author Maelle
  */
 public class ContenuRdv extends javax.swing.JFrame {
-    private ResultatPrescription respres;
-    private PatientHop patient;
+    /**
+     * le patient
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * Le médecin qui est connecté
+     * @see Medecin
+     */
     private Medecin medecin;
+    /**
+     * le rdv
+     * @see RdvMedecin
+     */
     private RdvMedecin rdvMed;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur ContenuRdv
+     * Creates new form ContenuRdv
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin qui est connecté
+     * @param rdvMed le rdv
      */
     public ContenuRdv(PatientHop p,Medecin med,RdvMedecin rdvMed) {
         // on initialise les composants
@@ -41,6 +57,10 @@ public class ContenuRdv extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation(){
         
         try {
@@ -268,6 +288,11 @@ public class ContenuRdv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page d'accueil du médecin
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // on affiche le contenu des rdc suivant le service du medecin
         this.dispose();
@@ -278,12 +303,23 @@ public class ContenuRdv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * on crée un nouveau CR ou questionnaire suivant le service
+     * fermeture de la fenêtre actuelle et ouverture de la fenêtre de saisie d'un CR ou d'un questionnaire (pour service d'anesthésie)
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // On cree un nouveau CR ou un nouveau questionnaire 
         // suivant le service

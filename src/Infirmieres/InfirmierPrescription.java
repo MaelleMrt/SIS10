@@ -17,17 +17,31 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre qui affiche toutes les prescriptions du patient
  * @author Maelle
  */
 public class InfirmierPrescription extends javax.swing.JFrame {
-
+    /**
+     * le patient
+     * @see PatientHop
+     */
     public PatientHop patient;
+    /**
+     * l'infirmière qui est connectée
+     * @see Infirmier
+     */
     public Infirmier infirmier;
+    /**
+     * modèle permettant de remplir le tableau avec toutes les precriptions du patient
+     */
     private TableauPrescriptionsInf listPrescription;
 
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur InfirmierPrescription
+     * Creates new form InfirmierPrescription
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param inf l'infirmière qui est connectée
      */
     public InfirmierPrescription(PatientHop p, Infirmier inf) {
         // on initialise nos variables
@@ -242,26 +256,44 @@ public class InfirmierPrescription extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à l'accueil quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Clic sur le bouton Acceuil ramene a l'interface acceuil
+        //Clic sur le bouton Accueil ramene a l'interface accueil
         this.dispose();
         new InfirmierAcceuil(infirmier.login);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page avec le dossier du patient 
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Clic sur le bouton Retour ramene a l'interface PatientHop
         new InfirmierPatient(patient, infirmier);
         this.dispose();
-
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter 
+     * ferme la fenêtre actuelle et renvoie à la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche le détail de la prescription correspondante
+     * ferme la fenêtre actuelle et renvoie à la page ContenuPrescription
+     * @param evt 
+     * @see ContenuPrescription
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // on affiche le detail de la prescription quand on clic sur la ligne
         // correspondante
@@ -275,11 +307,13 @@ public class InfirmierPrescription extends javax.swing.JFrame {
                 new ContenuPrescription(pres, patient, infirmier);
             } catch (Exception e2) {
             }
-
         }
-
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trie les prescriptions par service, nom du médecin, date, date de validation ou nom de l'infirmière qui a validé suivant la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
        // tri
         ArrayList<PrescriptionInf> list = listPrescription.getListPrescription();
@@ -318,7 +352,11 @@ public class InfirmierPrescription extends javax.swing.JFrame {
         jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    //convertir un string en boolean
+    /**
+     * convertit un string en boolean
+     * @param s un string
+     * @return true si le string est égal à "true", false sinon
+     */
     boolean convert(String s) {
         if (s.equals("true")) {
             return true;

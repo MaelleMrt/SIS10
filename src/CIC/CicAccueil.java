@@ -22,30 +22,54 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Correspond à la page d'accueil du CIC
  * @author clara
  */
 public class CicAccueil extends javax.swing.JFrame {
 
+    /**
+     * La liste de toutes les études cliniques
+     * @see Etude
+     */
     private ArrayList<Etude> listeEtude = new ArrayList<Etude>();
 
-    String login;
-    Cic cic;
     /**
-     * Creates new form CicAccueil
+     * Le PH du CIC
+     * @see Cic
      */
-    public CicAccueil(String login) throws SQLException {
-        this.login = login;
-        trouverCic(); 
+    private Cic cic;
+    
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
+    
+    /**
+     * Constructeur CicAccueil
+     * Creates new form CicAccueil
+     * initialise tous les éléments de la fenêtre 
+     * @see remplirTableau(), qui remplit le tableau avec la liste de toutes les études cliniques
+     * @see trouverCic(String login), qui identifie le PH qui s'est connecté
+     * 
+     * @param login, le login du PH qui s'est connecté
+     * @param s, correspond à la connexion à la base de données
+     * @throws SQLException en cas de problème lorsqu'on fait appel à la base de données
+     */
+    public CicAccueil(String login, Statement s) throws SQLException {
+        this.s = s;
+        trouverCic(login); 
         initComponents();
         remplirTableau();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
+    /**
+     * remplit le tableau avec toutes les études cliniques
+     * @throws SQLException 
+     */
     public void remplirTableau() throws SQLException {
-        try {
-            Statement s = ExempleJdbc.connexion();
+        
             try {
                 ResultSet rs = s.executeQuery("SELECT distinct Etude.nom, CIC.nom, CIC.prenom, date, duree FROM Etude JOIN CIC on (PH = login)");
                 while (rs.next()) {
@@ -57,9 +81,7 @@ public class CicAccueil extends javax.swing.JFrame {
                 System.out.println(e);
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        
 
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
@@ -79,11 +101,14 @@ public class CicAccueil extends javax.swing.JFrame {
         
     }
     
-    public void trouverCic(){
-        try {
-            Statement s = ExempleJdbc.connexion();
+    /**
+     * Identifie le PH qui s'est connecté grâce à son login en interrogeant la base de données
+     * @param login 
+     */
+    public void trouverCic(String login){
+        
             try {
-                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+this.login+"'");
+                ResultSet rs = s.executeQuery("SELECT nom, prenom FROM CIC WHERE login = '"+login+"'");
                 while (rs.next()) {
                     this.cic = new Cic(rs.getString("nom"), rs.getString("prenom"), login);
                 }
@@ -92,9 +117,7 @@ public class CicAccueil extends javax.swing.JFrame {
                 System.out.println(e);
             }
 
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        
     }
     
 
@@ -267,28 +290,38 @@ public class CicAccueil extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * renvoie sur la page Ajouter une étude clinique
+     * @param evt 
+     */
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
         ArrayList<Participant> part = new ArrayList<>();
         ArrayList<Participant> ancienne = new ArrayList<>();
-        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,cic);
+        CicAjouterEtude a = new CicAjouterEtude(ancienne, part, "", "", 0,cic,s);
     }//GEN-LAST:event_ajouterActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, on est envoyé sur la page qui donne les informations sur l'étude clinique en question
+     * @param evt 
+     */
     private void etudesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_etudesMouseClicked
         int i = 0;
+        // on vérifie que la ligne sur laquelle on clique ne dépasse pas la taille de la liste
         while (i < etudes.getRowCount() && !etudes.isRowSelected(i)) {
             i++;
         }
         if (i < etudes.getRowCount()) {
-
+            //On crée une nouvelle étude avec les informations de la ligne sur laquelle on a cliqué
             String nom = String.valueOf(etudes.getValueAt(i, 0));
             String PH = String.valueOf(etudes.getValueAt(i, 1));
             String date = String.valueOf(etudes.getValueAt(i, 2));
             int duree = (int) etudes.getValueAt(i, 3);
             Etude e = new Etude(nom, PH, date, duree);
+            //On ferme cette page et on ouvre une nouvelle page qui affiche toutes les infos de l'étude
             this.setVisible(false);
             try {
-                CicEtude etude = new CicEtude(e,cic);
+                CicEtude etude = new CicEtude(e,cic,s);
 
             } catch (SQLException ex) {
                 Logger.getLogger(CicAccueil.class
@@ -301,6 +334,11 @@ public class CicAccueil extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rechercherTextFieldActionPerformed
 
+    /**
+     * permet de faire une recherche par le nom de l'étude
+     * affiche la liste des études ayant un nom contenant le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
         rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -337,12 +375,22 @@ public class CicAccueil extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
+    /**
+     * permet de se déconnecter
+     * ferme la page actuelle et ouvre la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /** 
+     * permet de trier la liste des études en fonction de différents critères(nom, date, PH)
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        //On vérifie quel item du comboBox est sélectionné
         if (jComboBox1.getSelectedItem().equals("Nom")) {
             listeEtude = new Tri().trierEtudesParNom(listeEtude);
         }
@@ -352,6 +400,7 @@ public class CicAccueil extends javax.swing.JFrame {
         else if (jComboBox1.getSelectedItem().equals("Date")) {
             listeEtude = new Tri().trierEtudesParDates(listeEtude);
         }
+        //on rmplit le tableau avec la nouvelle liste
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Etude e : listeEtude) {
@@ -402,13 +451,7 @@ public class CicAccueil extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new CicAccueil("gregory_house").setVisible(true);
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(CicAccueil.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
+                
             }
         });
     }

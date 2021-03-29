@@ -14,14 +14,26 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 /**
- *
+ * crée un modèle de tableau contenant la liste des patients d'un service donné
  * @author Maelle
  */
 public class TableauPatientInf  extends AbstractTableModel{
+    /**
+     * liste de patients à mettre dans le tableau
+     * @see PatientHop
+     */
      private ArrayList<PatientHop> listPatient= new ArrayList<PatientHop>();
-     
+     /**
+      * l'entête du tableau
+      */
     private final String[] entetes = {"Nom ", "Prenom", "Date de Naissance"};
     
+    /**
+     * Constructeur TableauPatientInf
+     *
+     * @param nomS le nom du service
+     * 
+     */
     public TableauPatientInf(String nomS) {
         ArrayList<String> listLoginMedecin= new ArrayList<String>();
         try{
@@ -55,20 +67,38 @@ public class TableauPatientInf  extends AbstractTableModel{
  
     
    
-    
+    /**
+     * 
+     * @return le nombre de lignes dans le tableau = le nombre de patients
+     */
       public int getRowCount() {
         return listPatient.size();
         
     }
  
+    /**
+     * 
+     * @return le nombre de colonnes du tableau
+     */
     public int getColumnCount() {
         return entetes.length;
     }
  
+    /**
+     * 
+     * @param columnIndex l'indice de la colonne
+     * @return le nom de la colonne n° columnIndex
+     */
     public String getColumnName(int columnIndex) {
         return entetes[columnIndex];
     }
  
+    /**
+     * 
+     * @param rowIndex l'indice de la ligne
+     * @param columnIndex l'indice de la colonne
+     * @return la valeur dans la case de la ligne n° rowIndex et de la colonne n° columnIndex
+     */
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex){
             case 0:
@@ -83,6 +113,10 @@ public class TableauPatientInf  extends AbstractTableModel{
 
     }
     
+    /**
+     * 
+     * @return la liste des patients
+     */
     public ArrayList<PatientHop> getListPatient(){
         return listPatient;
     }

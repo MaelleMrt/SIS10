@@ -21,22 +21,45 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
+ * génère un fichier PDF avec le questionnaire Covid
  * @author clara
  */
 public class QuestionnaireCovidPDF {
 
+    /**
+     * le chemin du fichier PDF qu l'on va générer
+     */
     private static String FILE;
+    /**
+     * une police de caractère : en gras, taille 18, police Times Roman
+     */
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
+    /**
+     * une police de caractère : en gras, taille 14, police Times Roman
+     */
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 14);
+    /**
+     * une police de caractère : taille 12, police Times Roman
+     */
     private static Font font = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-    char checked = '\u00FE';
-    char unchecked = '\u00A8';
 
+    /**
+     * une liste avec les réponses du questionnaire covid (true correspondant à oui et false à non)
+     */
     private ArrayList<Boolean> reponses = new ArrayList<>();
+    /**
+     * le patient
+     * @see PatientHop
+     */
     private PatientHop patient;
 
+    /**
+     * Constructeur QuestionnaireCovidPDF
+     * génère un fichier PDF avec les informations du questionnaire Covid
+     * @param reponses les réponses au questionnaire
+     * @param patient le patient
+     */
     public QuestionnaireCovidPDF(ArrayList<Boolean> reponses, PatientHop patient) {
         try {
             this.reponses = reponses;
@@ -161,6 +184,11 @@ public class QuestionnaireCovidPDF {
         }
     }
 
+    /**
+     * permet de sauter des lignes
+     * @param paragraph un paragraphe
+     * @param number le nombre de lignes que l'on veut sauter
+     */
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));

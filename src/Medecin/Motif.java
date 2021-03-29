@@ -13,15 +13,35 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Fenêtre affichant les détails d'un acte d'un patient
  * @author Maelle
  */
 public class Motif extends javax.swing.JFrame {
-    Acte acte;
-    PatientHop patient;
-    Medecin medecin;
     /**
-     * Creates new form SecretaireAcceuil
+     * l'acte
+     * @see Acte
+     */
+    Acte acte;
+    /**
+     * le patient
+     *
+     * @see PatientHop
+     */
+    public PatientHop patient;
+    /**
+     * le médecin qui est connecté
+     *
+     * @see Medecin
+     */
+    public Medecin medecin;
+    
+    /**
+     * Constructeur Motif
+     * Creates new form Motif
+     * initialise les attributs et les éléments de la fenêtre
+     * @param a l'acte
+     * @param p le patient
+     * @param med le médecin connecté
      */
     public Motif(Acte a,PatientHop p,Medecin med ) {
         // initialisation des composants
@@ -36,6 +56,10 @@ public class Motif extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation(){
         
         try {
@@ -59,9 +83,7 @@ public class Motif extends javax.swing.JFrame {
 
         } catch (SQLException e) {
             System.out.println(e);
-        }
-        
-        
+        }      
     }
 
 
@@ -252,6 +274,10 @@ public class Motif extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page du DMA du patient
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // affiche le DMA
         this.dispose();
@@ -259,6 +285,12 @@ public class Motif extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexion1ActionPerformed
         // deconnexion
         this.setVisible(false);

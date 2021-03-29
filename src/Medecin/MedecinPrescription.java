@@ -17,15 +17,34 @@ import javax.swing.table.DefaultTableModel;
 import static sun.text.normalizer.NormalizerImpl.convert;
 
 /**
- *
+ * Fenêtre affichant toutes les prescriptions d'un patient
  * @author Maelle
  */
 public class MedecinPrescription extends javax.swing.JFrame {
-     public PatientHop patient;
-     public Medecin medecin;
-     public TableauPrescriptionsInf listPrescription;
     /**
-     * Creates new form SecretaireAcceuil
+     * le patient
+     *
+     * @see PatientHop
+     */
+    public PatientHop patient;
+    /**
+     * le médecin qui est connecté
+     *
+     * @see Medecin
+     */
+    public Medecin medecin;
+     /**
+      * le tableau avec la liste des prescriptions
+      * @see TableauPrescriptionInf
+      */
+     public TableauPrescriptionsInf listPrescription;
+     
+    /**
+     * Constructeur MedecinPrescription
+     * Creates new form MedecinPrescription
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin connecté
      */
     public MedecinPrescription(PatientHop p,Medecin med) {
         // on initialise les composants
@@ -209,24 +228,42 @@ public class MedecinPrescription extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Renvoie à la page d'accueil quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Clic sur le bouton Acceuil ramene a l'interface acceuil
+        //Clic sur le bouton Accueil ramene a l'interface accueil
         this.dispose();
         new MedecinAcceuil(medecin.login);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page du dossier patient
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Clic sur le bouton Retour ramene a l'interface PatientHop
+        //Clic sur le bouton Retour ramene a l'interface MedecinPatient
         this.dispose();
         this.setVisible(false);
         new MedecinPatient(patient,medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche les détails de la prescription correspondante
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
           // clic sur le bouton gauche ou droit
           // on affiche le detail de la prescription suivant la
@@ -246,6 +283,10 @@ public class MedecinPrescription extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trie les prescriptions par service, médecin, date, date de validation ou infirmier selon la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // tri
         ArrayList<PrescriptionInf> list = listPrescription.getListPrescription();
@@ -286,7 +327,13 @@ public class MedecinPrescription extends javax.swing.JFrame {
         }
         jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
-    //convertir un string en boolean
+    
+
+    /**
+     * convertir un string en boolean
+     * @param s String à convertir en boolean
+     * @return 
+     */
     boolean convert(String s) {
             if(s.equals("true")) return true;
             else return false;

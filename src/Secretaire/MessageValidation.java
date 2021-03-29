@@ -9,15 +9,37 @@ import Patient.PatientHop;
 import javax.swing.JFrame;
 
 /**
- *
+ * fenêtre pop-up de validation
  * @author Elodie
  */
 public class MessageValidation extends javax.swing.JFrame {
 
+    /**
+     * page d'accueil
+     */
     private JFrame accueil;
+    /**
+     * fenêtre d'affichage du rdv
+     */
     private JFrame RDV;
+    /**
+     * identifiant du patient
+     */
     private int id;
+    /**
+     * localisation
+     * @see Localisation
+     */
     private Localisation localisation;
+    
+    /**
+     * Constructeur MessageValidation
+     * initialisation des attributs et des éléments de la fenêtre
+     * @param accueil page d'accueil
+     * @param RDV fenêtre d'affichage du rdv
+     * @param id identifiant du patient
+     * @param l localisation
+     */
     public MessageValidation(JFrame accueil, JFrame RDV,int id,Localisation l) {
         this.setLocationRelativeTo(null);
         this.RDV = RDV;
@@ -25,7 +47,6 @@ public class MessageValidation extends javax.swing.JFrame {
         this.id=id;
         this.localisation=l;
         initComponents();
-        
     }
 
 
@@ -102,6 +123,10 @@ public class MessageValidation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * affiche un message de demande de transmission du patient au service de radiologie
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);

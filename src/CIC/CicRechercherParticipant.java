@@ -19,20 +19,54 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * fenêtre qui permet de faire une recherche de participants selon plusieurs critères
  * @author clara
  */
 public class CicRechercherParticipant extends javax.swing.JFrame {
 
+    /**
+     * liste des participants
+     */
     private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    /**
+     * liste des participants qui participent déjà à l'étude
+     */
     private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    /**
+     * nom de l'étude
+     */
     private String nom;
+    /**
+     * date de démarrage de l'étude
+     */
     private String date;
+    /**
+     * durée de l'étude
+     */
     private int duree;
+    /**
+     * PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
 
-    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic) {
-
+    /**
+     * constructeur CicRechercherParticipant
+     * initialise les éléments de la fenêtre
+     * 
+     * @param ancienneListe correspond à la liste des participants qui participent déjà à l'étude
+     * @param listeParticipants liste des participants 
+     * @param nom nom de l'étude clinique
+     * @param date date de démarrage de l'étude clinique
+     * @param duree durée de l'étude clinique
+     * @param cic PH connecté
+     * @param s connexion à la base de données
+     */
+    public CicRechercherParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic, Statement s) {
+        this.s = s;
         this.listeParticipants = listeParticipants;
         this.ancienneListe = ancienneListe;
         this.nom = nom;
@@ -46,7 +80,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
     }
 
     
-
+    /**
+     * 
+     * @return une liste de String correspondant aux cases cochées pour le critère 'type'
+     */
     public ArrayList<String> Type() {
         ArrayList<String> liste = new ArrayList<>();
         if (type1.isSelected()) {
@@ -62,6 +99,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'sexe'
+     */
     public ArrayList<String> Sexe() {
         ArrayList<String> liste = new ArrayList<>();
         if (sexe1.isSelected()) {
@@ -77,6 +118,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'allergie'
+     */
     public ArrayList<String> Allergie() {
         ArrayList<String> liste = new ArrayList<>();
         if (allergie1.isSelected()) {
@@ -100,6 +145,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'régime'
+     */
     public ArrayList<String> Regime() {
         ArrayList<String> liste = new ArrayList<>();
         if (regime1.isSelected()) {
@@ -127,6 +176,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'sport'
+     */
     public ArrayList<String> Sport() {
         ArrayList<String> liste = new ArrayList<>();
         if (sport1.isSelected()) {
@@ -150,6 +203,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'fumeur'
+     */
     public ArrayList<String> Fumeur() {
         ArrayList<String> liste = new ArrayList<>();
         if (fumeur1.isSelected()) {
@@ -164,7 +221,11 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         }
         return liste;
     }
-
+    
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'catégorie socio-professionnelle'
+     */
     public ArrayList<String> Categorie() {
         ArrayList<String> liste = new ArrayList<>();
         if (cat1.isSelected()) {
@@ -208,11 +269,22 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * convertit une chaine de caractère en Date
+     * 
+     * @param str la date mise en chaine de caractères
+     * @return la date sous format Date
+     * @throws ParseException 
+     */
     public Date Date(String str) throws ParseException {
         Date d = new SimpleDateFormat("dd/MM/yyyy").parse(str);
         return d;
     }
 
+    /**
+     * 
+     * @return une liste de Integer correspondants aux cases cochées pour le critère 'age'
+     */
     public ArrayList<Integer> Age() {
         ArrayList<Integer> liste = new ArrayList<>();
 
@@ -237,6 +309,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'taille'
+     */
     public ArrayList<String> Taille() {
         ArrayList<String> liste = new ArrayList<>();
         if (taille1.isSelected()) {
@@ -260,6 +336,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         return liste;
     }
 
+    /**
+     * 
+     * @return une liste de String correspondants aux cases cochées pour le critère 'poids'
+     */
     public ArrayList<String> Poids() {
         ArrayList<String> liste = new ArrayList<>();
         if (poids1.isSelected()) {
@@ -931,6 +1011,10 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cat9ActionPerformed
 
+    /**
+     * On recherche dans la base de données les participants correspondants aux critères sélectionnés en interrogeant la base de données
+     * @param evt 
+     */
     private void rechercherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rechercherActionPerformed
 
         ArrayList<String> l1 = Type();
@@ -1116,17 +1200,21 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
             }
             this.setVisible(false);
             try {
-                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic);
+                CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic,this.s);
             } catch (SQLException ex) {
                 Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_rechercherActionPerformed
 
+    /**
+     * on annule la recherche : retour à la page précédente 
+     * @param evt 
+     */
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic);
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic,this.s);
         } catch (SQLException ex) {
             Logger.getLogger(CicRechercherParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1136,6 +1224,12 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_regime5ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();

@@ -11,14 +11,41 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
+/**
+ * Définit une consultation
+ * @author Elodie
+ */
 public class Consultation {
+    /**
+     * le nom du médecin
+     */
     private String medecin;
+    /**
+     * l'identifiant du patient
+     */
     private int id;
+    /**
+     * le motif de consultation
+     */
     private String motif;
+    /**
+     * la date de consultation
+     */
     private String date;
+    /**
+     * l'identifiant du rdv
+     */
     private int rdv;
     
+    /**
+     * Constructeur Consultation
+     * initialise les attributs 
+     * @param medecin le nom du médecin
+     * @param id l'identifiant du patient
+     * @param motif le motif de consultation
+     * @param date la date de consultation
+     * @param rdv l'identifiant du rdv
+     */
     public Consultation(String medecin, int id, String motif, String date, int rdv){
         this.medecin = medecin;
         this.id = id;
@@ -83,6 +110,10 @@ public class Consultation {
         this.date = date;
     }
     
+    /**
+     * interroge la base de données pour trouver le service
+     * @return le service
+     */
     public String getService(){
         String service = new String();
         try {
@@ -99,6 +130,10 @@ public class Consultation {
         return service;
     }
     
+    /**
+     * interroge la base de données pour trouver le nom du patient
+     * @return le nom du patient
+     */
     public String getNomP(){
         String nom = new String();
         try {
@@ -114,6 +149,11 @@ public class Consultation {
         }
         return nom;
     }
+    
+    /**
+     * interroge la base de données pour trouver l'heure de la consultation
+     * @return l'heure de la consultation
+     */
     public String getHeure(){
         // rajouter un idRDV
         String heure = new String();

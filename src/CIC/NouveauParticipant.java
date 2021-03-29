@@ -20,23 +20,59 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
+ * Fenêtre de création d'un nouveau participant
  * @author clara
  */
 public class NouveauParticipant extends javax.swing.JFrame {
 
+    /**
+     * PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * liste des participants que l'on veut ajouter
+     */
     private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    /**
+     * liste des participants qui participent déjà à l'étude que l'on est en train de créer
+     */
     private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    /**
+     * nom de l'étude que l'on est en train de créer
+     */
     private String nom;
+    /**
+     * date de démarrage de l'étude
+     */
     private String date;
+    /**
+     * durée de l'étude
+     */
     private int duree;
+    /**
+     * liste des patients de l'hôpital qui ne participent pas encore à une étude clinique
+     */
     ArrayList<PatientHop> listePatients = new ArrayList<>();
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
 
     /**
+     * Constructeur NouveauParticipant
      * Creates new form NouveauParticipant
+     * initialise les attributs et les éléments de la fenêtre
+     * @param ancienneListe liste des participants qui participent déjà à l'étude
+     * @param listeParticipants liste des participants que l'on veut ajouter
+     * @param nom nom de l'étude
+     * @param date date de démarrage de l'étude
+     * @param duree durée de l'étude
+     * @param cic PH connecté
+     * @param s connexion à la BD
+     * @throws ParseException 
      */
-    public NouveauParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic) throws ParseException {
+    public NouveauParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic,Statement s) throws ParseException {
+        this.s = s;
         this.cic = cic;
         this.listeParticipants = listeParticipants;
         this.ancienneListe = ancienneListe;
@@ -56,6 +92,10 @@ public class NouveauParticipant extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * remplit le combo box avec la liste des patients qui ne participent pas encore à une étude clinique
+     * @throws ParseException 
+     */
     public void remplirPatients() throws ParseException {
         try {
             Statement s = ExempleJdbc.connexion();
@@ -94,6 +134,11 @@ public class NouveauParticipant extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Vérifie si une date en String est valide
+     * @param strdate la date en String
+     * @return true si la date est valide, false sinon
+     */
     public boolean dateValide(String strdate) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setLenient(false);
@@ -462,11 +507,21 @@ public class NouveauParticipant extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * si on sélectionne patient, on affiche la case Princeton Plainsboro
+     * @param evt 
+     */
     private void patientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientActionPerformed
         if (patient.isSelected()) {
             hopital.setVisible(true);
@@ -477,6 +532,10 @@ public class NouveauParticipant extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_patientActionPerformed
 
+    /**
+     * Quand on sélectionne un patient, on pré-remplit les informations du patient
+     * @param evt 
+     */
     private void patientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientsActionPerformed
         int i = 0;
         String s = listePatients.get(i).toString() + " (" + listePatients.get(i).getNomNaissance() + ")";
@@ -501,6 +560,11 @@ public class NouveauParticipant extends javax.swing.JFrame {
         
     }//GEN-LAST:event_patientsActionPerformed
 
+    /**
+     * on vérifie que toutes les informations sont saisies et valides
+     * On valide la création du participant et on l'enregistre dans la base de données
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (type.getSelection() == null || sexe.getSelection() == null || nomU.getText().equals("") || nomN.getText().equals("") || prenom.getText().equals("") || naissance.getText().equals("") || ville.getText().equals("") || (int) taille.getValue() == 0 || (int) poids.getValue() == 0 || allergie.getSelectedItem().equals(" ") || regime.getSelectedItem().equals(" ") || sport.getSelectedItem().equals(" ") || fumeur.getSelectedItem().equals(" ") || categorie.getSelectedItem().equals(" ")) {
             System.out.println(fumeur.getSelectedItem());
@@ -535,7 +599,7 @@ public class NouveauParticipant extends javax.swing.JFrame {
                     ArrayList<Participant> l = new ArrayList<>();
                     l.add(p);
                     JOptionPane.showMessageDialog(null, "Le participant " + p.getPrenom() + " " + p.getNomU() + " a bien été créé.", "Message", JOptionPane.WARNING_MESSAGE);
-                    CicAjouterEtude e = new CicAjouterEtude(ancienneListe, l, nom, date, duree, cic);
+                    CicAjouterEtude e = new CicAjouterEtude(ancienneListe, l, nom, date, duree, cic,this.s);
                     this.setVisible(false);
 
                 } catch (SQLException ex) {
@@ -547,15 +611,23 @@ public class NouveauParticipant extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * on annule la création du participant et on retourne à la page précédente
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic);
+            CicAjouterParticipant a = new CicAjouterParticipant(ancienneListe, listeParticipants, nom, date, duree, cic,s);
             this.setVisible(false);
         } catch (SQLException ex) {
             Logger.getLogger(NouveauParticipant.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * quand on sélectionne Princeton Plainsboro, on affiche le combobox avec la liste des patients
+     * @param evt 
+     */
     private void princActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_princActionPerformed
         if (princ.isSelected()) {
             patients.setVisible(true);
