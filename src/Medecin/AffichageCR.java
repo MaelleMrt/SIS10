@@ -310,7 +310,7 @@ public class AffichageCR extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // retour a l'accueil
         this.dispose();
-        new MedecinAcceuil(this.medecin.login);
+        new MedecinAcceuil(this.medecin.getLogin());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed

@@ -210,7 +210,7 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/pngegg.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel2.setText("service "+infirmier.service);
+        jLabel2.setText("service "+infirmier.getService());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

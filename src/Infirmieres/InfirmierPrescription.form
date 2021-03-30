@@ -226,7 +226,7 @@
                       <Font name="Lucida Grande" size="24" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="&quot;service &quot;+infirmier.service" type="code"/>
+                      <Connection code="&quot;service &quot;+infirmier.getService()" type="code"/>
                     </Property>
                   </Properties>
                 </Component>

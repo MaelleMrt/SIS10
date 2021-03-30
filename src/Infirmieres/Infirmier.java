@@ -15,23 +15,23 @@ public class Infirmier {
     /**
      * le service dans lequel travaille l'infirmière
      */
-    String service ;
+    private String service ;
     /**
      * nom de l'infirmière
      */
-    String nom;
+    private String nom;
     /**
      * prénom de l'infirmière
      */
-    String prenom;
+    private String prenom;
     /**
      * tableau contenant les patients du service
     */
-    TableauPatient tb;
+    private TableauPatient tb;
     /**
      * le login de l'infirmière
      */
-    String login;
+    private String login;
     
     /**
      * Constructeur Infirmier

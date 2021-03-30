@@ -232,7 +232,7 @@ public class MedecinResultat extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Clic sur le bouton Accueil ramene a l'interface acceuil
         this.dispose();
-        new MedecinAcceuil(medecin.login);
+        new MedecinAcceuil(medecin.getLogin());
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

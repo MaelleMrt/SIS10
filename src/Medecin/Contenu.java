@@ -142,7 +142,7 @@ public class Contenu extends javax.swing.JFrame {
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
-        jTextArea1.setText(respres.cont);
+        jTextArea1.setText(respres.getContenu());
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel10.setText("Descriptif Hospitalisation/Consultation");
@@ -227,7 +227,7 @@ public class Contenu extends javax.swing.JFrame {
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

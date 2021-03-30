@@ -13,11 +13,30 @@ import java.util.Date;
  * @author Maelle
  */
 public class Resultatexamen {
-    String service;
-    String nomMedecin;
-    String date;
-    String cont;
+    /**
+     * service
+     */
+    private String service;
+    /**
+     * nom du médecin
+     */
+    private String nomMedecin;
+    /**
+     * date du résultat
+     */
+    private String date;
+    /**
+     * contenu
+     */
+    private String cont;
     
+    /**
+     * Constructeur
+     * @param s service
+     * @param m nom du médecin
+     * @param d date
+     * @param contenu contenu
+     */
    public Resultatexamen(String s,String m, String d,String contenu){
        service =s;
        nomMedecin =m;
@@ -26,18 +45,34 @@ public class Resultatexamen {
         
     }
 
+   /**
+    * 
+    * @return la date
+    */
     public String getDate() {
         return date;
     }
 
+    /**
+     * 
+     * @return le contenu
+     */
     public String getContenu() {
         return cont;
     }
 
+    /**
+     * 
+     * @return le service
+     */
     public String getService() {
         return service;
     }
 
+    /**
+     * 
+     * @return le nom du médecin
+     */
     public String getMedecin() {
         return nomMedecin;
     }

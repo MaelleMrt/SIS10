@@ -10,9 +10,9 @@ package MedecinAnesthesiste;
  * @author amira
  */
  public class Rdv {
-    String motif;
-    String date;
-    String heure;
+    private String motif;
+    private String date;
+    private String heure;
     
     
    public Rdv(String m,String d, String h){

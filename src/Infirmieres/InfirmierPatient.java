@@ -159,7 +159,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/pngegg.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel2.setText("service "+infirmier.service);
+        jLabel2.setText("service "+infirmier.getService());
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -326,7 +326,7 @@ public class InfirmierPatient extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // retourne a l'accueil
         this.dispose();
-        InfirmierAcceuil init1=new InfirmierAcceuil(infirmier.login);
+        InfirmierAcceuil init1=new InfirmierAcceuil(infirmier.getLogin());
         init1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 

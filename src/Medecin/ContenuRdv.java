@@ -297,9 +297,9 @@ public class ContenuRdv extends javax.swing.JFrame {
         // on affiche le contenu des rdc suivant le service du medecin
         this.dispose();
         if(this.medecin.getService().equals("Anésthésie")){
-            new MedecinAnesthesisteAcceuil(this.medecin.login);
+            new MedecinAnesthesisteAcceuil(this.medecin.getLogin());
         }else{
-            new MedecinAcceuil(this.medecin.login);
+            new MedecinAcceuil(this.medecin.getLogin());
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

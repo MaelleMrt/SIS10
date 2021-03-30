@@ -48,7 +48,7 @@ public class Motif extends javax.swing.JFrame {
         acte=a;
         patient=p;
         medecin=med;
-        System.out.println(medecin.nom);
+        System.out.println(medecin.getNom());
         initComponents();
         jLabel1.setVisible(false);
         localisation();

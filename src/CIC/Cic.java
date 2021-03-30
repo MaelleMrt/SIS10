@@ -13,15 +13,15 @@ public class Cic {
     /**
      * Le nom du praticien hospitalier du Centre d'Investigation Clinique
      */
-    String nom;
+    private String nom;
     /**
      * Le prénom du praticien hospitalier du CIC
      */
-    String prenom;
+    private String prenom;
     /**
      * Le login du praticien hospitalier du CIC
      */
-    String login;
+    private String login;
     
     /**
      * 

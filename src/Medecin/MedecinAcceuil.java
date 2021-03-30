@@ -447,7 +447,7 @@ public class MedecinAcceuil extends javax.swing.JFrame {
                 RdvMedecin rdvMed=new RdvMedecin(jTable2.getValueAt(indRow, 0).toString(),jTable2.getValueAt(indRow, 1).toString(),jTable2.getValueAt(indRow, 2).toString(),jTable2.getValueAt(indRow, 3).toString(),jTable2.getValueAt(indRow, 4).toString(),jTable2.getValueAt(indRow, 5).toString());
                 PatientHop patient=rdvMed.getPatient();
                 System.out.println("patient =" +patient.getNomUsuel());
-                System.out.println("medecin = "+this.medecin.nom);
+                System.out.println("medecin = "+this.medecin.getNom());
                 System.out.println("rdv ="+ rdvMed.getMotif());
                 new ContenuRdv(patient,this.medecin,rdvMed);
                 this.dispose();

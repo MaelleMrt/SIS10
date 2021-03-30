@@ -13,23 +13,23 @@ public class Medecin {
     /**
      * nom du service
      */
-    String service ;
+    private String service ;
     /**
      * nom du médecin
      */
-    String nom;
+    private String nom;
     /**
      * prénom du médecin
      */
-    String prenom;
+    private String prenom;
     /**
      * modèle permettant de remplir le tableau avec la liste des patients du médecin
      */
-    TableauPatient tb;
+    private TableauPatient tb;
     /**
      * login du médecin
      */
-    String login;
+    private String login;
     
     /**
      * Constructeur Medecin

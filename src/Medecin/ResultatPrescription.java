@@ -17,19 +17,19 @@ public class ResultatPrescription {
     /**
      * le nom du service
      */
-    String service;
+    private String service;
     /**
      * le nom du médecin
      */
-    String nomMedecin;
+    private String nomMedecin;
     /**
      * la date du résultat/prescription
      */
-    String date;
+    private String date;
     /**
      * le contenu du résultat/prescription
      */
-    String cont;
+    private String cont;
 
     /**
      * Constructeur ResultatPrescription

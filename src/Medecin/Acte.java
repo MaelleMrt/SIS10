@@ -13,19 +13,19 @@ public abstract class Acte {
     /**
      * le service
      */
-    String service;
+    private String service;
     /**
      * le nom du médecin
      */
-    String nomMedecin;
+    private String nomMedecin;
     /**
      * la date de l'acte
      */
-    String date;
+    private String date;
     /**
      * Le motif de l'acte
      */
-    String mot;
+    private String mot;
     
     /**
      * Constructeur Acte

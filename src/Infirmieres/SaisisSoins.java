@@ -420,7 +420,7 @@ public class SaisisSoins extends javax.swing.JFrame {
                formater = new SimpleDateFormat("yyyy-MM-dd à hh:mm:ss");
                String date=formater.format(aujourdhui);
 
-                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"','"+date+"','"+infirmier.login+"')");
+                ResultSet rs= s.executeQuery("INSERT INTO Soin VALUES ('"+poids+"','"+temp+"','"+pa+"','"+fc+"','"+sat+"','"+gly+"','"+ob+"','"+this.patient.getId()+"','"+date+"','"+infirmier.getLogin()+"')");
           
 
             } catch(SQLException e){
