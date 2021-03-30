@@ -6,7 +6,7 @@
 package Connexion;
 
 
-import com.sun.org.apache.bcel.internal.generic.Select;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +19,7 @@ public class test {
 
     /**
      * @param args the command line arguments
+     * @throws SQLException gestion des exceptions
      */
     public static void main(String[] args) throws SQLException {
 

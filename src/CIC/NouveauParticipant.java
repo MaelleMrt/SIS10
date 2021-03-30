@@ -69,7 +69,7 @@ public class NouveauParticipant extends javax.swing.JFrame {
      * @param duree durée de l'étude
      * @param cic PH connecté
      * @param s connexion à la BD
-     * @throws ParseException 
+     * @throws ParseException gestion des exceptions
      */
     public NouveauParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree, Cic cic,Statement s) throws ParseException {
         this.s = s;
@@ -94,7 +94,7 @@ public class NouveauParticipant extends javax.swing.JFrame {
 
     /**
      * remplit le combo box avec la liste des patients qui ne participent pas encore à une étude clinique
-     * @throws ParseException 
+     * @throws ParseException gestion des exceptions
      */
     public void remplirPatients() throws ParseException {
         try {

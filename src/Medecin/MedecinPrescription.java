@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
-import static sun.text.normalizer.NormalizerImpl.convert;
+
 
 /**
  * Fenêtre affichant toutes les prescriptions d'un patient
@@ -35,7 +35,6 @@ public class MedecinPrescription extends javax.swing.JFrame {
     public Medecin medecin;
      /**
       * le tableau avec la liste des prescriptions
-      * @see TableauPrescriptionInf
       */
      public TableauPrescriptionsInf listPrescription;
      

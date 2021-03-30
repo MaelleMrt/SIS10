@@ -37,7 +37,7 @@ public class EnvoieMessagePDF {
  * @param text contenu du mail
  * @param destinataire adresse mail du destinataire
  * @param copyDest adresse mail du destinataire
- * @param idePatient identifiant du patient concerne
+ * @param idPatient identifiant du patient concerne
  * @author Maelle
  */
     public void sendMessage(String subject, String text, String destinataire, String copyDest,int idPatient) {

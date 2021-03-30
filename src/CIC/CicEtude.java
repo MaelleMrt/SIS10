@@ -49,12 +49,12 @@ public class CicEtude extends javax.swing.JFrame {
     /**
      * Constructeur CicEtude
      * initialise les éléments de la fenêtre
-     * @see remplirTableau(), remplit le tableau avec les participants de l'étude
+     * 
      * 
      * @param e correspond à l'étude qu'on affiche
      * @param cic correspond au PH connecté
      * @param s correspond à la connexion à la base de données
-     * @throws SQLException 
+     * @throws SQLException gestion des exceptions
      */
     public CicEtude(Etude e,Cic cic,Statement s) throws SQLException {
         this.s=s;
@@ -72,7 +72,7 @@ public class CicEtude extends javax.swing.JFrame {
     
     /**
      * remplit le tableau avec les participants de l'étude en interrogeant la base de données
-     * @throws SQLException 
+     * @throws SQLException gestion des exceptions
      */
     public void remplirTableau() throws SQLException{
             try{

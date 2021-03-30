@@ -274,7 +274,7 @@ public class CicRechercherParticipant extends javax.swing.JFrame {
      * 
      * @param str la date mise en chaine de caractères
      * @return la date sous format Date
-     * @throws ParseException 
+     * @throws ParseException gestion des exceptions
      */
     public Date Date(String str) throws ParseException {
         Date d = new SimpleDateFormat("dd/MM/yyyy").parse(str);

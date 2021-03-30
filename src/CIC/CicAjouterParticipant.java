@@ -67,6 +67,14 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
      * Creates new form CicAjouterParticipant
      * initialise les éléments de la fenêtre
      * remplit le tableau la liste des participants qui ne participent pas encore à cette étude
+     * @param ancienneListe la liste des participants qui participent déjà à l'étude
+     * @param listeParticipants la liste des participants qui va permettre de remplir le tableau
+     * @param nom nom de l'étude
+     * @param date date de démarrage de l'étude
+     * @param duree durée de l'étude
+     * @param cic PH
+     * @param s connexion à la base de données
+     * @throws SQLException gestion des exceptions
      * 
      */
     public CicAjouterParticipant(ArrayList<Participant> ancienneListe, ArrayList<Participant> listeParticipants, String nom, String date, int duree,Cic cic,Statement s) throws SQLException {
@@ -88,7 +96,7 @@ public class CicAjouterParticipant extends javax.swing.JFrame {
      * remplit le tableau avec la liste listeParticipants
      * on supprime d'abord de la liste de tous les participants, ceux qui participent déjà à cette étude (qui sont dans la liste ancienneListe)
      * 
-     * @throws SQLException 
+     * @throws SQLException gestion des exceptions
      */
     public void remplirTableau() throws SQLException {
         ArrayList<Participant> supp = new ArrayList<>();

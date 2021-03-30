@@ -48,8 +48,7 @@ public class CicAccueil extends javax.swing.JFrame {
      * Constructeur CicAccueil
      * Creates new form CicAccueil
      * initialise tous les éléments de la fenêtre 
-     * @see remplirTableau(), qui remplit le tableau avec la liste de toutes les études cliniques
-     * @see trouverCic(String login), qui identifie le PH qui s'est connecté
+     * 
      * 
      * @param login, le login du PH qui s'est connecté
      * @param s, correspond à la connexion à la base de données
@@ -66,7 +65,7 @@ public class CicAccueil extends javax.swing.JFrame {
 
     /**
      * remplit le tableau avec toutes les études cliniques
-     * @throws SQLException 
+     * @throws SQLException gestion exceptions
      */
     public void remplirTableau() throws SQLException {
         
@@ -103,7 +102,7 @@ public class CicAccueil extends javax.swing.JFrame {
     
     /**
      * Identifie le PH qui s'est connecté grâce à son login en interrogeant la base de données
-     * @param login 
+     * @param login login du PH
      */
     public void trouverCic(String login){
         

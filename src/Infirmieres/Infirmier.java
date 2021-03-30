@@ -58,7 +58,7 @@ public class Infirmier {
 
     /**
      * met à jour la valeur du service
-     * @param service 
+     * @param service service
      */
     public void setService(String service) {
         this.service = service;

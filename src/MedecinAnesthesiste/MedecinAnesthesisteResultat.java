@@ -20,7 +20,11 @@ public class MedecinAnesthesisteResultat extends javax.swing.JFrame {
     public PatientHop patient;
     public Medecin medecin;
     /**
+     * Constructeur MedecinAnesthésiste
      * Creates new form SecretaireAcceuil
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p patient
+     * @param med médecin
      */
     public MedecinAnesthesisteResultat(PatientHop p,Medecin med) {
         patient =p;

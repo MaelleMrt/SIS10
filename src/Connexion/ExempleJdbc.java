@@ -24,7 +24,7 @@ public class ExempleJdbc {
   * 
   * @return Statement utilise pour faire
   * les requetes SQL
-  * @throws SQLException 
+  * @throws SQLException gestion des exceptions
   */
  public static Statement connexion() throws SQLException {
      Statement st=null;

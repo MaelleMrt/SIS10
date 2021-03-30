@@ -903,8 +903,10 @@ public class FrameClientLoca extends javax.swing.JFrame {
         this.patient.setAssignedPatLocation(assignedLocation);
         // connexion
         // on recupere le port et l'adresse IP de host
-        String host = "82.65.192.5";
-        Integer port = 4444;
+        //String host = "82.65.192.5";
+        String host = "localhost";
+        Integer port = 6558;
+        //Integer port =4444;
         
         ClientHL7 c = new ClientHL7();
         // on se connecte
@@ -1227,7 +1229,7 @@ public class FrameClientLoca extends javax.swing.JFrame {
   * Conversion patientHop en patient HL7
   * @param patHop patient de l'hopital
   * @param classe type d'action
-  * @return 
+  * @return le patient en patient HL7
   */  
     public Patient conversionPatient(PatientHop patHop,char classe){
        return patient=new Patient(patHop.getId(),patHop.getPrenom(),classe);

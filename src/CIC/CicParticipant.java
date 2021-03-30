@@ -40,10 +40,10 @@ public class CicParticipant extends javax.swing.JFrame {
      * Constructeur CicParticipant
      * initialise les élément de la fenêtre
      * 
-     * @param e
-     * @param p
-     * @param cic
-     * @param s 
+     * @param e étude clinique
+     * @param p participant
+     * @param cic PH
+     * @param s connexion à la base de données
      */
     public CicParticipant(Etude e,Participant p,Cic cic,Statement s) {
         this.s = s;

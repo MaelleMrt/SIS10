@@ -26,6 +26,8 @@ public class AjoutValide extends javax.swing.JFrame {
      * Constructeur AjoutValide
      * Creates new form AjoutValide
      * initialise les attributs
+     * @param pat patient
+     * @param med médecin
      */
     public AjoutValide(PatientHop pat,Medecin med) {
         // initialisation des composants

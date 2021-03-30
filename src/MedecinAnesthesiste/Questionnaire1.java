@@ -21,11 +21,28 @@ import java.util.ArrayList;
  * @author Maelle
  */
 public class Questionnaire1 extends javax.swing.JFrame {
+    /**
+     * patient
+     * @see PatientHop
+     */
     private PatientHop patient;
+    /**
+     * médecin
+     * @see Medecin
+     */
     private Medecin medecin;
+    /**
+     * rdv du médecin
+     * @see RdvMedecin
+     */
     private RdvMedecin rdvMed;
     /**
+     * Constructeur Questionnaire1
      * Creates new form SecretaireAcceuil
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p patient
+     * @param med médecin
+     * @param rdv rdv du médecin
      */
     public Questionnaire1(PatientHop p,Medecin med,RdvMedecin rdv) {
         this.rdvMed=rdv;

@@ -25,9 +25,9 @@ public class Cic {
     
     /**
      * 
-     * @param nom
-     * @param prenom
-     * @param login 
+     * @param nom nom
+     * @param prenom prénom
+     * @param login login
      */
     public Cic(String nom, String prenom, String login){
         this.nom = nom;

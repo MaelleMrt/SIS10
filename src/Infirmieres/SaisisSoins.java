@@ -9,7 +9,7 @@ import Connexion.ExempleJdbc;
 import Medecin.*;
 import PageConnexion.InterfaceConnexion;
 import Patient.PatientHop;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

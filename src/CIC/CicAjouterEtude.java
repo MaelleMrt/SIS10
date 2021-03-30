@@ -67,13 +67,13 @@ public class CicAjouterEtude extends javax.swing.JFrame {
      * remplit la liste des participants avec les participants qui étaient déjà dans le tableau (qui sont dans ancienneListe) et les participants que l'on vient d'ajouter (qui sont dans la liste nouveaux)
      * initialise tous les éléments de la fenêtre
      * 
-     * @param ancienneListe
-     * @param nouveaux
-     * @param nom
-     * @param date
-     * @param duree
-     * @param cic
-     * @param s 
+     * @param ancienneListe la liste des participants qui sont déjà dans la liste
+     * @param nouveaux la liste avec les participants que l'on vient d'ajouter
+     * @param nom nom de l'étude
+     * @param date date de démarrage
+     * @param duree durée
+     * @param cic PH
+     * @param s connexion à la base de données
      */
     public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, Cic cic, Statement s) {
 
@@ -135,7 +135,7 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
     /**
      * vérifie que le nom entré dans le champs de texte n'existe pas encore dans la base de données
-     * @param str
+     * @param str nom
      * @return un booléen : True si le nom existe déjà, false sinon
      */
     public boolean verifNom(String str) {

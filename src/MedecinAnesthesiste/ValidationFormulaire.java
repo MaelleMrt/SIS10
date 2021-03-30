@@ -16,7 +16,11 @@ public class ValidationFormulaire extends javax.swing.JFrame {
     private PatientHop patient;
     private Medecin medecin;
     /**
+     * Constructeur ValidationFormulaire
      * Creates new form ValidationFormulaire
+     * initialise les attributs et les éléments de la fenêtre
+     * @param pat patient
+     * @param med médecin
      */
     public ValidationFormulaire(PatientHop pat,Medecin med) {
         this.patient =pat;

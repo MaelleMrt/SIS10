@@ -37,6 +37,8 @@ public class InfirmiereResultat extends javax.swing.JFrame {
      * Cpnstructeur InfirmierResultat
      * Creates new form InfirmierResultat
      * initialise les attributs et les éléments de la fenêtre
+     * @param p patient
+     * @param inf infirmière
      */
     public InfirmiereResultat(PatientHop p,Infirmier inf) {
         // on initialise nos variables

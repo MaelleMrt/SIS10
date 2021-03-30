@@ -29,13 +29,13 @@ public class PrescriptionInf extends ResultatPrescription {
 
     /**
      * Constructeur PrescriptionInf
-     * @param s
-     * @param m
-     * @param d
+     * @param s service
+     * @param m médecin
+     * @param d date
      * @param contenu contenu de la prescription
-     * @param valider
-     * @param dateVal
-     * @param loginInf 
+     * @param valider true si la prescription est validée, false sinon
+     * @param dateVal date de validation de la prescription
+     * @param loginInf nom de l'infimière qui a validé la prescription
      */
     public PrescriptionInf(String s, String m, String d, String contenu, boolean valider, String dateVal, String loginInf) {
         super(s, m, d, contenu);
