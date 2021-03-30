@@ -9,13 +9,31 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenêtre affichant les détails d'un rdv
  * @author Elodie
  */
 public class RDV extends javax.swing.JFrame {
 
+    /**
+     * page précédente
+     */
     JFrame precedent;
 
+    /**
+     * Constructeur RDV
+     * initialise les attributs et les éléments de la fenêtre
+     * @param precedent page précédente
+     * @param patient patient
+     * @param id identifiant du patient
+     * @param motif motif du rdv
+     * @param date date du rdv
+     * @param categorie categorie du rdv
+     * @param localisation localisation du patient
+     * @param medecin médecin
+     * @param prenomS prénom de la secrétaire
+     * @param nomS nom de la secrétaire
+     * @param heure heure du rdv
+     */
     public RDV(JFrame precedent, String patient, String id, String motif, String date, String categorie, String localisation, String medecin, String prenomS, String nomS, String heure) {
         initComponents();
         this.precedent = precedent;
@@ -23,6 +41,19 @@ public class RDV extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
+    /**
+     * affiche toutes les informations sur les labels correspondants
+     * @param patient le patient
+     * @param id l'identifiant du patient
+     * @param motif motif du rdv
+     * @param date date du rdv
+     * @param categorie categorie du rdv
+     * @param localisation localisation du patient
+     * @param medecin médecin
+     * @param prenomS prénom de la secrétaire
+     * @param nomS nom de la secrétaire
+     * @param heure heure du rdv
+     */
     private void affichageDonnées(String patient, String id, String motif, String date, String categorie, String localisation, String medecin, String prenomS, String nomS, String heure) {
         Localisation l = new Localisation(localisation);
         jLabel14.setText(patient);
@@ -306,6 +337,10 @@ public class RDV extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);

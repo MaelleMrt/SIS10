@@ -11,18 +11,45 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Définit une hospitalisation
  * @author Elodie
  */
 public class Hospitalisations {
 
+    /**
+     * le nom du médecin
+     */
     private String medecin;
+    /**
+     * l'identifiant du patient
+     */
     private int id;
+    /**
+     * le motif d'hospitalisation
+     */
     private String motif;
+    /**
+     * la date d'hospitalisation
+     */
     private String date;
+    /**
+     * l'identifiant du rdv
+     */
     private int rdv;
+    /**
+     * la localisation du patient
+     */
     private Localisation loca;
 
+    /**
+     * Constructeur Hospitalisations
+     * initialise les attributs
+     * @param medecin nom du médecin
+     * @param id identifiant du patient
+     * @param motif motif d'hospitalisation
+     * @param date date d'hospitalisation
+     * @param rdv identifiant du rdv
+     */
     public Hospitalisations(String medecin, int id, String motif, String date, int rdv) {
         this.medecin = medecin;
         this.id = id;
@@ -87,6 +114,10 @@ public class Hospitalisations {
         this.date = date;
     }
 
+    /**
+     * interroge la base de données pour trouver le service
+     * @return le service
+     */
     public String getService() {
         String service = new String();
         try {
@@ -103,6 +134,10 @@ public class Hospitalisations {
         return service;
     }
 
+    /**
+     * interroge la base de données pour trouver l'identifiant de la localisation
+     * @return l'identifiant de la localisation
+     */
     public String getLocalisationChiffre() {
         String loc = new String();
         try {
@@ -119,6 +154,10 @@ public class Hospitalisations {
         return loc;
     }
 
+    /**
+     * interroge la base de données pour trouver le nom du patient
+     * @return le nom du patient
+     */
     public String getNomP() {
         String nom = new String();
         try {
@@ -135,6 +174,10 @@ public class Hospitalisations {
         return nom;
     }
 
+    /**
+     * interroge la base de données pour trouver l'heure du rdv
+     * @return l'heure du rdv
+     */
     public String getHeure() {
         // rajouter un idRDV
         String heure = new String();
@@ -152,6 +195,10 @@ public class Hospitalisations {
         return heure;
     }
 
+    /**
+     * interroge la base de données pour trouver la localisation
+     * @return la localisation
+     */
     public String getLocalisationPhrase() {
         String loc = new String();
         try {

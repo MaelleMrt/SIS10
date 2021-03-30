@@ -17,15 +17,28 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre affichant les soins réalisés sur un patient
  * @author Maelle
  */
 public class InfirmiereSoins extends javax.swing.JFrame {
+    /**
+     * le patient
+     */
     public PatientHop patient;
+    /**
+     * l'infirmière qui est connectée
+     */
     public Infirmier infirmier;
+    /**
+     * le modèle permettant de remplir le tableau avec la liste des soins
+     */
     private TableauxSoins listSoins;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur InfirmiereSoins
+     * Creates new form InfirmiereSoins
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p patient
+     * @param inf l'infirmière qui est connectée
      */
     public InfirmiereSoins(PatientHop p,Infirmier inf) {
         // on initialise nos variables
@@ -224,29 +237,45 @@ public class InfirmiereSoins extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page d'accueil quand on clique sur le bouton
+     * @param evt 
+     * @see InfirmierAcceuil
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //Clic sur le bouton Acceuil ramene a l'interface acceuil
+        //Clic sur le bouton Accueil ramene a l'interface accueil
         this.dispose();
         new InfirmierAcceuil(infirmier.login);
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * ferme la fenêtre actuelle et permet de retourner à la page précédente avec le dossier patient
+     * @param evt 
+     * @see InfirmierPatient
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //Clic sur le bouton Retour ramene a l'interface PatientHop
-   
+        //Clic sur le bouton Retour ramene a l'interface InfirmierPatient
         new InfirmierPatient(patient,infirmier);
         this.dispose();
-        
-        
-        
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter, ferme la page actuelle et renvoie à la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche les détails du soin correspondant
+     * ferme la fenêtre actuelle et renvoie à la page qui affiche le contenu du soin
+     * @see ContenuInfSoins
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // affiche detail du soin en cliquant sur la ligne
         // correspondante
@@ -265,6 +294,10 @@ public class InfirmiereSoins extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trier les soins par nom de l'infirmier ou par date selon la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         ArrayList<Soins> list = listSoins.getListSoins();
         if (jComboBox1.getSelectedItem().equals("Infirmier")) {

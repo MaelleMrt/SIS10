@@ -15,17 +15,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * Fenêtre affichant le contenu d'un résultat d'une consultation ou d'une hospitalisation dans l'interface médecin
  * @author Maelle
  */
 public class Contenu extends javax.swing.JFrame {
-
+    /**
+     * le résultat dont on veut afficher le contenu
+     * @see ResultatPrescription
+     */
     ResultatPrescription respres;
+    /**
+     * le patient
+     * @see PatientHop
+     */
     PatientHop patient;
+    /**
+     * Le médecin qui est connecté
+     * @see Medecin
+     */
     Medecin medecin;
 
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur Contenu
+     * Creates new form Contenu
+     * initialise les attributs et les éléments de la fenêtre
+     * @param rp le résultat dont on veut afficher le contenu
+     * @param p le patient
+     * @param med le médecin qui est connecté
      */
     public Contenu(ResultatPrescription rp, PatientHop p, Medecin med) {
         medecin = med;
@@ -41,6 +57,10 @@ public class Contenu extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation() {
 
         try {
@@ -255,6 +275,11 @@ public class Contenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page avec tous les résultats d'un patient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         if (this.medecin.getService().equals("Anésthésie")) {
@@ -265,6 +290,12 @@ public class Contenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();

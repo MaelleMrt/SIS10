@@ -19,14 +19,24 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenêtre affichant le dossier du patient
  * @author Maelle
  */
 public class InfirmierPatient extends javax.swing.JFrame {
+    /**
+     * le patient
+     */
     PatientHop patient;
+    /**
+     * l'infirmière qui est connectée
+     */
     Infirmier infirmier;
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur InfirmierPatient
+     * Creates new form InfirmierPatient
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param inf l'infirmière qui est connectée
      */
     public InfirmierPatient(PatientHop p,Infirmier inf) {
         // on initialise nos variables
@@ -39,6 +49,10 @@ public class InfirmierPatient extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
      public void localisation(){
         // on affiche la localisation du patient
         try {
@@ -292,12 +306,23 @@ public class InfirmierPatient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet d'afficher la liste des observations et résultats du patient quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie vers la fenêtre InfirmiereResultat
+     * @param evt 
+     * @see InfirmiereResultat
+     */
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         // on affiche les resultats des examens precedents
         new InfirmiereResultat(patient, infirmier);
         this.dispose();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
+    /**
+     * retourne à l'accueil quand on clique sur le bouton
+     * @param evt 
+     * @see InfirmierAcceuil
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // retourne a l'accueil
         this.dispose();
@@ -305,26 +330,48 @@ public class InfirmierPatient extends javax.swing.JFrame {
         init1.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie à la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * permet d'afficher les soins déjà réalisés quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page InfirmiereSoins
+     * @param evt 
+     * @see InfirmiereSoins
+     */
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
         // on affiche les soins passe 
         this.dispose();
         new InfirmiereSoins(this.patient,this.infirmier);
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
+    /**
+     * permet de saisir un nouveau soin
+     * ferme la fenêtre actuelle et ouvre la page de saisie de soin
+     * @param evt 
+     * @see SaisisSoins
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // saisis d'un nouveau soin
         this.dispose();
         new SaisisSoins(this.patient,this.infirmier);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet d'ouvrir la dernière lettre de sortie 
+     * quand on clique sur le bouton, le pdf s'ouvre
+     * @param evt 
+     */
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
-        // on affiche la dernier lettre de sortie
+        // on affiche la derniere lettre de sortie
         try {
             File fichier = new File("src/PDF/LettreSortie" + patient.getId() + ".pdf");
             if (fichier.exists()) {
@@ -335,6 +382,12 @@ public class InfirmierPatient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
+    /**
+     * permet d'afficher les prescriptions quand on clique sur le bouton
+     * la fenêtre actuelle se ferme et la page avec la liste de prescriptions s'ouvre
+     * @param evt 
+     * @see InfirmierPrescription
+     */
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
         // on affiche les prescriptions
         new InfirmierPrescription(patient, infirmier);

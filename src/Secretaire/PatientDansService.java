@@ -7,9 +7,20 @@ package Secretaire;
 
 public class PatientDansService {
 
+    /**
+     * l'identifiant du patient
+     */
     private int id;
+    /**
+     * le service
+     */
     private String service;
 
+    /**
+     * Constructeur PatientDansService
+     * @param id identifiant du patient
+     * @param service service
+     */
     public PatientDansService(int id, String service) {
         this.id = id ;
         this.service = service;

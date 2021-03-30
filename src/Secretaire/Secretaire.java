@@ -26,19 +26,47 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre d'accueil d'une secrétaire
  * @author Elodie
  */
 public class Secretaire extends javax.swing.JFrame {
 
+    /**
+     * nom de la secrétaire
+     */
     String nom;
+    /**
+     * prénom de la secrétaire
+     */
     String prenom;
+    /**
+     * service
+     */
     String service;
+    /**
+     * liste des patients du service
+     */
     private ArrayList<PatientDansService> listPatient = new ArrayList<>();
+    /**
+     * liste des médecins
+     */
     private ArrayList<Medecin> listMedecin = new ArrayList<>();
+    /**
+     * liste de patients
+     */
     private ArrayList<PatientHop> listPatient2 = new ArrayList<>();
+    /**
+     * connexion à la base de données
+     */
     private Statement connexion;
 
+    /**
+     * Constructeur Secretaire
+     * initialise les attributs et éléments de la fenêtre
+     * @param nom nom de la secrétaire
+     * @param prenom prénom de la secrétaire
+     * @param service service
+     */
     public Secretaire(String nom, String prenom, String service) {
         try{
             this.connexion=new ExempleJdbc().connexion();
@@ -57,12 +85,18 @@ public class Secretaire extends javax.swing.JFrame {
 
     }
 
+    /**
+     * affiche le service et les nom et prénom de la secrétaire
+     */
     private void affichageNom() { // récupérer nom de la personne
         jLabel4.setText(prenom);
         jLabel2.setText(nom);
         jLabel6.setText(service);
     }
 
+    /**
+     * remplit le tableau des médecins
+     */
     private void Tableau2() { // affichage des médecins (nom et prénom)
         try {
    
@@ -90,6 +124,9 @@ public class Secretaire extends javax.swing.JFrame {
         jTable2.setModel(model);
     }
 
+    /**
+     * remplit le tableau des patients
+     */
     private void Tableau1() { // affichage des médecins (nom et prénom)
         try {
 
@@ -373,12 +410,22 @@ public class Secretaire extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * renvoie à la page de saisie d'un nouveau DMA
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JFrame DMA = new CreationDMA(this, nom, prenom, service);
         DMA.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
         JFrame pageConnexion = new InterfaceConnexion();
@@ -392,6 +439,11 @@ public class Secretaire extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    /**
+     * permet de faire une recherche par le nom du médecin
+     * affiche la liste des médecins ayant un nom contenant le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void jTextField2PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField2PropertyChange
         jTextField2.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -427,6 +479,10 @@ public class Secretaire extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jTextField2PropertyChange
 
+    /**
+     * Quand on clique sur une ligne du tableau, affichage de la liste des rdv du médecin correspondant
+     * @param evt 
+     */
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         int i = 0;
         while (i < jTable2.getRowCount() && !jTable2.isRowSelected(i)) {
@@ -442,6 +498,11 @@ public class Secretaire extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTable2MouseClicked
 
+    /**
+     * permet de faire une recherche par le nom du patient
+     * affiche la liste des patients ayant un nom contenant le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
          jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -477,6 +538,10 @@ public class Secretaire extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jTextField1PropertyChange
 
+    /**
+     * Quand on clique sur une ligne du tableau, affichage du DMA du patient correspondant
+     * @param evt 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
          int i = 0;
         while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {

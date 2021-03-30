@@ -18,19 +18,50 @@ import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 /**
- *
+ * Fenêtre affichant un message de confirmation de l'ajout d'un patient
  * @author Elodie
  */
 public class Message extends javax.swing.JFrame {
 
+    /**
+     * page d'accueil
+     */
     JFrame accueil;
+    /**
+     * fenêtre affichant le DMA
+     */
     JFrame DMA;
+    /**
+     * date 
+     */
     Date date = new Date();
+    /**
+     * année
+     */
     int annee = date.getYear() + 1900;
+    /**
+     * n° de sécurité sociale
+     */
     String nSecu;
+    /**
+     * le patient 
+     * @see PatientHop
+     */
     PatientHop patient;
+    /**
+     * le service
+     */
     String service;
 
+    /**
+     * Constructeur Message
+     * initialise les attributs et les éléments de la fenêtre
+     * @param accueil page d'accueil
+     * @param nSecu n° de sécu
+     * @param precedent page précédente
+     * @param pat patient
+     * @param service service
+     */
     public Message(JFrame accueil, String nSecu, JFrame precedent,PatientHop pat, String service) {
         this.nSecu = nSecu;
         System.out.println(nSecu);
@@ -46,10 +77,12 @@ public class Message extends javax.swing.JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        
-
     }
 
+    /**
+     * Génère un identifiant pour le nouveau patient
+     * @return l'identifiant
+     */
     private String generationID() {
         int max = 9999999;
         int min = 0;
@@ -179,6 +212,10 @@ public class Message extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ouvre une fenêtre pop-up pour demander si on veut envoyer l'information d'admission au service de radiologie
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);

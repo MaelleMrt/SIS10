@@ -18,15 +18,22 @@ import Patient.PatientHop;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author clara
  */
 public class Tri {
     
+    /**
+     * Constructeur Tri 
+     */
     public Tri(){
-        
     }
     
+    /**
+     * trie une liste d'études par date
+     * @param liste liste d'études
+     * @return la liste triée
+     */
     public ArrayList<Etude> trierEtudesParDates(ArrayList<Etude> liste) {
         ArrayList<Etude> copieListe = new ArrayList<Etude>(liste);
         ArrayList<Etude> listeTriee = new ArrayList<Etude>();
@@ -47,6 +54,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de participants par date
+     * @param liste liste de participants
+     * @return la liste triée
+     */
     public ArrayList<Participant> trierParticipantsParDates(ArrayList<Participant> liste) {
         ArrayList<Participant> copieListe = new ArrayList<Participant>(liste);
         ArrayList<Participant> listeTriee = new ArrayList<Participant>();
@@ -67,6 +79,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste d'études par nom
+     * @param liste liste d'études
+     * @return la liste triée
+     */
     public ArrayList<Etude> trierEtudesParNom(ArrayList<Etude> liste) {
         ArrayList<Etude> copieListe = new ArrayList<Etude>(liste);
         ArrayList<Etude> listeTriee = new ArrayList<Etude>();
@@ -87,6 +104,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste d'études par praticien hospitalier
+     * @param liste liste d'études
+     * @return la liste triée
+     */
     public ArrayList<Etude> trierEtudesParPH(ArrayList<Etude> liste) {
         ArrayList<Etude> copieListe = new ArrayList<Etude>(liste);
         ArrayList<Etude> listeTriee = new ArrayList<Etude>();
@@ -107,6 +129,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de participants par nom
+     * @param liste liste de participants
+     * @return la liste triée
+     */
     public ArrayList<Participant> trierParticipantsParNom(ArrayList<Participant> liste) {
         ArrayList<Participant> copieListe = new ArrayList<Participant>(liste);
         ArrayList<Participant> listeTriee = new ArrayList<Participant>();
@@ -127,6 +154,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de participants par prénom
+     * @param liste liste de participants
+     * @return la liste triée
+     */
     public ArrayList<Participant> trierParticipantsParPrenom(ArrayList<Participant> liste) {
         ArrayList<Participant> copieListe = new ArrayList<Participant>(liste);
         ArrayList<Participant> listeTriee = new ArrayList<Participant>();
@@ -147,6 +179,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de participants par type
+     * @param liste liste de participants
+     * @return la liste triée
+     */
     public ArrayList<Participant> trierParticipantsParType(ArrayList<Participant> liste) {
         ArrayList<Participant> copieListe = new ArrayList<Participant>(liste);
         ArrayList<Participant> listeTriee = new ArrayList<Participant>();
@@ -167,6 +204,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de patients par nom
+     * @param liste liste de patients
+     * @return la liste triée
+     */
     public ArrayList<PatientHop> trierPatientsParNom(ArrayList<PatientHop> liste) {
         ArrayList<PatientHop> copieListe = new ArrayList<PatientHop>(liste);
         ArrayList<PatientHop> listeTriee = new ArrayList<PatientHop>();
@@ -187,6 +229,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de patients par prénom
+     * @param liste liste de patients
+     * @return la liste triée
+     */
     public ArrayList<PatientHop> trierPatientsParPrenom(ArrayList<PatientHop> liste) {
         ArrayList<PatientHop> copieListe = new ArrayList<PatientHop>(liste);
         ArrayList<PatientHop> listeTriee = new ArrayList<PatientHop>();
@@ -207,6 +254,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de patients par date
+     * @param liste liste de patients
+     * @return la liste triée
+     */
     public ArrayList<PatientHop> trierPatientsParDate(ArrayList<PatientHop> liste) {
         ArrayList<PatientHop> copieListe = new ArrayList<PatientHop>(liste);
         ArrayList<PatientHop> listeTriee = new ArrayList<PatientHop>();
@@ -227,6 +279,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de prescriptions par date
+     * @param liste liste de prescriptions
+     * @return la liste triée
+     */
     public ArrayList<PrescriptionInf> trierPrescriptionParDate(ArrayList<PrescriptionInf> liste) {
         ArrayList<PrescriptionInf> copieListe = new ArrayList<PrescriptionInf>(liste);
         ArrayList<PrescriptionInf> listeTriee = new ArrayList<PrescriptionInf>();
@@ -247,6 +304,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de prescriptions par service
+     * @param liste liste de prescriptions
+     * @return la liste triée
+     */
     public ArrayList<PrescriptionInf> trierPrescriptionParService(ArrayList<PrescriptionInf> liste) {
         ArrayList<PrescriptionInf> copieListe = new ArrayList<PrescriptionInf>(liste);
         ArrayList<PrescriptionInf> listeTriee = new ArrayList<PrescriptionInf>();
@@ -267,6 +329,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de prescriptions par médecin
+     * @param liste liste de prescriptions
+     * @return la liste triée
+     */
     public ArrayList<PrescriptionInf> trierPrescriptionParMedecin(ArrayList<PrescriptionInf> liste) {
         ArrayList<PrescriptionInf> copieListe = new ArrayList<PrescriptionInf>(liste);
         ArrayList<PrescriptionInf> listeTriee = new ArrayList<PrescriptionInf>();
@@ -287,6 +354,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de prescriptions par infirmière
+     * @param liste liste de prescriptions
+     * @return la liste triée
+     */
     public ArrayList<PrescriptionInf> trierPrescriptionParInf(ArrayList<PrescriptionInf> liste) {
         ArrayList<PrescriptionInf> copieListe = new ArrayList<PrescriptionInf>(liste);
         ArrayList<PrescriptionInf> listeTriee = new ArrayList<PrescriptionInf>();
@@ -307,6 +379,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de prescriptions par date de validation
+     * @param liste liste de prescriptions
+     * @return la liste triée
+     */
     public ArrayList<PrescriptionInf> trierPrescriptionParDateValid(ArrayList<PrescriptionInf> liste) {
         ArrayList<PrescriptionInf> copieListe = new ArrayList<PrescriptionInf>(liste);
         ArrayList<PrescriptionInf> listeTriee = new ArrayList<PrescriptionInf>();
@@ -327,6 +404,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de résultats par date
+     * @param liste liste de résultats
+     * @return la liste triée
+     */
     public ArrayList<Resultat> trierResultatParDate(ArrayList<Resultat> liste) {
         ArrayList<Resultat> copieListe = new ArrayList<Resultat>(liste);
         ArrayList<Resultat> listeTriee = new ArrayList<Resultat>();
@@ -348,6 +430,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de résultats par service
+     * @param liste liste de résultats
+     * @return la liste triée
+     */
     public ArrayList<Resultat> trierResultatParService(ArrayList<Resultat> liste) {
         ArrayList<Resultat> copieListe = new ArrayList<Resultat>(liste);
         ArrayList<Resultat> listeTriee = new ArrayList<Resultat>();
@@ -368,6 +455,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de résultats par médecin
+     * @param liste liste de résultats
+     * @return la liste triée
+     */
     public ArrayList<Resultat> trierResultatParMedecin(ArrayList<Resultat> liste) {
         ArrayList<Resultat> copieListe = new ArrayList<Resultat>(liste);
         ArrayList<Resultat> listeTriee = new ArrayList<Resultat>();
@@ -388,6 +480,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste d'hospitalisations par date
+     * @param liste liste d'hospitalisations
+     * @return la liste triée
+     */
     public ArrayList<Hospitalisations> trierHospitParDate(ArrayList<Hospitalisations> liste) {
         ArrayList<Hospitalisations> copieListe = new ArrayList<Hospitalisations>(liste);
         ArrayList<Hospitalisations> listeTriee = new ArrayList<Hospitalisations>();
@@ -408,6 +505,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste d'hospitalisations par service
+     * @param liste liste d'hospitalisations
+     * @return la liste triée
+     */
     public ArrayList<Hospitalisations> trierHospitParService(ArrayList<Hospitalisations> liste) {
         ArrayList<Hospitalisations> copieListe = new ArrayList<Hospitalisations>(liste);
         ArrayList<Hospitalisations> listeTriee = new ArrayList<Hospitalisations>();
@@ -428,6 +530,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste d'hospitalisations par médecin
+     * @param liste liste d'hospitalisations
+     * @return la liste triée
+     */
     public ArrayList<Hospitalisations> trierHospitParMedecin(ArrayList<Hospitalisations> liste) {
         ArrayList<Hospitalisations> copieListe = new ArrayList<Hospitalisations>(liste);
         ArrayList<Hospitalisations> listeTriee = new ArrayList<Hospitalisations>();
@@ -448,6 +555,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de consultations par date
+     * @param liste liste de consultations
+     * @return la liste triée
+     */
     public ArrayList<Consultations> trierConsultParDate(ArrayList<Consultations> liste) {
         ArrayList<Consultations> copieListe = new ArrayList<Consultations>(liste);
         ArrayList<Consultations> listeTriee = new ArrayList<Consultations>();
@@ -468,6 +580,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de consultations par service
+     * @param liste liste de consultations
+     * @return la liste triée
+     */
     public ArrayList<Consultations> trierConsultParService(ArrayList<Consultations> liste) {
         ArrayList<Consultations> copieListe = new ArrayList<Consultations>(liste);
         ArrayList<Consultations> listeTriee = new ArrayList<Consultations>();
@@ -488,6 +605,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de consultations par médecin
+     * @param liste liste de consultations
+     * @return la liste triée
+     */
     public ArrayList<Consultations> trierConsultParMedecin(ArrayList<Consultations> liste) {
         ArrayList<Consultations> copieListe = new ArrayList<Consultations>(liste);
         ArrayList<Consultations> listeTriee = new ArrayList<Consultations>();
@@ -508,6 +630,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de soins par infirmière
+     * @param liste liste de soins
+     * @return la liste triée
+     */
     public ArrayList<Soins> trierSoinsParInf(ArrayList<Soins> liste) {
         ArrayList<Soins> copieListe = new ArrayList<Soins>(liste);
         ArrayList<Soins> listeTriee = new ArrayList<Soins>();
@@ -528,6 +655,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de soins par date
+     * @param liste liste de soins
+     * @return la liste triée
+     */
     public ArrayList<Soins> trierSoinsParDate(ArrayList<Soins> liste) {
         ArrayList<Soins> copieListe = new ArrayList<Soins>(liste);
         ArrayList<Soins> listeTriee = new ArrayList<Soins>();
@@ -548,6 +680,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de rdv par nom
+     * @param liste liste de rdv
+     * @return la liste triée
+     */
     public ArrayList<RdvMedecin> trierRDVParNom(ArrayList<RdvMedecin> liste) {
         ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
         ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
@@ -568,6 +705,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de rdv par prénom
+     * @param liste liste de rdv
+     * @return la liste triée
+     */
     public ArrayList<RdvMedecin> trierRDVParPrenom(ArrayList<RdvMedecin> liste) {
         ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
         ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
@@ -588,6 +730,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de rdv par date
+     * @param liste liste de rdv
+     * @return la liste triée
+     */
     public ArrayList<RdvMedecin> trierRDVParDate(ArrayList<RdvMedecin> liste) {
         ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
         ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();
@@ -608,6 +755,11 @@ public class Tri {
         return listeTriee;
     }
     
+    /**
+     * trie une liste de rdv par date de naissance
+     * @param liste liste de rdv
+     * @return la liste triée
+     */
     public ArrayList<RdvMedecin> trierRDVParNaissance(ArrayList<RdvMedecin> liste) {
         ArrayList<RdvMedecin> copieListe = new ArrayList<RdvMedecin>(liste);
         ArrayList<RdvMedecin> listeTriee = new ArrayList<RdvMedecin>();

@@ -21,17 +21,41 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- *
+ * Fenêtre de saisie du DMA
  * @author Elodie
  */
 public class CreationDMA extends javax.swing.JFrame {
 
+    /**
+     * page d'accueil
+     */
     JFrame accueil;
+    /**
+     * numéro de sécurité sociale du patient
+     */
     String nSecu;
+    /**
+     * date
+     */
     String date;
+    /**
+     * date de naissance du patient
+     */
     char[] dateNaissance;
+    /**
+     * service
+     */
     String service;
 
+    /**
+     * Constructeur CreationDMA
+     * Creates new form CreationDMA
+     * initialise les attributs et les éléments de la fenêtre
+     * @param precedent page précédente
+     * @param nom nom du patient
+     * @param prenom prenom du patient
+     * @param service service
+     */
     public CreationDMA(JFrame precedent, String nom, String prenom, String service) {
         this.accueil = precedent;
         initComponents();
@@ -43,11 +67,20 @@ public class CreationDMA extends javax.swing.JFrame {
 
     }
 
+    /**
+     * récupère les nom et prénom du patient
+     * @param nom nom du patient
+     * @param prenom prénom du patient
+     */
     private void affichageNom(String nom, String prenom) { // récupérer nom de la personne
         jLabel13.setText(prenom);
         jLabel2.setText(nom);
     }
 
+    /**
+     * 
+     * @return le premier numéro du n° de sécurité social du patient en fonction de son sexe
+     */
     private int genderSecu() { // quel est le sexe du patient ?
         int numero = 0;
         if (jCheckBox1.isSelected()) {
@@ -58,6 +91,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return numero;
     }
 
+    /**
+     * 
+     * @return le sexe du patient en fonction de la case sélectionnée
+     */
     private String genderBDD() { // quel est le sexe du patient ?
         String numero = "";
         if (jCheckBox1.isSelected()) {
@@ -68,6 +105,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return numero;
     }
 
+    /**
+     * Vérifie que le n° de sécurité sociale est valide
+     * @return true s'il est valide et false sinon
+     */
     private boolean verificationNumSecu() {
         boolean result = false;
         String numero = jTextField10.getText();
@@ -93,6 +134,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return result;
     }
 
+    /**
+     * 
+     * @return l'année de naissance du patient
+     */
     private int RecuperAnnee() {
         int uno = Character.getNumericValue(dateNaissance[0]);
         int dos = Character.getNumericValue(dateNaissance[1]);
@@ -102,6 +147,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return annee;
     }
 
+    /**
+     * 
+     * @return le mois de naissance du patient
+     */
     private int RecuperMois() {
         int cinco = Character.getNumericValue(dateNaissance[5]);
         int seis = Character.getNumericValue(dateNaissance[6]);
@@ -109,6 +158,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return mois;
     }
 
+    /**
+     * 
+     * @return le jour de naissance du patient
+     */
     private int RecuperJour() {
         int siete = Character.getNumericValue(dateNaissance[8]);
         int ocho = Character.getNumericValue(dateNaissance[9]);
@@ -116,6 +169,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return jour;
     }
 
+    /**
+     * vérifie si la date de naissance est valide
+     * @return true si la date est valide, false sinon
+     */
     private boolean verifDateNaissance() {
         boolean result = false;
         Date dateAjd = new Date();
@@ -140,6 +197,10 @@ public class CreationDMA extends javax.swing.JFrame {
         return result;
     }
 
+    /**
+     * On récupère les informations saisies et on enregistre le nouveau patient dans la base de données
+     * @return le patient
+     */
     private PatientHop enregistrer() {
         PatientHop patient=null;
         // On récupère les info saisies
@@ -177,6 +238,11 @@ public class CreationDMA extends javax.swing.JFrame {
         return patient;
     }
     
+    /**
+     * vérifie si le patient est déjà dans la base de données
+     * @param secu numéro de sécurité sociale du patient
+     * @return true si le patient est déjà dans la BD, false sinon
+     */
     public boolean VerifPatient(String secu){
         //renvoie true si le patient est déjà dans la BD
         boolean result = false;
@@ -568,6 +634,10 @@ public class CreationDMA extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * impose la condition 'une seule des 2 cases sexe peut être cochée en même temps'
+     * @param evt 
+     */
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         if (jCheckBox1.isSelected()) {
             jCheckBox2.setEnabled(false);
@@ -580,6 +650,11 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField7ActionPerformed
 
+    /**
+     * On vérifie que toutes les informations sont valides (toutes les infos saisies, n° sécu valide, date de naissance valide et patient n'existant pas encore)
+     * On enregistre le patient
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         date = jTextField4.getText();
         dateNaissance = date.toCharArray();
@@ -606,12 +681,13 @@ public class CreationDMA extends javax.swing.JFrame {
             this.setVisible(false);
             Message message = new Message(this.accueil,nSecu,this.accueil,patient, service);
             message.setVisible(true);
-            
-
         }
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * impose la condition 'une seule des 2 cases sexe peut être cochée en même temps'
+     * @param evt 
+     */
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         if (jCheckBox2.isSelected()) {
             jCheckBox1.setEnabled(false);
@@ -640,7 +716,11 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
-
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * fermeture de la fenêtre actuelle et ouverture de la page d'accueil
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
         accueil.setVisible(true);
@@ -654,6 +734,11 @@ public class CreationDMA extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    /**
+     * affiche la liste des villes correspondant au code postal
+     * @param codePostal le code postal
+     * @return la liste des villes correspondant au code postal
+     */
     public ArrayList<String> VilleCodePostale(String codePostal){
         ArrayList<String> listVille= new ArrayList<String>();
          try{

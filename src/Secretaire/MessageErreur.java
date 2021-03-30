@@ -6,13 +6,21 @@
 package Secretaire;
 
 /**
- *
+ * Fenêtre pop-up avec un message d'erreur
  * @author Elodie
  */
 public class MessageErreur extends javax.swing.JFrame {
 
+    /**
+     * message d'erreur
+     */
     String erreur;
     
+    /**
+     * Constructeur MessageErreur
+     * initialise les attributs et les éléments de la fenêtre
+     * @param erreur message d'erreur
+     */
     public MessageErreur(String erreur) {
         initComponents();
         this.erreur = erreur;
@@ -24,6 +32,9 @@ public class MessageErreur extends javax.swing.JFrame {
         //this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
+    /**
+     * affiche le message d'erreur
+     */
     private void infoNonConnues(){
         if (erreur.equals("- Des informations n'ont pas été saisies ")){
             jLabel5.setText("Si les informations ne sont pas connues, veuillez inscrire 'Non renseigné'");           
@@ -126,6 +137,10 @@ public class MessageErreur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ferme la fenêtre pop-up
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed

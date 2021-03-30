@@ -16,83 +16,119 @@ import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 /**
+ * crée un modèle de tableau contenant la liste des résultats d'un patient
  *
  * @author Maelle
  */
-public class TableauResultatInf extends AbstractTableModel{
-     private ArrayList<Resultat> listResultat = new ArrayList<Resultat>();
-     
-    private final String[] entetes = {"Service ", "Medecin", "Date","Contenu"};
+public class TableauResultatInf extends AbstractTableModel {
+
+    /**
+     * liste des résultats d'un patient
+     */
+    private ArrayList<Resultat> listResultat = new ArrayList<Resultat>();
+
+    /**
+     * entête du tableau
+     */
+    private final String[] entetes = {"Service ", "Medecin", "Date", "Contenu"};
+    /**
+     * nom du service dans lequel est le patient
+     */
     public String service;
-    
-    public TableauResultatInf(PatientHop p,String nomS) {
-        service=nomS;
+
+    /**
+     * Constructeur TableauResultatInf
+     * initialise les attributs, remplit la liste des résultats en interrogeant la base de données
+     * @param p le patient
+     * @param nomS le nom du service
+     */
+    public TableauResultatInf(PatientHop p, String nomS) {
+        service = nomS;
         String date;
         String contenu;
-        String login=null;
+        String login = null;
         String nomM;
 
-        try{
-        Statement s= ExempleJdbc.connexion();
-            try{
-                ResultSet rs1= s.executeQuery("SELECT date,contenu,login FROM CR WHERE idP ='"+ p.getId()+"'" );
-                while(rs1.next()){
-                    date= rs1.getString("date");
-                    contenu= rs1.getString("contenu");
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                ResultSet rs1 = s.executeQuery("SELECT date,contenu,login FROM CR WHERE idP ='" + p.getId() + "'");
+                while (rs1.next()) {
+                    date = rs1.getString("date");
+                    contenu = rs1.getString("contenu");
                     System.out.println(contenu);
-                    login =rs1.getString("login");
-                    ResultSet rs2= s.executeQuery("SELECT nom FROM Médecin WHERE login ='"+login+"'AND nomS='"+service+"'"  );
-                        while(rs2.next()){
-                            nomM= rs2.getString("nom");
+                    login = rs1.getString("login");
+                    ResultSet rs2 = s.executeQuery("SELECT nom FROM Médecin WHERE login ='" + login + "'AND nomS='" + service + "'");
+                    while (rs2.next()) {
+                        nomM = rs2.getString("nom");
 
-                            Resultat res=new Resultat(service,nomM,date,contenu);
-                            listResultat.add(res);
-                        }   
-                
+                        Resultat res = new Resultat(service, nomM, date, contenu);
+                        listResultat.add(res);
+                    }
+
                 }
-                
-            } catch(SQLException e){
-                    System.out.println(e);
+
+            } catch (SQLException e) {
+                System.out.println(e);
             }
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
-     }
- 
-    
-   
-    
-      public int getRowCount() {
-        return listResultat.size();
-        
     }
- 
+
+    /**
+     * 
+     * @return le nombre de lignes du tableau = le nombre de résultats
+     */
+    public int getRowCount() {
+        return listResultat.size();
+    }
+
+    /**
+     * 
+     * @return le nombre de colonnes du tableau
+     */
     public int getColumnCount() {
         return entetes.length;
     }
- 
+
+    /**
+     * 
+     * @param columnIndex l'indice de la colonne
+     * @return le nom de la colonne
+     */
     public String getColumnName(int columnIndex) {
         return entetes[columnIndex];
     }
- 
+
+    /**
+     * 
+     * @param rowIndex l'indice de la ligne
+     * @param columnIndex l'indice de la colonne
+     * @return la valeur de la case à la ligne n°rowIndex et à la colonne n°columnIndex
+     */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        switch(columnIndex){
+        switch (columnIndex) {
             case 0:
                 return listResultat.get(rowIndex).getService();
             case 1:
                 return listResultat.get(rowIndex).getMedecin();
-            case 2: 
+            case 2:
                 return listResultat.get(rowIndex).getDate();
-            case 3: 
+            case 3:
                 return listResultat.get(rowIndex).getContenu();
             default:
                 return null; //Ne devrait jamais arriver
         }
 
     }
-    
-    public ArrayList<Resultat> getListResultat(){
+
+    /**
+     * 
+     * @return la liste des résultats
+     */
+    public ArrayList<Resultat> getListResultat() {
         return listResultat;
     }
 }

@@ -19,20 +19,55 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Fenêtre affichant la liste des rdv d'un médecin
  * @author Elodie
  */
 public class ListeRDV extends javax.swing.JFrame {
 
+    /**
+     * page précédente
+     */
     JFrame precedent;
+    /**
+     * nom de la secrétaire
+     */
     String nomS;
+    /**
+     * prénom de la secrétaire
+     */
     String prenomS;
+    /**
+     * nom du médecin
+     */
     String nomM;
+    /**
+     * prénom du médecin
+     */
     String prenomM;
+    /**
+     * liste des rdv
+     */
     private ArrayList<RendezVous> listRDV = new ArrayList<RendezVous>();
+    /**
+     * liste des patients du service
+     */
     private ArrayList liste;
+    /**
+     * service
+     */
     String service;
 
+    /**
+     * Constructeur ListeRDV
+     * initialise les attributs et les éléments de la fenêtre
+     * @param precedent page précédente
+     * @param nomS nom de la secrétaire
+     * @param prenomS prénom de la secrétaire
+     * @param nomM nom du médecin
+     * @param prenomM prénom du médecin
+     * @param liste liste des patients du service
+     * @param service service
+     */
     public ListeRDV(JFrame precedent, String nomS, String prenomS, String nomM, String prenomM, ArrayList liste, String service) {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -47,12 +82,18 @@ public class ListeRDV extends javax.swing.JFrame {
         Tableau();
     }
 
+    /**
+     * affiche les noms et prénoms de la secrétaire et du médecin
+     */
     private void affichageNom() { // récupérer nom de la personne
         jLabel4.setText(prenomS);
         jLabel2.setText(nomS);
         jLabel6.setText(nomM + " " + prenomM);
     }
 
+    /**
+     * remplit le tableau avec les rdv du médecin
+     */
     private void Tableau() { // affichage des médecins (nom et prénom)
         try {
             Statement s = ExempleJdbc.connexion();
@@ -264,12 +305,22 @@ public class ListeRDV extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fermeture de la fenêtre actuelle et ouverture de la page de saisie d'un nouveau rdv
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         CreationRDV nouveau = new CreationRDV(precedent, nomM, prenomM, liste, service);
         nouveau.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
         InterfaceConnexion co = new InterfaceConnexion();
@@ -279,11 +330,19 @@ public class ListeRDV extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    /**
+     * permet de faire une recherche par le nom du patient
+     * affiche la liste des rdv dont le nom du patient contient le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void jTextField1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextField1PropertyChange
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -319,6 +378,10 @@ public class ListeRDV extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jTextField1PropertyChange
 
+    /**
+     * Quand on clique sur une ligne du tableau, affiche les détails du rdv correspondant
+     * @param evt 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int i = 0;
         while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {

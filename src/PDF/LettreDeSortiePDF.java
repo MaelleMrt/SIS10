@@ -31,21 +31,36 @@ import java.time.format.DateTimeFormatter;
 
 
 /**
- *
+ * crée une lettre de sortie sous format PDF
  * @author clara
  */
 public class LettreDeSortiePDF {
 
+    /**
+     * le chemin du fichier PDF que l'on va générer
+     */
     private static String FILE;
+    /**
+     * une police de caractère : en gras, taille 18 et police Times Roman
+     */
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
+    /**
+     * une police de caractère : en gras, taille 14 et police Times Roman
+     */
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 14,
             Font.BOLD);
     
-    
+    /**
+     * la lettre de sortie que l'on veut mettre sous PDF
+     */
     private LettreDeSortie lettre;
-    
 
+    /**
+     * Constructeur LettreDeSortie
+     * génère un PDF avec les informations de la lettre de sortie
+     * @param lettre la lettre de sortie
+     */
     public LettreDeSortiePDF(LettreDeSortie lettre) {
         try {
             this.lettre = lettre;
@@ -173,10 +188,13 @@ public class LettreDeSortiePDF {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }    
 
-    
-
+    /**
+     * permet de sauter des lignes
+     * @param paragraph un paragraphe
+     * @param number le nombre de lignes que l'on veut sauter
+     */
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));

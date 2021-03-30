@@ -8,14 +8,24 @@ package Medecin;
 import Patient.PatientHop;
 
 /**
- *
+ * Fenêtre pop-up pour confirmer l'ajout du document à la base de données
  * @author Maelle
  */
 public class AjoutValide extends javax.swing.JFrame {
+    /**
+     * le patient
+     * @see PatientHop
+     */
     PatientHop patient;
+    /**
+     * le médecin
+     * @see Medecin
+     */
     Medecin medecin;
     /**
+     * Constructeur AjoutValide
      * Creates new form AjoutValide
+     * initialise les attributs
      */
     public AjoutValide(PatientHop pat,Medecin med) {
         // initialisation des composants
@@ -93,6 +103,10 @@ public class AjoutValide extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fermeture de la fenêtre actuelle et ouverture de la page du dossier patient
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // retour a l'accueil patient
         new MedecinPatient(patient, medecin);

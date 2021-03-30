@@ -18,16 +18,35 @@ import javax.swing.JFrame;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 /**
- *
+ * Fenêtre pop-up confirmant la transmission de l'admission du patient au service de radiologie
  * @author Elodie
  */
 public class MessageAdmi extends javax.swing.JFrame {
 
+    /**
+     * page d'accueil
+     */
     JFrame accueil;
+    /**
+     * date
+     */
     Date date = new Date();
+    /**
+     * année
+     */
     int annee = date.getYear() + 1900;
+    /**
+     * patient
+     * @see PatientHop
+     */
     PatientHop patient;
 
+    /**
+     * Constructeur MessageAdmi
+     * initialise les attributs et les éléments de la fenêtre
+     * @param accueil page d'accueil
+     * @param pat patient
+     */
     public MessageAdmi(JFrame accueil,PatientHop pat) {
         this.accueil = accueil;
         patient=pat;
@@ -35,8 +54,6 @@ public class MessageAdmi extends javax.swing.JFrame {
         this.setVisible(true);
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        
-
     }
 
     
@@ -126,6 +143,10 @@ public class MessageAdmi extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * renvoie à la page d'accueil
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //accueil.setVisible(true);
         this.setVisible(false);

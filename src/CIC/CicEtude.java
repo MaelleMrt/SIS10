@@ -23,18 +23,41 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * page qui affiche les informations d'une étude
  * @author clara
  */
 public class CicEtude extends javax.swing.JFrame {
 
+    /**
+     * l'étude que l'on veut afficher
+     * @see Etude
+     */
     private Etude e;
+    /**
+     * liste des participants à l'étude
+     */
     private ArrayList<Participant> listeParticipants= new ArrayList<Participant>();
+    /**
+     * PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
     
-    public CicEtude(Etude e,Cic cic) throws SQLException {
-        
-        
+    /**
+     * Constructeur CicEtude
+     * initialise les éléments de la fenêtre
+     * @see remplirTableau(), remplit le tableau avec les participants de l'étude
+     * 
+     * @param e correspond à l'étude qu'on affiche
+     * @param cic correspond au PH connecté
+     * @param s correspond à la connexion à la base de données
+     * @throws SQLException 
+     */
+    public CicEtude(Etude e,Cic cic,Statement s) throws SQLException {
+        this.s=s;
         this.cic = cic;
         initComponents();
         this.e = e;
@@ -45,12 +68,13 @@ public class CicEtude extends javax.swing.JFrame {
         remplirTableau();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-         
    }
     
+    /**
+     * remplit le tableau avec les participants de l'étude en interrogeant la base de données
+     * @throws SQLException 
+     */
     public void remplirTableau() throws SQLException{
-        try{
-        Statement s= ExempleJdbc.connexion();
             try{
                 ResultSet rs= s.executeQuery("SELECT nomUsuel, prenom, dateDeNaissance, type FROM Participant JOIN Etude on (nomUsuel = participantNomU AND prenom = participantPrenom AND dateDeNaissance = participantDate AND etude = nom) WHERE Etude.nom = '"+e.getNom()+"'");
                 while(rs.next()){
@@ -61,11 +85,6 @@ public class CicEtude extends javax.swing.JFrame {
             } catch(SQLException e){
                     System.out.println(e);
             }
-
-        } catch (SQLException e){
-            System.out.println(e);
-        }
-        
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {
@@ -336,10 +355,15 @@ public class CicEtude extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * ferme la fenêtre actuelle et retourne à la page d'accueil
+     * @param evt 
+     * @see CicAccueil
+     */
     private void retourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retourActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(cic.getLogin());
+            CicAccueil accueil = new CicAccueil(cic.getLogin(),s);
         } catch (SQLException ex) {
             Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -349,7 +373,11 @@ public class CicEtude extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rechercherTextFieldActionPerformed
 
-    
+    /**
+     * quand on clique sur une ligne du tableau des participants, ferme la fenêtre actuelle et renvoie à la page qui affiche les infos du participant
+     * @param evt 
+     * @see CicParticipant
+     */
     private void participantsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_participantsMouseClicked
         int i = 0;
         while (i < participants.getRowCount() && !participants.isRowSelected(i)) {
@@ -368,13 +396,18 @@ public class CicEtude extends javax.swing.JFrame {
                 String type = String.valueOf(participants.getValueAt(i, 3));
                 Participant p = new Participant(nom, prenom, date,type);
                 this.setVisible(false);  
-                CicParticipant part = new CicParticipant(e,p,cic);
+                CicParticipant part = new CicParticipant(e,p,cic,s);
             } catch (ParseException ex) {
                 Logger.getLogger(CicEtude.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_participantsMouseClicked
 
+    /**
+     * permet de faire une recherche par le nom du participant
+     * affiche la liste des participants ayant un nom contenant le texte qu'on a entré dans la barre de recherche
+     * @param evt 
+     */
     private void rechercherTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_rechercherTextFieldPropertyChange
         rechercherTextField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
@@ -411,11 +444,21 @@ public class CicEtude extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_rechercherTextFieldPropertyChange
 
+    /**
+     * permet de se déconnecter
+     * ferme la page actuelle et ouvre la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    
+    /**
+     * permet de trier les participants par nom, prénom, date de naissance ou type
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (jComboBox1.getSelectedItem().equals("Nom")) {
             listeParticipants = new Tri().trierParticipantsParNom(listeParticipants);
@@ -429,6 +472,7 @@ public class CicEtude extends javax.swing.JFrame {
         else if (jComboBox1.getSelectedItem().equals("Type")) {
             listeParticipants = new Tri().trierParticipantsParType(listeParticipants);
         }
+        //on remplit le tableau avec la liste triée
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
         for (Participant p : listeParticipants) {

@@ -16,21 +16,46 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 /**
- *
+ * génère un fichier PDF avec le questionnaire anesthésie
  * @author clara
  */
 
 
 public class QuestionnairePDF {
+    /**
+     * le chemin du fichier PDF qu l'on va générer
+     */
     private static String FILE;
+    /**
+     * une police de caractère : en gras, taille 18, police Times Roman
+     */
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
             Font.BOLD);
+    /**
+     * une police de caractère : taille 14, police Times Roman
+     */
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 14);
+    /**
+     * une police de caractère : taille 12, police Times Roman
+     */
     private static Font font = new Font(Font.FontFamily.TIMES_ROMAN, 12);
     
+    /**
+     * la liste des réponses au questionnaire
+     */
     private ArrayList<String> reponses;
+    /**
+     * le patient
+     * @see PatientHop
+     */
     private PatientHop patient;
     
+    /**
+     * Constructeur QuestionnairePDF
+     * génère un fichier PDF avec les informations du questionnaire anesthésie
+     * @param l la liste des réponses au questionnaire
+     * @param p le patient
+     */
     public QuestionnairePDF(ArrayList<String> l, PatientHop p){
         this.reponses = l;
         this.patient = p;
@@ -144,7 +169,11 @@ public class QuestionnairePDF {
         }
     }
     
-
+    /**
+     * permet de sauter des lignes
+     * @param paragraph un paragraphe
+     * @param number le nombre de lignes que l'on veut sauter
+     */
     private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph(" "));

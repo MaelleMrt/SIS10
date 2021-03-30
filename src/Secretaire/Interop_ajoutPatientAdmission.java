@@ -11,18 +11,38 @@ import Patient.PatientHop;
 import javax.swing.JFrame;
 
 /**
- *
+ * Fenetre demandant si on veut partager l'admission d'un patient avec le service de radiologie
  * @author Maelle
  */
 public class Interop_ajoutPatientAdmission extends javax.swing.JFrame {
+    /**
+     * le patient
+     * @see PatientHop
+     */
     private PatientHop patient;
+    /**
+     * page d'accueil
+     */
     private JFrame accueil;
+    /**
+     * service
+     */
     private String service;
+    /**
+     * nom du patient
+     */
     private String nom;
+    /**
+     * prénom du patient
+     */
     private String prenom;
 
     /**
-     * Creates new form Interop_ajoutPatient
+     * Constructeur Interop_ajoutPatientAdmission
+     * Creates new form Interop_ajoutPatientAdmission
+     * initialise les attributs et les éléments de la fenêtre
+     * @param pat le patient
+     * @param acc la page d'accueil
      */
     public Interop_ajoutPatientAdmission(PatientHop pat, JFrame acc) {
         patient=pat;
@@ -116,11 +136,19 @@ public class Interop_ajoutPatientAdmission extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * renvoie à la page d'accueil sans partager l'information avec le service de radiologie
+     * @param evt 
+     */
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
       this.accueil.setVisible(true);
       this.setVisible(false);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
+    /**
+     * partage l'information avec le service de radiologie
+     * @param evt 
+     */
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         this.setVisible(false);
         new FrameClientAdmi(patient,accueil);

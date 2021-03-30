@@ -14,20 +14,41 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- *
- * @author kalma
+ * Définit un patient
+ * @author Maelle
  */
 public class PatientHop {
 
+    /**
+     * nom usuel du patient
+     */
     private String nom;
+    /**
+     * prénom du patient
+     */
     private String prenom;
+    /**
+     * date de naissance du patient
+     */
     private String naissance;
+    /**
+     * identifiant du patient
+     */
     private int id;
+    /**
+     * nom de naissance du patient
+     */
     private String nomN;
 
 
 
-    //, Date naissance, Integer numSecu
+    /**
+     * Constructeur PatientHop 
+     * initialise les attributs, trouve l'identifiant du patient en interrogeant la base de données
+     * @param nom nom usuel du patient
+     * @param prenom prénom du patient
+     * @param dateDeNaissance date de naissance du patient
+     */
     public PatientHop(String nom, String prenom, String dateDeNaissance) {
         this.nom = nom;
         this.prenom = prenom;
@@ -46,11 +67,18 @@ public class PatientHop {
 
         } catch (SQLException e){
             System.out.println(e);
-
-        }
-        
+        }      
     }
-    
+   
+    /**
+     * 2e constructeur PatientHop
+     * initialise les attributs
+     * @param nom nom usuel du patient
+     * @param nomN nom de naissance du patient
+     * @param prenom prénom du patient
+     * @param naissance date de naissance du patient
+     * @param id identifiant du patient
+     */
     public PatientHop(String nom, String nomN, String prenom, String naissance, int id){
         this.nom = nom;
         this.nomN = nomN;
@@ -58,6 +86,12 @@ public class PatientHop {
         this.naissance = naissance;
         this.id = id;
     }
+    
+    /**
+     * 3e constructeur PatientHop
+     * initialise les attributs en interrogeant la base de données
+     * @param id l"identifiant du patient
+     */
     public PatientHop(int id){
         this.id = id;
         try{
@@ -80,24 +114,42 @@ public class PatientHop {
         }
     }
 
+    /**
+     * 
+     * @return l'identifiant du patient
+     */
     public int getId() {
         return id;
     }
 
-   
-
+    /**
+     * 
+     * @return le nom usuel du patient
+     */
     public String getNomUsuel() {
         return nom;
     }
 
+    /**
+     * 
+     * @return le prénom du patient
+     */
     public String getPrenom() {
         return prenom;
     }
 
+    /**
+     * 
+     * @return la date de naissance du patient
+     */
     public String getNaissance() {
         return naissance;
     }
    
+    /**
+     * Interroge la base de données pour trouver le nom de naissance du patient
+     * @return le nom de naissance du patient
+     */
     public String getNomNaissance() {
         String nomNaissance=null;
         try{
@@ -120,6 +172,10 @@ public class PatientHop {
         return nomNaissance;
     }
     
+    /**
+     * interroge la base de données pour trouver le sexe du patient
+     * @return le sexe du patient
+     */
     public String getSexe() {
         String sexe=null;
         try{
@@ -142,6 +198,10 @@ public class PatientHop {
         return sexe;
     }
    
+    /**
+     * interroge la base de données pour trouver l'adresse du patient
+     * @return l'adresse du patient
+     */
     public String getAdresse() {
         String adresse="";
         try{
@@ -166,6 +226,10 @@ public class PatientHop {
         return adresse;
     }
     
+    /**
+     * interroge la base de données pour trouver la ville du patient
+     * @return la ville du patient
+     */
     public String getVille(){
         String ville = "";
         try{
@@ -184,6 +248,10 @@ public class PatientHop {
         return ville;
     }
     
+    /**
+     * interroge la base de données pour trouver le n° de sécurité sociale du patient
+     * @return le n° de sécurité sociale du patient
+     */
     public String getSecu() {
         String secu=null;
         try{
@@ -207,6 +275,10 @@ public class PatientHop {
         return secu;
     }
     
+    /**
+     * interroge la base de données pour trouver le nom du médecin traitant du patient
+     * @return le médecin traitant du patient
+     */
     public String getMedecinTraitant() {
         String medT=null;
         try{
@@ -229,6 +301,10 @@ public class PatientHop {
         return medT;
     }
    
+    /**
+     * interroge la base de données pour trouver la nationalité du patient
+     * @return la nationalité du patient
+     */
     public String getNationalite() {
         String nat=null;
         try{
@@ -251,6 +327,10 @@ public class PatientHop {
         return nat;
     }
     
+    /**
+     * interroge la base de données pour trouver le lieu de naissance du patient
+     * @return le lieu de naissance du patient
+     */
     public String getLieuNaissance() {
         String lieuN=null;
         try{
@@ -273,25 +353,41 @@ public class PatientHop {
         return lieuN;
     }
    
-   
+    /**
+     * 
+     * @return le prénom suivi du nom du patient
+     */
     @Override
     public String toString() {
         return prenom + " " + nom;
     }
+    
+    /**
+     * Fixe la valeur de l'identifiant à id
+     * @param id identifiant
+     */
     public void setID(int id){
      this.id=id;
     }
  
-
+    /**
+     * vérifie si 2 patients sont les mêmes
+     * @param o un Object correspondant à un patient 
+     * @return true si le nom et le prénom des 2 patients sont les mêmes, false sinon
+     */
     public boolean equals(Object o) {
         if (o instanceof PatientHop) {
             PatientHop p = (PatientHop) o;
-            return nom.equals(p.nom) && prenom.equals(p.prenom);
+            return nom.equals(p.getNomUsuel()) && prenom.equals(p.getPrenom());
         } else {
             return false;
         }
     }
     
+    /**
+     * 
+     * @return le prénom du patient suivi de son nom usuel et de son nom de naissance entre parenthèses
+     */
     public String toString2(){
         return prenom + " " + nom + " (" + nomN + ")";
     }

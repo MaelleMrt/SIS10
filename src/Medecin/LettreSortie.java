@@ -24,15 +24,31 @@ import java.util.logging.Logger;
 
 
 /**
- *
+ * FRenêtre permettant la saisie des informations pour la lettre de sortie
  * @author clara
  */
 public class LettreSortie extends javax.swing.JFrame {
 
-    private PatientHop patient;
-    private Medecin medecin;
+    /**
+     * le patient
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * Le médecin qui est connecté
+     * @see Medecin
+     */
+    Medecin medecin;
+    /**
+     * le médecin traitant du patient
+     */
     private String medecinTraitant;
 
+    /**
+     * Constructeur LettreSortie
+     * @param patient le patient
+     * @param medecin le médecin
+     */
     public LettreSortie(PatientHop patient, Medecin medecin) {
         
         this.patient = patient;
@@ -44,6 +60,9 @@ public class LettreSortie extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Pré-remplit le champ texte du médecin traitant en interrogeant la base de données
+     */
     public void remplirChamps() {
         try {
             Statement s = ExempleJdbc.connexion();
@@ -61,6 +80,11 @@ public class LettreSortie extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * vérifie si une date donnée en String est valide suivant un format donné
+     * @param strdate la date donnée en String
+     * @return true si la date est valide et false sinon
+     */
     public boolean dateValide(String strdate) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setLenient(false);
@@ -351,6 +375,12 @@ public class LettreSortie extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
@@ -360,11 +390,23 @@ public class LettreSortie extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_medActionPerformed
 
+    /**
+     * Annule la création d'une lettre de sortie
+     * Fermeture de la fenêtre actuelle et ouverture de la page précédente : la page du dossier patient
+     * @param evt 
+     */
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         MedecinPatient m = new MedecinPatient(patient, medecin);
         this.setVisible(false);
     }//GEN-LAST:event_annulerActionPerformed
 
+    /**
+     * Vérification qu'il n'y ait pas d'erreurs(tous les champs bien remplis, date valide)
+     * Si tout est bon, validation de la lettre de sortie
+     * Génération de la lettre sous format PDF
+     * Envoie de la lettre au médecin traitant par mail.
+     * @param evt 
+     */
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
         if (med.getText().equals("") || pat.getText().equals("") || naissance.getText().equals("") || entree.getText().equals("") || sortie.getText().equals("") || motif.getText().equals("") || exam.getText().equals("") || traitement.getText().equals("") || synthese.getText().equals("") || suivi.getText().equals("")) {
             erreur.setText("Veuillez remplir tous les champs");

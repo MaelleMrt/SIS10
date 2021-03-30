@@ -18,36 +18,69 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * fenêtre d'affchage du DMA d'un patient
  *
  * @author Elodie
  */
 public class VisualisationDMA extends javax.swing.JFrame {
 
-   JFrame precedent;
-   String nomSecrétaire;
-   PatientHop patient;
-   private ArrayList<Consultation> listConsult = new ArrayList<>();
-   private ArrayList<Hospitalisations> listHospit = new ArrayList<>();
+    /**
+     * page précédente
+     */
+    JFrame precedent;
+    /**
+     * nom de la secrétaire
+     */
+    String nomSecrétaire;
+    /**
+     * patient
+     *
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * liste des consultations du patient
+     */
+    private ArrayList<Consultation> listConsult = new ArrayList<>();
+    /**
+     * liste des hospitalisations du patient
+     */
+    private ArrayList<Hospitalisations> listHospit = new ArrayList<>();
+    /**
+     * connexion à la base de données
+     */
     private Statement connexion;
-    
+
+    /**
+     * Constructeur VisualisationDMA
+     * initialise les attributs et éléments de la fenêtre
+     * @param precedent page précédente
+     * @param nomS nom de la secrétaire
+     * @param nomP nom du patient
+     * @param prenomP prénom du patient
+     * @param dateN date de naissance du patient
+     */
     public VisualisationDMA(JFrame precedent, String nomS, String nomP, String prenomP, String dateN) {
         initComponents();
         this.precedent = precedent;
         nomSecrétaire = nomS;
         jLabel2.setText(nomSecrétaire);
-        patient = new PatientHop(nomP,prenomP,dateN);
-        try{
-            this.connexion=new ExempleJdbc().connexion();
-         } catch (SQLException e) {
-                System.out.println(e);
-         }
+        patient = new PatientHop(nomP, prenomP, dateN);
+        try {
+            this.connexion = new ExempleJdbc().connexion();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
         this.setLocationRelativeTo(null);
         remplissageDonnées();
         remplissageConsultations();
         remplissageHospitalisations();
     }
-    
-    private void remplissageDonnées(){
+
+    /**
+     * remplit tous les labels 
+     */
+    private void remplissageDonnées() {
         jLabel14.setText(patient.getPrenom() + " " + patient.getNomUsuel());
         jLabel8.setText(patient.getNomNaissance());
         jLabel15.setText(String.valueOf(patient.getId()));
@@ -59,14 +92,18 @@ public class VisualisationDMA extends javax.swing.JFrame {
         jLabel22.setText(patient.getNationalite());
         jLabel26.setText(patient.getMedecinTraitant());
     }
-    private void remplissageConsultations(){
+
+    /**
+     * remplit le tableau des consultations
+     */
+    private void remplissageConsultations() {
         try {
 
             ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Consultation' AND idPatient ='" + patient.getId() + "'");
             while (rs.next()) {
                 Consultation consult = new Consultation(rs.getString("Médecin"), rs.getInt("idPatient"), rs.getString("Motif"), rs.getString("Date"), rs.getInt("idRdv"));
                 listConsult.add(consult);
-                
+
             }
 
         } catch (SQLException e) {
@@ -80,13 +117,17 @@ public class VisualisationDMA extends javax.swing.JFrame {
             v.add(e.getMedecin());
             v.add(e.getMotif());
             v.add(e.getDate());
-            model.setColumnIdentifiers(new String[]{"Service","Médecin","Motif","Date"});
+            model.setColumnIdentifiers(new String[]{"Service", "Médecin", "Motif", "Date"});
             model.insertRow(i, v);
             i++;
         }
         jTable1.setModel(model);
     }
-    private void remplissageHospitalisations(){
+
+    /**
+     * remplit le tableau des hospitalisations
+     */
+    private void remplissageHospitalisations() {
         try {
 
             ResultSet rs = connexion.executeQuery("SELECT idPatient, Médecin, Motif, Date, idRdv FROM RendezVous WHERE Catégorie ='Hospitalisation' AND idPatient ='" + patient.getId() + "'");
@@ -108,12 +149,13 @@ public class VisualisationDMA extends javax.swing.JFrame {
             v.add(e.getMotif());
             v.add(e.getDate());
             v.add(e.getLocalisationChiffre());
-            model.setColumnIdentifiers(new String[]{"Service","Médecin","Motif","Date","Localisation"});
+            model.setColumnIdentifiers(new String[]{"Service", "Médecin", "Motif", "Date", "Localisation"});
             model.insertRow(i, v);
             i++;
         }
         jTable2.setModel(model);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -512,22 +554,40 @@ public class VisualisationDMA extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         this.setVisible(false);
         JFrame pageConnexion = new InterfaceConnexion();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    /**
+     * ouverture de la page de saisie d'un nouveau rdv pour le patient
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
-        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(),precedent);
+        RDVpatient p = new RDVpatient(nomSecrétaire, jLabel14.getText(), jLabel15.getText(), precedent);
         p.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * quand on clique sur une ligne du tableau, affichage des détails de l'hospitalisation correspondante
+     * @param evt 
+     */
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         int i = 0;
         while (i < jTable2.getRowCount() && !jTable2.isRowSelected(i)) {
@@ -535,12 +595,16 @@ public class VisualisationDMA extends javax.swing.JFrame {
         }
         if (i < jTable2.getRowCount()) {
             Hospitalisations h = listHospit.get(i);
-            AffichageHospitalisation ah = new AffichageHospitalisation(this,h);
+            AffichageHospitalisation ah = new AffichageHospitalisation(this, h);
             ah.setVisible(true);
             this.setVisible(false);
         }
     }//GEN-LAST:event_jTable2MouseClicked
 
+    /**
+     * quand on clique sur une ligne du tableau, affichage des détails de la consultation correspondante
+     * @param evt 
+     */
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int i = 0;
         while (i < jTable1.getRowCount() && !jTable1.isRowSelected(i)) {

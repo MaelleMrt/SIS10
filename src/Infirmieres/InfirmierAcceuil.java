@@ -24,15 +24,27 @@ import javax.swing.table.DefaultTableModel;
 
 
 /**
- *
+ * Page d'accueil de l'interface Infirmière
  * @author Maelle
  */
 public class InfirmierAcceuil extends javax.swing.JFrame {
+    /**
+     * le login de l'infirmière
+     */
     String login;
+    /**
+     * le modèle permettant de remplir le tableau avec la liste de tous les patients du service de l'infirmière
+     */
     TableauPatientInf listPatient;
+    /**
+     * l'infirmière qui est connectée
+     */
     Infirmier infirmier;
     /**
+     * Constructeur InfirmierAcceuil
      * Creates new form SecretaireAcceuil
+     * initialise les attributs et les éléments de la fenêtre
+     * @param log le login de l'infirmière
      */
     public InfirmierAcceuil (String log) {
         // on initialise nos variables
@@ -260,12 +272,21 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    /**
+     * permet de se déconnecter 
+     * ferme la fenêtre actuelle et renvoie à la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         // deconnexion
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Quand on clique sur une ligne du tableau, on ouvre le dossier du patient correspondant
+     * @param evt 
+     */
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // si on clic sur une ligne on ouvre le dossier du patient correspondant
         if(evt.getButton() == MouseEvent.BUTTON1 ||
@@ -283,6 +304,10 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
                                 }
     }//GEN-LAST:event_jTable1MousePressed
 
+    /**
+     * trie le tableau par nom, prénom ou date de naissance suivant la valeur sélectionnée
+     * @param evt 
+     */
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // tri par nom 
         ArrayList<PatientHop> list = listPatient.getListPatient();
@@ -312,7 +337,9 @@ public class InfirmierAcceuil extends javax.swing.JFrame {
         jTable1.setModel(model);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    // rechercher le médecin à partir du login 
+    /**
+     * recherche l'infirmière à partir du login
+     */ 
     public void rechercheInfirmiere(){
         System.out.println(login);
          try{

@@ -17,37 +17,64 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * Fenêtre affichant le contenu d'une prescription dans l'interface médecin
  *
  * @author Maelle
  */
 public class ContenuPrescriptionMedecin extends javax.swing.JFrame {
-    
-    PrescriptionInf prescription;
-    PatientHop patient;
-    Medecin medecin;
+
     /**
-     * Creates new form SecretaireAcceuil
+     * la prescription dont on veut afficher le contenu
+     *
+     * @see PrescriptionInf
      */
-    public ContenuPrescriptionMedecin(PrescriptionInf rp,PatientHop p,Medecin med) {
+    PrescriptionInf prescription;
+    /**
+     * le patient
+     *
+     * @see PatientHop
+     */
+    PatientHop patient;
+    /**
+     * Le médecin qui est connecté
+     *
+     * @see Medecin
+     */
+    Medecin medecin;
+
+    /**
+     * Constructeur ContenuPrescriptionMedecin Creates new form
+     * ContenuPrescriptionMedecin initialise les attributs et les éléments de la
+     * fenêtre
+     *
+     * @param rp la prescription dont on veut afficher le contenu
+     * @param p le patient
+     * @param med le médecin qui est connecté
+     */
+    public ContenuPrescriptionMedecin(PrescriptionInf rp, PatientHop p, Medecin med) {
         // initialisation des composants
-        medecin =med;
-        prescription=rp;
-        patient=p;
+        medecin = med;
+        prescription = rp;
+        patient = p;
         initComponents();
         jLabel14.setVisible(false);
         localisation();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
-    public void localisation(){
-        
+
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre
+     * attribuée Si c'est le cas, on affiche la localisation du patient
+     */
+    public void localisation() {
+
         try {
             Statement s = ExempleJdbc.connexion();
             try {
-                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE idPatient ="+patient.getId());
+                ResultSet rs = s.executeQuery("SELECT lit FROM Localisation WHERE idPatient =" + patient.getId());
                 rs.last();
-                if (rs.getRow() > 0){
+                if (rs.getRow() > 0) {
                     rs.beforeFirst();
                     while (rs.next()) {
                         jLabel14.setText(rs.getString("lit"));
@@ -55,7 +82,6 @@ public class ContenuPrescriptionMedecin extends javax.swing.JFrame {
                         jLabel14.setVisible(true);
                     }
                 }
-                
 
             } catch (SQLException e) {
                 System.out.println(e);
@@ -64,10 +90,7 @@ public class ContenuPrescriptionMedecin extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
-        
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -288,36 +311,51 @@ public class ContenuPrescriptionMedecin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page avec toutes les
+     * prescriptions d'un patient
+     *
+     * @param evt
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         // on retourne a la liste des prescriptions
+        // on retourne a la liste des prescriptions
         this.dispose();
-        new MedecinPrescription(patient,medecin);
-  
-       
-
+        new MedecinPrescription(patient, medecin);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * permet de se déconnecter ferme la fenêtre actuelle et renvoie sur la page
+     * de connexion
+     *
+     * @param evt
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
-     public void validerPrescription(){
-        try{
-            Statement s= ExempleJdbc.connexion();
-            try{
-                String date=LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                ResultSet rs1= s.executeQuery("UPDATE Prescription SET valider = '1',dateVal='"+date+"'"+"WHERE Contenu='"+this.prescription.getContenu()+"' AND idP='"+this.patient.getId()+"'");
+    /**
+     * On valide la prescription en modifiant la base de données
+     */
+    public void validerPrescription() {
+        try {
+            Statement s = ExempleJdbc.connexion();
+            try {
+                String date = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                ResultSet rs1 = s.executeQuery("UPDATE Prescription SET valider = '1',dateVal='" + date + "'" + "WHERE Contenu='" + this.prescription.getContenu() + "' AND idP='" + this.patient.getId() + "'");
                 System.out.println("valider");
-                
-            } catch(SQLException e){
-                    System.out.println(e);
+
+            } catch (SQLException e) {
+                System.out.println(e);
             }
-            
-        } catch (SQLException e){
+
+        } catch (SQLException e) {
             System.out.println(e);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -351,7 +389,7 @@ public class ContenuPrescriptionMedecin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }

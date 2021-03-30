@@ -8,35 +8,73 @@ package Medecin;
 import java.util.Date;
 
 /**
+ * Définit un résultat ou une prescription
  *
  * @author Maelle
  */
 public class ResultatPrescription {
+
+    /**
+     * le nom du service
+     */
     String service;
+    /**
+     * le nom du médecin
+     */
     String nomMedecin;
+    /**
+     * la date du résultat/prescription
+     */
     String date;
+    /**
+     * le contenu du résultat/prescription
+     */
     String cont;
-    
-   public ResultatPrescription(String s,String m, String d,String contenu){
-       service =s;
-       nomMedecin =m;
-       date=d;
-       cont=contenu;
-        
+
+    /**
+     * Constructeur ResultatPrescription
+     * initialise les attributs
+     * @param s le service
+     * @param m le nom du médecin
+     * @param d la date
+     * @param contenu le contenu
+     */
+    public ResultatPrescription(String s, String m, String d, String contenu) {
+        service = s;
+        nomMedecin = m;
+        date = d;
+        cont = contenu;
+
     }
 
+    /**
+     * 
+     * @return la date du résultat/prescription
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * 
+     * @return le contenu du résultat/prescription
+     */
     public String getContenu() {
         return cont;
     }
 
+    /**
+     * 
+     * @return le service
+     */
     public String getService() {
         return service;
     }
 
+    /**
+     * 
+     * @return le nom du médecin 
+     */
     public String getMedecin() {
         return nomMedecin;
     }

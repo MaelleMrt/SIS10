@@ -19,16 +19,28 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Fenêtre affichant le dossier patient
  * @author Maelle
  */
 public class MedecinAnesthesistePatient extends javax.swing.JFrame {
 
+    /**
+     * le patient
+     * @see PatientHop
+     */
     public PatientHop patient;
+    /**
+     * le médecin qui est connecté
+     * @see Medecin
+     */
     public Medecin medecin;
 
     /**
-     * Creates new form SecretaireAcceuil
+     * Constructeur MedecinAnesthesistePatient
+     * Creates new form MedecinAnesthesistePatient
+     * initialise les attributs et les éléments de la fenêtre
+     * @param p le patient
+     * @param med le médecin connecté
      */
     public MedecinAnesthesistePatient(PatientHop p, Medecin med) {
         patient = p;
@@ -40,6 +52,10 @@ public class MedecinAnesthesistePatient extends javax.swing.JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * On vérifie d'abord si le patient est hospitalisé et s'il a une chambre attribuée
+     * Si c'est le cas, on affiche la localisation du patient
+     */
     public void localisation(){
         
         try {
@@ -248,22 +264,42 @@ public class MedecinAnesthesistePatient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     * ferme la fenêtre actuelle et renvoie à la page d'accueil du médecin
+     * @param evt 
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.dispose();
         new MedecinAnesthesisteAcceuil(medecin.getLogin());
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    /**
+     * Affiche les résultats du patient quand on clique sur le bouton
+     * @param evt 
+     */
     private void jToggleButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton5ActionPerformed
         this.dispose();
         new MedecinAnesthesisteResultat(patient, medecin);
     }//GEN-LAST:event_jToggleButton5ActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la fenêtre actuelle et renvoie sur la page de connexion
+     * @param evt 
+     * @see InterfaceConnexion
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();
     }//GEN-LAST:event_deconnexionActionPerformed
 
+    /**
+     * Ouvre le fichier PDF correspondant aux derniers questionnaire et questionnaire covid
+     * ne fait rien s'il n'existe aucun questionnaire
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         File fichier1 = new File("src/PDF/QuestionnaireAnesthésie" + patient.getId() + ".pdf");
         if (fichier1.exists()) {

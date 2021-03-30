@@ -22,21 +22,62 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Correspond à la page permettant d'ajouter une nouvelle étude clinique
  * @author clara
  */
 public class CicAjouterEtude extends javax.swing.JFrame {
 
+    /**
+     * la liste des participants à afficher dans le tableau
+     * elle est vide, va être remplie dans le constructeur grâce aux listes ancienneListe et nouveaux
+     */
     private ArrayList<Participant> listeParticipants = new ArrayList<Participant>();
+    /**
+     * la liste des participants qui sont déjà dans la liste
+     */
     private ArrayList<Participant> ancienneListe = new ArrayList<Participant>();
+    /**
+     * la liste avec les participants que l'on vient d'ajouter
+     */
     private ArrayList<Participant> nouveaux = new ArrayList<Participant>();
+    /**
+     * le nom de l'étude que l'on a entré dans le champs de texte correspondant
+     */
     private String nomEtude;
+    /**
+     * la date de démarrage de l'étude que l'on a entré dans le champs de texte correspondant
+     */
     private String dateDemarrage;
+    /**
+     * la durée de l'étude que l'on a entré dans le champs de texte correspondant
+     */
     private int dureeEtude;
+    /**
+     * le PH qui est connecté
+     */
     private Cic cic;
+    /**
+     * connexion à la base de données
+     */
+    private Statement s;
 
-    public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, Cic cic) {
+    /**
+     * Constructeur CicAjouterEtude
+     * initialise les attributs
+     * remplit la liste des participants avec les participants qui étaient déjà dans le tableau (qui sont dans ancienneListe) et les participants que l'on vient d'ajouter (qui sont dans la liste nouveaux)
+     * initialise tous les éléments de la fenêtre
+     * 
+     * @param ancienneListe
+     * @param nouveaux
+     * @param nom
+     * @param date
+     * @param duree
+     * @param cic
+     * @param s 
+     */
+    public CicAjouterEtude(ArrayList<Participant> ancienneListe, ArrayList<Participant> nouveaux, String nom, String date, int duree, Cic cic, Statement s) {
 
+        this.s = s;
         this.ancienneListe = ancienneListe;
         this.nouveaux = nouveaux;
         for (Participant p : this.ancienneListe) {
@@ -50,15 +91,15 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         this.dureeEtude = duree;
         this.cic = cic;
         initComponents();
-//        this.nom.setText(nomEtude);
-//        this.date.setText(dateDemarrage);
-//        this.duree.setValue(dureeEtude);
         remplirTableau();
         erreur.setVisible(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
+    /**
+     * remplit le tableau avec la liste listeParticipants
+     */
     public void remplirTableau() {
         DefaultTableModel model = new DefaultTableModel();
         int i = 0;
@@ -75,9 +116,13 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         jTable1.setModel(model);
     }
 
-    
-    
-    public boolean verifDate(String s){
+    /**
+     * vérifie si la date s donnée en chaine de caractère est bien dans le bon format de date 
+     * 
+     * @param s, correspondant à la chaine de caractère de la date
+     * @return un booléen : True si la date est bien valide, false sinon
+     */
+    public boolean verifDate(String s) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         format.setLenient(false);
         try {
@@ -87,22 +132,26 @@ public class CicAjouterEtude extends javax.swing.JFrame {
             return false;
         }
     }
-    
-    public boolean verifNom(String str){
-        Statement s;
-            try {
-                s = ExempleJdbc.connexion();
-                ResultSet r = s.executeQuery("SELECT distinct nom FROM Etude");
-                while (r.next()) {
-                    if (str.toUpperCase().equals(r.getString("nom").toUpperCase())) {
-                        return true;
-                    }
+
+    /**
+     * vérifie que le nom entré dans le champs de texte n'existe pas encore dans la base de données
+     * @param str
+     * @return un booléen : True si le nom existe déjà, false sinon
+     */
+    public boolean verifNom(String str) {
+        ResultSet r;
+        try {
+            r = s.executeQuery("SELECT distinct nom FROM Etude");
+
+            while (r.next()) {
+                if (str.toUpperCase().equals(r.getString("nom").toUpperCase())) {
+                    return true;
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(CicAjouterEtude.class
-                        .getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     /**
@@ -343,50 +392,57 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-       
-    
+/**
+ * renvoie à la page permettant d'ajouter des participants à l'étude que l'on est en train de créer
+ * @see CicAjouterParticipant
+ * @param evt 
+ */
     private void ajouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterActionPerformed
         this.setVisible(false);
+        //On crée une nouvelle liste de participants que l'on va remplir avec tous les participants de la base de données 
         ArrayList<Participant> liste = new ArrayList<>();
         try {
-            Statement s = ExempleJdbc.connexion();
-            try {
-                ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
-                while (rs.next()) {
-                    Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
-                    liste.add(participant);
-                }
-
-            } catch (SQLException e) {
-                System.out.println(e);
+            ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, prenom, dateDeNaissance, type FROM Participant");
+            while (rs.next()) {
+                Participant participant = new Participant(rs.getString("nomUsuel"), rs.getString("prenom"), rs.getDate("dateDeNaissance"), rs.getString("type"));
+                liste.add(participant);
             }
 
         } catch (SQLException e) {
             System.out.println(e);
         }
+
         try {
-            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nom.getText(), date.getText(), (int)duree.getValue(), cic);
+            CicAjouterParticipant a = new CicAjouterParticipant(listeParticipants, liste, nom.getText(), date.getText(), (int) duree.getValue(), cic,s);
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ajouterActionPerformed
 
+    /**
+     * supprime du tableau les lignes sélectionnées
+     * @param evt 
+     */
     private void supprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_supprimerActionPerformed
+        //On crée une liste de participants que l'on va remplir avec les participants que l'on a sélectionné
         ArrayList<Participant> supp = new ArrayList<>();
         for (int i = 0; i < jTable1.getRowCount(); i++) {
+            //on vérifie que la ligne est sélectionnée
             if (jTable1.isRowSelected(i)) {
                 try {
+                    //On crée un nouveau participant 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     String da = String.valueOf(jTable1.getValueAt(i, 2));
                     java.util.Date d = dateFormat.parse(da);
                     Date date = new Date(d.getTime());
                     Participant p1 = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), date, String.valueOf(jTable1.getValueAt(i, 3)));
-
+                    //si le participant est dans la liste listeParticipants, on l'ajoute dans la liste supp
                     for (Participant p : listeParticipants) {
                         if (p.egal(p1)) {
                             supp.add(p);
                         }
                     }
+                    //On supprime de la liste ListeParticipants les participants de la liste supp
                     for (Participant p2 : supp) {
                         listeParticipants.remove(p2);
                     }
@@ -396,61 +452,71 @@ public class CicAjouterEtude extends javax.swing.JFrame {
                 }
             }
         }
-        
+        //on remplit le tableau avec la liste modifiée listeParticipants
         remplirTableau();
     }//GEN-LAST:event_supprimerActionPerformed
 
+    /**
+     * valider la nouvelle étude clinique
+     * on l'ajoute dans la base de données
+     * renvoie un message d'erreur en cas de problème
+     * 
+     * @param evt 
+     */
     private void validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_validerActionPerformed
-       ArrayList<String> liste = new ArrayList<>();
+        //on vérifie que tous les champs sont remplis
         if (!nom.getText().equals("") && !date.getText().equals("") && (int) duree.getValue() != 0 && jTable1.getRowCount() > 0) {
-            Statement s;
-            try {
-                s = ExempleJdbc.connexion();
-                    if (verifNom(nom.getText())) {
-                        erreur.setText("L'étude " + nom.getText() + " existe déjà.");
-                        erreur.setVisible(true);
-                    } else if (!verifDate(date.getText())) {
-                        erreur.setText("La date n'est pas valide. Veuillez saisir une date sous la forme yyyy-MM-dd");
-                        erreur.setVisible(true);
-                    } else {
-                        erreur.setVisible(false);
-                        for (int i = 0; i < jTable1.getRowCount(); i++) {
-                            try {
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                String da = String.valueOf(jTable1.getValueAt(i, 2));
-                                java.util.Date d = dateFormat.parse(da);
-                                Date d1 = new Date(d.getTime());
-                                Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), d1, String.valueOf(jTable1.getValueAt(i, 3)));
-                                Etude e = new Etude(nom.getText(), cic.getLogin(), date.getText(), (int) duree.getValue());
-                                
 
-//                                s = ExempleJdbc.connexion();
-                                s.executeUpdate("INSERT INTO `Etude`(`nom`, `PH`, `date`, `duree`, `participantNomU`, `participantDate`, `participantPrenom`) VALUES ('" + e.getNom() + "','" + e.getPH() + "','" + e.getDate() + "','" + e.getDuree() + "','" + p.getNomU() + "','" + p.getDateN() + "','" + p.getPrenom() + "')");
-                                ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, nomDeNaissance, dateDeNaissance, prenom, type, sexe, taille, poids, pathologie, allergie, regime, sport, fumeur, categorie, ville FROM Participant WHERE (nomUsuel = '" + p.getNomU() + "' and dateDeNaissance = '" + p.getDateN() + "' and prenom = '" + p.getPrenom() + "')");
-                                while (rs.next()) {
-                                    s.executeUpdate("INSERT INTO `Participant`(`nomUsuel`, `nomDeNaissance`, `dateDeNaissance`, `prenom`, `type`, `sexe`, `taille`, `poids`, `pathologie`, `allergie`, `regime`, `sport`, `fumeur`, `categorie`, `ville`, `etude`) VALUES ('" + rs.getString("nomUsuel") + "','" + rs.getString("nomDeNaissance") + "','" + rs.getDate("dateDeNaissance") + "','" + rs.getString("prenom") + "','" + rs.getString("type") + "','" + rs.getString("sexe") + "','" + rs.getInt("taille") + "','" + rs.getInt("poids") + "','" + rs.getString("pathologie") + "','" + rs.getString("allergie") + "','" + rs.getString("regime") + "','" + rs.getString("sport") + "','" + rs.getString("fumeur") + "','" + rs.getString("categorie") + "','" + rs.getString("ville") + "','" + e.getNom() + "')");
+            //Si le nom de l'étude existe déjà, message d'erreur apparait
+            if (verifNom(nom.getText())) {
+                erreur.setText("L'étude " + nom.getText() + " existe déjà.");
+                erreur.setVisible(true);
+            } 
+            //Si la date n'est pas valide, message d'erreur apparait
+            else if (!verifDate(date.getText())) {
+                erreur.setText("La date n'est pas valide. Veuillez saisir une date sous la forme yyyy-MM-dd");
+                erreur.setVisible(true);
+            } else {
+                erreur.setVisible(false);
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+                    try {
+                        //On crée une nouvelle Etude et un nouveau Participant
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        String da = String.valueOf(jTable1.getValueAt(i, 2));
+                        java.util.Date d = dateFormat.parse(da);
+                        Date d1 = new Date(d.getTime());
+                        Participant p = new Participant(String.valueOf(jTable1.getValueAt(i, 0)), String.valueOf(jTable1.getValueAt(i, 1)), d1, String.valueOf(jTable1.getValueAt(i, 3)));
+                        Etude e = new Etude(nom.getText(), cic.getLogin(), date.getText(), (int) duree.getValue());
 
-                                }
-
-                            } catch (ParseException ex) {
-                                Logger.getLogger(CicAjouterEtude.class
-                                        .getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        JOptionPane.showMessageDialog(null, "L'étude " + nom.getText() + " a bien été ajoutée", "Message", JOptionPane.WARNING_MESSAGE);
-                        this.setVisible(false);
                         try {
-                            CicAccueil a = new CicAccueil(cic.getLogin());
+                            //On ajoute l'étude à la base de données
+                            s.executeUpdate("INSERT INTO `Etude`(`nom`, `PH`, `date`, `duree`, `participantNomU`, `participantDate`, `participantPrenom`) VALUES ('" + e.getNom() + "','" + e.getPH() + "','" + e.getDate() + "','" + e.getDuree() + "','" + p.getNomU() + "','" + p.getDateN() + "','" + p.getPrenom() + "')");
 
+                            ResultSet rs = s.executeQuery("SELECT distinct nomUsuel, nomDeNaissance, dateDeNaissance, prenom, type, sexe, taille, poids, pathologie, allergie, regime, sport, fumeur, categorie, ville FROM Participant WHERE (nomUsuel = '" + p.getNomU() + "' and dateDeNaissance = '" + p.getDateN() + "' and prenom = '" + p.getPrenom() + "')");
+                            while (rs.next()) {
+                                //On ajoute le Participant à la base de données
+                                s.executeUpdate("INSERT INTO `Participant`(`nomUsuel`, `nomDeNaissance`, `dateDeNaissance`, `prenom`, `type`, `sexe`, `taille`, `poids`, `pathologie`, `allergie`, `regime`, `sport`, `fumeur`, `categorie`, `ville`, `etude`) VALUES ('" + rs.getString("nomUsuel") + "','" + rs.getString("nomDeNaissance") + "','" + rs.getDate("dateDeNaissance") + "','" + rs.getString("prenom") + "','" + rs.getString("type") + "','" + rs.getString("sexe") + "','" + rs.getInt("taille") + "','" + rs.getInt("poids") + "','" + rs.getString("pathologie") + "','" + rs.getString("allergie") + "','" + rs.getString("regime") + "','" + rs.getString("sport") + "','" + rs.getString("fumeur") + "','" + rs.getString("categorie") + "','" + rs.getString("ville") + "','" + e.getNom() + "')");
+
+                            }
                         } catch (SQLException ex) {
-                            Logger.getLogger(CicAjouterEtude.class
-                                    .getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(CicAjouterEtude.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(CicAjouterEtude.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(CicAjouterEtude.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                }
+                //message pop-up pour confirmer la création de l'étude clinique
+                JOptionPane.showMessageDialog(null, "L'étude " + nom.getText() + " a bien été ajoutée", "Message", JOptionPane.WARNING_MESSAGE);
+                this.setVisible(false);
+                //On est envoyé sur la page d'accueil
+                try {
+                    CicAccueil a = new CicAccueil(cic.getLogin(), s);
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(CicAjouterEtude.class
+                            .getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
         } else {
@@ -460,14 +526,20 @@ public class CicAjouterEtude extends javax.swing.JFrame {
 
     }//GEN-LAST:event_validerActionPerformed
 
+    
     private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_dateActionPerformed
 
+    /**
+     * annule la création de l'étude clinique
+     * on est renvoyé à la page d'accueil sans enregistrer les informations remplies
+     * @param evt 
+     */
     private void annulerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_annulerActionPerformed
         this.setVisible(false);
         try {
-            CicAccueil accueil = new CicAccueil(cic.getLogin());
+            CicAccueil accueil = new CicAccueil(cic.getLogin(),s);
 
         } catch (SQLException ex) {
             Logger.getLogger(CicAjouterEtude.class
@@ -475,6 +547,11 @@ public class CicAjouterEtude extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_annulerActionPerformed
 
+    /**
+     * permet de se déconnecter
+     * ferme la page actuelle et ouvre la page de connexion
+     * @param evt 
+     */
     private void deconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deconnexionActionPerformed
         this.setVisible(false);
         InterfaceConnexion i = new InterfaceConnexion();

@@ -8,14 +8,29 @@ package Secretaire;
 import javax.swing.JFrame;
 
 /**
+ * Fenêtre affichant une hospitalisation d'un patient
  *
  * @author Elodie
  */
 public class AffichageHospitalisation extends javax.swing.JFrame {
 
+    /**
+     * page précédente
+     */
     JFrame precedent;
+    /**
+     * l'hospitalisation à afficher
+     */
     Hospitalisations h;
-    
+
+    /**
+     * Constructeur AffichageHospitalisation Creates new form
+     * AffichageHospitalisation initialise les attributs et les éléments de la
+     * fenêtre
+     *
+     * @param precedent la page précédente
+     * @param h l'hospitalisation
+     */
     public AffichageHospitalisation(JFrame precedent, Hospitalisations h) {
         initComponents();
         this.precedent = precedent;
@@ -23,7 +38,11 @@ public class AffichageHospitalisation extends javax.swing.JFrame {
         affichageInfo();
         this.setLocationRelativeTo(null);
     }
-     private void affichageInfo(){
+
+    /**
+     * remplit les labels avec les informations correspondantes
+     */
+    private void affichageInfo() {
         jLabel15.setText(String.valueOf(h.getId()));
         jLabel8.setText(h.getMedecin());
         jLabel16.setText(h.getMotif());
@@ -33,10 +52,10 @@ public class AffichageHospitalisation extends javax.swing.JFrame {
         jLabel14.setText(h.getNomP());
         jLabel21.setText(h.getHeure());
     }
-     
-     public void correspondance(){
-         
-     }
+
+    public void correspondance() {
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -302,6 +321,9 @@ public class AffichageHospitalisation extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * permet de retourner à la page précédente quand on clique sur le bouton
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         precedent.setVisible(true);
