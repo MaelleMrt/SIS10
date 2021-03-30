@@ -903,8 +903,10 @@ public class FrameClientLoca extends javax.swing.JFrame {
         this.patient.setAssignedPatLocation(assignedLocation);
         // connexion
         // on recupere le port et l'adresse IP de host
-        String host = "82.65.192.5";
-        Integer port = 4444;
+//        String host = "82.65.192.5";
+//        Integer port = 4444;
+        String host = "localhost";
+        Integer port = 6558;
         
         ClientHL7 c = new ClientHL7();
         // on se connecte
